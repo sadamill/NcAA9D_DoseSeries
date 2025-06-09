@@ -140,8 +140,7 @@ doc <- read_pptx(path = '/Users/sm9/Desktop/Template.pptx') %>%
   ph_with(value = ggplots$Occupancies, 
           location = ph_location_fullsize()
   ) %>% 
-  add_slide() %>% 
-  ph_with(value = ggplots$OccupancyTrends, 
+  add_slide() %>% xgplots$OccupancyTrends, 
           location = ph_location_fullsize()
   ) %>% 
   add_slide() %>% 

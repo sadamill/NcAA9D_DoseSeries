@@ -92,7 +92,8 @@ rsconnect/
 # End of https://www.toptal.com/developers/gitignore/api/r,macos
 
 #All manually-set ignores
-/Phenix_Analysis
-/Visualizations
-/Files_From_Analysis_Cluster
+Phenix_Analysis
+Visualizations
+Files_From_Analysis_Cluster
 Python_Scripts/.idea
+Electron_Density_Quantification/Outputs
