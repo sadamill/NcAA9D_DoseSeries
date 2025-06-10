@@ -146,46 +146,21 @@ for (i in 1:length(regressionSummaries)) {
   )
 }
 
+#Make PowerPoint containing figures
+new.figure.slide <- function(ppt, plot_list) {
+  for (plot in plot_list) {
+    ppt <- ppt %>%
+      add_slide() %>%
+      ph_with(value = plot, location = ph_location_fullsize())
+  }
+  ppt
+} #Function to insert slides with 
+
 doc <- read_pptx(path = '/Users/sm9/Desktop/Template.pptx') %>%
   layout_default('Title and Content') %>%
-  add_slide() %>%
-  ph_with(value = ggplots$Occupancies, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>% 
-  ph_with(ggplots$OccupancyTrends, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$CopperDistances, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$DioxygenDistances, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$DistanceTrends, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$Angles, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$AngleTrends, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$Densities, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$DensityTrends, 
-          location = ph_location_fullsize()
-  ) %>%
-  add_slide() %>%
-  ph_with(value = ggplots$WedgeCVs, 
-          location = ph_location_fullsize()
-  ) %>%
-  print(doc, target = '/Users/sm9/Desktop/Example Figures.pptx')
+  new.figure.slide(ppt = ., plot_list = ggplots$Occupancies) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$BFactors) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$Distances) %>%
+  new.figure.slide(ppt = ., plot_list = ggplots$Angles) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$CVs)
+print(doc, target = '/Users/sm9/Desktop/Example Figures.pptx')
