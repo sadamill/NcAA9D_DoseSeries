@@ -1,4 +1,7 @@
-counter=1
+# Clear the file first (overwrite with empty content)
+> QuantificationGrid.pdb
+
+counter = 1
 for x in $(seq -16 0.5 -5); do
   for y in $(seq -6 0.5 9); do
     for z in $(seq -20 0.5 -2); do
