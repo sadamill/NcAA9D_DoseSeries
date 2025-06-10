@@ -39,26 +39,26 @@ wedgeDose <- c(6.700685286,6.720294865,6.729773805,6.743861225,6.746327023,6.719
 #Define functions
 emtrends.coefficient <- function(model, regressor) {
   c(
-    emtrends(model,'Molecule', regressor) %>% 
-      test() %>% {.[,2]},
-    emtrends(model,'Molecule', regressor) %>% 
-      pairs() %>% summary() %>% {.[,2]}
+    emtrends(model,'Molecule', regressor) %>%
+      test() %>% .[,2],
+    emtrends(model,'Molecule', regressor) %>%
+      pairs() %>% summary() %>% .[,2]
   )
 } #Extract coefficients from emtrends
 emtrends.pvalue <- function(model, regressor) {
   c(
-    emtrends(model,'Molecule', regressor) %>% 
-      test() %>% {.[,6]},
-    emtrends(model,'Molecule', regressor) %>% 
-      pairs() %>% summary() %>% {.[,6]}
+    emtrends(model,'Molecule', regressor) %>%
+      test() %>% .[,6],
+    emtrends(model,'Molecule', regressor) %>%
+      pairs() %>%summary() %>% .[,6]
   )
 } #Extract p-values from emtrends
 emtrends.se <- function(model, regressor) {
   c(
-    emtrends(model,'Molecule', regressor) %>% 
-      summary() %>% {.[,3]},
-    emtrends(model,'Molecule', regressor) %>% 
-      pairs() %>% summary() %>% {.[,3]}
+    emtrends(model,'Molecule', regressor) %>%
+      summary() %>% .[,3],
+    emtrends(model,'Molecule', regressor) %>%
+      pairs() %>%summary() %>% .[,3]
   )
 } #Extract standard errors from emtrends
 ggtheme <- function() {
@@ -134,45 +134,45 @@ for (i in 1:length(regressionSummaries)) {
   )
 }
 
-doc <- read_pptx(path = '/Users/sm9/Desktop/Template.pptx') %>% 
-  layout_default('Title and Content') %>% 
-  add_slide() %>% 
+doc <- read_pptx(path = '/Users/sm9/Desktop/Template.pptx') %>%
+  layout_default('Title and Content') %>%
+  add_slide() %>%
   ph_with(value = ggplots$Occupancies, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% xgplots$OccupancyTrends, 
+  ) %>%
+  add_slide() %>%xgplots$OccupancyTrends, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% 
+  ) %>%
+  add_slide() %>%
   ph_with(value = ggplots$CopperDistances, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% 
+  ) %>%
+  add_slide() %>%
   ph_with(value = ggplots$DioxygenDistances, 
           location = ph_location_fullsize()
   ) %>%
-  add_slide() %>% 
+  add_slide() %>%
   ph_with(value = ggplots$DistanceTrends, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% 
+  ) %>%
+  add_slide() %>%
   ph_with(value = ggplots$Angles, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% 
+  ) %>%
+  add_slide() %>%
   ph_with(value = ggplots$AngleTrends, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% 
+  ) %>%
+  add_slide() %>%
   ph_with(value = ggplots$Densities, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% 
+  ) %>%
+  add_slide() %>%
   ph_with(value = ggplots$DensityTrends, 
           location = ph_location_fullsize()
-  ) %>% 
-  add_slide() %>% 
+  ) %>%
+  add_slide() %>%
   ph_with(value = ggplots$WedgeCVs, 
           location = ph_location_fullsize()
-  ) %>% 
+  ) %>%
   print(doc, target = '/Users/sm9/Desktop/Example Figures.pptx')
