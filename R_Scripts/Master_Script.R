@@ -12,7 +12,7 @@ py_require('numpy')
 py_require('mrcfile')
 py_require('matplotlib')
 
-options(scipen = 7)
+options(scipen = 7) #I don't like viewing things in scientific notation
 mem.maxVSize(vsize = 30000) #Set max memory size to allow space for large distance matrices
 
 # Raw Data Extraction/Preparation -----------------------------------------
@@ -123,8 +123,20 @@ save.plots(ggplots$Angles)
 save.plots(ggplots$CVs)
 
 #Save all the PDBs
-write.pdb(OccupancyColoredPDB,'OccupancyColoredPDB.pdb')
-write.pdb(bFactorColoredPDB,'BFactorColoredPDB.pdb')
+write.pdb(pdb = OccupancyColoredPDB, file = 'OccupancyColoredPDB.pdb')
+write.pdb(pdb = bFactorColoredPDB, file = 'BFactorColoredPDB.pdb')
+for(i in 1:length(pseudohelixList)) {
+  write.pdb(
+    pdb = pseudohelixList[[i]],
+    file = paste0('PDBs/Pseudohelix', i, '.pdb')
+  )
+}
+for(i in 1:length(wedgeList)) {
+  write.pdb(
+    pdb = wedgeList[[i]],
+    file = paste0('PDBs/Wedge', i, '.pdb')
+  )
+}
 
 #Save all the tables
 for (i in 1:length(regressionSummaries)) {
@@ -140,7 +152,8 @@ doc <- read_pptx(path = '/Users/sm9/Desktop/Template.pptx') %>%
   ph_with(value = ggplots$Occupancies, 
           location = ph_location_fullsize()
   ) %>%
-  add_slide() %>%xgplots$OccupancyTrends, 
+  add_slide() %>% 
+  ph_with(ggplots$OccupancyTrends, 
           location = ph_location_fullsize()
   ) %>%
   add_slide() %>%
