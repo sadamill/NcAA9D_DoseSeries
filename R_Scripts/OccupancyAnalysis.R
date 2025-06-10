@@ -307,7 +307,7 @@ ggplots$Occupancies$Pseudohelices <- ggplot(stackedOccupancies$Pseudohelices,aes
     )
   ) +
   labs(
-    x = 'Wedge Number',
+    x = 'Density-Weighted Dose (MGy)',
     y = 'Occupancy'
   )
 
