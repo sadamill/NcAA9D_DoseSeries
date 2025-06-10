@@ -325,6 +325,10 @@ ggplots$Angles$Pseudohelices <- ggplot(stackedAngles$Pseudohelices,aes(x = Dose,
     show.legend = FALSE
   ) + #Point for each occupancy value
   ggtheme() +
+  theme(
+    legend.position.inside = c(0.85,0.15),
+    
+  ) +
   facet_wrap(
     ~AngleID,
     scales = 'free',
@@ -363,6 +367,10 @@ ggplots$Angles$Wedges <- ggplot(stackedAngles$Wedges,aes(x = WedgeNumber, y = An
     show.legend = FALSE
   ) + #Point for each occupancy value
   ggtheme() +
+  theme(
+    legend.position.inside = c(0.85,0.15),
+
+  ) +
   facet_wrap(
     ~AngleID,
     scales = 'free',
@@ -381,6 +389,6 @@ ggplots$Angles$Wedges <- ggplot(stackedAngles$Wedges,aes(x = WedgeNumber, y = An
     )
   ) +
   labs(
-    x = 'Density-Weighted Dose (MGy)',
+    x = 'Wedge Number',
     y = 'Angle (°)'
   )

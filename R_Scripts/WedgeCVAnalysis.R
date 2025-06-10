@@ -64,7 +64,7 @@ ggplots$CVs$WedgeCVs <- ggplot(wedgeCVs, aes(x = reorder(Parameter, AverageCV), 
     legend.position = 'none'
   ) +
   labs(
-    x = 'Angle ID/Atom Set',
+    x = 'Parameter ID',
     y = 'Coefficient of Variance'
   ) +
   scale_x_discrete(labels = c(

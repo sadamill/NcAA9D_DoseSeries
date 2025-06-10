@@ -342,6 +342,6 @@ ggplots$Occupancies$Wedges <- ggplot(stackedOccupancies$Wedges,aes(x = WedgeNumb
     )
   ) +
   labs(
-    x = 'Density-Weighted Dose (MGy)',
+    x = 'Wedge Number',
     y = 'Occupancy'
   )
