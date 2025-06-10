@@ -1,3 +1,4 @@
+wedgeNumber <- 1:36
 
 electronDensities <- list(
   Pseudohelices = lapply(1:36, function(x) {
@@ -50,8 +51,8 @@ for (voxelIndex in 1:ncol(electronDensities$Wedges)) {
   #Extract a vector of densities for a given voxel in the quantification grid
   voxelDensity <- electronDensities$Wedges[,voxelIndex]
   
-  #Generate a linear regression of density vs dose for the extracted voxel
-  fit <- lm(voxelDensity ~ pseudohelixDose)
+  #Generate a linear regression of density vs wedge number for the extracted voxel
+  fit <- lm(voxelDensity ~ wedgeNumber)
   
   #Get the slope from the linear regression
   slope <- coef(fit)[2]
