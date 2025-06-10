@@ -18,7 +18,7 @@ mem.maxVSize(vsize = 30000) #Set max memory size to allow space for large distan
 # Raw Data Extraction/Preparation -----------------------------------------
 
 #Extract PDB files
-setwd('/Users/sm9/Documents/17_Meilleur_Lab/NcLPMO9D_Dose_Series_Study/Analysis/Files_From_Analysis_Cluster')
+setwd('Files_From_Analysis_Cluster')
 pseudohelixList <- lapply(1:36, function(x) {
   read.pdb(paste0('Pseudohelix_', x,'/Refine_1/Phenix_refine_001.pdb'), rm.alt = FALSE)
 }) #Extract pseudohelix PDBs
