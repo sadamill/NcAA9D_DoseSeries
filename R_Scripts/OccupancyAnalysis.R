@@ -277,9 +277,10 @@ OccupancyColoredPDB <- pseudohelixList[[1]]
 OccupancyColoredPDB$atom$b <- pseudohelixOccSlopes
 
 ggplots$Occupancies$Pseudohelices <- ggplot(stackedOccupancies$Pseudohelices,aes(x = Dose, y = Occupancy, color = Molecule)) +
-  stat_smooth( #Linear regression line
+  stat_smooth( #Standard error plotting
     method = 'lm',
     linewidth = 0,
+    fill = 'gray85',
     show.legend = FALSE
   ) +
   stat_smooth( #Linear regression line
@@ -312,9 +313,10 @@ ggplots$Occupancies$Pseudohelices <- ggplot(stackedOccupancies$Pseudohelices,aes
   )
 
 ggplots$Occupancies$Wedges <- ggplot(stackedOccupancies$Wedges,aes(x = WedgeNumber, y = Occupancy, color = Molecule)) +
-  stat_smooth( #Linear regression line
+  stat_smooth( #Standard error plotting
     method = 'lm',
     linewidth = 0,
+    fill = 'gray85',
     show.legend = FALSE
   ) +
   stat_smooth( #Linear regression line

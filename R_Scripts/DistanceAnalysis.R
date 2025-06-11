@@ -257,9 +257,10 @@ regressionSummaries$Distances <- list(
 
 plot.distance.pseudohelix <- function(sphere) {
   ggplot(stackedDistances$Pseudohelices[[sphere]],aes(x = Dose, y = Distance, color = Molecule)) +
-    stat_smooth( #Linear regression line
+    stat_smooth( #Standard error plotting
       method = 'lm',
       linewidth = 0,
+      fill = 'gray85',
       show.legend = FALSE
     ) +
     stat_smooth( #Linear regression line
@@ -283,9 +284,10 @@ plot.distance.pseudohelix <- function(sphere) {
 
 plot.distance.wedge <- function(sphere) {
   ggplot(stackedDistances$Wedges[[sphere]],aes(x = WedgeNumber, y = Distance, color = Molecule)) +
-    stat_smooth( #Linear regression line
+    stat_smooth( #Standard error plotting
       method = 'lm',
       linewidth = 0,
+      fill = 'gray85',
       show.legend = FALSE
     ) +
     stat_smooth( #Linear regression line

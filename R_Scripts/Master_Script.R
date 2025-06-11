@@ -86,7 +86,7 @@ ggtheme <- function() {
     scale_color_manual(
       "Molecule", 
       labels = c("A", "B"), 
-      values = c("#004c0b", "#90188d"), 
+      values = c("#5cb344", "#8100b6"), 
     ), 
       theme_bw(), 
       theme(

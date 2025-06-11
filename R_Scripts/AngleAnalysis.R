@@ -310,9 +310,10 @@ regressionSummaries$Angles <- list(
 ######################################################
 
 ggplots$Angles$Pseudohelices <- ggplot(stackedAngles$Pseudohelices,aes(x = Dose, y = Angle, color = Molecule)) +
-  stat_smooth( #Linear regression line
+  stat_smooth( #Standard error plotting
     method = 'lm',
     linewidth = 0,
+    fill = 'gray85',
     show.legend = FALSE
   ) +
   stat_smooth( #Linear regression line
@@ -352,9 +353,10 @@ ggplots$Angles$Pseudohelices <- ggplot(stackedAngles$Pseudohelices,aes(x = Dose,
   )
 
 ggplots$Angles$Wedges <- ggplot(stackedAngles$Wedges,aes(x = WedgeNumber, y = Angle, color = Molecule)) +
-  stat_smooth( #Linear regression line
+  stat_smooth( #Standard error plotting
     method = 'lm',
     linewidth = 0,
+    fill = 'gray85',
     show.legend = FALSE
   ) +
   stat_smooth( #Linear regression line
