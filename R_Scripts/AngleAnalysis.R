@@ -310,26 +310,9 @@ regressionSummaries$Angles <- list(
 ######################################################
 
 ggplots$Angles$Pseudohelices <- ggplot(stackedAngles$Pseudohelices,aes(x = Dose, y = Angle, color = Molecule)) +
-  stat_smooth( #Standard error plotting
-    method = 'lm',
-    linewidth = 0,
-    fill = 'gray85',
-    show.legend = FALSE
-  ) +
-  stat_smooth( #Linear regression line
-    method = 'lm',
-    linetype = 2,
-    se = FALSE
-  ) +
-  geom_point(
-    size = 0.3,
-    show.legend = FALSE
-  ) + #Point for each occupancy value
-  ggtheme() +
-  theme(
-    legend.position.inside = c(0.85,0.15),
-    
-  ) +
+  scatter_plot() +
+  ggtheme_light() +
+  theme(legend.position.inside = c(0.85,0.15)) +
   facet_wrap(
     ~AngleID,
     scales = 'free',
@@ -353,26 +336,9 @@ ggplots$Angles$Pseudohelices <- ggplot(stackedAngles$Pseudohelices,aes(x = Dose,
   )
 
 ggplots$Angles$Wedges <- ggplot(stackedAngles$Wedges,aes(x = WedgeNumber, y = Angle, color = Molecule)) +
-  stat_smooth( #Standard error plotting
-    method = 'lm',
-    linewidth = 0,
-    fill = 'gray85',
-    show.legend = FALSE
-  ) +
-  stat_smooth( #Linear regression line
-    method = 'lm',
-    linetype = 2,
-    se = FALSE
-  ) +
-  geom_point(
-    size = 0.3,
-    show.legend = FALSE
-  ) + #Point for each occupancy value
-  ggtheme() +
-  theme(
-    legend.position.inside = c(0.85,0.15),
-
-  ) +
+  scatter_plot() +
+  ggtheme_light() +
+  theme(legend.position.inside = c(0.85,0.15)) +
   facet_wrap(
     ~AngleID,
     scales = 'free',

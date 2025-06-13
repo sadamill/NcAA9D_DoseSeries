@@ -277,22 +277,8 @@ OccupancyColoredPDB <- pseudohelixList[[1]]
 OccupancyColoredPDB$atom$b <- pseudohelixOccSlopes
 
 ggplots$Occupancies$Pseudohelices <- ggplot(stackedOccupancies$Pseudohelices,aes(x = Dose, y = Occupancy, color = Molecule)) +
-  stat_smooth( #Standard error plotting
-    method = 'lm',
-    linewidth = 0,
-    fill = 'gray85',
-    show.legend = FALSE
-  ) +
-  stat_smooth( #Linear regression line
-    method = 'lm',
-    linetype = 2,
-    se = FALSE
-  ) +
-  geom_point(
-    size = 0.3,
-    show.legend = FALSE
-  ) + #Point for each occupancy value
-  ggtheme() +
+  scatter_plot() +
+  ggtheme_light() +
   facet_wrap(
     ~Residue,
     scales = 'free',
@@ -313,22 +299,8 @@ ggplots$Occupancies$Pseudohelices <- ggplot(stackedOccupancies$Pseudohelices,aes
   )
 
 ggplots$Occupancies$Wedges <- ggplot(stackedOccupancies$Wedges,aes(x = WedgeNumber, y = Occupancy, color = Molecule)) +
-  stat_smooth( #Standard error plotting
-    method = 'lm',
-    linewidth = 0,
-    fill = 'gray85',
-    show.legend = FALSE
-  ) +
-  stat_smooth( #Linear regression line
-    method = 'lm',
-    linetype = 2,
-    se = FALSE
-  ) +
-  geom_point(
-    size = 0.3,
-    show.legend = FALSE
-  ) + #Point for each occupancy value
-  ggtheme() +
+  scatter_plot() +
+  ggtheme_light() +
   facet_wrap(
     ~Residue,
     scales = 'free',
@@ -347,3 +319,4 @@ ggplots$Occupancies$Wedges <- ggplot(stackedOccupancies$Wedges,aes(x = WedgeNumb
     x = 'Wedge Number',
     y = 'Occupancy'
   )
+

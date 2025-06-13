@@ -257,22 +257,8 @@ regressionSummaries$Distances <- list(
 
 plot.distance.pseudohelix <- function(sphere) {
   ggplot(stackedDistances$Pseudohelices[[sphere]],aes(x = Dose, y = Distance, color = Molecule)) +
-    stat_smooth( #Standard error plotting
-      method = 'lm',
-      linewidth = 0,
-      fill = 'gray85',
-      show.legend = FALSE
-    ) +
-    stat_smooth( #Linear regression line
-      method = 'lm',
-      linetype = 2,
-      se = FALSE
-    ) +
-    geom_point(
-      size = 0.3,
-      show.legend = FALSE
-    ) + #Point for each occupancy value
-    ggtheme() +
+    scatter_plot() +
+    ggtheme_light() +
     theme(
       legend.position = 'right'
     ) +
@@ -284,22 +270,8 @@ plot.distance.pseudohelix <- function(sphere) {
 
 plot.distance.wedge <- function(sphere) {
   ggplot(stackedDistances$Wedges[[sphere]],aes(x = WedgeNumber, y = Distance, color = Molecule)) +
-    stat_smooth( #Standard error plotting
-      method = 'lm',
-      linewidth = 0,
-      fill = 'gray85',
-      show.legend = FALSE
-    ) +
-    stat_smooth( #Linear regression line
-      method = 'lm',
-      linetype = 2,
-      se = FALSE
-    ) +
-    geom_point(
-      size = 0.3,
-      show.legend = FALSE
-    ) + #Point for each occupancy value
-    ggtheme() +
+    scatter_plot() +
+    ggtheme_light() +
     theme(
       legend.position = 'right'
     ) +

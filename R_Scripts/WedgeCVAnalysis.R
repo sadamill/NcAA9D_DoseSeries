@@ -60,7 +60,7 @@ ggplots$CVs$WedgeCVs <- ggplot(wedgeCVs, aes(x = reorder(Parameter, AverageCV), 
   ) +
   theme(
     axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-    strip.background = element_rect(fill = 'gray95'),
+    strip.background = element_rect(fill = 'white'),
     legend.position = 'none'
   ) +
   labs(

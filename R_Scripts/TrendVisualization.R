@@ -75,7 +75,7 @@ plot.trend <- function(trend, datasetType, nudge_y_val = 0.2) {
     ) +
     geom_vline(xintercept = 0) +
     new_scale_color() +
-    ggtheme() +
+    ggtheme_light() +
     geom_point(
       aes(color = Estimate),
       size = 5
