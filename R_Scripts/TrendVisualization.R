@@ -63,15 +63,18 @@ plot.trend <- function(trend, datasetType, nudge_y_val = 0.2) {
         yend = Residue, 
         x = TrendA, 
         xend = TrendB, 
-        color = Significance
+        color = Significance,
+        alpha = Significance
       ), 
       show.legend = FALSE, 
       inherit.aes = FALSE, 
-      linewidth = 5, 
-      alpha = 0.5
+      linewidth = 5
     ) +
     scale_color_manual(
-      values = c("gray", "cadetblue3"), 
+      values = c("gray", "skyblue2"), 
+    ) +
+    scale_alpha_manual(
+      values = c(0.5, 0.75)
     ) +
     geom_vline(xintercept = 0) +
     new_scale_color() +
