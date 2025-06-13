@@ -88,24 +88,24 @@ ggtheme_dark <- function() {
       "Molecule", 
       labels = c("A", "B"), 
       values = c("#5cb344", "#8100b6")
-    ),
-    theme_dark(),
+    ), 
+    theme_dark(), 
     theme(
       #Overall elements
-      rect = element_blank(),
-      text = element_text(color = "white"),
-      line = element_line(color = 'black'),
+      rect = element_blank(), 
+      text = element_text(color = "white"), 
+      line = element_line(color = "black"), 
       
       #Legend positioning
       legend.position = "inside", 
-      legend.position.inside = c(0.85, 0.25),
+      legend.position.inside = c(0.85, 0.25), 
       
       #Manual override of desired theme elements
-      panel.background = element_rect(fill = 'black', color = 'white'),
+      panel.background = element_rect(fill = "black", color = "white"), 
       legend.key = element_blank(), #panel.background automatically maps to legend.key; I want to override this
-      legend.background = element_rect(fill = 'black', color = 'white'),
-      strip.background = element_rect(fill = 'black', color = 'white')
-    ),
+      legend.background = element_rect(fill = "black", color = "white"), 
+      strip.background = element_rect(fill = "black", color = "white")
+    ), 
     coord_cartesian(expand = FALSE)
   )
 } #Global ggplot dark theme
@@ -119,35 +119,35 @@ ggtheme_light <- function() {
     theme_bw(), 
     theme(
       #Overall elements
-      text = element_text(color = "black"),
+      text = element_text(color = "black"), 
       
       #Legend positioning
       legend.position = "inside", 
-      legend.position.inside = c(0.85, 0.25),
+      legend.position.inside = c(0.85, 0.25), 
       
       #Manual override of desired theme elements
-      legend.background = element_rect(fill = 'white', color = 'black'),
-      strip.background = element_rect(fill = 'white'),
+      legend.background = element_rect(fill = "white", color = "black"), 
+      strip.background = element_rect(fill = "white"), 
       plot.background = element_blank()
-    ),
+    ), 
     coord_cartesian(expand = FALSE)
   )
 } #Global ggplot light theme
 scatter_plot <- function() {
   list(
     stat_smooth( #Standard error plotting
-      method = 'lm',
-      linewidth = 0,
-      fill = 'gray85',
+      method = "lm", 
+      linewidth = 0, 
+      fill = "gray85", 
       show.legend = FALSE
-    ),
+    ), 
     stat_smooth( #Linear regression line
-      method = 'lm',
-      linetype = 2,
+      method = "lm", 
+      linetype = 2, 
       se = FALSE
-    ),
+    ), 
     geom_point(
-      size = 0.3,
+      size = 0.3, 
       show.legend = FALSE
     ) #Point for each occupancy value
   )
