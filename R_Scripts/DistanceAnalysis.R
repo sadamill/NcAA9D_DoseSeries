@@ -74,7 +74,7 @@ stackedDistances <- list(
   Pseudohelices = list(
     Cu = tibble(
       Dose = rep(trimmedDistances$Pseudohelices$dose_MGy, 6), 
-      AtomPair = c(
+      CuAtomPair = c(
         rep("Cu-Tyr", 72), 
         rep("Cu-NTerm", 72), 
         rep("Cu-His1ND1", 72), 
@@ -94,7 +94,7 @@ stackedDistances <- list(
     ), 
     Oxy = tibble(
       Dose = rep(trimmedDistances$Pseudohelices$dose_MGy, 8), 
-      AtomPair = c(
+      OAtomPair = c(
         rep("O1-Eq", 72), 
         rep("O2-Eq", 72), 
         rep("O1-His157NE2", 72), 
@@ -120,7 +120,7 @@ stackedDistances <- list(
   Wedges = list(
     Cu = tibble(
       WedgeNumber = rep(trimmedDistances$Wedges$WedgeNumber, 6), 
-      AtomPair = c(
+      CuAtomPair = c(
         rep("Cu-Tyr", 72), 
         rep("Cu-NTerm", 72), 
         rep("Cu-His1ND1", 72), 
@@ -140,7 +140,7 @@ stackedDistances <- list(
     ), 
     Oxy = tibble(
       WedgeNumber = rep(trimmedDistances$Wedges$WedgeNumber, 8), 
-      AtomPair = c(
+      OAtomPair = c(
         rep("O1-Eq", 72), 
         rep("O2-Eq", 72), 
         rep("O1-His157NE2", 72), 

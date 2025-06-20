@@ -65,7 +65,15 @@ faceting <- function(facetVar, datasetType) {
       "GluBF" = "Glu[30]", 
       "OxyBF" = "'Dioxygen'"
     ),
-    AtomPair = c(
+    CuAtomPair = c(
+      "Cu-Tyr" = "Cu-Tyr[168]",
+      "Cu-NTerm" = "Cu-N[term]",
+      "Cu-His1ND1" = "Cu-His[1]*Nδ[1]",
+      "Cu-His84NE2" = "Cu-His[84]*Nε[2]",
+      "Cu-Eq" = "Cu-H[2]*O[Eq]",
+      "Cu-Ax" = "Cu-H[2]*O[Ax]"
+    ),
+    OAtomPair = c(
       "O1-Eq" = "O[prox]*-H[2]*O[Eq]", 
       "O2-Eq" = "O[dist]*-H[2]*O[Eq]", 
       "O1-His157NE2" = "O[prox]*-His[157]*N[ε2]", 
@@ -113,6 +121,49 @@ faceting <- function(facetVar, datasetType) {
     )
   )
 }
+scales <- function(facetVar) {
+  
+  angle_window <- 7
+  occupancy_window <- 0.4
+  bfactor_window <- 8
+  cudistance_window <- 0.25
+  
+  facetted_pos_scales(y = if(facetVar == "AngleID") {
+    list(
+      scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
+      scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
+      scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
+      scale_y_continuous(limits = c(180 - angle_window / 2, 180 + angle_window / 2)),
+      scale_y_continuous(limits = c(176 - angle_window / 2, 176 + angle_window / 2)),
+      scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
+      scale_y_continuous(limits = c(120, 150)),
+      scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
+    )} else if(facetVar == "Residue") {
+      list(
+        scale_y_continuous(limits = c(0.6 - occupancy_window / 2, 0.6 + occupancy_window / 2)),
+        scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
+        scale_y_continuous(limits = c(0.35 - occupancy_window / 2, 0.35 + occupancy_window / 2)),
+        scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
+        scale_y_continuous(limits = c(0.65 - occupancy_window / 2, 0.65 + occupancy_window / 2))
+      )} else if(facetVar == "bResidue") {
+        list(
+          scale_y_continuous(limits = c(21 - bfactor_window / 2, 21 + bfactor_window / 2)),
+          scale_y_continuous(limits = c(10.5 - bfactor_window / 2, 10.5 + bfactor_window / 2)),
+          scale_y_continuous(limits = c(22.6 - bfactor_window / 2, 22.6 + bfactor_window / 2)),
+          scale_y_continuous(limits = c(14 - bfactor_window / 2, 14 + bfactor_window / 2)),
+          scale_y_continuous(limits = c(12.5 - bfactor_window / 2, 12.5 + bfactor_window / 2))
+        )
+      } else if(facetVar == "CuAtomPair") {
+        list(
+          scale_y_continuous(limits = c(2.375 - cudistance_window / 2, 2.375 + cudistance_window / 2)),
+          scale_y_continuous(limits = c(1.99 - cudistance_window / 2, 1.99 + cudistance_window / 2)),
+          scale_y_continuous(limits = c(1.95 - cudistance_window / 2, 1.95 + cudistance_window / 2)),
+          scale_y_continuous(limits = c(1.98 - cudistance_window / 2, 1.98 + cudistance_window / 2)),
+          scale_y_continuous(limits = c(2.18 - cudistance_window / 2, 2.18 + cudistance_window / 2)),
+          scale_y_continuous(limits = c(2.66 - cudistance_window / 2, 2.66 + cudistance_window / 2))
+        )
+      } else {NULL})
+}
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
   ggplot(data, mapping) +
@@ -133,8 +184,11 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_dark() +
-    if(facetVar == "AngleID") {
+    scales(facetVar = facetVar) +
+    if(facetVar == "AngleID" | facetVar == "OAtomPair") {
       theme(legend.position.inside = c(0.85, 0.15))
+    } else if(facetVar == "CuAtomPair") {
+      theme(legend.position = "right")
     }
 } #Make scatter plot with fitted linear regression
 scatter_light <- function(data, mapping, facetVar, datasetType) {
@@ -156,8 +210,11 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_light() +
-    if(facetVar == "AngleID") {
+    scales(facetVar = facetVar) +
+    if(facetVar == "AngleID" | facetVar == "OAtomPair") {
       theme(legend.position.inside = c(0.85, 0.15))
+    } else if(facetVar == "CuAtomPair") {
+      theme(legend.position = "right")
     }
 } #Make scatter plot with fitted linear regression
 
@@ -165,7 +222,7 @@ scatter_dark(
   data = stackedAngles$Pseudohelices,
   mapping = aes(x = Dose, y = Angle, color = Molecule),
   facetVar = 'AngleID',
-  datasetType = "Wedge",
+  datasetType = "Wedge"
 )
 
 # Occupancy plotting ------------------------------------------------------

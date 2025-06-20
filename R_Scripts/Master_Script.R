@@ -7,6 +7,7 @@ require(emmeans)
 require(officedown)
 require(officer)
 require(RcppCNPy)
+require(ggh4x)
 
 py_require("numpy")
 py_require("mrcfile")
