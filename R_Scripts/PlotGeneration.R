@@ -50,73 +50,68 @@ ggtheme_light <- function() {
   )
 } #Global ggplot light theme
 faceting <- function(facetVar, datasetType) {
-    facet <- do.call(
-      what = facet_wrap,
-      args = list(
-        facet = as.formula(paste("~", facetVar)), 
-        scales = 'free',
-        labeller = labeller(
-          list(
-            Residue = as_labeller(c(
-              "CO2" = "CO[2]", 
-              "Ax"  = "H[2]*O[Ax]", 
-              "Eq"  = "H[2]*O[Eq]", 
-              "Glu" = "Glu[30]", 
-              "Oxy" = "'Dioxygen'"
-            )),
-            bResidue = as_labeller(c(
-              "CO2BF" = "CO[2]", 
-              "AxBF"  = "H[2]*O[Ax]", 
-              "EqBF"  = "H[2]*O[Eq]", 
-              "GluBF" = "Glu[30]", 
-              "OxyBF" = "'Dioxygen'"
-            )),
-            AtomPair = as_labeller(c(
-              "O1-Eq" = "O[prox]*-H[2]*O[Eq]", 
-              "O2-Eq" = "O[dist]*-H[2]*O[Eq]", 
-              "O1-His157NE2" = "O[prox]*-His[157]*N[ε2]", 
-              "O2-His157NE2" = "O[dist]*-His[157]*N[ε2]", 
-              "O1-GluOE1" = "O[prox]*-Glu[30]*O[ε1]", 
-              "O2-GluOE1" = "O[dist]*-Glu[30]*O[ε1]", 
-              "O1-GluOE2" = "O[prox]*-Glu[30]*O[ε2]", 
-              "O2-GluOE2" = "O[dist]*-Glu[30]*O[ε2]"
-            )),
-            AngleID = as_labeller(c(
-              "T1" = "θ[1]", 
-              "T2" = "θ[2]", 
-              "T3" = "θ[3]", 
-              "TT" = "θ[T]", 
-              "THH" = "θ[HH]", 
-              "TH1HN1" = "θH[1]*HN[1]", 
-              "TH1HN84" = "θH[1]*HN[84]", 
-              "TOxy" = "θ[oxygen]"
-            )
-            )),
-          .default = label_parsed
-        )
-      ))
-    
-    labs <- do.call(
-      what = labs,
-      args = list(
-        x = if(datasetType == 'Pseudohelix') {
-          "Dose (MGy)"
-        } else if(datasetType == "Wedge") {
-          "Wedge Number"
-        },
-        y = if(facetVar == "Residue") {
-          "Occupancy"
-        } else if(facetVar == "bResidue") {
-          bquote("B-Factor (" * Å^2 * ")")
-        } else if(facetVar == "AtomPair") {
-          "Distance (Å)"
-        } else if(facetVar == "AngleID") {
-          "Angle (°)"
-        }
-      )
+  mapping_list <- list(
+    Residue = c(
+      "CO2" = "CO[2]", 
+      "Ax"  = "H[2]*O[Ax]", 
+      "Eq"  = "H[2]*O[Eq]", 
+      "Glu" = "Glu[30]", 
+      "Oxy" = "'Dioxygen'"
+    ),
+    bResidue = c(
+      "CO2BF" = "CO[2]", 
+      "AxBF"  = "H[2]*O[Ax]", 
+      "EqBF"  = "H[2]*O[Eq]", 
+      "GluBF" = "Glu[30]", 
+      "OxyBF" = "'Dioxygen'"
+    ),
+    AtomPair = c(
+      "O1-Eq" = "O[prox]*-H[2]*O[Eq]", 
+      "O2-Eq" = "O[dist]*-H[2]*O[Eq]", 
+      "O1-His157NE2" = "O[prox]*-His[157]*N[ε2]", 
+      "O2-His157NE2" = "O[dist]*-His[157]*N[ε2]", 
+      "O1-GluOE1" = "O[prox]*-Glu[30]*O[ε1]", 
+      "O2-GluOE1" = "O[dist]*-Glu[30]*O[ε1]", 
+      "O1-GluOE2" = "O[prox]*-Glu[30]*O[ε2]", 
+      "O2-GluOE2" = "O[dist]*-Glu[30]*O[ε2]"
+    ),
+    AngleID = c(
+      "T1" = "θ[1]", 
+      "T2" = "θ[2]", 
+      "T3" = "θ[3]", 
+      "TT" = "θ[T]", 
+      "THH" = "θ[HH]", 
+      "TH1HN1" = "θH[1]*HN[1]", 
+      "TH1HN84" = "θH[1]*HN[84]", 
+      "TOxy" = "θ[oxygen]"
     )
-    
-    list(facet, labs)
+  )
+  
+  list(
+    facet_wrap(
+      as.formula(paste("~", facetVar)), 
+      scales = 'free',
+      labeller = labeller(
+        !!facetVar := as_labeller(mapping_list[[facetVar]], label_parsed),
+        .default = label_parsed
+      )),
+    labs(
+      x = if(datasetType == 'Pseudohelix') {
+        "Dose (MGy)"
+      } else if(datasetType == "Wedge") {
+        "Wedge Number"
+      },
+      y = if(facetVar == "Residue") {
+        "Occupancy"
+      } else if(facetVar == "bResidue") {
+        bquote("B-Factor (" * Å^2 * ")")
+      } else if(facetVar == "AtomPair") {
+        "Distance (Å)"
+      } else if(facetVar == "AngleID") {
+        "Angle (°)"
+      }
+    )
+  )
 }
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
@@ -137,7 +132,10 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       show.legend = FALSE
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
-    ggtheme_dark()
+    ggtheme_dark() +
+    if(facetVar == "AngleID") {
+      theme(legend.position.inside = c(0.85, 0.15))
+    }
 } #Make scatter plot with fitted linear regression
 scatter_light <- function(data, mapping, facetVar, datasetType) {
   ggplot(data, mapping) +
@@ -157,14 +155,17 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
       show.legend = FALSE
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
-    ggtheme_light()
+    ggtheme_light() +
+    if(facetVar == "AngleID") {
+      theme(legend.position.inside = c(0.85, 0.15))
+    }
 } #Make scatter plot with fitted linear regression
 
-scatter_light(
+scatter_dark(
   data = stackedAngles$Pseudohelices,
   mapping = aes(x = Dose, y = Angle, color = Molecule),
   facetVar = 'AngleID',
-  datasetType = "Pseudohelix"
+  datasetType = "Wedge",
 )
 
 # Occupancy plotting ------------------------------------------------------
