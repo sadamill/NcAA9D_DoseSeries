@@ -82,77 +82,6 @@ emtrends.se <- function(model, regressor) {
   )
 } #Extract standard errors from emtrends
 
-ggtheme_dark <- function() {
-  list(
-    scale_color_manual(
-      "Molecule", 
-      labels = c("A", "B"), 
-      values = c("#5cb344", "#8100b6")
-    ), 
-    theme_dark(), 
-    theme(
-      #Overall elements
-      rect = element_blank(), 
-      text = element_text(color = "white"), 
-      line = element_line(color = "black"), 
-      
-      #Legend positioning
-      legend.position = "inside", 
-      legend.position.inside = c(0.85, 0.25), 
-      
-      #Manual override of desired theme elements
-      panel.background = element_rect(fill = "black", color = "white"), 
-      legend.key = element_blank(), #panel.background automatically maps to legend.key; I want to override this
-      legend.background = element_rect(fill = "black", color = "white"), 
-      strip.background = element_rect(fill = "black", color = "white")
-    ), 
-    coord_cartesian(expand = FALSE)
-  )
-} #Global ggplot dark theme
-ggtheme_light <- function() {
-  list(
-    scale_color_manual(
-      "Molecule", 
-      labels = c("A", "B"), 
-      values = c("#5cb344", "#8100b6"), 
-    ), 
-    theme_bw(), 
-    theme(
-      #Overall elements
-      text = element_text(color = "black"), 
-      
-      #Legend positioning
-      legend.position = "inside", 
-      legend.position.inside = c(0.85, 0.25), 
-      
-      #Manual override of desired theme elements
-      legend.background = element_rect(fill = "white", color = "black"), 
-      strip.background = element_rect(fill = "white"), 
-      plot.background = element_blank()
-    ), 
-    coord_cartesian(expand = FALSE)
-  )
-} #Global ggplot light theme
-scatter_plot <- function() {
-  list(
-    stat_smooth( #Standard error plotting
-      method = "lm", 
-      linewidth = 0, 
-      fill = "gray85", 
-      show.legend = FALSE
-    ), 
-    stat_smooth( #Linear regression line
-      method = "lm", 
-      linetype = 2, 
-      se = FALSE
-    ), 
-    geom_point(
-      size = 0.3, 
-      show.legend = FALSE
-    ) #Point for each occupancy value
-  )
-} #Make scatter plot with fitted linear regression
-
 #Make blank lists to organize all visualization data
 multipleRegressions <- list()
 regressionSummaries <- list()
@@ -165,17 +94,21 @@ source("OccupancyAnalysis.R")
 source("BFactorAnalysis.R")
 source("DistanceAnalysis.R")
 source("AngleAnalysis.R")
-source("WedgeCVAnalysis.R")
-source("TrendVisualization.R")
 source("ElectronDensityAnalysis.R")
 
 setwd("../Python_Scripts")
 py_run_file("PseuodohelixMapGeneration.py")
 py_run_file("WedgeMapGeneration.py")
 
+# Data Visualization ------------------------------------------------------
+
+source("WedgeCVAnalysis.R")
+source("TrendVisualization.R")
+source("PlotGeneration.R")
+
 # Data write-out ----------------------------------------------------------
 
-setwd("../Visualizations")
+setwd("../Visualizations/LightPlots")
 
 #Save all the plots
 save.plots <- function(list) {

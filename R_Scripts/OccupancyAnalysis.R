@@ -267,3 +267,7 @@ regressionSummaries$Occupancies <- list(
     )
   ))
 )
+
+#Write out a PDB file for B-factor coloring in ChimeraX
+OccupancyColoredPDB <- pseudohelixList[[1]]
+OccupancyColoredPDB$atom$b <- pseudohelixOccSlopes

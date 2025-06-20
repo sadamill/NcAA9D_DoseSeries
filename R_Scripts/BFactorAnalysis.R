@@ -101,7 +101,7 @@ stackedBFactors <- list(
       trimmedBFactors$Pseudohelices$OxyBF, 
       trimmedBFactors$Pseudohelices$GluBF
     ), 
-    Residue = c(
+    bResidue = c(
       rep("CO2BF", 72), 
       rep("AxBF", 72), 
       rep("EqBF", 72), 
@@ -110,7 +110,7 @@ stackedBFactors <- list(
     ), 
     Molecule = rep(trimmedBFactors$Pseudohelices$Molecule, 5), 
   ) %>% 
-    mutate(Residue = factor(Residue, levels = c("OxyBF", "GluBF", "CO2BF", "AxBF", "EqBF"))), 
+    mutate(bResidue = factor(bResidue, levels = c("OxyBF", "GluBF", "CO2BF", "AxBF", "EqBF"))), 
   Wedges = tibble(
     WedgeNumber = rep(trimmedBFactors$Wedges$WedgeNumber, 5), 
     bFactor = c(
@@ -120,7 +120,7 @@ stackedBFactors <- list(
       trimmedBFactors$Wedges$OxyBF, 
       trimmedBFactors$Wedges$GluBF
     ), 
-    Residue = c(
+    bResidue = c(
       rep("CO2BF", 72), 
       rep("AxBF", 72), 
       rep("EqBF", 72), 
@@ -129,7 +129,7 @@ stackedBFactors <- list(
     ), 
     Molecule = rep(trimmedBFactors$Wedges$Molecule, 5), 
   ) %>% 
-    mutate(Residue = factor(Residue, levels = c("OxyBF", "GluBF", "CO2BF", "AxBF", "EqBF")))
+    mutate(bResidue = factor(bResidue, levels = c("OxyBF", "GluBF", "CO2BF", "AxBF", "EqBF")))
 )
 
 #Make vector containing occupancy change of each atom
@@ -166,7 +166,7 @@ multipleRegressions$BFactors <- list(
 #Prepare summary table of linear regression analysis
 regressionSummaries$BFactors <- list(
   Pseudohelices = tibble(
-    Residue = c(
+    bResidue = c(
       rep("OxyBF", 3), 
       rep("GluBF", 3), 
       rep("CO2BF", 3), 
@@ -220,7 +220,7 @@ regressionSummaries$BFactors <- list(
     )
   )), 
   Wedges = tibble(
-    Residue = c(
+    bResidue = c(
       rep("OxyBF", 3), 
       rep("GluBF", 3), 
       rep("CO2BF", 3), 
@@ -274,3 +274,7 @@ regressionSummaries$BFactors <- list(
     )
   ))
 )
+
+#Write a model for B-factor coloring in ChimerAxBF
+bFactorColoredPDB <- pseudohelixList[[1]]
+bFactorColoredPDB$atom$b <- pseudohelixBFSlopes
