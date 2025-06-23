@@ -114,7 +114,7 @@ faceting <- function(facetVar, datasetType) {
         "Occupancy"
       } else if(facetVar == "bResidue") {
         bquote("B-Factor (" * Å^2 * ")")
-      } else if(facetVar == "AtomPair") {
+      } else if(facetVar %in% c('CuAtomPair', 'OAtomPair')) {
         "Distance (Å)"
       } else if(facetVar == "AngleID") {
         "Angle (°)"

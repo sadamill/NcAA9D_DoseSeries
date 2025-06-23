@@ -191,19 +191,27 @@ for (i in 1:length(regressionSummaries)) {
 
 #Make PowerPoint containing figures
 new.figure.slide <- function(ppt, plot_list) {
-  for (plot in plot_list) {
-    ppt <- ppt %>%
-      add_slide() %>%
-      ph_with(value = plot, location = ph_location_fullsize())
+  for (i in plot_list) {
+    if ("ggplot" %in% class(i)) {
+      ppt <- ppt %>%
+        add_slide() %>%
+        ph_with(value = i, location = ph_location_fullsize())
+    } else if("list" %in% class(i)) {
+      for(j in i) {
+        ppt <- ppt %>%
+          add_slide() %>%
+          ph_with(value = j, location = ph_location_fullsize())
+      }
+    }
   }
   ppt
 } #Function to insert slides with 
 
 doc <- read_pptx(path = "/Users/sm9/Desktop/Template.pptx") %>%
   layout_default("Title and Content") %>%
-  new.figure.slide(ppt = ., plot_list = ggplots$Occupancies$Dark) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$BFactors$Dark) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$Distances$Dark) %>%
-  new.figure.slide(ppt = ., plot_list = ggplots$Angles$Dark) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$CVs$Dark)
+  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Occupancies) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$Dark$BFactors) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Distances) %>%
+  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Angles) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$Dark$CVs)
 print(doc, target = "/Users/sm9/Desktop/Example Figures.pptx")
