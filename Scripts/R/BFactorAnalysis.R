@@ -275,6 +275,6 @@ regressionSummaries$BFactors <- list(
   ))
 )
 
-#Write a model for B-factor coloring in ChimerAxBF
+#Write a model for B-factor coloring in ChimeraX
 bFactorColoredPDB <- pseudohelixList[[1]]
 bFactorColoredPDB$atom$b <- pseudohelixBFSlopes

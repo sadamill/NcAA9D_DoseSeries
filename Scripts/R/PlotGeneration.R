@@ -1,3 +1,5 @@
+# Function setup ----------------------------------------------------------
+
 ggtheme_dark <- function() {
   list(
     scale_color_manual(
@@ -218,255 +220,97 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     }
 } #Make scatter plot with fitted linear regression
 
-scatter_dark(
-  data = stackedAngles$Pseudohelices,
-  mapping = aes(x = Dose, y = Angle, color = Molecule),
-  facetVar = 'AngleID',
-  datasetType = "Wedge"
-)
+ggdarklight <- function(data, key, key2 = NA) {
+  yvar <- if(deparse(substitute(data)) == "stackedOccupancies") {
+    'Occupancy'
+  } else if(deparse(substitute(data)) == "stackedBFactors") {
+    'bFactor'
+  } else if(deparse(substitute(data)) %in% c("stackedDistances$Cu", "stackedDistances$Oxy")) {
+    'Distance'
+  } else if(deparse(substitute(data)) == "stackedAngles") {
+    'Angle'
+  } else {stop("Invalid data input")}
+  
+  facetStr <- if(deparse(substitute(data)) == "stackedOccupancies") {
+    "Residue"
+  } else if(deparse(substitute(data)) == "stackedBFactors") {
+    "bResidue"
+  } else if(deparse(substitute(data)) == "stackedDistances$Cu") {
+    "CuAtomPair"
+  } else if(deparse(substitute(data)) == "stackedDistances$Oxy") {
+    "OAtomPair"
+  } else if(deparse(substitute(data)) == "stackedAngles") {
+    "AngleID"
+  } else{stop("Invalid data input")}
+  
+  plots <- list(
+    Light = list(
+      Pseudohelices = scatter_light(
+        data = data$Pseudohelices,
+        mapping = aes(
+          x = Dose,
+          y = .data[[yvar]],
+          color = Molecule
+        ),
+        facetVar = facetStr,
+        datasetType = "Pseudohelix"
+      ),
+      Wedges = scatter_light(
+        data = data$Wedges,
+        mapping = aes(
+          x = WedgeNumber,
+          y = .data[[yvar]],
+          color = Molecule
+        ),
+        facetVar = facetStr,
+        datasetType = "Pseudohelix"
+      )
+    ),
+    Dark = list(
+      Pseudohelices = scatter_dark(
+        data = data$Pseudohelices,
+        mapping = aes(
+          x = Dose,
+          y = .data[[yvar]],
+          color = Molecule
+        ),
+        facetVar = facetStr,
+        datasetType = "Pseudohelix"
+      ),
+      Wedges = scatter_dark(
+        data = data$Wedges,
+        mapping = aes(
+          x = WedgeNumber,
+          y = .data[[yvar]],
+          color = Molecule
+        ),
+        facetVar = facetStr,
+        datasetType = "Pseudohelix"
+      )
+    )
+  )
+  
+  if(is.na(key2)) {
+    ggplots[[key]] <<- plots
+  } else {
+    ggplots[[key]][[key2]] <<- plots
+  }
+
+} #Combination of scatter_dark and scatter_light to ease the plotting of multiple datasets with multiple themes
 
 # Occupancy plotting ------------------------------------------------------
 
-ggplots$Occupancies$Pseudohelices <- scatter_plot() +
-  plotcolors() +
-  facetet() +
-  labs(
-    x = "Density-Weighted Dose (MGy)", 
-    y = "Occupancy"
-  )
+ggdarklight(stackedOccupancies, "Occupancies")
 
-ggplots$Occupancies$Pseudohelices <- ggplot(stackedOccupancies$Pseudohelices, aes(x = Dose, y = Occupancy, color = Molecule)) +
-  scatter_plot() +
-  plotcolors() +
-  facetet() +
-  labs(
-    x = "Density-Weighted Dose (MGy)", 
-    y = "Occupancy"
-  )
+# B-Factor plotting -------------------------------------------------------
 
-ggplots$Occupancies$Wedges <- ggplot(stackedOccupancies$Wedges, aes(x = WedgeNumber, y = Occupancy, color = Molecule)) +
-  scatter_plot() +
-  plotcolors() +
-  facet_wrap(
-    ~Residue, 
-    scales = "free", 
-    labeller = labeller(
-      Residue = c(
-        "CO2" = "CO[2]", 
-        "Ax"  = "H[2]*O[Ax]", 
-        "Eq"  = "H[2]*O[Eq]", 
-        "Glu" = "Glu[30]", 
-        "Oxy" = "'Dioxygen'"
-      ), 
-      .default = label_parsed
-    )
-  ) +
-  labs(
-    x = "Wedge Number", 
-    y = "Occupancy"
-  )
-
-# B-factor plotting -------------------------------------------------------
-
-ggplots$BFactors$Pseudohelices <- scatter_plot(stackedBFactors$Pseudohelices, aes(x = Dose, y = bFactor, color = Molecule)) +
-  ggtheme_light() +
-  facet_wrap(
-    vars(Residue), 
-    scales = "free", 
-    labeller = labeller(
-      Residue = c(
-        "CO2BF" = "CO[2]", 
-        "AxBF"  = "H[2]*O[Ax]", 
-        "EqBF"  = "H[2]*O[Eq]", 
-        "GluBF" = "Glu[30]", 
-        "OxyBF" = "'Dioxygen'"
-      ), 
-      .default = label_parsed
-    )
-  ) +
-  labs(
-    x = "Density-Weighted Dose (MGy)", 
-    y = bquote('B-Factor ('Å^2*')')
-  )
-
-ggplots$BFactors$Wedges <- scatter_plot(stackedBFactors$Wedges, aes(x = WedgeNumber, y = bFactor, color = Molecule)) +
-  plotcolors() +
-  facet_wrap(
-    vars(Residue), 
-    scales = "free", 
-    labeller = labeller(
-      Residue = c(
-        "CO2BF" = "CO[2]", 
-        "AxBF"  = "H[2]*O[Ax]", 
-        "EqBF"  = "H[2]*O[Eq]", 
-        "GluBF" = "Glu[30]", 
-        "OxyBF" = "'Dioxygen'"
-      ), 
-      .default = label_parsed
-    )
-  ) +
-  labs(
-    x = "Wedge Number", 
-    y = "Occupancy"
-  )
+ggdarklight(stackedBFactors, "BFactors")
 
 # Distance plotting -------------------------------------------------------
 
-plot.distance.pseudohelix <- function(sphere) {
-  ggplot(stackedDistances$Pseudohelices[[sphere]], aes(x = Dose, y = Distance, color = Molecule)) +
-    scatter_plot() +
-    plotcolors() +
-    theme(
-      legend.position = "right"
-    ) +
-    labs(
-      x = "Density-Weighted Dose (MGy)", 
-      y = "Distance (Å)"
-    )
-}
-plot.distance.wedge <- function(sphere) {
-  ggplot(stackedDistances$Wedges[[sphere]], aes(x = WedgeNumber, y = Distance, color = Molecule)) +
-    scatter_plot() +
-    plotcolors() +
-    theme(
-      legend.position = "right"
-    ) +
-    labs(
-      x = "Wedge Number", 
-      y = "Distance (Å)"
-    )
-}
+ggdarklight(stackedDistances$Cu, "Distances", "Cu")
+ggdarklight(stackedDistances$Oxy, "Distances", "Oxy")
 
-ggplots$Distances$DioxygenPseudohelices <- plot.distance.pseudohelix("Oxy") +
-  facet_wrap(
-    ~ AtomPair, 
-    scales = "free", 
-    labeller = labeller(
-      AtomPair = c(
-        "O1-Eq" = "O[prox]*-H[2]*O[Eq]", 
-        "O2-Eq" = "O[dist]*-H[2]*O[Eq]", 
-        "O1-His157NE2" = "O[prox]*-His[157]*N[ε2]", 
-        "O2-His157NE2" = "O[dist]*-His[157]*N[ε2]", 
-        "O1-GluOE1" = "O[prox]*-Glu[30]*O[ε1]", 
-        "O2-GluOE1" = "O[dist]*-Glu[30]*O[ε1]", 
-        "O1-GluOE2" = "O[prox]*-Glu[30]*O[ε2]", 
-        "O2-GluOE2" = "O[dist]*-Glu[30]*O[ε2]"
-      ), 
-      .default = label_parsed
-    )
-  ) +
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(0.85, 0.15)
-  )
+# Angle plotting ----------------------------------------------------------
 
-ggplots$Distances$CopperPseudohelices <- plot.distance.pseudohelix("Cu") +
-  facet_wrap(
-    ~ AtomPair, 
-    scales = "free", 
-    labeller = labeller(
-      AtomPair = c(
-        "Cu-Tyr" = "Cu-Tyr[168]", 
-        "Cu-NTerm" = "'Cu-N Terminus'", 
-        "Cu-His1ND1" = "Cu-His[1]*Nδ[1]", 
-        "Cu-His84NE2" = "Cu-His[84]*Nε[2]", 
-        "Cu-Eq" = "Cu-H[2]*O[Eq]", 
-        "Cu-Ax" = "Cu-H[2]*O[Ax]"
-      ), 
-      .default = label_parsed
-    )
-  )
-
-ggplots$Distances$DioxygenWedges <- plot.distance.wedge("Oxy") +
-  facet_wrap(
-    ~ AtomPair, 
-    scales = "free", 
-    labeller = labeller(
-      AtomPair = c(
-        "O1-Eq" = "O[prox]*-H[2]*O[Eq]", 
-        "O2-Eq" = "O[dist]*-H[2]*O[Eq]", 
-        "O1-His157NE2" = "O[prox]*-His[157]*N[ε2]", 
-        "O2-His157NE2" = "O[dist]*-His[157]*N[ε2]", 
-        "O1-GluOE1" = "O[prox]*-Glu[30]*O[ε1]", 
-        "O2-GluOE1" = "O[dist]*-Glu[30]*O[ε1]", 
-        "O1-GluOE2" = "O[prox]*-Glu[30]*O[ε2]", 
-        "O2-GluOE2" = "O[dist]*-Glu[30]*O[ε2]"
-      ), 
-      .default = label_parsed
-    )
-  ) +
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(0.85, 0.15)
-  )
-
-ggplots$Distances$CopperWedges <- plot.distance.wedge("Cu") +
-  facet_wrap(
-    ~ AtomPair, 
-    scales = "free", 
-    labeller = labeller(
-      AtomPair = c(
-        "Cu-Tyr" = "Cu-Tyr[168]", 
-        "Cu-NTerm" = "'Cu-N Terminus'", 
-        "Cu-His1ND1" = "Cu-His[1]*Nδ[1]", 
-        "Cu-His84NE2" = "Cu-His[84]*Nε[2]", 
-        "Cu-Eq" = "Cu-H[2]*O[Eq]", 
-        "Cu-Ax" = "Cu-H[2]*O[Ax]"
-      ), 
-      .default = label_parsed
-    )
-  )
-
-# Angle Plotting ----------------------------------------------------------
-
-ggplots$Angles$Pseudohelices <- ggplot(stackedAngles$Pseudohelices, aes(x = Dose, y = Angle, color = Molecule)) +
-  scatter_plot() +
-  plotcolors() +
-  theme(legend.position.inside = c(0.85, 0.15)) +
-  facet_wrap(
-    ~AngleID, 
-    scales = "free", 
-    labeller = labeller(
-      AngleID = c(
-        "T1" = "θ[1]", 
-        "T2" = "θ[2]", 
-        "T3" = "θ[3]", 
-        "TT" = "θ[T]", 
-        "THH" = "θ[HH]", 
-        "TH1HN1" = "θH[1]*HN[1]", 
-        "TH1HN84" = "θH[1]*HN[84]", 
-        "TOxy" = "θ[oxygen]"
-      ), 
-      .default = label_parsed
-    )
-  ) +
-  labs(
-    x = "Density-Weighted Dose (MGy)", 
-    y = "Angle (°)"
-  )
-
-ggplots$Angles$Wedges <- ggplot(stackedAngles$Wedges, aes(x = WedgeNumber, y = Angle, color = Molecule)) +
-  scatter_plot() +
-  plotcolors() +
-  theme(legend.position.inside = c(0.85, 0.15)) +
-  facet_wrap(
-    ~AngleID, 
-    scales = "free", 
-    labeller = labeller(
-      AngleID = c(
-        "T1" = "θ[1]", 
-        "T2" = "θ[2]", 
-        "T3" = "θ[3]", 
-        "TT" = "θ[T]", 
-        "THH" = "θ[HH]", 
-        "TH1HN1" = "θH[1]*HN[1]", 
-        "TH1HN84" = "θH[1]*HN[84]", 
-        "TOxy" = "θ[oxygen]"
-      ), 
-      .default = label_parsed
-    )
-  ) +
-  labs(
-    x = "Wedge Number", 
-    y = "Angle (°)"
-  )
+ggdarklight(stackedAngles, "Angles")

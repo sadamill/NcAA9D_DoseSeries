@@ -67,5 +67,5 @@ for (voxelIndex in 1:ncol(electronDensities$Wedges)) {
 }
 
 #Save numpy outputs
-npySave('../Python_Scripts/PseudohelixSlopeGrid.npy', slopeGrids$Pseudohelices)
-npySave('../Python_Scripts/WedgeSlopeGrid.npy', slopeGrids$Wedges)
+npySave('Scripts/Python/PseudohelixSlopeGrid.npy', slopeGrids$Pseudohelices)
+npySave('Scripts/Python/WedgeSlopeGrid.npy', slopeGrids$Wedges)

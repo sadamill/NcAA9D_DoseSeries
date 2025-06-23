@@ -1,3 +1,5 @@
+# Packages ----------------------------------------------------------------
+
 require(reticulate)
 require(tidyverse)
 require(bio3d)
@@ -19,16 +21,15 @@ mem.maxVSize(vsize = 30000) #Set max memory size to allow space for large distan
 # Raw Data Extraction/Preparation -----------------------------------------
 
 #Extract PDB files
-setwd("Files_From_Analysis_Cluster")
 pseudohelixList <- lapply(1:36, function(x) {
   read.pdb(
-    file = paste0("Pseudohelix_", x, "/Refine_1/Phenix_refine_001.pdb"), 
+    file = paste0("Input/Files_From_Analysis_Cluster/Pseudohelix_", x, "/Refine_1/Phenix_refine_001.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract pseudohelix PDBs
 wedgeList <- lapply(1:36, function(x) {
   read.pdb(
-    file = paste0("Wedge_", x, "/Refine_1/Phenix_refine_001.pdb"), 
+    file = paste0("Input/Files_From_Analysis_Cluster/Wedge_", x, "/Refine_1/Phenix_refine_001.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract wedge PDBs
@@ -57,7 +58,6 @@ wedgeDose       <- c(6.700685286, 6.720294865, 6.729773805, 6.743861225, 6.74632
 
 # Global Functions and Objects --------------------------------------------
 
-#Define functions
 emtrends.coefficient <- function(model, regressor) {
   c(
     emtrends(model, "Molecule", regressor) %>%
@@ -90,16 +90,14 @@ ggplots <- list()
 
 # Data Analysis -----------------------------------------------------------
 
-setwd("../R_Scripts")
-source("OccupancyAnalysis.R")
-source("BFactorAnalysis.R")
-source("DistanceAnalysis.R")
-source("AngleAnalysis.R")
-source("ElectronDensityAnalysis.R")
+source("R/OccupancyAnalysis.R")
+source("R/BFactorAnalysis.R")
+source("R/DistanceAnalysis.R")
+source("R/AngleAnalysis.R")
+source("R/ElectronDensityAnalysis.R")
 
-setwd("../Python_Scripts")
-py_run_file("PseuodohelixMapGeneration.py")
-py_run_file("WedgeMapGeneration.py")
+py_run_file("Python/PseuodohelixMapGeneration.py")
+py_run_file("Python/WedgeMapGeneration.py")
 
 # Data Visualization ------------------------------------------------------
 
@@ -109,21 +107,36 @@ source("PlotGeneration.R")
 
 # Data write-out ----------------------------------------------------------
 
-setwd("../Visualizations/LightPlots")
-
 #Save all the plots
 save.plots <- function(list) {
   for(i in 1:length(list)) {
-    ggsave(
-      filename = paste0(
-        deparse(substitute(list)), 
-        "$", names(list)[i], 
-        ".svg"
-      ), 
-      plot = list[[i]], 
-      height = 5, 
-      width = 7
-    )
+    for(j in 1:length(list[[i]])) {
+      if(names(list[[i]])[j] == "Light") {
+        ggsave(
+          filename = paste0(
+            "Visualizations/Plots/Light/",
+            deparse(substitute(list)), 
+            "$", names(list)[i], 
+            ".svg"
+          ), 
+          plot = list[[i]][[j]], 
+          height = 5, 
+          width = 7
+        )
+      } else if (names(list[[i]])[j] == "Dark") {
+        ggsave(
+          filename = paste0(
+            "Visualizations/Plots/Dark/",
+            deparse(substitute(list)), 
+            "$", names(list)[i], 
+            ".svg"
+          ), 
+          plot = list[[i]][[j]], 
+          height = 5, 
+          width = 7
+        )
+      }
+    }
   }
 }
 
@@ -133,19 +146,19 @@ save.plots(ggplots$Distances)
 save.plots(ggplots$Angles)
 save.plots(ggplots$CVs)
 
-#Save all the PDBs
-write.pdb(pdb = OccupancyColoredPDB, file = "OccupancyColoredPDB.pdb")
-write.pdb(pdb = bFactorColoredPDB, file = "BFactorColoredPDB.pdb")
+#Save all associated PDBs
+write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
+write.pdb(pdb = bFactorColoredPDB, file = "Output/ColoredPDBs/BFactorColoredPDB.pdb")
 for(i in 1:length(pseudohelixList)) {
   write.pdb(
     pdb = pseudohelixList[[i]], 
-    file = paste0("PDBs/Pseudohelix", i, ".pdb")
+    file = paste0("Output/PDBs/Pseudohelix", i, ".pdb")
   )
 }
 for(i in 1:length(wedgeList)) {
   write.pdb(
     pdb = wedgeList[[i]], 
-    file = paste0("PDBs/Wedge", i, ".pdb")
+    file = paste0("Output/PDBs/Wedge", i, ".pdb")
   )
 }
 
@@ -154,6 +167,7 @@ for (i in 1:length(regressionSummaries)) {
   write.csv(
     regressionSummaries[[i]], 
     paste0(
+      "Output/RegressionTables/",
       deparse(substitute(regressionSummaries)), 
       "$", names(regressionSummaries)[i], 
       ".csv"
@@ -173,9 +187,9 @@ new.figure.slide <- function(ppt, plot_list) {
 
 doc <- read_pptx(path = "/Users/sm9/Desktop/Template.pptx") %>%
   layout_default("Title and Content") %>%
-  new.figure.slide(ppt = ., plot_list = ggplots$Occupancies) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$BFactors) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$Distances) %>%
-  new.figure.slide(ppt = ., plot_list = ggplots$Angles) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$CVs)
+  new.figure.slide(ppt = ., plot_list = ggplots$Occupancies$Dark) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$BFactors$Dark) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$Distances$Dark) %>%
+  new.figure.slide(ppt = ., plot_list = ggplots$Angles$Dark) %>% 
+  new.figure.slide(ppt = ., plot_list = ggplots$CVs$Dark)
 print(doc, target = "/Users/sm9/Desktop/Example Figures.pptx")
