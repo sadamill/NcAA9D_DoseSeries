@@ -109,43 +109,56 @@ source("Scripts/R/PlotGeneration.R")
 # Data write-out ----------------------------------------------------------
 
 #Save all the plots
-save.plots <- function(list) {
-  for(i in 1:length(list)) {
-    for(j in 1:length(list[[i]])) {
-      if(names(list[[i]])[j] == "Light") {
+save.plots <- function(key) {
+  for(theme in names(ggplots)) {
+    for(i in names(ggplots[[theme]][[key]])) {
+      if("ggplot" %in% class(ggplots[[theme]][[key]][[i]])) {
         ggsave(
           filename = paste0(
-            "Visualizations/Plots/Light/",
-            deparse(substitute(list)), 
-            "$", names(list)[i], 
+            "Output/Plots/",
+            theme, "/",
+            ifelse(
+              i == "Pseudohelices",
+              'Pseudohelix',
+              'Wedge'
+            ), "_",
+            key, 
             ".svg"
           ), 
-          plot = list[[i]][[j]], 
+          plot = ggplots[[theme]][[key]][[i]], 
           height = 5, 
           width = 7
         )
-      } else if (names(list[[i]])[j] == "Dark") {
-        ggsave(
-          filename = paste0(
-            "Visualizations/Plots/Dark/",
-            deparse(substitute(list)), 
-            "$", names(list)[i], 
-            ".svg"
-          ), 
-          plot = list[[i]][[j]], 
-          height = 5, 
-          width = 7
-        )
+      } else if("list" %in% class(ggplots[[theme]][[key]][[i]])) {
+        for(j in names(ggplots[[theme]][[key]][[i]])) {
+          ggsave(
+            filename = paste0(
+              "Output/Plots/",
+              theme, "/",
+              ifelse(
+                j == "Pseudohelices",
+                'Pseudohelix',
+                'Wedge'
+              ),
+              key, "_",
+              i,
+              ".svg"
+            ), 
+            plot = ggplots[[theme]][[key]][[i]][[j]], 
+            height = 5, 
+            width = 7
+          )
+        }
       }
     }
   }
 }
 
-save.plots(ggplots$Occupancies)
-save.plots(ggplots$BFactors)
-save.plots(ggplots$Distances)
-save.plots(ggplots$Angles)
-save.plots(ggplots$CVs)
+save.plots('Occupancies')
+save.plots('BFactors')
+save.plots('Distances')
+save.plots('Angles')
+save.plots('CVs')
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")

@@ -71,8 +71,8 @@ colnames(trimmedDistances$Pseudohelices)[1] <- "dose_MGy"
 colnames(trimmedDistances$Wedges)[1] <- "WedgeNumber"
 
 stackedDistances <- list(
-  Pseudohelices = list(
-    Cu = tibble(
+  Cu = list(
+    Pseudohelices = tibble(
       Dose = rep(trimmedDistances$Pseudohelices$dose_MGy, 6), 
       CuAtomPair = c(
         rep("Cu-Tyr", 72), 
@@ -91,8 +91,30 @@ stackedDistances <- list(
         trimmedDistances$Pseudohelices$CuAx
       ), 
       Molecule = rep(trimmedDistances$Pseudohelices$Molecule, 6)
-    ), 
-    Oxy = tibble(
+    ),
+    Wedges = tibble(
+      WedgeNumber = rep(trimmedDistances$Wedges$WedgeNumber, 6), 
+      CuAtomPair = c(
+        rep("Cu-Tyr", 72), 
+        rep("Cu-NTerm", 72), 
+        rep("Cu-His1ND1", 72), 
+        rep("Cu-His84NE2", 72), 
+        rep("Cu-Eq", 72), 
+        rep("Cu-Ax", 72)
+      ), 
+      Distance = c(
+        trimmedDistances$Wedges$CuTyr, 
+        trimmedDistances$Wedges$CuNterm, 
+        trimmedDistances$Wedges$CuHis1ND1, 
+        trimmedDistances$Wedges$CuHis84NE2, 
+        trimmedDistances$Wedges$CuEq, 
+        trimmedDistances$Wedges$CuAx
+      ), 
+      Molecule = rep(trimmedDistances$Wedges$Molecule, 6)
+    )
+  ),
+  Oxy = list(
+    Pseudohelices = tibble(
       Dose = rep(trimmedDistances$Pseudohelices$dose_MGy, 8), 
       OAtomPair = c(
         rep("O1-Eq", 72), 
@@ -115,30 +137,8 @@ stackedDistances <- list(
         trimmedDistances$Pseudohelices$O2GluOE2
       ), 
       Molecule = rep(trimmedDistances$Pseudohelices$Molecule, 8)
-    )
-  ), 
-  Wedges = list(
-    Cu = tibble(
-      WedgeNumber = rep(trimmedDistances$Wedges$WedgeNumber, 6), 
-      CuAtomPair = c(
-        rep("Cu-Tyr", 72), 
-        rep("Cu-NTerm", 72), 
-        rep("Cu-His1ND1", 72), 
-        rep("Cu-His84NE2", 72), 
-        rep("Cu-Eq", 72), 
-        rep("Cu-Ax", 72)
-      ), 
-      Distance = c(
-        trimmedDistances$Wedges$CuTyr, 
-        trimmedDistances$Wedges$CuNterm, 
-        trimmedDistances$Wedges$CuHis1ND1, 
-        trimmedDistances$Wedges$CuHis84NE2, 
-        trimmedDistances$Wedges$CuEq, 
-        trimmedDistances$Wedges$CuAx
-      ), 
-      Molecule = rep(trimmedDistances$Wedges$Molecule, 6)
-    ), 
-    Oxy = tibble(
+    ),
+    Wedges = tibble(
       WedgeNumber = rep(trimmedDistances$Wedges$WedgeNumber, 8), 
       OAtomPair = c(
         rep("O1-Eq", 72), 

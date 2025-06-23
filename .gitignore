@@ -93,6 +93,7 @@ rsconnect/
 
 #All manually-set ignores
 Input
+Output
 Visualizations
 Files_From_Analysis_Cluster
 Python_Scripts/.idea
