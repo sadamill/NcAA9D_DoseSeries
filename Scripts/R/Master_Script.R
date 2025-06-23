@@ -102,9 +102,9 @@ py_run_file("Scripts/Python/WedgeMapGeneration.py")
 
 # Data Visualization ------------------------------------------------------
 
-source("Scripts/R/WedgeCVAnalysis.R")
 source("Scripts/R/TrendVisualization.R")
 source("Scripts/R/PlotGeneration.R")
+source("Scripts/R/WedgeCVAnalysis.R")
 
 # Data write-out ----------------------------------------------------------
 
