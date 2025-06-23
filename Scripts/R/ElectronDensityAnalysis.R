@@ -2,14 +2,14 @@ wedgeNumber <- 1:36
 
 electronDensities <- list(
   Pseudohelices = lapply(1:36, function(x) {
-    lines <- readLines(paste0('../Electron_Density_Quantification/Outputs/Pseudohelices/Pseudohelix', x, '.txt'))
+    lines <- readLines(paste0('Input/Electron_Density_Quantification/Outputs/Pseudohelices/Pseudohelix', x, '.txt'))
     maplines <- grep("Map value:", lines, value = TRUE)
     mapValues <- as.numeric(sub('.*Map value: ', '', maplines))
   }) %>% 
     as.data.frame() %>% 
     t(),
   Wedges = lapply(1:36, function(x) {
-    lines <- readLines(paste0('../Electron_Density_Quantification/Outputs/Wedges/Wedge', x, '.txt'))
+    lines <- readLines(paste0('Input/Electron_Density_Quantification/Outputs/Wedges/Wedge', x, '.txt'))
     maplines <- grep("Map value:", lines, value = TRUE)
     mapValues <- as.numeric(sub('.*Map value: ', '', maplines))
   }) %>% 

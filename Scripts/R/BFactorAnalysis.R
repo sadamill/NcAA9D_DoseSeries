@@ -166,7 +166,7 @@ multipleRegressions$BFactors <- list(
 #Prepare summary table of linear regression analysis
 regressionSummaries$BFactors <- list(
   Pseudohelices = tibble(
-    bResidue = c(
+    Residue = c(
       rep("OxyBF", 3), 
       rep("GluBF", 3), 
       rep("CO2BF", 3), 
@@ -220,7 +220,7 @@ regressionSummaries$BFactors <- list(
     )
   )), 
   Wedges = tibble(
-    bResidue = c(
+    Residue = c(
       rep("OxyBF", 3), 
       rep("GluBF", 3), 
       rep("CO2BF", 3), 

@@ -22,9 +22,9 @@ ggtheme_dark <- function() {
       panel.background = element_rect(fill = "black", color = "white"), 
       legend.key = element_blank(), #panel.background automatically maps to legend.key; I want to override this
       legend.background = element_rect(fill = "black", color = "white"), 
-      strip.background = element_rect(fill = "black", color = "white")
-    ),
-    coord_cartesian(expand = FALSE)
+      strip.background = element_rect(fill = "black", color = "white"),
+      axis.text = element_text(color = 'gray')
+    )
   )
 } #Global ggplot dark theme
 ggtheme_light <- function() {
@@ -47,8 +47,7 @@ ggtheme_light <- function() {
       legend.background = element_rect(fill = "white", color = "black"), 
       strip.background = element_rect(fill = "white"), 
       plot.background = element_blank()
-    ), 
-    coord_cartesian(expand = FALSE)
+    )
   )
 } #Global ggplot light theme
 faceting <- function(facetVar, datasetType) {
@@ -173,12 +172,16 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       method = "lm", 
       linewidth = 0, 
       fill = "gray", 
-      show.legend = FALSE
+      show.legend = FALSE,
+      na.rm = TRUE,
+      fullrange = TRUE
     ) + #Standard error plotting
     stat_smooth(
       method = "lm", 
       linetype = 2, 
-      se = FALSE
+      se = FALSE,
+      na.rm = TRUE,
+      fullrange = TRUE
     ) + #Linear regression line
     geom_point(
       size = 0.3, 
@@ -186,6 +189,7 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_dark() +
+    coord_cartesian(expand = FALSE) +
     scales(facetVar = facetVar) +
     if(facetVar == "AngleID" | facetVar == "OAtomPair") {
       theme(legend.position.inside = c(0.85, 0.15))
@@ -199,12 +203,16 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
       method = "lm", 
       linewidth = 0, 
       fill = "gray", 
-      show.legend = FALSE
+      show.legend = FALSE,
+      na.rm = TRUE,
+      fullrange = TRUE
     ) + #Standard error plotting
     stat_smooth(
       method = "lm", 
       linetype = 2, 
-      se = FALSE
+      se = FALSE,
+      na.rm = TRUE,
+      fullrange = TRUE
     ) + #Linear regression line
     geom_point(
       size = 0.3, 
@@ -212,6 +220,7 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_light() +
+    coord_cartesian(expand = FALSE) +
     scales(facetVar = facetVar) +
     if(facetVar == "AngleID" | facetVar == "OAtomPair") {
       theme(legend.position.inside = c(0.85, 0.15))
@@ -243,74 +252,318 @@ ggdarklight <- function(data, key, key2 = NA) {
     "AngleID"
   } else{stop("Invalid data input")}
   
-  plots <- list(
-    Light = list(
-      Pseudohelices = scatter_light(
-        data = data$Pseudohelices,
-        mapping = aes(
-          x = Dose,
-          y = .data[[yvar]],
-          color = Molecule
-        ),
-        facetVar = facetStr,
-        datasetType = "Pseudohelix"
+  lightplots <- list(
+    Pseudohelices = scatter_light(
+      data = data$Pseudohelices,
+      mapping = aes(
+        x = Dose,
+        y = .data[[yvar]],
+        color = Molecule
       ),
-      Wedges = scatter_light(
-        data = data$Wedges,
-        mapping = aes(
-          x = WedgeNumber,
-          y = .data[[yvar]],
-          color = Molecule
-        ),
-        facetVar = facetStr,
-        datasetType = "Pseudohelix"
-      )
+      facetVar = facetStr,
+      datasetType = "Pseudohelix"
     ),
-    Dark = list(
-      Pseudohelices = scatter_dark(
-        data = data$Pseudohelices,
-        mapping = aes(
-          x = Dose,
-          y = .data[[yvar]],
-          color = Molecule
-        ),
-        facetVar = facetStr,
-        datasetType = "Pseudohelix"
+    Wedges = scatter_light(
+      data = data$Wedges,
+      mapping = aes(
+        x = WedgeNumber,
+        y = .data[[yvar]],
+        color = Molecule
       ),
-      Wedges = scatter_dark(
-        data = data$Wedges,
-        mapping = aes(
-          x = WedgeNumber,
-          y = .data[[yvar]],
-          color = Molecule
-        ),
-        facetVar = facetStr,
-        datasetType = "Pseudohelix"
-      )
+      facetVar = facetStr,
+      datasetType = "Pseudohelix"
+    )
+  )
+  
+  darkplots <- list(
+    Pseudohelices = scatter_dark(
+      data = data$Pseudohelices,
+      mapping = aes(
+        x = Dose,
+        y = .data[[yvar]],
+        color = Molecule
+      ),
+      facetVar = facetStr,
+      datasetType = "Pseudohelix"
+    ),
+    Wedges = scatter_dark(
+      data = data$Wedges,
+      mapping = aes(
+        x = WedgeNumber,
+        y = .data[[yvar]],
+        color = Molecule
+      ),
+      facetVar = facetStr,
+      datasetType = "Pseudohelix"
     )
   )
   
   if(is.na(key2)) {
-    ggplots[[key]] <<- plots
+    ggplots$Light[[key]] <<- lightplots
+    ggplots$Dark[[key]] <<- darkplots
   } else {
-    ggplots[[key]][[key2]] <<- plots
+    ggplots$Light[[key]][[key2]] <<- lightplots
+    ggplots$Dark[[key]][[key2]] <<- darkplots
   }
 
 } #Combination of scatter_dark and scatter_light to ease the plotting of multiple datasets with multiple themes
 
-# Occupancy plotting ------------------------------------------------------
+# Scatter plots -----------------------------------------------------------
 
 ggdarklight(stackedOccupancies, "Occupancies")
-
-# B-Factor plotting -------------------------------------------------------
-
 ggdarklight(stackedBFactors, "BFactors")
-
-# Distance plotting -------------------------------------------------------
-
 ggdarklight(stackedDistances$Cu, "Distances", "Cu")
 ggdarklight(stackedDistances$Oxy, "Distances", "Oxy")
-
-# Angle plotting ----------------------------------------------------------
-
 ggdarklight(stackedAngles, "Angles")
+
+# Trend plotting ----------------------------------------------------------
+
+dark.trend <- function(trend, datasetType, nudge_y_val = 0.2) {
+  
+  regressionSummaries[[trend]][[datasetType]] <- regressionSummaries[[trend]][[datasetType]] %>%
+    mutate(Residue = factor(Residue, levels = levels(wideData[[trend]][[datasetType]]$Residue)))
+  
+  ggplot(
+    subset(regressionSummaries[[trend]][[datasetType]], Estimate %in% c("TrendA", "TrendB")), 
+    aes(x = Residue, y = Coefficient)
+  ) + 
+    geom_hline(yintercept = 0, color = 'gray') +
+    geom_segment(
+      data = wideData[[trend]][[datasetType]], 
+      aes(
+        x = Residue, 
+        xend = Residue, 
+        y = TrendA, 
+        yend = TrendB, 
+        color = Significance,
+        alpha = Significance
+      ), 
+      show.legend = FALSE, 
+      inherit.aes = FALSE, 
+      linewidth = 5
+    ) +
+    scale_color_manual(
+      values = c("gray", "skyblue2"), 
+    ) +
+    scale_alpha_manual(
+      values = c(0.5, 0.5)
+    ) +
+    new_scale_color() +
+    ggtheme_dark() +
+    geom_point(
+      color = "black", 
+      size = 5,
+    ) +
+    geom_point(
+      aes(color = Estimate), 
+      size = 5,
+      alpha = 0.6
+    ) +
+    geom_text(
+      aes(
+        label = Significance,
+        x = as.numeric(Residue) + ifelse(Estimate == "TrendA", nrow(regressionSummaries[[trend]][[datasetType]])/3/72, nrow(regressionSummaries[[trend]])/3/38),
+        y = Coefficient
+      ),
+      size = 6, 
+      color = 'white',
+      inherit.aes = FALSE
+    ) +
+    theme(
+      legend.position.inside = c(0.94, 0.08), 
+      panel.grid.major.y = element_blank()
+    ) +
+    scale_x_discrete(labels = c(
+      "T1" = bquote(θ[1]), 
+      "T2" = bquote(θ[2]), 
+      "T3" = bquote(θ[3]), 
+      "TH1HN1" = bquote(θH[1]*HN[1]), 
+      "TH1HN84" = bquote(θH[1]*HN[84]), 
+      "THH" = bquote(θ[HH]), 
+      "TT" = bquote(θ[T]), 
+      "CuAx" = bquote(Cu-H[2]*O[Ax]), 
+      "CuEq" = bquote(Cu-H[2]*O[Eq]), 
+      "CuHis1ND1" = bquote(Cu-His[1]*Nδ[1]), 
+      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]), 
+      "CuO1" = bquote(Cu-O[prox]), 
+      "CuO2" = bquote(Cu-O[dist]), 
+      "CuTyr" = bquote(Cu-Tyr[168]), 
+      "O1Eq" = bquote(O[prox]*H[2]*O[Eq]), 
+      "O2Eq" = bquote(O[dist]*H[2]*O[Eq]), 
+      "O1GluOE1" = bquote(O[prox]*Glu[30]*Oε[1]), 
+      "O2GluOE1" = bquote(O[dist]*Glu[30]*Oε[1]), 
+      "O1GluOE2" = bquote(O[prox]*Glu[30]*Oε[2]), 
+      "O2GluOE2" = bquote(O[dist]*Glu[30]*Oε[2]), 
+      "O1His157NE2" = bquote(O[prox]*His[157]*Nε[2]), 
+      "O2His157NE2" = bquote(O[dist]*His[157]*Nε[2]), 
+      "Ax" = bquote(H[2]*O[Ax]), 
+      "Eq" = bquote(H[2]*O[Eq]), 
+      "CO2" = bquote(CO[2]), 
+      "Glu" = bquote(Glu[30]), 
+      "OxyBF" = bquote(Dioxygen), 
+      "AxBF" = bquote(H[2]*O[Ax]), 
+      "EqBF" = bquote(H[2]*O[Eq]), 
+      "CO2BF" = bquote(CO[2]), 
+      "GluBF" = bquote(Glu[30]), 
+      "OxyBF" = bquote(Dioxygen)
+    )) +
+    labs(
+      y = if(trend %in% c("Occupancies", "BFactors")) {
+        "Residue"
+      } else if(trend == "Distances") {
+        "Atom Pair"
+      } else if(trend == "Angles") {
+        "Angle ID"
+      } else {stop("Invalid trend input for trend visualization")},
+      x = if(trend == "Occupancies") {
+        "Occupancy Trend (Δ/MGy)"
+      } else if(trend == "BFactors") {
+        bquote("B-Factor Trend (" * Å^2 * "/MGy)")
+      } else if(trend == "Distances") {
+        "Distance Trend (ΔÅ/MGy)"
+      } else if(trend == "Angles") {
+        "Angle Trend (Δ°/MGy)"
+      } else {stop("Invalid trend input for trend visualization")}
+    ) +
+    coord_flip()
+}
+light.trend <- function(trend, datasetType, nudge_y_val = 0.2) {
+  
+  regressionSummaries[[trend]][[datasetType]] <- regressionSummaries[[trend]][[datasetType]] %>%
+    mutate(Residue = factor(Residue, levels = levels(wideData[[trend]][[datasetType]]$Residue)))
+  
+  ggplot(
+    subset(regressionSummaries[[trend]][[datasetType]], Estimate %in% c("TrendA", "TrendB")), 
+    aes(x = Residue, y = Coefficient)
+  ) + 
+    geom_hline(yintercept = 0, color = 'gray') +
+    geom_segment(
+      data = wideData[[trend]][[datasetType]], 
+      aes(
+        x = Residue, 
+        xend = Residue, 
+        y = TrendA, 
+        yend = TrendB, 
+        color = Significance,
+        alpha = Significance
+      ), 
+      show.legend = FALSE, 
+      inherit.aes = FALSE, 
+      linewidth = 5
+    ) +
+    scale_color_manual(
+      values = c("gray", "skyblue2"), 
+    ) +
+    scale_alpha_manual(
+      values = c(0.5, 0.5)
+    ) +
+    new_scale_color() +
+    ggtheme_light() +
+    geom_point(
+      color = "white", 
+      size = 5,
+    ) +
+    geom_point(
+      aes(color = Estimate), 
+      size = 5,
+      alpha = 0.6
+    ) +
+    geom_text(
+      aes(
+        label = Significance,
+        x = as.numeric(Residue) + ifelse(Estimate == "TrendA", nrow(regressionSummaries[[trend]][[datasetType]])/3/72, nrow(regressionSummaries[[trend]])/3/38),
+        y = Coefficient
+      ),
+      size = 6, 
+      color = 'black',
+      inherit.aes = FALSE
+    ) +
+    theme(
+      legend.position.inside = c(0.94, 0.08), 
+      panel.grid.major.y = element_blank()
+    ) +
+    scale_x_discrete(labels = c(
+      "T1" = bquote(θ[1]), 
+      "T2" = bquote(θ[2]), 
+      "T3" = bquote(θ[3]), 
+      "TH1HN1" = bquote(θH[1]*HN[1]), 
+      "TH1HN84" = bquote(θH[1]*HN[84]), 
+      "THH" = bquote(θ[HH]), 
+      "TT" = bquote(θ[T]), 
+      "CuAx" = bquote(Cu-H[2]*O[Ax]), 
+      "CuEq" = bquote(Cu-H[2]*O[Eq]), 
+      "CuHis1ND1" = bquote(Cu-His[1]*Nδ[1]), 
+      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]), 
+      "CuO1" = bquote(Cu-O[prox]), 
+      "CuO2" = bquote(Cu-O[dist]), 
+      "CuTyr" = bquote(Cu-Tyr[168]), 
+      "O1Eq" = bquote(O[prox]*H[2]*O[Eq]), 
+      "O2Eq" = bquote(O[dist]*H[2]*O[Eq]), 
+      "O1GluOE1" = bquote(O[prox]*Glu[30]*Oε[1]), 
+      "O2GluOE1" = bquote(O[dist]*Glu[30]*Oε[1]), 
+      "O1GluOE2" = bquote(O[prox]*Glu[30]*Oε[2]), 
+      "O2GluOE2" = bquote(O[dist]*Glu[30]*Oε[2]), 
+      "O1His157NE2" = bquote(O[prox]*His[157]*Nε[2]), 
+      "O2His157NE2" = bquote(O[dist]*His[157]*Nε[2]), 
+      "Ax" = bquote(H[2]*O[Ax]), 
+      "Eq" = bquote(H[2]*O[Eq]), 
+      "CO2" = bquote(CO[2]), 
+      "Glu" = bquote(Glu[30]), 
+      "OxyBF" = bquote(Dioxygen), 
+      "AxBF" = bquote(H[2]*O[Ax]), 
+      "EqBF" = bquote(H[2]*O[Eq]), 
+      "CO2BF" = bquote(CO[2]), 
+      "GluBF" = bquote(Glu[30]), 
+      "OxyBF" = bquote(Dioxygen)
+    )) +
+    labs(
+      y = if(trend %in% c("Occupancies", "BFactors")) {
+        "Residue"
+      } else if(trend == "Distances") {
+        "Atom Pair"
+      } else if(trend == "Angles") {
+        "Angle ID"
+      } else {stop("Invalid trend input for trend visualization")},
+      x = if(trend == "Occupancies") {
+        "Occupancy Trend (Δ/MGy)"
+      } else if(trend == "BFactors") {
+        bquote("B-Factor Trend (" * Å^2 * "/MGy)")
+      } else if(trend == "Distances") {
+        "Distance Trend (ΔÅ/MGy)"
+      } else if(trend == "Angles") {
+        "Angle Trend (Δ°/MGy)"
+      } else {stop("Invalid trend input for trend visualization")}
+    ) +
+    coord_flip()
+}
+darklighttrend <- function(trend, nudge_y_val = 0.2) {
+  
+  ggplots$Light[[trend]]$Trends$Pseudohelices <<- light.trend(
+    trend = trend,
+    datasetType = "Pseudohelices",
+    nudge_y_val = nudge_y_val
+  )
+  
+  ggplots$Dark[[trend]]$Trends$Pseudohelices <<- dark.trend(
+    trend = trend,
+    datasetType = "Pseudohelices",
+    nudge_y_val = nudge_y_val
+  )
+  
+  ggplots$Light[[trend]]$Trends$Wedges <<- light.trend(
+    trend = trend,
+    datasetType = "Wedges",
+    nudge_y_val = nudge_y_val
+  )
+  
+  ggplots$Dark[[trend]]$Trends$Wedges <<- dark.trend(
+    trend = trend,
+    datasetType = "Wedges",
+    nudge_y_val = nudge_y_val
+  )
+}
+
+darklighttrend("Occupancies")
+darklighttrend("BFactors")
+darklighttrend("Distances")
+darklighttrend("Angles")

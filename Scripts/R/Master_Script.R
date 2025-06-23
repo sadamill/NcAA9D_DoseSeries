@@ -10,6 +10,7 @@ require(officedown)
 require(officer)
 require(RcppCNPy)
 require(ggh4x)
+library(ggnewscale)
 
 py_require("numpy")
 py_require("mrcfile")
@@ -90,20 +91,20 @@ ggplots <- list()
 
 # Data Analysis -----------------------------------------------------------
 
-source("R/OccupancyAnalysis.R")
-source("R/BFactorAnalysis.R")
-source("R/DistanceAnalysis.R")
-source("R/AngleAnalysis.R")
-source("R/ElectronDensityAnalysis.R")
+source("Scripts/R/OccupancyAnalysis.R")
+source("Scripts/R/BFactorAnalysis.R")
+source("Scripts/R/DistanceAnalysis.R")
+source("Scripts/R/AngleAnalysis.R")
+source("Scripts/R/ElectronDensityAnalysis.R")
 
-py_run_file("Python/PseuodohelixMapGeneration.py")
-py_run_file("Python/WedgeMapGeneration.py")
+py_run_file("Scripts/Python/PseuodohelixMapGeneration.py")
+py_run_file("Scripts/Python/WedgeMapGeneration.py")
 
 # Data Visualization ------------------------------------------------------
 
-source("WedgeCVAnalysis.R")
-source("TrendVisualization.R")
-source("PlotGeneration.R")
+source("Scripts/R/WedgeCVAnalysis.R")
+source("Scripts/R/TrendVisualization.R")
+source("Scripts/R/PlotGeneration.R")
 
 # Data write-out ----------------------------------------------------------
 
