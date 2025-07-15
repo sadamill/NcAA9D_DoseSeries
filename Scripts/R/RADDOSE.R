@@ -118,7 +118,7 @@ add_dummy_points <- function(plot, linecolor) {
     mode = 'markers',
     x = c(max(allData$wedgeDoseState[[1]]$x) * 10), y = c(max(allData$wedgeDoseState[[1]]$y) * 10), z = c(max(allData$wedgeDoseState[[1]]$z) * 10), # Have to set points out of bounds so they are visible. Positions are based on the data so the aspect ratio stays correct.
     marker = list(
-      color = 'red',
+      color = 'gray',
       size = 20,
       symbol = "square",
       line = list(
@@ -126,7 +126,7 @@ add_dummy_points <- function(plot, linecolor) {
         width = 2
       )
     ),
-    name = "20 MGy"
+    name = "1 MGy"
   ) %>%
     add_trace(
       type = 'scatter3d',
@@ -149,7 +149,7 @@ add_dummy_points <- function(plot, linecolor) {
       mode = 'markers',
       x = c(max(allData$wedgeDoseState[[1]]$x) * 10), y = c(max(allData$wedgeDoseState[[1]]$y) * 10), z = c(max(allData$wedgeDoseState[[1]]$z) * 10),
       marker = list(
-        color = 'gray',
+        color = 'red',
         size = 20,
         symbol = "square",
         line = list(
@@ -157,7 +157,7 @@ add_dummy_points <- function(plot, linecolor) {
           width = 2
         )
       ),
-      name = "1 MGy"
+      name = "20 MGy"
     ) %>% 
     add_trace(
       type = 'scatter3d',
@@ -222,7 +222,7 @@ add_isosurface_traces <- function(plot, dataset, dataset_type) {
     index <- ((i - 1) * isosPerWedge + 1):((i - 1) * isosPerWedge + isosPerWedge) # Generate index of traces of the current wedge being plotted
     step <- list(args = list('visible', rep(FALSE, totalTraces)), # Initialize a list of steps the length of the total number of traces
                  method = 'restyle',
-                 label = paste(dataset_type, i))
+                 label = paste(i))
     step$args[[2]][index + (numberDummyTraces + numberBoxTraces)] <- TRUE # Set traces for the current wedge iteration to be visible
     step$args[[2]][(1:(numberDummyTraces + numberBoxTraces))] <- TRUE # The static traces (for legend and outline box) are always visible
     steps[[i]] <<- step # Inject the current step parameters into the steps list
@@ -230,7 +230,7 @@ add_isosurface_traces <- function(plot, dataset, dataset_type) {
   
   return(plot)
 }
-plotly_layout <- function(plot, dataset, linecolor, bgcolor) {
+plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
   layout(
     plot, 
     font = list(
@@ -245,7 +245,8 @@ plotly_layout <- function(plot, dataset, linecolor, bgcolor) {
         showgrid = FALSE,
         zeroline = FALSE,
         nticks = 3,
-        ticks = 'outside',
+        ticks = 'outside', 
+        tickcolor = linecolor,
         showspikes = FALSE,
         autorange = FALSE, 
         range = range(allData$wedgeDoseState[[1]]$x)
@@ -254,7 +255,8 @@ plotly_layout <- function(plot, dataset, linecolor, bgcolor) {
         title = "Y (mm)", 
         showgrid = FALSE, 
         zeroline = FALSE, 
-        ticks = 'outside', 
+        ticks = 'outside',  
+        tickcolor = linecolor,
         showspikes = FALSE,
         autorange = FALSE, 
         range = range(allData$wedgeDoseState[[1]]$y)
@@ -265,13 +267,14 @@ plotly_layout <- function(plot, dataset, linecolor, bgcolor) {
         zeroline = FALSE, 
         nticks = 3, 
         ticks = 'outside', 
+        tickcolor = linecolor,
         showspikes = FALSE,
         autorange = FALSE, 
         range = range(allData$wedgeDoseState[[1]]$z)
       ),
       camera = list(
         center = list(x = 0, y = 0, z = 0),
-        eye = list(x = 2.25, y = 0.01, z = 1.1)
+        eye = list(x = 2.25, y = 0, z = 1.1)
       )
     ),
     margin = list(
@@ -307,7 +310,7 @@ plotly_layout <- function(plot, dataset, linecolor, bgcolor) {
     sliders = list(
       list(
         active = length(dataset) - 1,
-        currentvalue = list(prefix = "Dataset: "),
+        currentvalue = list(prefix = paste0("Dataset: ", dataset_type, " ")),
         steps = steps,
         tickcolor = linecolor,
         pad = list(
@@ -345,7 +348,10 @@ plotly_dose <- function(dataset, theme) {
   fig <- base_fig %>% 
     add_dummy_points(linecolor = linecolor) %>% 
     add_isosurface_traces(dataset = dataset, dataset_type = dataset_type) %>% 
-    plotly_layout(dataset = dataset, linecolor = linecolor, bgcolor = bgcolor)
+    plotly_layout(dataset = dataset, dataset_type = dataset_type, linecolor = linecolor, bgcolor = bgcolor)
+  
+  steps <<- list()  #  Clear the global steps list to prepare for next plot
+  
   return(fig)
 }
 
@@ -358,4 +364,4 @@ plotlys$light$pseudohelixDoseState <- plotly_dose(dataset = allData$pseudohelixD
 plotlys$dark$wedgeDoseState <- plotly_dose(dataset = allData$wedgeDoseState, theme = "dark")
 plotlys$dark$pseudohelixDoseState <- plotly_dose(dataset = allData$pseudohelixDoseState, theme = "dark")
 
-plotlys$dark$wedgeDoseState
+plotlys$dark$pseudohelixDoseState
