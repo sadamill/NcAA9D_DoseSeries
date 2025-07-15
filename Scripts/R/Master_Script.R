@@ -11,6 +11,7 @@ require(officer)
 require(RcppCNPy)
 require(ggh4x)
 library(ggnewscale)
+library(plotly)
 
 py_require("numpy")
 py_require("mrcfile")

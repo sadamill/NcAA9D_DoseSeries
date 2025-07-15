@@ -26,7 +26,7 @@ ggtheme_dark <- function() {
       axis.text = element_text(color = 'gray')
     )
   )
-} #Global ggplot dark theme
+} # Define a custom ggplot dark theme
 ggtheme_light <- function() {
   list(
     scale_color_manual(
@@ -49,8 +49,9 @@ ggtheme_light <- function() {
       plot.background = element_blank()
     )
   )
-} #Global ggplot light theme
+} # Define a custom ggplot light theme
 faceting <- function(facetVar, datasetType) {
+  # Create a list containing all the necessary facet variables
   mapping_list <- list(
     Residue = c(
       "CO2" = "CO[2]", 
@@ -97,13 +98,16 @@ faceting <- function(facetVar, datasetType) {
   )
   
   list(
+    # Dynamically create a faceting layer based on the input facetVar string
     facet_wrap(
-      as.formula(paste("~", facetVar)), 
+      as.formula(paste("~", facetVar)), # Create a formula based on the input facetVar string
       scales = 'free',
       labeller = labeller(
-        !!facetVar := as_labeller(mapping_list[[facetVar]], label_parsed),
+        # Use a custom labeller from the mapping list; use tidy eval (!! to inject the user-supplied string and := to allow for LHS evaluation; R coerces the input string into a symbol)
+        !!facetVar := as_labeller(mapping_list[[facetVar]], label_parsed), # 
         .default = label_parsed
       )),
+    # Dynamically assign axis labels depending on the data type and facet used
     labs(
       x = if(datasetType == 'Pseudohelix') {
         "Dose (MGy)"
