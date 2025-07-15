@@ -92,6 +92,7 @@ ggplots <- list()
 
 # Data Analysis -----------------------------------------------------------
 
+source("Scripts/R/RADDOSE.R")
 source("Scripts/R/OccupancyAnalysis.R")
 source("Scripts/R/BFactorAnalysis.R")
 source("Scripts/R/DistanceAnalysis.R")
@@ -161,9 +162,13 @@ save.plots('Distances')
 save.plots('Angles')
 save.plots('CVs')
 
+ggsave("Output/Plots/Light/DWDs.svg", height = 5, width = 7, plot = ggplots$Light$Dose$DWDs)
+ggsave("Output/Plots/Dark/DWDs.svg", height = 5, width = 7, plot = ggplots$Dark$Dose$DWDs)
+
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
 write.pdb(pdb = bFactorColoredPDB, file = "Output/ColoredPDBs/BFactorColoredPDB.pdb")
+
 for(i in 1:length(pseudohelixList)) {
   write.pdb(
     pdb = pseudohelixList[[i]], 
@@ -210,6 +215,7 @@ new.figure.slide <- function(ppt, plot_list) {
 
 doc <- read_pptx(path = "/Users/sm9/Desktop/Template.pptx") %>%
   layout_default("Title and Content") %>%
+  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Dose) %>% 
   new.figure.slide(ppt = ., plot_list = ggplots$Dark$Occupancies) %>% 
   new.figure.slide(ppt = ., plot_list = ggplots$Dark$BFactors) %>% 
   new.figure.slide(ppt = ., plot_list = ggplots$Dark$Distances) %>%

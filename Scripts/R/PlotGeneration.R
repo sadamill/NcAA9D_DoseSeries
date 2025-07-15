@@ -242,6 +242,8 @@ ggdarklight <- function(data, key, key2 = NA) {
     'Distance'
   } else if(deparse(substitute(data)) == "stackedAngles") {
     'Angle'
+  } else if(deparse(substitute(data)) == "dwds") {
+    'Dataset Number'
   } else {stop("Invalid data input")}
   
   facetStr <- if(deparse(substitute(data)) == "stackedOccupancies") {
@@ -254,6 +256,8 @@ ggdarklight <- function(data, key, key2 = NA) {
     "OAtomPair"
   } else if(deparse(substitute(data)) == "stackedAngles") {
     "AngleID"
+  } else if(deparse(substitute(data)) == 'dwds') {
+    NA
   } else{stop("Invalid data input")}
   
   lightplots <- list(
@@ -319,6 +323,24 @@ ggdarklight(stackedBFactors, "BFactors")
 ggdarklight(stackedDistances$Cu, "Distances", "Cu")
 ggdarklight(stackedDistances$Oxy, "Distances", "Oxy")
 ggdarklight(stackedAngles, "Angles")
+
+ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
+  geom_point() +
+  ggtheme_dark() +
+  coord_cartesian(expand = FALSE) +
+  labs(
+    x = "Dataset Number",
+    y = "Density-Weighted Dose (MGy)"
+  )
+
+ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
+  geom_point() +
+  ggtheme_light() +
+  coord_cartesian(expand = FALSE) +
+  labs(
+    x = "Dataset Number",
+    y = "Density-Weighted Dose (MGy)"
+  )
 
 # Trend plotting ----------------------------------------------------------
 
