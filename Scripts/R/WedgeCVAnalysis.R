@@ -1,6 +1,5 @@
-#######################################################
-#                    CV CALCULATION                   #
-#######################################################
+
+# CV calculation ----------------------------------------------------------
 
 #Compile data frame containing all different wedge variables
 allWedges <- tibble(
@@ -38,9 +37,7 @@ wedgeCVs <- tibble(
   ) %>% 
   mutate(ParameterType = factor(ParameterType, levels = c("Occupancy", "B-Factor", "Angle", "Distance")))
 
-######################################################
-#                    DATA PLOTTING                   #
-######################################################
+# Data plotting -----------------------------------------------------------
 
 ggplots$Light$CVs$Wedges <- ggplot(wedgeCVs, aes(x = reorder(Parameter, AverageCV), y = AverageCV, fill = ParameterType)) +
   geom_bar(

@@ -6,9 +6,7 @@
 #The script also generates a plot of dose vs. occupancy for important residues, allowing to highlight differences
 #between different molecules in the asymmetric unit
 
-######################################################
-#            OCCUPANCY VARIATION ANALYSIS            #
-######################################################
+# Occupancy analysis ------------------------------------------------------
 
 #Make data frames containing the occupancy data for each atom across datasets
 pseudohelixOccupancies <- lapply(pseudohelixAtoms, function(atoms) atoms$o) %>% #Pull occupancies from pseudohelices
@@ -134,9 +132,7 @@ pseudohelixOccSlopes <- apply(pseudohelixOccupancies[, 2:(ncol(pseudohelixOccupa
 pseudohelixOccSlopes[abs(pseudohelixOccSlopes) < 10e-15] <- 0 #Turn any values below 10e-15 to 0
 pseudohelixOccSlopes <- pseudohelixOccSlopes * 1000 #Scale the numbers by 1000
 
-##############################################################
-#                 LINEAR REGRESSION ANALYSIS                 #
-##############################################################
+# Linear regression analysis ----------------------------------------------
 
 #Prepare a list of multiple linear regression models for each atom of interest
 multipleRegressions$Occupancies <- list(

@@ -4,13 +4,11 @@
 #It  generates a plot of dose vs. angle for important atom sets, allowing to highlight differences
 #between different molecules in the asymmetric unit
 
-######################################################
-#                FUNCTION DEFINITIONS                #
-######################################################
+# Function definitions ----------------------------------------------------
 
-#Calculates a vector orthogonal to a plane abc, where a, b, and c are three xyz points on a plane
+# Calculates a vector orthogonal to a plane abc, where a, b, and c are three xyz points on a plane
 orthogonal.vector <- function(a, b, c) {
-  c(a-b, a-c) %>% #Calculate two vectors within the plane abc; point a is the vertex
+  c(a-b, a-c) %>% # Calculate two vectors within the plane abc; point a is the vertex
     matrix(nrow = 2, byrow = TRUE) %>% #Make a 2x3 matrix containing ijk components of two vectors inside the plane abc
     {c( #Calculate the orthogonal vector by finding the cross product of the two vectors inside the matrix
       .[1, 2]*.[2, 3] - .[1, 3]*.[2, 2], #I component
@@ -28,9 +26,7 @@ vector.angle <- function(v1, v2) {
     {.*180/pi}
 }
 
-####################################################
-#                ANGLE CALCULATIONS                #
-####################################################
+# Angle calculations ------------------------------------------------------
 
 #Create vectors containing coordinates for active site atoms
 ACu <- atom.select(pseudohelixList[[1]], resno=1, chain="C")$xyz
@@ -229,9 +225,7 @@ stackedAngles <- list(
   )
 )
 
-##############################################################
-#                 LINEAR REGRESSION ANALYSIS                 #
-##############################################################
+# Linear regression analysis ----------------------------------------------
 
 multipleRegressions$Angles <- list(
   Pseudohelices = list (

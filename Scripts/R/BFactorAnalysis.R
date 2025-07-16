@@ -4,9 +4,7 @@
 #It writes out a PDB file which replaces the B-factor column with the B-factor slope as a function of X-ray dose
 #This allows the user to visualize potential impact sites in the structure by coloring the model by B-factor
 
-#####################################################
-#            B-FACTOR VARIATION ANALYSIS            #
-#####################################################
+# B-factor extraction -----------------------------------------------------
 
 #Make data frames containing the B-Factor data for each atom across datasets
 pseudohelixBFactors <- lapply(pseudohelixAtoms, function(atoms) atoms$b) %>% #Pull B-factors from pseudohelices
@@ -141,9 +139,7 @@ pseudohelixBFSlopes <- apply(pseudohelixBFactors[, 2:(ncol(pseudohelixBFactors))
 pseudohelixBFSlopes[abs(pseudohelixBFSlopes) < 10e-15] <- 0 #Turn any values below 10e-15 to 0
 pseudohelixBFSlopes <- pseudohelixBFSlopes * 1000 #Scale the numbers by 1000
 
-##############################################################
-#                 LINEAR REGRESSION ANALYSIS                 #
-##############################################################
+# Linear regression analysis ----------------------------------------------
 
 #Prepare a list of multiple linear regression models for each atom of interest
 multipleRegressions$BFactors <- list(

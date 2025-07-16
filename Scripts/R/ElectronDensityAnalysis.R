@@ -1,12 +1,14 @@
+
 wedgeNumber <- 1:36
 
+# Extract electron densities from phenix output
 electronDensities <- list(
   Pseudohelices = lapply(1:36, function(x) {
-    lines <- readLines(paste0('Input/Electron_Density_Quantification/Outputs/Pseudohelices/Pseudohelix', x, '.txt'))
-    maplines <- grep("Map value:", lines, value = TRUE)
-    mapValues <- as.numeric(sub('.*Map value: ', '', maplines))
+    lines <- readLines(paste0('Input/Electron_Density_Quantification/Outputs/Pseudohelices/Pseudohelix', x, '.txt')) # Put all lines into a list
+    maplines <- grep("Map value:", lines, value = TRUE) # Extract only lines with a map value listed
+    mapValues <- as.numeric(sub('.*Map value: ', '', maplines)) # Extract the map values and convert to a number
   }) %>% 
-    as.data.frame() %>% 
+    as.data.frame() %>% # Add the map values to a dataframe
     t(),
   Wedges = lapply(1:36, function(x) {
     lines <- readLines(paste0('Input/Electron_Density_Quantification/Outputs/Wedges/Wedge', x, '.txt'))
@@ -19,10 +21,10 @@ electronDensities <- list(
 
 electronDensities$Pseudohelices <- data.frame(electronDensities$Pseudohelices) #Convert matrix output from t() back to a df
 rownames(electronDensities$Pseudohelices) <- 1:36
-
-electronDensities$Wedges <- data.frame(electronDensities$Wedges) #Convert matrix output from t() back to a df
+electronDensities$Wedges <- data.frame(electronDensities$Wedges)
 rownames(electronDensities$Wedges) <- 1:36
 
+# Prepare an empty list to contain the electron density slope arrays
 slopeGrids <- list(
   Pseudohelices = array(NA, dim = c(23,31,37)),
   Wedges = array(NA, dim = c(23,31,37))

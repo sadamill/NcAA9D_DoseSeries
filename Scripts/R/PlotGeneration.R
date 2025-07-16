@@ -128,6 +128,7 @@ faceting <- function(facetVar, datasetType) {
 }
 scales <- function(facetVar) {
   
+  # Manually alter the scales of individual facets
   angle_window <- 7
   occupancy_window <- 0.4
   bfactor_window <- 8
@@ -167,7 +168,7 @@ scales <- function(facetVar) {
           scale_y_continuous(limits = c(2.18 - cudistance_window / 2, 2.18 + cudistance_window / 2)),
           scale_y_continuous(limits = c(2.66 - cudistance_window / 2, 2.66 + cudistance_window / 2))
         )
-      } else {NULL})
+      } else {NULL}) # If input facetVar isn't known, just automatically scale the axes
 }
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
