@@ -363,5 +363,3 @@ plotlys$light$wedgeDoseState <- plotly_dose(dataset = allData$wedgeDoseState, th
 plotlys$light$pseudohelixDoseState <- plotly_dose(dataset = allData$pseudohelixDoseState, theme = "light")
 plotlys$dark$wedgeDoseState <- plotly_dose(dataset = allData$wedgeDoseState, theme = "dark")
 plotlys$dark$pseudohelixDoseState <- plotly_dose(dataset = allData$pseudohelixDoseState, theme = "dark")
-
-plotlys$dark$pseudohelixDoseState

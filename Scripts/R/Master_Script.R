@@ -40,23 +40,12 @@ wedgeList <- lapply(1:36, function(x) {
 pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract atoms from pseudohelices
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges
 
+#Run dose analysis to prepare dose state vectors
+source("Scripts/R/RADDOSE.R")
+
 #Prep vectors containing all density-weighted dose values
-pseudohelixDose <- c(0.959494770, 2.309835566, 3.099525168, 3.614838606, 3.998769111, 
-                     4.305138794, 4.559751096, 4.774831928, 4.972192543, 5.169593890, 
-                     5.362558116, 5.529478983, 5.690346875, 5.855073470, 6.006623963, 
-                     6.144268815, 6.277907374, 6.424709533, 6.582981515, 6.723683491, 
-                     6.848334088, 6.979721043, 7.097238290, 7.227514626, 7.375691563, 
-                     7.522691199, 7.680733524, 7.875180309, 8.110508433, 8.344207821, 
-                     8.606089844, 8.943259379, 9.363393076, 9.883614072, 10.67258175, 
-                     11.97970325)
-wedgeDose       <- c(6.700685286, 6.720294865, 6.729773805, 6.743861225, 6.746327023, 
-                     6.719767433, 6.711379946, 6.702595256, 6.677506338, 6.629260722, 
-                     6.603718009, 6.595284247, 6.588494019, 6.592423462, 6.618326270, 
-                     6.628786101, 6.641042627, 6.660685626, 6.679410310, 6.700307956, 
-                     6.713330933, 6.723102252, 6.730564695, 6.703977105, 6.698935005, 
-                     6.690346661, 6.667656327, 6.623201255, 6.600886756, 6.596310344, 
-                     6.591970625, 6.595671753, 6.629001804, 6.644251692, 6.664629154, 
-                     6.680498800)
+pseudohelixDose <- filter(dwds, datasetType == "Pseudohelices")$dwd_MGy
+wedgeDose       <- filter(dwds, datasetType == "Wedges")$dwd_MGy
 
 # Global Functions and Objects --------------------------------------------
 
@@ -92,7 +81,6 @@ ggplots <- list()
 
 # Data Analysis -----------------------------------------------------------
 
-source("Scripts/R/RADDOSE.R")
 source("Scripts/R/OccupancyAnalysis.R")
 source("Scripts/R/BFactorAnalysis.R")
 source("Scripts/R/DistanceAnalysis.R")

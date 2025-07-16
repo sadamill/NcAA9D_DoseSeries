@@ -327,6 +327,11 @@ ggdarklight(stackedAngles, "Angles")
 ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
   geom_point() +
   ggtheme_dark() +
+  scale_color_manual(
+    "Dataset Type", 
+    labels = c("Wedges", "Pseudohelices"), 
+    values = c("#0096c5", "#b8008c"), 
+  ) +
   coord_cartesian(expand = FALSE) +
   labs(
     x = "Dataset Number",
@@ -336,6 +341,11 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
 ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
   geom_point() +
   ggtheme_light() +
+  scale_color_manual(
+    "Dataset Type", 
+    labels = c("Wedges", "Pseudohelices"), 
+    values = c("#0096c5", "#b8008c"), 
+  ) +
   coord_cartesian(expand = FALSE) +
   labs(
     x = "Dataset Number",
