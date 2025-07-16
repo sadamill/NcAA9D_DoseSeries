@@ -58,9 +58,9 @@ dwds <- tibble(
 ## Define Crystal Box ------------------------------------------------------
 
 # Define corners of prism
-xrange <- range(allData$wedgeDoseState[[1]]$x)
-yrange <- range(allData$wedgeDoseState[[1]]$y)
-zrange <- range(allData$wedgeDoseState[[1]]$z)
+xrange <- c(-125, 125)
+yrange <- c(-593.5, 593.5)
+zrange <- c(-125, 125)
 
 corners <- expand.grid(
   x = xrange,
