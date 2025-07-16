@@ -1,4 +1,3 @@
-
 # Data import -------------------------------------------------------------
 
 allData <- list() # Initalize a list to contain all the raw data
@@ -54,8 +53,7 @@ dwds <- tibble(
   datasetType = c(rep("Wedges", 36), rep("Pseudohelices", 36))
 )
 
-# Dose state analysis -----------------------------------------------------
-## Define Crystal Box ------------------------------------------------------
+# Dose state visualization --------------------------------------------------
 
 # Define corners of prism
 xrange <- c(-125, 125)
@@ -103,7 +101,6 @@ edges <- tibble(
     }),
 )
 
-## Set up plotly functions -------------------------------------------------
 
 # Initialize empty list for use in plotly sliders
 steps <- list()
@@ -173,7 +170,47 @@ add_dummy_points <- function(plot, linecolor) {
   
   return(plot)
 }
-add_isosurface_traces <- function(plot, dataset, dataset_type) {
+add_static_isosurface_traces <- function(plot, dataset, dataset_type) {
+  
+  # Add necessary traces for the dataset (isosurfaces for 1, 5, and 20 MGy)
+  plot <- plot %>% 
+    add_trace(
+      data = dataset,
+      type = 'isosurface',
+      x = ~x, y = ~y, z = ~z,
+      value = ~dose,
+      name = "\u200B", # Zero-width space to prevent the name showing on legend
+      isomin = 20, isomax = Inf,
+      opacity = 1,
+      showscale = FALSE,
+      colorscale = list(c(0, 'red'), c(1, 'red'))
+    ) %>% 
+    add_trace(
+      data = dataset,
+      type = 'isosurface',
+      x = ~x, y = ~y, z = ~z,
+      value = ~dose,
+      name = "\u200B",
+      isomin = 5, isomax = Inf,
+      opacity = 0.25,
+      showscale = FALSE,
+      colorscale = list(c(0, 'dodgerblue'), c(1, 'dodgerblue'))
+    ) %>%
+    add_trace(
+      data = dataset,
+      type = 'isosurface',
+      x = ~x, y = ~y, z = ~z,
+      value = ~dose,
+      name = "\u200B", 
+      isomin = 1, isomax = Inf,
+      opacity = 0.1,
+      showscale = FALSE,
+      colorscale = list(c(0, 'gray'), c(1, 'gray'))
+    )
+  
+  return(plot)
+}
+add_interactive_isosurface_traces <- function(plot, dataset, dataset_type) {
   
   # Add necessary traces for all the wedges (isosurfaces for 1, 5, and 20 MGy)
   for (i in 1:length(dataset)) {
@@ -241,7 +278,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
       aspectmode = "data",
       bgcolor = bgcolor,
       xaxis = list(
-        title = "X (mm)",
+        title = "X (μm)",
         showgrid = FALSE,
         zeroline = FALSE,
         nticks = 3,
@@ -252,7 +289,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
         range = xrange
       ),
       yaxis = list(
-        title = "Y (mm)", 
+        title = "Y (μm)", 
         showgrid = FALSE, 
         zeroline = FALSE, 
         ticks = 'outside',  
@@ -262,7 +299,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
         range = yrange
       ),
       zaxis = list(
-        title = "Z (mm)",
+        title = "Z (μm)",
         showgrid = FALSE, 
         zeroline = FALSE, 
         nticks = 3, 
@@ -325,7 +362,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
   )
 }
 
-plotly_dose <- function(dataset, theme) {
+plotly_static_dose <- function(dataset, theme) {
   bgcolor <- if(theme == "light") {
     "white"
   } else if(theme == "dark") {
@@ -338,7 +375,33 @@ plotly_dose <- function(dataset, theme) {
     "white"
   } else {stop("Improper theme input")}
   
-  dataset_type = if(grepl("wedge", deparse(substitute(dataset)), fixed = TRUE)) {
+  dataset_type <- if(grepl("wedge", deparse(substitute(dataset)), fixed = TRUE)) {
+    "Wedge"
+  } else if(grepl("pseudohelix", deparse(substitute(dataset)), fixed = TRUE)) {
+    "Pseudohelix"
+  } else {stop(print(deparse(substitute(dataset))))}
+  
+  fig <- base_fig %>% 
+    add_dummy_points(linecolor = linecolor) %>% 
+    add_static_isosurface_traces(dataset = dataset, dataset_type = dataset_type) %>% 
+    plotly_layout(dataset = dataset, dataset_type = dataset_type, linecolor = linecolor, bgcolor = bgcolor)
+  
+  return(fig)
+}
+plotly_interactive_dose <- function(dataset, theme) {
+  bgcolor <- if(theme == "light") {
+    "white"
+  } else if(theme == "dark") {
+    "black"
+  } else {stop("Improper theme input")}
+  
+  linecolor <- if(theme == "light") {
+    "black"
+  } else if(theme == "dark") {
+    "white"
+  } else {stop("Improper theme input")}
+  
+  dataset_type <- if(grepl("wedge", deparse(substitute(dataset)), fixed = TRUE)) {
       "Wedge"
     } else if(grepl("pseudohelix", deparse(substitute(dataset)), fixed = TRUE)) {
       "Pseudohelix"
@@ -346,7 +409,7 @@ plotly_dose <- function(dataset, theme) {
   
   fig <- base_fig %>% 
     add_dummy_points(linecolor = linecolor) %>% 
-    add_isosurface_traces(dataset = dataset, dataset_type = dataset_type) %>% 
+    add_interactive_isosurface_traces(dataset = dataset, dataset_type = dataset_type) %>% 
     plotly_layout(dataset = dataset, dataset_type = dataset_type, linecolor = linecolor, bgcolor = bgcolor)
   
   steps <<- list()  #  Clear the global steps list to prepare for next plot
@@ -358,7 +421,25 @@ plotly_dose <- function(dataset, theme) {
 
 plotlys <- list()
 
-plotlys$light$wedgeDoseState <- plotly_dose(dataset = allData$wedgeDoseState, theme = "light")
-plotlys$light$pseudohelixDoseState <- plotly_dose(dataset = allData$pseudohelixDoseState, theme = "light")
-plotlys$dark$wedgeDoseState <- plotly_dose(dataset = allData$wedgeDoseState, theme = "dark")
-plotlys$dark$pseudohelixDoseState <- plotly_dose(dataset = allData$pseudohelixDoseState, theme = "dark")
+# Interactives with slider
+plotlys$light$interactive$wedgeDoseState <- plotly_interactive_dose(dataset = allData$wedgeDoseState, theme = "light")
+plotlys$light$interactive$pseudohelixDoseState <- plotly_interactive_dose(dataset = allData$pseudohelixDoseState, theme = "light")
+plotlys$dark$interactive$wedgeDoseState <- plotly_interactive_dose(dataset = allData$wedgeDoseState, theme = "dark")
+plotlys$dark$interactive$pseudohelixDoseState <- plotly_interactive_dose(dataset = allData$pseudohelixDoseState, theme = "dark")
+
+# Non interactive for images
+plotlys$light$static$pseudohelix1DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[1]], theme = "light")
+plotlys$light$static$pseudohelix18DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[18]], theme = "light")
+plotlys$light$static$pseudohelix36DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[36]], theme = "light")
+plotlys$light$static$wedge1DoseState <- plotly_static_dose(dataset = allData$wedgeDoseState[[1]], theme = "light")
+
+plotlys$dark$static$pseudohelix1DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[1]], theme = "dark")
+plotlys$dark$static$pseudohelix18DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[18]], theme = "dark")
+plotlys$dark$static$pseudohelix36DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[36]], theme = "dark")
+plotlys$dark$static$wedge1DoseState <- plotly_static_dose(dataset = allData$wedgeDoseState[[1]], theme = "dark")
+
+
+
+saveWidget(as_widget(plotlys$dark$wedge1DoseState), "test.html")
+webshot("test.html", "output.png", vwidth = 2400, vheight = 1200, cliprect = "viewport", zoom = 4)
+
