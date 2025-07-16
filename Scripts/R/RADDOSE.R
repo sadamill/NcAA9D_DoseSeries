@@ -116,7 +116,7 @@ add_dummy_points <- function(plot, linecolor) {
     p = plot,
     type = 'scatter3d',
     mode = 'markers',
-    x = c(max(allData$wedgeDoseState[[1]]$x) * 10), y = c(max(allData$wedgeDoseState[[1]]$y) * 10), z = c(max(allData$wedgeDoseState[[1]]$z) * 10), # Have to set points out of bounds so they are visible. Positions are based on the data so the aspect ratio stays correct.
+    x = c(max(xrange) * 10), y = c(max(yrange) * 10), z = c(max(zrange) * 10), # Have to set points out of bounds so they are visible. Positions are based on the data so the aspect ratio stays correct.
     marker = list(
       color = 'gray',
       size = 20,
@@ -131,7 +131,7 @@ add_dummy_points <- function(plot, linecolor) {
     add_trace(
       type = 'scatter3d',
       mode = 'markers',
-      x = c(max(allData$wedgeDoseState[[1]]$x) * 10), y = c(max(allData$wedgeDoseState[[1]]$y) * 10), z = c(max(allData$wedgeDoseState[[1]]$z) * 10),
+      x = c(max(xrange) * 10), y = c(max(yrange) * 10), z = c(max(zrange) * 10),
       marker = list(
         color = 'dodgerblue',
         size = 20,
@@ -147,7 +147,7 @@ add_dummy_points <- function(plot, linecolor) {
     add_trace(
       type = 'scatter3d',
       mode = 'markers',
-      x = c(max(allData$wedgeDoseState[[1]]$x) * 10), y = c(max(allData$wedgeDoseState[[1]]$y) * 10), z = c(max(allData$wedgeDoseState[[1]]$z) * 10),
+      x = c(max(xrange) * 10), y = c(max(yrange) * 10), z = c(max(zrange) * 10),
       marker = list(
         color = 'red',
         size = 20,
@@ -249,7 +249,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
         tickcolor = linecolor,
         showspikes = FALSE,
         autorange = FALSE, 
-        range = range(allData$wedgeDoseState[[1]]$x)
+        range = xrange
       ),
       yaxis = list(
         title = "Y (mm)", 
@@ -259,7 +259,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
         tickcolor = linecolor,
         showspikes = FALSE,
         autorange = FALSE, 
-        range = range(allData$wedgeDoseState[[1]]$y)
+        range = yrange
       ),
       zaxis = list(
         title = "Z (mm)",
@@ -270,7 +270,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
         tickcolor = linecolor,
         showspikes = FALSE,
         autorange = FALSE, 
-        range = range(allData$wedgeDoseState[[1]]$z)
+        range = zrange
       ),
       camera = list(
         center = list(x = 0, y = 0, z = 0),
@@ -314,7 +314,7 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
         steps = steps,
         tickcolor = linecolor,
         pad = list(
-          b = 5,
+          b = 20,
           t = 0,
           l = 20,
           r = 20
