@@ -274,7 +274,8 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
       ),
       camera = list(
         center = list(x = 0, y = 0, z = 0),
-        eye = list(x = 2.25, y = 0, z = 1.1)
+        eye = list(x = 2.25, y = 0, z = 0.75),
+        projection = list(type = "perspective")
       )
     ),
     margin = list(
@@ -323,8 +324,6 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
     )
   )
 }
-
-##### add combined plotly functions
 
 plotly_dose <- function(dataset, theme) {
   bgcolor <- if(theme == "light") {
