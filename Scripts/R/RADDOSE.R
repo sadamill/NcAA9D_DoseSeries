@@ -441,5 +441,5 @@ plotlys$dark$static$wedge1DoseState <- plotly_static_dose(dataset = allData$wedg
 
 
 saveWidget(as_widget(plotlys$dark$static$wedge1DoseState), "./Output/PlotlyHTMLs/test.html")
-webshot("test.html", "./Output/Plots/Dark/output.png", vwidth = 2400, vheight = 1200, cliprect = "viewport", zoom = 4)
+webshot("./Output/PlotlyHTMLs/test.html", "./Output/Plots/Dark/output.png", vwidth = 2400, vheight = 1200, cliprect = "viewport", zoom = 4)
 
