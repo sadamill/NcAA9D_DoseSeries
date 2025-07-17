@@ -13,6 +13,7 @@ require(ggh4x)
 require(ggnewscale)
 require(plotly)
 require(webshot2)
+require(htmlwidgets)
 
 py_require("numpy")
 py_require("mrcfile")
