@@ -399,7 +399,7 @@ dark.trend <- function(trend, datasetType) {
     geom_text( # Asterisks for significance
       aes(
         label = Significance,
-        x = (as.numeric(Residue) + ifelse(Estimate == "TrendB", nrow(regressionSummaries[[trend]][[datasetType]])/3/72, nrow(regressionSummaries[[trend]][[datasetType]])/3/36)), # Offset vertically for only trend A (proportional to number of data points)
+        x = (as.numeric(Residue) + ifelse(Estimate == "TrendB", nrow(regressionSummaries[[trend]][[datasetType]])/3/64, nrow(regressionSummaries[[trend]][[datasetType]])/3/32)), # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient
       ),
       size = 6, 
@@ -508,7 +508,7 @@ light.trend <- function(trend, datasetType) {
     geom_text(
       aes(
         label = Significance,
-        x = as.numeric(Residue) + ifelse(Estimate == "TrendA", nrow(regressionSummaries[[trend]][[datasetType]])/3/72, nrow(regressionSummaries[[trend]][[datasetType]])/3/36),
+        x = as.numeric(Residue) + ifelse(Estimate == "TrendA", nrow(regressionSummaries[[trend]][[datasetType]])/3/64, nrow(regressionSummaries[[trend]][[datasetType]])/3/32),
         y = Coefficient
       ),
       size = 6, 
