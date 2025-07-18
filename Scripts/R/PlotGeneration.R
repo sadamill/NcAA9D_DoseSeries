@@ -407,7 +407,7 @@ dark.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     theme(
-      legend.position.inside = c(0.94, 0.08), 
+      legend.position.inside = c(0.95, 0.1), 
       panel.grid.major.y = element_blank()
     ) +
     scale_x_discrete(labels = c(
@@ -516,7 +516,7 @@ light.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     theme(
-      legend.position.inside = c(0.94, 0.08), 
+      legend.position.inside = c(0.95, 0.1), 
       panel.grid.major.y = element_blank()
     ) +
     scale_x_discrete(labels = c(
