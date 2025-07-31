@@ -90,9 +90,9 @@ faceting <- function(facetVar, datasetType) {
       "T2" = "θ[2]", 
       "T3" = "θ[3]", 
       "TT" = "θ[T]", 
-      "THH" = "θ[HH]", 
-      "TH1HN1" = "θH[1]*HN[1]", 
-      "TH1HN84" = "θH[1]*HN[84]", 
+      "THH" = "θ[H-H]", 
+      "TH1" = "θ[H1]", 
+      "THN" = "θ[HN]", 
       "TOxy" = "θ[oxygen]"
     )
   )
@@ -140,8 +140,8 @@ scales <- function(facetVar) {
       scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
       scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
       scale_y_continuous(limits = c(180 - angle_window / 2, 180 + angle_window / 2)),
-      scale_y_continuous(limits = c(176 - angle_window / 2, 176 + angle_window / 2)),
       scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
+      scale_y_continuous(limits = c(176 - angle_window / 2, 176 + angle_window / 2)),
       scale_y_continuous(limits = c(120, 150)),
       scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
     )} else if(facetVar == "Residue") {
@@ -407,16 +407,16 @@ dark.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     theme(
-      legend.position.inside = c(0.95, 0.1), 
+      legend.position.inside = c(0.9, 0.15), 
       panel.grid.major.y = element_blank()
     ) +
     scale_x_discrete(labels = c(
       "T1" = bquote(θ[1]), 
       "T2" = bquote(θ[2]), 
       "T3" = bquote(θ[3]), 
-      "TH1HN1" = bquote(θH[1]*HN[1]), 
-      "TH1HN84" = bquote(θH[1]*HN[84]), 
-      "THH" = bquote(θ[HH]), 
+      "TH1" = bquote(θ[H1]), 
+      "THN" = bquote(θ[HN]), 
+      "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
       "CuAx" = bquote(Cu-H[2]*O[Ax]), 
       "CuEq" = bquote(Cu-H[2]*O[Eq]), 
@@ -516,16 +516,16 @@ light.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     theme(
-      legend.position.inside = c(0.95, 0.1), 
+      legend.position.inside = c(0.9, 0.15), 
       panel.grid.major.y = element_blank()
     ) +
     scale_x_discrete(labels = c(
       "T1" = bquote(θ[1]), 
       "T2" = bquote(θ[2]), 
       "T3" = bquote(θ[3]), 
-      "TH1HN1" = bquote(θH[1]*HN[1]), 
-      "TH1HN84" = bquote(θH[1]*HN[84]), 
-      "THH" = bquote(θ[HH]), 
+      "TH1" = bquote(θ[H1]), 
+      "THN" = bquote(θ[HN]), 
+      "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
       "CuAx" = bquote(Cu-H[2]*O[Ax]), 
       "CuEq" = bquote(Cu-H[2]*O[Eq]), 

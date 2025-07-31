@@ -7,7 +7,7 @@ plt.close()  # Close current figure if needed
 
 # Load the slopeGrid array from your .npy file
 pseudohelixSlopeGrid = np.load('Scripts/Python/PseudohelixSlopeGrid.npy')
-pseudohelixSlopeGrid = pseudohelixSlopeGrid.reshape((23, 31, 37))
+pseudohelixSlopeGrid = pseudohelixSlopeGrid.reshape((29, 29, 42))
 
 print(np.min(pseudohelixSlopeGrid), np.max(pseudohelixSlopeGrid))
 
@@ -32,6 +32,6 @@ slope_grid_transposed = np.transpose(pseudohelixSlopeGrid, (2, 1, 0))
 with mrcfile.new('Output/SlopeMaps/PseudohelixSlopeGrid.mrc', overwrite=True) as mrc:
     mrc.set_data(slope_grid_transposed.astype(np.float32))
     # Optional: set voxel size or origin if you know them
-    mrc.voxel_size = (0.5, 0.5, 0.5)
-    mrc.header.origin = (-16, -6, -20)  # in Å
+    mrc.voxel_size = (2, 2, 2)
+    mrc.header.origin = (-43, -27, -53)  # in Å
     print("Saved slopeGrid.mrc successfully.")

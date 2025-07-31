@@ -7,7 +7,7 @@ plt.close()  # Close current figure if needed
 
 # Load the slopeGrid array from your .npy file
 wedgeSlopeGrid = np.load('Scripts/Python/WedgeSlopeGrid.npy')
-wedgeSlopeGrid = wedgeSlopeGrid.reshape((23, 31, 37))
+wedgeSlopeGrid = wedgeSlopeGrid.reshape((56, 57, 83))
 
 print(np.min(wedgeSlopeGrid), np.max(wedgeSlopeGrid))
 
@@ -32,6 +32,6 @@ slope_grid_transposed = np.transpose(wedgeSlopeGrid, (2, 1, 0))
 with mrcfile.new('Output/SlopeMaps/WedgeSlopeGrid.mrc', overwrite=True) as mrc:
     mrc.set_data(slope_grid_transposed.astype(np.float32))
     # Optional: set voxel size or origin if you know them
-    mrc.voxel_size = (0.5, 0.5, 0.5)
-    mrc.header.origin = (-16, -6, -20)  # in Å
+    mrc.voxel_size = (2, 2, 2)
+    mrc.header.origin = (-43, -27, -53)  # in Å
     print("Saved slopeGrid.mrc successfully.")

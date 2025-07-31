@@ -19,6 +19,11 @@ electronDensities <- list(
     t()
 )
 
+# Define grid dimensions
+xdim <- seq(-43, 13, by = 2) %>% length()
+ydim <- seq(-27, 30, by = 2) %>% length()
+zdim <- seq(-53, 30, by = 2) %>% length()
+
 electronDensities$Pseudohelices <- data.frame(electronDensities$Pseudohelices) #Convert matrix output from t() back to a df
 rownames(electronDensities$Pseudohelices) <- 1:36
 electronDensities$Wedges <- data.frame(electronDensities$Wedges)
@@ -26,8 +31,8 @@ rownames(electronDensities$Wedges) <- 1:36
 
 # Prepare an empty list to contain the electron density slope arrays
 slopeGrids <- list(
-  Pseudohelices = array(NA, dim = c(23,31,37)),
-  Wedges = array(NA, dim = c(23,31,37))
+  Pseudohelices = array(NA, dim = c(xdim, ydim, zdim)),
+  Wedges = array(NA, dim = c(xdim, ydim, zdim))
 )
 
 for (voxelIndex in 1:ncol(electronDensities$Pseudohelices)) {
@@ -41,9 +46,9 @@ for (voxelIndex in 1:ncol(electronDensities$Pseudohelices)) {
   slope <- coef(fit)[2]
   
   #Convert voxel index to relevant slopeGrid indices
-  ix <- ((voxelIndex - 1) %% 23) + 1 #X coordinate is modulo (remainder) of voxel index divided by 23 (X dimension of grid)
-  iy <- (((voxelIndex - 1) %/% 23) %% 31) + 1 #Y coordinate is modulo of voxel index divided by 27 (Y dimension of grid) after dividing by 23 (to slice across X plane)
-  iz <- ((voxelIndex - 1) %/% (23 * 31)) + 1 #Z coordinate is the quotient of voxel index divided by 23 and 27. This slices across x and y planes
+  ix <- ((voxelIndex - 1) %% xdim) + 1 #X coordinate is modulo (remainder) of voxel index divided by X dimension of grid
+  iy <- (((voxelIndex - 1) %/% xdim) %% ydim) + 1 #Y coordinate is modulo of voxel index divided by Y dimension of grid after dividing by xdim (to slice across X plane)
+  iz <- ((voxelIndex - 1) %/% (xdim * ydim)) + 1 #Z coordinate is the quotient of voxel index divided by x and and y dimensions. This slices across x and y planes
   
   #Store slopes in slopeGrid at calculated index (ix, iy, iz)
   slopeGrids$Pseudohelices[ix,iy,iz] <- slope
@@ -60,9 +65,9 @@ for (voxelIndex in 1:ncol(electronDensities$Wedges)) {
   slope <- coef(fit)[2]
   
   #Convert voxel index to relevant slopeGrid indices
-  ix <- ((voxelIndex - 1) %% 23) + 1 #X coordinate is modulo (remainder) of voxel index divided by 23 (X dimension of grid)
-  iy <- (((voxelIndex - 1) %/% 23) %% 31) + 1 #Y coordinate is modulo of voxel index divided by 27 (Y dimension of grid) after dividing by 23 (to slice across X plane)
-  iz <- ((voxelIndex - 1) %/% (23 * 31)) + 1 #Z coordinate is the quotient of voxel index divided by 23 and 27. This slices across x and y planes
+  ix <- ((voxelIndex - 1) %% xdim) + 1 #X coordinate is modulo (remainder) of voxel index divided by X dimension of grid
+  iy <- (((voxelIndex - 1) %/% xdim) %% ydim) + 1 #Y coordinate is modulo of voxel index divided by Y dimension of grid after dividing by xdim (to slice across X plane)
+  iz <- ((voxelIndex - 1) %/% (xdim * ydim)) + 1 #Z coordinate is the quotient of voxel index divided by x and and y dimensions. This slices across x and y planes
   
   #Store slopes in slopeGrid at calculated index (ix, iy, iz)
   slopeGrids$Wedges[ix,iy,iz] <- slope

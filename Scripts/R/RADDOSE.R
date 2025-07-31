@@ -438,7 +438,6 @@ plotlys$dark$static$pseudohelix18DoseState <- plotly_static_dose(dataset = allDa
 plotlys$dark$static$pseudohelix36DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[36]], theme = "dark")
 plotlys$dark$static$wedge1DoseState <- plotly_static_dose(dataset = allData$wedgeDoseState[[1]], theme = "dark")
 
-
 saveWidget(as_widget(plotlys$dark$interactive$pseudohelixDoseState), "./Output/PlotlyHTMLs/Pseudohelix.html", selfcontained = FALSE)
 saveWidget(as_widget(plotlys$dark$static$wedge1DoseState), "./Output/PlotlyHTMLs/test.html")
 webshot("./Output/PlotlyHTMLs/test.html", "./Output/Plots/Dark/output.png", vwidth = 2400, vheight = 1200, cliprect = "viewport", zoom = 4)

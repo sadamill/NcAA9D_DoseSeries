@@ -47,7 +47,11 @@ source("Scripts/R/RADDOSE.R")
 
 #Prep vectors containing all density-weighted dose values
 pseudohelixDose <- filter(dwds, datasetType == "Pseudohelices")$dwd_MGy
-wedgeDose       <- filter(dwds, datasetType == "Wedges")$dwd_MGy
+wedgeDose <- filter(dwds, datasetType == "Wedges")$dwd_MGy
+write_csv(
+  data.frame(pseudohelixDose, wedgeDose),
+  file = "./Output/SlopeMaps/DWDs.csv"
+)
 
 # Global Functions and Objects --------------------------------------------
 
@@ -87,10 +91,6 @@ source("Scripts/R/OccupancyAnalysis.R")
 source("Scripts/R/BFactorAnalysis.R")
 source("Scripts/R/DistanceAnalysis.R")
 source("Scripts/R/AngleAnalysis.R")
-source("Scripts/R/ElectronDensityAnalysis.R")
-
-py_run_file("Scripts/Python/PseuodohelixMapGeneration.py")
-py_run_file("Scripts/Python/WedgeMapGeneration.py")
 
 # Data Visualization ------------------------------------------------------
 
