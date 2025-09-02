@@ -87,16 +87,16 @@ ggplots <- list()
 
 # Data Analysis -----------------------------------------------------------
 
-source("Scripts/R/OccupancyAnalysis.R")
-source("Scripts/R/BFactorAnalysis.R")
-source("Scripts/R/DistanceAnalysis.R")
-source("Scripts/R/AngleAnalysis.R")
+source("Scripts/OccupancyAnalysis.R")
+source("Scripts/BFactorAnalysis.R")
+source("Scripts/DistanceAnalysis.R")
+source("Scripts/AngleAnalysis.R")
 
 # Data Visualization ------------------------------------------------------
 
-source("Scripts/R/TrendVisualization.R")
-source("Scripts/R/PlotGeneration.R")
-source("Scripts/R/WedgeCVAnalysis.R")
+source("Scripts/TrendVisualization.R")
+source("Scripts/PlotGeneration.R")
+source("Scripts/WedgeCVAnalysis.R")
 
 # Data write-out ----------------------------------------------------------
 
