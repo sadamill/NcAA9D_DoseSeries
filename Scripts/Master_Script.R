@@ -15,10 +15,6 @@ require(plotly)
 require(webshot2)
 require(htmlwidgets)
 
-py_require("numpy")
-py_require("mrcfile")
-py_require("matplotlib")
-
 options(scipen = 7) #I don"t like viewing things in scientific notation
 mem.maxVSize(vsize = 30000) #Set max memory size to allow space for large distance matrices
 
@@ -43,7 +39,7 @@ pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract ato
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges
 
 #Run dose analysis to prepare dose state vectors
-source("Scripts/R/RADDOSE.R")
+source("Scripts/RADDOSE.R")
 
 #Prep vectors containing all density-weighted dose values
 pseudohelixDose <- filter(dwds, datasetType == "Pseudohelices")$dwd_MGy
@@ -88,7 +84,6 @@ ggplots <- list()
 # Data Analysis -----------------------------------------------------------
 
 source("Scripts/OccupancyAnalysis.R")
-source("Scripts/BFactorAnalysis.R")
 source("Scripts/DistanceAnalysis.R")
 source("Scripts/AngleAnalysis.R")
 
@@ -101,7 +96,7 @@ source("Scripts/WedgeCVAnalysis.R")
 # Data write-out ----------------------------------------------------------
 
 #Save all the plots
-save.plots <- function(key) {
+save_plots <- function(key) {
   for(theme in names(ggplots)) {
     for(i in names(ggplots[[theme]][[key]])) {
       if("ggplot" %in% class(ggplots[[theme]][[key]][[i]])) {
@@ -146,11 +141,11 @@ save.plots <- function(key) {
   }
 }
 
-save.plots('Occupancies')
-save.plots('BFactors')
-save.plots('Distances')
-save.plots('Angles')
-save.plots('CVs')
+save_plots('Occupancies')
+save_plots('BFactors')
+save_plots('Distances')
+save_plots('Angles')
+save_plots('CVs')
 
 ggsave("Output/Plots/Light/DWDs.svg", height = 5, width = 7, plot = ggplots$Light$Dose$DWDs)
 ggsave("Output/Plots/Dark/DWDs.svg", height = 5, width = 7, plot = ggplots$Dark$Dose$DWDs)
@@ -158,19 +153,6 @@ ggsave("Output/Plots/Dark/DWDs.svg", height = 5, width = 7, plot = ggplots$Dark$
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
 write.pdb(pdb = bFactorColoredPDB, file = "Output/ColoredPDBs/BFactorColoredPDB.pdb")
-
-for(i in 1:length(pseudohelixList)) {
-  write.pdb(
-    pdb = pseudohelixList[[i]], 
-    file = paste0("Output/PDBs/Pseudohelix", i, ".pdb")
-  )
-}
-for(i in 1:length(wedgeList)) {
-  write.pdb(
-    pdb = wedgeList[[i]], 
-    file = paste0("Output/PDBs/Wedge", i, ".pdb")
-  )
-}
 
 #Save all the tables
 for (i in 1:length(regressionSummaries)) {

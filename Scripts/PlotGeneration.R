@@ -60,30 +60,13 @@ faceting <- function(facetVar, datasetType) {
       "Glu" = "Glu[30]", 
       "Oxy" = "'Dioxygen'"
     ),
-    bResidue = c(
-      "CO2BF" = "CO[2]", 
-      "AxBF"  = "H[2]*O[Ax]", 
-      "EqBF"  = "H[2]*O[Eq]", 
-      "GluBF" = "Glu[30]", 
-      "OxyBF" = "'Dioxygen'"
-    ),
-    CuAtomPair = c(
+    AtomPair = c(
       "Cu-Tyr" = "Cu-Tyr[168]",
       "Cu-NTerm" = "Cu-N[term]",
       "Cu-His1ND1" = "Cu-His[1]*Nδ[1]",
       "Cu-His84NE2" = "Cu-His[84]*Nε[2]",
       "Cu-Eq" = "Cu-H[2]*O[Eq]",
       "Cu-Ax" = "Cu-H[2]*O[Ax]"
-    ),
-    OAtomPair = c(
-      "O1-Eq" = "O[prox]*-H[2]*O[Eq]", 
-      "O2-Eq" = "O[dist]*-H[2]*O[Eq]", 
-      "O1-His157NE2" = "O[prox]*-His[157]*N[ε2]", 
-      "O2-His157NE2" = "O[dist]*-His[157]*N[ε2]", 
-      "O1-GluOE1" = "O[prox]*-Glu[30]*O[ε1]", 
-      "O2-GluOE1" = "O[dist]*-Glu[30]*O[ε1]", 
-      "O1-GluOE2" = "O[prox]*-Glu[30]*O[ε2]", 
-      "O2-GluOE2" = "O[dist]*-Glu[30]*O[ε2]"
     ),
     AngleID = c(
       "T1" = "θ[1]", 
@@ -92,8 +75,7 @@ faceting <- function(facetVar, datasetType) {
       "TT" = "θ[T]", 
       "THH" = "θ[H-H]", 
       "TH1" = "θ[H1]", 
-      "THN" = "θ[HN]", 
-      "TOxy" = "θ[oxygen]"
+      "THN" = "θ[HN]"
     )
   )
   
@@ -116,9 +98,7 @@ faceting <- function(facetVar, datasetType) {
       },
       y = if(facetVar == "Residue") {
         "Occupancy"
-      } else if(facetVar == "bResidue") {
-        bquote("B-Factor (" * Å^2 * ")")
-      } else if(facetVar %in% c('CuAtomPair', 'OAtomPair')) {
+      } else if(facetVar == 'AtomPair') {
         "Distance (Å)"
       } else if(facetVar == "AngleID") {
         "Angle (°)"
@@ -132,18 +112,18 @@ scales <- function(facetVar) {
   angle_window <- 7
   occupancy_window <- 0.4
   bfactor_window <- 8
-  cudistance_window <- 0.25
+  distance_window <- 0.25
   
-  facetted_pos_scales(y = if(facetVar == "AngleID") {
-    list(
-      scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
-      scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
-      scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
-      scale_y_continuous(limits = c(180 - angle_window / 2, 180 + angle_window / 2)),
-      scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
-      scale_y_continuous(limits = c(176 - angle_window / 2, 176 + angle_window / 2)),
-      scale_y_continuous(limits = c(120, 150)),
-      scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
+  facetted_pos_scales(
+    y = if(facetVar == "AngleID") {
+      list(
+        scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
+        scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
+        scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
+        scale_y_continuous(limits = c(180 - angle_window / 2, 180 + angle_window / 2)),
+        scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
+        scale_y_continuous(limits = c(176 - angle_window / 2, 176 + angle_window / 2)),
+        scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
     )} else if(facetVar == "Residue") {
       list(
         scale_y_continuous(limits = c(0.6 - occupancy_window / 2, 0.6 + occupancy_window / 2)),
@@ -151,24 +131,15 @@ scales <- function(facetVar) {
         scale_y_continuous(limits = c(0.35 - occupancy_window / 2, 0.35 + occupancy_window / 2)),
         scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
         scale_y_continuous(limits = c(0.65 - occupancy_window / 2, 0.65 + occupancy_window / 2))
-      )} else if(facetVar == "bResidue") {
-        list(
-          scale_y_continuous(limits = c(21 - bfactor_window / 2, 21 + bfactor_window / 2)),
-          scale_y_continuous(limits = c(10.5 - bfactor_window / 2, 10.5 + bfactor_window / 2)),
-          scale_y_continuous(limits = c(22.6 - bfactor_window / 2, 22.6 + bfactor_window / 2)),
-          scale_y_continuous(limits = c(14 - bfactor_window / 2, 14 + bfactor_window / 2)),
-          scale_y_continuous(limits = c(12.5 - bfactor_window / 2, 12.5 + bfactor_window / 2))
-        )
-      } else if(facetVar == "CuAtomPair") {
-        list(
-          scale_y_continuous(limits = c(2.375 - cudistance_window / 2, 2.375 + cudistance_window / 2)),
-          scale_y_continuous(limits = c(1.99 - cudistance_window / 2, 1.99 + cudistance_window / 2)),
-          scale_y_continuous(limits = c(1.95 - cudistance_window / 2, 1.95 + cudistance_window / 2)),
-          scale_y_continuous(limits = c(1.98 - cudistance_window / 2, 1.98 + cudistance_window / 2)),
-          scale_y_continuous(limits = c(2.18 - cudistance_window / 2, 2.18 + cudistance_window / 2)),
-          scale_y_continuous(limits = c(2.66 - cudistance_window / 2, 2.66 + cudistance_window / 2))
-        )
-      } else {NULL}) # If input facetVar isn't known, just automatically scale the axes
+    )} else if(facetVar == "AtomPair") {
+      list(
+        scale_y_continuous(limits = c(2.375 - distance_window / 2, 2.375 + distance_window / 2)),
+        scale_y_continuous(limits = c(1.99 - distance_window / 2, 1.99 + distance_window / 2)),
+        scale_y_continuous(limits = c(1.95 - distance_window / 2, 1.95 + distance_window / 2)),
+        scale_y_continuous(limits = c(1.98 - distance_window / 2, 1.98 + distance_window / 2)),
+        scale_y_continuous(limits = c(2.18 - distance_window / 2, 2.18 + distance_window / 2)),
+        scale_y_continuous(limits = c(2.66 - distance_window / 2, 2.66 + distance_window / 2))
+    )} else {NULL}) # If input facetVar isn't known, just automatically scale the axes
 }
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
@@ -196,9 +167,9 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
     ggtheme_dark() +
     coord_cartesian(expand = FALSE) +
     scales(facetVar = facetVar) +
-    if(facetVar == "AngleID" | facetVar == "OAtomPair") {
+    if(facetVar == "AngleID") {
       theme(legend.position.inside = c(0.85, 0.15))
-    } else if(facetVar == "CuAtomPair") {
+    } else if(facetVar == "AtomPair") {
       theme(legend.position = "right")
     }
 } #Make scatter plot with fitted linear regression
@@ -227,19 +198,19 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     ggtheme_light() +
     coord_cartesian(expand = FALSE) +
     scales(facetVar = facetVar) +
-    if(facetVar == "AngleID" | facetVar == "OAtomPair") {
+    if(facetVar == "AngleID") {
       theme(legend.position.inside = c(0.85, 0.15))
-    } else if(facetVar == "CuAtomPair") {
+    } else if(facetVar == "AtomPair") {
       theme(legend.position = "right")
     }
 } #Make scatter plot with fitted linear regression
 
-ggdarklight <- function(data, key, key2 = NA) {
+ggdarklight <- function(data, key) {
   yvar <- if(deparse(substitute(data)) == "stackedOccupancies") {
     'Occupancy'
   } else if(deparse(substitute(data)) == "stackedBFactors") {
     'bFactor'
-  } else if(deparse(substitute(data)) %in% c("stackedDistances$Cu", "stackedDistances$Oxy")) {
+  } else if(deparse(substitute(data)) == "stackedDistances") {
     'Distance'
   } else if(deparse(substitute(data)) == "stackedAngles") {
     'Angle'
@@ -249,12 +220,8 @@ ggdarklight <- function(data, key, key2 = NA) {
   
   facetStr <- if(deparse(substitute(data)) == "stackedOccupancies") {
     "Residue"
-  } else if(deparse(substitute(data)) == "stackedBFactors") {
-    "bResidue"
-  } else if(deparse(substitute(data)) == "stackedDistances$Cu") {
-    "CuAtomPair"
-  } else if(deparse(substitute(data)) == "stackedDistances$Oxy") {
-    "OAtomPair"
+  } else if(deparse(substitute(data)) == "stackedDistances") {
+    "AtomPair"
   } else if(deparse(substitute(data)) == "stackedAngles") {
     "AngleID"
   } else if(deparse(substitute(data)) == 'dwds') {
@@ -307,22 +274,14 @@ ggdarklight <- function(data, key, key2 = NA) {
     )
   )
   
-  if(is.na(key2)) {
-    ggplots$Light[[key]] <<- lightplots
-    ggplots$Dark[[key]] <<- darkplots
-  } else {
-    ggplots$Light[[key]][[key2]] <<- lightplots
-    ggplots$Dark[[key]][[key2]] <<- darkplots
-  }
-
+  ggplots$Light[[key]] <<- lightplots
+  ggplots$Dark[[key]] <<- darkplots
 } #Combination of scatter_dark and scatter_light to ease the plotting of multiple datasets with multiple themes
 
 # Scatter plots -----------------------------------------------------------
 
 ggdarklight(stackedOccupancies, "Occupancies")
-ggdarklight(stackedBFactors, "BFactors")
-ggdarklight(stackedDistances$Cu, "Distances", "Cu")
-ggdarklight(stackedDistances$Oxy, "Distances", "Oxy")
+ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
 ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
@@ -419,30 +378,15 @@ dark.trend <- function(trend, datasetType) {
       "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
       "CuAx" = bquote(Cu-H[2]*O[Ax]), 
+      "CuNterm" = bquote(Cu-N[term]),
       "CuEq" = bquote(Cu-H[2]*O[Eq]), 
       "CuHis1ND1" = bquote(Cu-His[1]*Nδ[1]), 
-      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]), 
-      "CuO1" = bquote(Cu-O[prox]), 
-      "CuO2" = bquote(Cu-O[dist]), 
+      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]),
       "CuTyr" = bquote(Cu-Tyr[168]), 
-      "O1Eq" = bquote(O[prox]*H[2]*O[Eq]), 
-      "O2Eq" = bquote(O[dist]*H[2]*O[Eq]), 
-      "O1GluOE1" = bquote(O[prox]*Glu[30]*Oε[1]), 
-      "O2GluOE1" = bquote(O[dist]*Glu[30]*Oε[1]), 
-      "O1GluOE2" = bquote(O[prox]*Glu[30]*Oε[2]), 
-      "O2GluOE2" = bquote(O[dist]*Glu[30]*Oε[2]), 
-      "O1His157NE2" = bquote(O[prox]*His[157]*Nε[2]), 
-      "O2His157NE2" = bquote(O[dist]*His[157]*Nε[2]), 
       "Ax" = bquote(H[2]*O[Ax]), 
       "Eq" = bquote(H[2]*O[Eq]), 
       "CO2" = bquote(CO[2]), 
-      "Glu" = bquote(Glu[30]), 
-      "OxyBF" = bquote(Dioxygen), 
-      "AxBF" = bquote(H[2]*O[Ax]), 
-      "EqBF" = bquote(H[2]*O[Eq]), 
-      "CO2BF" = bquote(CO[2]), 
-      "GluBF" = bquote(Glu[30]), 
-      "OxyBF" = bquote(Dioxygen)
+      "Glu" = bquote(Glu[30])
     )) +
     labs(
       y = if(trend %in% c("Occupancies", "BFactors")) {
@@ -527,31 +471,16 @@ light.trend <- function(trend, datasetType) {
       "THN" = bquote(θ[HN]), 
       "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
+      "CuNterm" = bquote(Cu-N[term]),
       "CuAx" = bquote(Cu-H[2]*O[Ax]), 
       "CuEq" = bquote(Cu-H[2]*O[Eq]), 
       "CuHis1ND1" = bquote(Cu-His[1]*Nδ[1]), 
-      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]), 
-      "CuO1" = bquote(Cu-O[prox]), 
-      "CuO2" = bquote(Cu-O[dist]), 
-      "CuTyr" = bquote(Cu-Tyr[168]), 
-      "O1Eq" = bquote(O[prox]*H[2]*O[Eq]), 
-      "O2Eq" = bquote(O[dist]*H[2]*O[Eq]), 
-      "O1GluOE1" = bquote(O[prox]*Glu[30]*Oε[1]), 
-      "O2GluOE1" = bquote(O[dist]*Glu[30]*Oε[1]), 
-      "O1GluOE2" = bquote(O[prox]*Glu[30]*Oε[2]), 
-      "O2GluOE2" = bquote(O[dist]*Glu[30]*Oε[2]), 
-      "O1His157NE2" = bquote(O[prox]*His[157]*Nε[2]), 
-      "O2His157NE2" = bquote(O[dist]*His[157]*Nε[2]), 
+      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]),
+      "CuTyr" = bquote(Cu-Tyr[168]),
       "Ax" = bquote(H[2]*O[Ax]), 
       "Eq" = bquote(H[2]*O[Eq]), 
       "CO2" = bquote(CO[2]), 
-      "Glu" = bquote(Glu[30]), 
-      "OxyBF" = bquote(Dioxygen), 
-      "AxBF" = bquote(H[2]*O[Ax]), 
-      "EqBF" = bquote(H[2]*O[Eq]), 
-      "CO2BF" = bquote(CO[2]), 
-      "GluBF" = bquote(Glu[30]), 
-      "OxyBF" = bquote(Dioxygen)
+      "Glu" = bquote(Glu[30])
     )) +
     labs(
       y = if(trend %in% c("Occupancies", "BFactors")) {
@@ -597,6 +526,5 @@ darklighttrend <- function(trend) {
 }
 
 darklighttrend("Occupancies")
-darklighttrend("BFactors")
 darklighttrend("Distances")
 darklighttrend("Angles")

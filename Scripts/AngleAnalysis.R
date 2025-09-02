@@ -37,8 +37,6 @@ A1CG <- atom.select(pseudohelixList[[1]], resno=1, chain="A", elety="CG")$xyz
 A84ND1 <- atom.select(pseudohelixList[[1]], resno=84, chain="A", elety="ND1")$xyz
 A84NE2 <- atom.select(pseudohelixList[[1]], resno=84, chain="A", elety="NE2")$xyz
 A84CG <- atom.select(pseudohelixList[[1]], resno=84, chain="A", elety="CG")$xyz
-AO1 <- atom.select(pseudohelixList[[1]], resno=1, chain="D", elety="O1")$xyz
-AO2 <- atom.select(pseudohelixList[[1]], resno=1, chain="D", elety="O2")$xyz
 
 BCu <- atom.select(pseudohelixList[[1]], resno=2, chain="C")$xyz
 B1N <- atom.select(pseudohelixList[[1]], resno=1, chain="B", elety="N")$xyz
@@ -48,8 +46,6 @@ B1CG <- atom.select(pseudohelixList[[1]], resno=1, chain="B", elety="CG")$xyz
 B84ND1 <- atom.select(pseudohelixList[[1]], resno=84, chain="B", elety="ND1")$xyz
 B84NE2 <- atom.select(pseudohelixList[[1]], resno=84, chain="B", elety="NE2")$xyz
 B84CG <- atom.select(pseudohelixList[[1]], resno=84, chain="B", elety="CG")$xyz
-BO1 <- atom.select(pseudohelixList[[1]], resno=2, chain="D", elety="O1")$xyz
-BO2 <- atom.select(pseudohelixList[[1]], resno=2, chain="D", elety="O2")$xyz
 
 #Calculate angles for all datasets based off XYZ indices calculated earlier
 allAngles <- list(
@@ -100,11 +96,7 @@ allAngles <- list(
         orthogonal.vector(pdb$xyz[B84CG], pdb$xyz[B84ND1], pdb$xyz[B84NE2]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[B84ND1]-pdb$xyz[BCu]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
           {90+.}
-      ), 
-      TOxy = c(
-        angle.xyz(c(pdb$xyz[ACu], pdb$xyz[AO1], pdb$xyz[AO2])), 
-        angle.xyz(c(pdb$xyz[BCu], pdb$xyz[BO1], pdb$xyz[BO2]))
-      ), 
+      ),
       Molecule = c("A", "B")
     )
   }) %>%
@@ -158,11 +150,7 @@ allAngles <- list(
         orthogonal.vector(pdb$xyz[B84CG], pdb$xyz[B84ND1], pdb$xyz[B84NE2]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[B84ND1]-pdb$xyz[BCu]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
           {90+.}
-      ), 
-      TOxy = c(
-        angle.xyz(c(pdb$xyz[ACu], pdb$xyz[AO1], pdb$xyz[AO2])), 
-        angle.xyz(c(pdb$xyz[BCu], pdb$xyz[BO1], pdb$xyz[BO2]))
-      ), 
+      ),
       Molecule = c("A", "B")
     )
   }) %>%
@@ -176,7 +164,7 @@ colnames(allAngles$Wedges)[1] <- "WedgeNumber"
 
 stackedAngles <- list(
   Pseudohelices = tibble(
-    Dose = rep(allAngles$Pseudohelices$dose_MGy, 8), 
+    Dose = rep(allAngles$Pseudohelices$dose_MGy, 7), 
     AngleID = c(
       rep("T1", 72), 
       rep("T2", 72), 
@@ -184,8 +172,7 @@ stackedAngles <- list(
       rep("TT", 72), 
       rep("THH", 72), 
       rep("TH1", 72), 
-      rep("THN", 72), 
-      rep("TOxy", 72)
+      rep("THN", 72)
     ), 
     Angle = c(
       allAngles$Pseudohelices$T1, 
@@ -194,13 +181,12 @@ stackedAngles <- list(
       allAngles$Pseudohelices$TT, 
       allAngles$Pseudohelices$THH, 
       allAngles$Pseudohelices$TH1, 
-      allAngles$Pseudohelices$THN, 
-      allAngles$Pseudohelices$TOxy
+      allAngles$Pseudohelices$THN
     ), 
-    Molecule = rep(allAngles$Pseudohelices$Molecule, 8)
+    Molecule = rep(allAngles$Pseudohelices$Molecule, 7)
   ), 
   Wedges = tibble(
-    WedgeNumber = rep(allAngles$Wedges$WedgeNumber, 8), 
+    WedgeNumber = rep(allAngles$Wedges$WedgeNumber, 7), 
     AngleID = c(
       rep("T1", 72), 
       rep("T2", 72), 
@@ -208,8 +194,7 @@ stackedAngles <- list(
       rep("TT", 72), 
       rep("THH", 72), 
       rep("TH1", 72), 
-      rep("THN", 72), 
-      rep("TOxy", 72)
+      rep("THN", 72)
     ), 
     Angle = c(
       allAngles$Wedges$T1, 
@@ -218,10 +203,9 @@ stackedAngles <- list(
       allAngles$Wedges$TT, 
       allAngles$Wedges$THH, 
       allAngles$Wedges$TH1, 
-      allAngles$Wedges$THN, 
-      allAngles$Wedges$TOxy
+      allAngles$Wedges$THN
     ), 
-    Molecule = rep(allAngles$Wedges$Molecule, 8)
+    Molecule = rep(allAngles$Wedges$Molecule, 7)
   )
 )
 
@@ -235,8 +219,7 @@ multipleRegressions$Angles <- list(
     TT = lm(TT ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
     THH = lm(THH ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
     TH1 = lm(TH1 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    THN = lm(THN ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    TOxy = lm(TOxy ~ dose_MGy * Molecule, data = allAngles$Pseudohelices)
+    THN = lm(THN ~ dose_MGy * Molecule, data = allAngles$Pseudohelices)
   ), 
   Wedges = list (
     T1 = lm(T1 ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
@@ -245,15 +228,14 @@ multipleRegressions$Angles <- list(
     TT = lm(TT ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
     THH = lm(THH ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
     TH1 = lm(TH1 ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    THN = lm(THN ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    TOxy = lm(TOxy ~ WedgeNumber * Molecule, data = allAngles$Wedges)
+    THN = lm(THN ~ WedgeNumber * Molecule, data = allAngles$Wedges)
   )
 )
 
 regressionSummaries$Angles <- list(
   Pseudohelices = bind_rows(
     lapply(
-      c("T1", "T2", "T3", "TT", "THH", "TH1", "THN", "TOxy"), 
+      c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
         tibble(
           Residue = atom, 
@@ -276,7 +258,7 @@ regressionSummaries$Angles <- list(
   ), 
   Wedges = bind_rows(
     lapply(
-      c("T1", "T2", "T3", "TT", "THH", "TH1", "THN", "TOxy"), 
+      c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
         tibble(
           Residue = atom, 
