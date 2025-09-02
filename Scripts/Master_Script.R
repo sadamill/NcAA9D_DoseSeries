@@ -23,13 +23,13 @@ mem.maxVSize(vsize = 30000) #Set max memory size to allow space for large distan
 #Extract PDB files
 pseudohelixList <- lapply(1:36, function(x) {
   read.pdb(
-    file = paste0("Input/Files_From_Analysis_Cluster/Pseudohelix_", x, "/Refine_1/Phenix_refine_001.pdb"), 
+    file = str_glue("Input/Files_From_Analysis_Cluster/Pseudohelix_{x}/Refine_1/Phenix_refine_001.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract pseudohelix PDBs
 wedgeList <- lapply(1:36, function(x) {
   read.pdb(
-    file = paste0("Input/Files_From_Analysis_Cluster/Wedge_", x, "/Refine_1/Phenix_refine_001.pdb"), 
+    file = str_glue("Input/Files_From_Analysis_Cluster/Wedge_{x}/Refine_1/Phenix_refine_001.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract wedge PDBs
@@ -96,42 +96,24 @@ source("Scripts/WedgeCVAnalysis.R")
 # Data write-out ----------------------------------------------------------
 
 #Save all the plots
-save_plots <- function(key) {
+save_plots <- function(parameter) {
   for(theme in names(ggplots)) {
-    for(i in names(ggplots[[theme]][[key]])) {
-      if("ggplot" %in% class(ggplots[[theme]][[key]][[i]])) {
+    for(i in names(ggplots[[theme]][[parameter]])) {
+      if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
+        dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"}
+        this_parameter = if(parameter %in% c("Angles", "Distances", "Occupancies")) {parameter} else {""}
         ggsave(
-          filename = paste0(
-            "Output/Plots/",
-            theme, "/",
-            ifelse(
-              i == "Pseudohelices",
-              'Pseudohelix',
-              'Wedge'
-            ), "_",
-            key, 
-            ".svg"
-          ), 
-          plot = ggplots[[theme]][[key]][[i]], 
+          filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}.svg"), 
+          plot = ggplots[[theme]][[parameter]][[i]], 
           height = 5, 
           width = 7
         )
-      } else if("list" %in% class(ggplots[[theme]][[key]][[i]])) {
-        for(j in names(ggplots[[theme]][[key]][[i]])) {
+      } else if("list" %in% class(ggplots[[theme]][[parameter]][[i]])) {
+        for(j in names(ggplots[[theme]][[parameter]][[i]])) {
+          dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"} else if(j == "DWDs") {"DWDs"}
           ggsave(
-            filename = paste0(
-              "Output/Plots/",
-              theme, "/",
-              ifelse(
-                j == "Pseudohelices",
-                'Pseudohelix',
-                'Wedge'
-              ),
-              key, "_",
-              i,
-              ".svg"
-            ), 
-            plot = ggplots[[theme]][[key]][[i]][[j]], 
+            filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
+            plot = ggplots[[theme]][[parameter]][[i]][[j]], 
             height = 5, 
             width = 7
           )
@@ -146,29 +128,21 @@ save_plots('BFactors')
 save_plots('Distances')
 save_plots('Angles')
 save_plots('CVs')
-
-ggsave("Output/Plots/Light/DWDs.svg", height = 5, width = 7, plot = ggplots$Light$Dose$DWDs)
-ggsave("Output/Plots/Dark/DWDs.svg", height = 5, width = 7, plot = ggplots$Dark$Dose$DWDs)
+save_plots('Dose')
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
-write.pdb(pdb = bFactorColoredPDB, file = "Output/ColoredPDBs/BFactorColoredPDB.pdb")
 
 #Save all the tables
 for (i in 1:length(regressionSummaries)) {
   write.csv(
     regressionSummaries[[i]], 
-    paste0(
-      "Output/RegressionTables/",
-      deparse(substitute(regressionSummaries)), 
-      "$", names(regressionSummaries)[i], 
-      ".csv"
-    )
+    str_glue("Output/RegressionTables/RegressionSummary_{names(regressionSummaries)[i]}.csv")
   )
 }
 
 #Make PowerPoint containing figures
-new.figure.slide <- function(ppt, plot_list) {
+new_figure_slide <- function(ppt, plot_list) {
   for (i in plot_list) {
     if ("ggplot" %in% class(i)) {
       ppt <- ppt %>%
@@ -182,15 +156,14 @@ new.figure.slide <- function(ppt, plot_list) {
       }
     }
   }
-  ppt
+  return(ppt)
 } #Function to insert slides with 
 
 doc <- read_pptx(path = "/Users/sm9/Desktop/Template.pptx") %>%
   layout_default("Title and Content") %>%
-  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Dose) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Occupancies) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$Dark$BFactors) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Distances) %>%
-  new.figure.slide(ppt = ., plot_list = ggplots$Dark$Angles) %>% 
-  new.figure.slide(ppt = ., plot_list = ggplots$Dark$CVs)
+  new_figure_slide(ppt = ., plot_list = ggplots$Dark$Dose) %>% 
+  new_figure_slide(ppt = ., plot_list = ggplots$Dark$Occupancies) %>% 
+  new_figure_slide(ppt = ., plot_list = ggplots$Dark$Distances) %>%
+  new_figure_slide(ppt = ., plot_list = ggplots$Dark$Angles) %>% 
+  new_figure_slide(ppt = ., plot_list = ggplots$Dark$CVs)
 print(doc, target = "/Users/sm9/Desktop/Example Figures.pptx")

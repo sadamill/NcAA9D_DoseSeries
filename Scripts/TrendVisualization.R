@@ -28,10 +28,6 @@ wideData <- list(
     Pseudohelices = make.wide("Occupancies", "Pseudohelices"), 
     Wedges = make.wide("Occupancies", "Wedges")
   ), 
-  BFactors = list(
-    Pseudohelices = make.wide("BFactors", "Pseudohelices"), 
-    Wedges = make.wide("BFactors", "Wedges")
-  ), 
   Distances = list(
     Pseudohelices = make.wide("Distances", "Pseudohelices"), 
     Wedges = make.wide("Distances", "Wedges")

@@ -5,7 +5,6 @@
 allWedges <- tibble(
   cbind(
     trimmedOccupancies[["Wedges"]][2:(ncol(trimmedOccupancies[["Wedges"]])-1)], 
-    trimmedBFactors[["Wedges"]][2:(ncol(trimmedBFactors[["Wedges"]])-1)], 
     trimmedDistances[["Wedges"]][2:(ncol(trimmedDistances[["Wedges"]])-1)], 
     allAngles[["Wedges"]][2:(ncol(allAngles[["Wedges"]]))]
   )
@@ -14,13 +13,11 @@ allWedges <- tibble(
 wedgeCVs <- tibble(
   Parameter = c(
     names(trimmedOccupancies[["Wedges"]][2:(ncol(trimmedOccupancies[["Wedges"]])-1)]), 
-    names(trimmedBFactors[["Wedges"]][2:(ncol(trimmedBFactors[["Wedges"]])-1)]), 
     names(trimmedDistances[["Wedges"]][2:(ncol(trimmedDistances[["Wedges"]])-1)]), 
     names(allAngles[["Wedges"]][2:(ncol(allAngles[["Wedges"]])-1)])
   ), 
   ParameterType = c(
     rep("Occupancy", ncol(trimmedOccupancies[["Wedges"]])-2), 
-    rep("B-Factor", ncol(trimmedBFactors[["Wedges"]])-2), 
     rep("Distance", ncol(trimmedDistances[["Wedges"]])-2), 
     rep("Angle", ncol(allAngles[["Wedges"]])-2)
   ), 
