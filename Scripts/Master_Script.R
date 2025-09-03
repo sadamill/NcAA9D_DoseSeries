@@ -39,15 +39,12 @@ pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract ato
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges
 
 #Run dose analysis to prepare dose state vectors
+source("Scripts/CheckingForHeterogeneity.R")
 source("Scripts/RADDOSE.R")
 
 #Prep vectors containing all density-weighted dose values
 pseudohelixDose <- filter(dwds, datasetType == "Pseudohelices")$dwd_MGy
 wedgeDose <- filter(dwds, datasetType == "Wedges")$dwd_MGy
-write_csv(
-  data.frame(pseudohelixDose, wedgeDose),
-  file = "./Output/SlopeMaps/DWDs.csv"
-)
 
 # Global Functions and Objects --------------------------------------------
 
