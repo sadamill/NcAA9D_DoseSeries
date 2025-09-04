@@ -1,39 +1,37 @@
 # Data preparation --------------------------------------------------------
-
-make.wide <- function(trend, datasetType) {
-  regressionSummaries[[trend]][[datasetType]] %>%
-    filter(Estimate %in% c("TrendA", "TrendB")) %>%
+compile_widen <- function(datasetType) {
+  compiled <- rbind(
+    regressionSummaries$Occupancies[[datasetType]],
+    regressionSummaries$Distances[[datasetType]],
+    regressionSummaries$Angles[[datasetType]]
+  )
+  df_wider <- compiled %>% 
     pivot_wider(
       id_cols = Residue, 
       names_from = Estimate, 
-      values_from = Coefficient
-    ) %>%
+      values_from = c(Coefficient, PValue)
+    ) %>% 
     left_join(
-      regressionSummaries[[trend]][[datasetType]] %>%
+      compiled %>%
         filter(Estimate == "Contrast") %>%
-        select(Residue, PValue), 
+        select(Residue, Measurement),
       by = "Residue"
-    ) %>%
+    ) %>% 
+    select(!Coefficient_Contrast) %>% 
     mutate(
-      Significance = ifelse(PValue <= 0.05, "*", " "), 
-      PValue = round(PValue, 3), 
-      MinTrend = pmin(TrendA, TrendB)
-    ) %>%
-    arrange(MinTrend) %>%
-    mutate(Residue = factor(Residue, levels = Residue))
+      PValue_TrendA = p.adjust(PValue_TrendA, method = "BH"),
+      PValue_TrendB = p.adjust(PValue_TrendA, method = "BH"),
+      PValue_Contrast = p.adjust(PValue_TrendA, method = "BH")
+    ) %>% 
+    mutate(
+      PValue_TrendA = signif(PValue_TrendA, 2),
+      PValue_TrendB = signif(PValue_TrendB, 2),
+      PValue_Contrast = signif(PValue_Contrast, 2)
+    )
+  return(df_wider)
 }
 
 wideData <- list(
-  Occupancies = list(
-    Pseudohelices = make.wide("Occupancies", "Pseudohelices"), 
-    Wedges = make.wide("Occupancies", "Wedges")
-  ), 
-  Distances = list(
-    Pseudohelices = make.wide("Distances", "Pseudohelices"), 
-    Wedges = make.wide("Distances", "Wedges")
-  ), 
-  Angles = list(
-    Pseudohelices = make.wide("Angles", "Pseudohelices"), 
-    Wedges = make.wide("Angles", "Wedges")
-  )
+  Pseudohelices = compile_widen("Pseudohelices"),
+  Wedges = compile_widen("Wedges")
 )

@@ -125,6 +125,7 @@ regressionSummaries$Distances <- list(
       c("CuTyr", "CuNterm", "CuHis1ND1", "CuHis84NE2", "CuEq", "CuAx"), 
       function(atom) {
         tibble(
+          Measurement = "Distance",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Distances$Pseudohelices[[atom]], "dose_MGy"), 
@@ -148,6 +149,7 @@ regressionSummaries$Distances <- list(
       c("CuTyr", "CuNterm", "CuHis1ND1", "CuHis84NE2", "CuEq", "CuAx"), 
       function(atom) {
         tibble(
+          Measurement = "Distance",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Distances$Wedges[[atom]], "WedgeNumber"), 

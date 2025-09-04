@@ -162,6 +162,7 @@ regressionSummaries$Occupancies <- list(
       rep("Ax", 3), 
       rep("Eq", 3)
     ), 
+    Measurement = rep("Occupancy", 15),
     Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
     Coefficient = c(
       emtrends.coefficient(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
@@ -216,6 +217,7 @@ regressionSummaries$Occupancies <- list(
       rep("Ax", 3), 
       rep("Eq", 3)
     ), 
+    Measurement = rep("Occupancy", 15),
     Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
     Coefficient = c(
       emtrends.coefficient(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 

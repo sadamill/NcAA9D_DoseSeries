@@ -238,6 +238,7 @@ regressionSummaries$Angles <- list(
       c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
         tibble(
+          Measurement = "Angle",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Angles$Pseudohelices[[atom]], "dose_MGy"), 
@@ -261,6 +262,7 @@ regressionSummaries$Angles <- list(
       c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
         tibble(
+          Measurement = "Angle",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Angles$Wedges[[atom]], "WedgeNumber"), 
