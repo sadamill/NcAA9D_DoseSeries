@@ -1,5 +1,5 @@
 # Data preparation --------------------------------------------------------
-compile_regressions <- function(datasetType) {
+compile_widen <- function(datasetType) {
   compiled <- rbind(
     regressionSummaries$Occupancies[[datasetType]],
     regressionSummaries$Distances[[datasetType]],
@@ -18,9 +18,9 @@ compile_regressions <- function(datasetType) {
       by = "Residue"
     ) %>% 
     mutate(
-      PValue_TrendA = p.adjust(PValue_TrendA, method = "BH"),
-      PValue_TrendB = p.adjust(PValue_TrendB, method = "BH"),
-      PValue_Contrast = p.adjust(PValue_Contrast, method = "BH")
+      PValue_TrendA = p.adjust(PValue_TrendA, method = "BY"),
+      PValue_TrendB = p.adjust(PValue_TrendB, method = "BY"),
+      PValue_Contrast = p.adjust(PValue_Contrast, method = "BY")
     ) %>% arrange(
       pmax(Coefficient_TrendA, Coefficient_TrendB, na.rm = TRUE)
     ) %>% mutate(
