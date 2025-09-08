@@ -162,7 +162,7 @@ regressionSummaries$Occupancies <- list(
       rep("Ax", 3), 
       rep("Eq", 3)
     ), 
-    Measurement = rep("Occupancy", 15),
+    Measurement = rep("Occupancies", 15),
     Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
     Coefficient = c(
       emtrends.coefficient(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
@@ -200,15 +200,7 @@ regressionSummaries$Occupancies <- list(
       emtrends.pvalue(multipleRegressions$Occupancies$Pseudohelices$Ax, "dose_MGy"), 
       emtrends.pvalue(multipleRegressions$Occupancies$Pseudohelices$Eq, "dose_MGy")
     )
-  ) %>% mutate(Significance = ifelse(
-    PValue <= 0.001, "***", 
-    ifelse(
-      PValue <= 0.01, "**", 
-      ifelse(
-        PValue <= 0.05, "*", " "
-      )
-    )
-  )), 
+  ), 
   Wedges = tibble(
     Residue = c(
       rep("Oxy", 3), 
@@ -217,7 +209,7 @@ regressionSummaries$Occupancies <- list(
       rep("Ax", 3), 
       rep("Eq", 3)
     ), 
-    Measurement = rep("Occupancy", 15),
+    Measurement = rep("Occupancies", 15),
     Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
     Coefficient = c(
       emtrends.coefficient(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 
@@ -255,15 +247,7 @@ regressionSummaries$Occupancies <- list(
       emtrends.pvalue(multipleRegressions$Occupancies$Wedges$Ax, "WedgeNumber"), 
       emtrends.pvalue(multipleRegressions$Occupancies$Wedges$Eq, "WedgeNumber")
     )
-  ) %>% mutate(Significance = ifelse(
-    PValue <= 0.001, "***", 
-    ifelse(
-      PValue <= 0.01, "**", 
-      ifelse(
-        PValue <= 0.05, "*", " "
-      )
-    )
-  ))
+  )
 )
 
 #Write out a PDB file for B-factor coloring in ChimeraX

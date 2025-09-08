@@ -238,22 +238,14 @@ regressionSummaries$Angles <- list(
       c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
         tibble(
-          Measurement = "Angle",
+          Measurement = "Angles",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Angles$Pseudohelices[[atom]], "dose_MGy"), 
           StandardError = emtrends.se(multipleRegressions$Angles$Pseudohelices[[atom]], "dose_MGy"), 
           ModelRSquared = summary(multipleRegressions$Angles$Pseudohelices[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Angles$Pseudohelices[[atom]], "dose_MGy")
-        ) %>% mutate(Significance = ifelse(
-          PValue <= 0.001, "***", 
-          ifelse(
-            PValue <= 0.01, "**", 
-            ifelse(
-              PValue <= 0.05, "*", " "
-            )
-          )
-        ))
+        )
       }
     )
   ), 
@@ -262,22 +254,14 @@ regressionSummaries$Angles <- list(
       c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
         tibble(
-          Measurement = "Angle",
+          Measurement = "Angles",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Angles$Wedges[[atom]], "WedgeNumber"), 
           StandardError = emtrends.se(multipleRegressions$Angles$Wedges[[atom]], "WedgeNumber"), 
           ModelRSquared = summary(multipleRegressions$Angles$Wedges[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Angles$Wedges[[atom]], "WedgeNumber")
-        ) %>% mutate(Significance = ifelse(
-          PValue <= 0.001, "***", 
-          ifelse(
-            PValue <= 0.01, "**", 
-            ifelse(
-              PValue <= 0.05, "*", " "
-            )
-          )
-        ))
+        )
       }
     )
   )

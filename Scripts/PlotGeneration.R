@@ -315,34 +315,27 @@ ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, colo
 # Trend plotting ----------------------------------------------------------
 
 dark.trend <- function(trend, datasetType) {
-  
-  regressionSummaries[[trend]][[datasetType]] <<- regressionSummaries[[trend]][[datasetType]] %>%
-    mutate(Residue = factor(Residue, levels = levels(wideData[[trend]][[datasetType]]$Residue))) # Give the residue columns the same factor IDs in both source dataframes
-  
   ggplot(
-    subset(regressionSummaries[[trend]][[datasetType]], Estimate %in% c("TrendA", "TrendB")), # Plot only trends A and B (exclude contrast coefficients)
+    filter(longData[[datasetType]], Trend != "Contrast" & Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
     aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
     geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
     geom_segment( # Line portion of barbell
-      data = wideData[[trend]][[datasetType]],
+      data = filter(wideData[[datasetType]], Measurement == trend),
       aes(
         x = Residue, 
         xend = Residue, 
-        y = TrendA, 
-        yend = TrendB, 
-        color = Significance,
-        alpha = Significance
+        y = Coefficient_TrendA, 
+        yend = Coefficient_TrendB, 
+        color = PValue_Contrast <= 0.05
       ), 
       show.legend = FALSE, 
       inherit.aes = FALSE, 
-      linewidth = 5
+      linewidth = 5,
+      alpha = 0.5
     ) +
     scale_color_manual( # Significant contrasts get colored light blue
       values = c("gray", "skyblue2"), 
-    ) +
-    scale_alpha_manual( # Placeholder in case I want an alpha scale too
-      values = c(0.5, 0.5)
     ) +
     new_scale_color() + # Need new color scale for dots
     ggtheme_dark() +
@@ -351,18 +344,32 @@ dark.trend <- function(trend, datasetType) {
       size = 5,
     ) +
     geom_point( # Individual trend plotting
-      aes(color = Estimate), 
+      aes(color = Trend), 
       size = 5,
       alpha = 0.6
     ) +
     geom_text( # Asterisks for significance
+      data = filter(longData[[datasetType]], Trend == "TrendA" & Measurement == trend),
       aes(
         label = Significance,
-        x = (as.numeric(Residue) + ifelse(Estimate == "TrendB", nrow(regressionSummaries[[trend]][[datasetType]])/3/64, nrow(regressionSummaries[[trend]][[datasetType]])/3/32)), # Offset vertically for only trend A (proportional to number of data points)
-        y = Coefficient
+        x = Residue, # Offset vertically for only trend A (proportional to number of data points)
+        y = Coefficient,
       ),
       size = 6, 
-      color = 'white',
+      position = position_nudge(x = 0.1),
+      color = '#B2DEAB',
+      inherit.aes = FALSE
+    ) +
+    geom_text( # Asterisks for significance
+      data = filter(longData[[datasetType]], Trend == "TrendB" & Measurement == trend),
+      aes(
+        label = Significance,
+        x = Residue, # Offset vertically for only trend A (proportional to number of data points)
+        y = Coefficient,
+      ),
+      size = 6, 
+      position = position_nudge(x = 0.2),
+      color = '#BD9ADB',
       inherit.aes = FALSE
     ) +
     theme(
@@ -409,54 +416,61 @@ dark.trend <- function(trend, datasetType) {
     coord_flip() # Flip coordinates back
 }
 light.trend <- function(trend, datasetType) {
-  
-  regressionSummaries[[trend]][[datasetType]] <- regressionSummaries[[trend]][[datasetType]] %>%
-    mutate(Residue = factor(Residue, levels = levels(wideData[[trend]][[datasetType]]$Residue)))
-  
   ggplot(
-    subset(regressionSummaries[[trend]][[datasetType]], Estimate %in% c("TrendA", "TrendB")), 
-    aes(x = Residue, y = Coefficient)
+    filter(longData[[datasetType]], Trend != "Contrast" & Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
+    aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
-    geom_hline(yintercept = 0, color = 'gray') +
-    geom_segment(
-      data = wideData[[trend]][[datasetType]], 
+    geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
+    geom_segment( # Line portion of barbell
+      data = filter(wideData[[datasetType]], Measurement == trend),
       aes(
         x = Residue, 
         xend = Residue, 
-        y = TrendA, 
-        yend = TrendB, 
-        color = Significance,
-        alpha = Significance
+        y = Coefficient_TrendA, 
+        yend = Coefficient_TrendB, 
+        color = PValue_Contrast <= 0.05
       ), 
       show.legend = FALSE, 
       inherit.aes = FALSE, 
-      linewidth = 5
+      linewidth = 5,
+      alpha = 0.5
     ) +
-    scale_color_manual(
+    scale_color_manual( # Significant contrasts get colored light blue
       values = c("gray", "skyblue2"), 
     ) +
-    scale_alpha_manual(
-      values = c(0.5, 0.5)
-    ) +
-    new_scale_color() +
+    new_scale_color() + # Need new color scale for dots
     ggtheme_light() +
-    geom_point(
+    geom_point( # Blocks out geom_segment to allow for transparent dots
       color = "white", 
       size = 5,
     ) +
-    geom_point(
-      aes(color = Estimate), 
+    geom_point( # Individual trend plotting
+      aes(color = Trend), 
       size = 5,
       alpha = 0.6
     ) +
-    geom_text(
+    geom_text( # Asterisks for significance
+      data = filter(longData[[datasetType]], Trend == "TrendA" & Measurement == trend),
       aes(
         label = Significance,
-        x = as.numeric(Residue) + ifelse(Estimate == "TrendA", nrow(regressionSummaries[[trend]][[datasetType]])/3/64, nrow(regressionSummaries[[trend]][[datasetType]])/3/32),
-        y = Coefficient
+        x = Residue, # Offset vertically for only trend A (proportional to number of data points)
+        y = Coefficient,
       ),
       size = 6, 
-      color = 'black',
+      position = position_nudge(x = 0.15),
+      color = '#4F9437',
+      inherit.aes = FALSE
+    ) +
+    geom_text( # Asterisks for significance
+      data = filter(longData[[datasetType]], Trend == "TrendB" & Measurement == trend),
+      aes(
+        label = Significance,
+        x = Residue, # Offset vertically for only trend A (proportional to number of data points)
+        y = Coefficient,
+      ),
+      size = 6, 
+      position = position_nudge(x = 0.25),
+      color = '#8100b6',
       inherit.aes = FALSE
     ) +
     theme(

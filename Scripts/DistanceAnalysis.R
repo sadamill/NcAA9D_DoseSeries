@@ -125,22 +125,14 @@ regressionSummaries$Distances <- list(
       c("CuTyr", "CuNterm", "CuHis1ND1", "CuHis84NE2", "CuEq", "CuAx"), 
       function(atom) {
         tibble(
-          Measurement = "Distance",
+          Measurement = "Distances",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Distances$Pseudohelices[[atom]], "dose_MGy"), 
           StandardError = emtrends.se(multipleRegressions$Distances$Pseudohelices[[atom]], "dose_MGy"), 
           ModelRSquared = summary(multipleRegressions$Distances$Pseudohelices[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Distances$Pseudohelices[[atom]], "dose_MGy")
-        ) %>% mutate(Significance = ifelse(
-          PValue <= 0.001, "***", 
-          ifelse(
-            PValue <= 0.01, "**", 
-            ifelse(
-              PValue <= 0.05, "*", " "
-            )
-          )
-        ))
+        )
       }
     )
   ), 
@@ -149,22 +141,14 @@ regressionSummaries$Distances <- list(
       c("CuTyr", "CuNterm", "CuHis1ND1", "CuHis84NE2", "CuEq", "CuAx"), 
       function(atom) {
         tibble(
-          Measurement = "Distance",
+          Measurement = "Distances",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Distances$Wedges[[atom]], "WedgeNumber"), 
           StandardError = emtrends.se(multipleRegressions$Distances$Wedges[[atom]], "WedgeNumber"), 
           ModelRSquared = summary(multipleRegressions$Distances$Wedges[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Distances$Wedges[[atom]], "WedgeNumber")
-        ) %>% mutate(Significance = ifelse(
-          PValue <= 0.001, "***", 
-          ifelse(
-            PValue <= 0.01, "**", 
-            ifelse(
-              PValue <= 0.05, "*", " "
-            )
-          )
-        ))
+        )
       }
     )
   )
