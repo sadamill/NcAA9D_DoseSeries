@@ -84,6 +84,7 @@ ggplots <- list()
 source("Scripts/OccupancyAnalysis.R")
 source("Scripts/DistanceAnalysis.R")
 source("Scripts/AngleAnalysis.R")
+source("Scripts/StructureStats.R")
 
 # Data Visualization ------------------------------------------------------
 
@@ -127,6 +128,7 @@ save_plots('Distances')
 save_plots('Angles')
 save_plots('CVs')
 save_plots('Dose')
+save_plots('Statistics')
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
@@ -160,6 +162,7 @@ new_figure_slide <- function(ppt, plot_list) {
 doc <- read_pptx(path = "/Users/sm9/Desktop/Template.pptx") %>%
   layout_default("Title and Content") %>%
   new_figure_slide(ppt = ., plot_list = ggplots$Dark$Dose) %>% 
+  new_figure_slide(ppt = ., plot_list = ggplots$Dark$Stats) %>% 
   new_figure_slide(ppt = ., plot_list = ggplots$Dark$Occupancies) %>% 
   new_figure_slide(ppt = ., plot_list = ggplots$Dark$Distances) %>%
   new_figure_slide(ppt = ., plot_list = ggplots$Dark$Angles) %>% 

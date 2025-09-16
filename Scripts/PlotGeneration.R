@@ -298,7 +298,7 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
     y = "Density-Weighted Dose (MGy)"
   )
 
-ggplots$Light$Stats$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
+ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
   geom_point() +
   ggtheme_light() +
   scale_color_manual(
@@ -329,7 +329,9 @@ ggplots$Dark$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = 
       ),
       label_parsed
     )
-  )
+  ) +
+  theme(axis.title.y = element_blank()) +
+  labs(x = "Dose (MGy)")
 ggplots$Dark$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, y = value)) +
   geom_point(color = "#0096c5") +
   ggtheme_dark() +
@@ -347,10 +349,12 @@ ggplots$Dark$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, 
       ),
       label_parsed
     )
-  )
+  ) +
+  theme(axis.title.y = element_blank()) +
+  labs(x = "Wedge Number")
 ggplots$Light$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = pseudohelix_dose, y = value)) +
   geom_point(color = "#b8008c") +
-  ggtheme_dark() +
+  ggtheme_light() +
   facet_wrap(
     ~ statistic,
     scales = "free",
@@ -365,10 +369,12 @@ ggplots$Light$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x =
       ),
       label_parsed
     )
-  )
+  ) +
+  theme(axis.title.y = element_blank()) +
+  labs(x = "Dose (MGy)")
 ggplots$Light$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, y = value)) +
   geom_point(color = "#0096c5") +
-  ggtheme_dark() +
+  ggtheme_light() +
   facet_wrap(
     ~ statistic,
     scales = "free",
@@ -383,7 +389,9 @@ ggplots$Light$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number,
       ),
       label_parsed
     )
-  )
+  ) +
+  theme(axis.title.y = element_blank()) +
+  labs(x = "Wedge Number")
 
 # Trend plotting ----------------------------------------------------------
 
