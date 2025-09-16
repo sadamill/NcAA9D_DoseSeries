@@ -128,7 +128,7 @@ save_plots('Distances')
 save_plots('Angles')
 save_plots('CVs')
 save_plots('Dose')
-save_plots('Statistics')
+save_plots('Stats')
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
