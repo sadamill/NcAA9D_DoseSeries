@@ -298,7 +298,7 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
     y = "Density-Weighted Dose (MGy)"
   )
 
-ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
+ggplots$Light$Stats$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
   geom_point() +
   ggtheme_light() +
   scale_color_manual(
@@ -312,11 +312,84 @@ ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, colo
     y = "Density-Weighted Dose (MGy)"
   )
 
+ggplots$Dark$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = pseudohelix_dose, y = value)) +
+  geom_point(color = "#b8008c") +
+  ggtheme_dark() +
+  facet_wrap(
+    ~ statistic,
+    scales = "free",
+    labeller = as_labeller(
+      c(
+        cc1_2 = "CC[1/2]",
+        r_free = "R[free]",
+        r_work = "R[work]",
+        completeness_percent = "'Completeness (%)'",
+        mean_i_sigma_i = "Mean~I/σ(I)",
+        wilson_b_factor = "Wilson~B-factor"
+      ),
+      label_parsed
+    )
+  )
+ggplots$Dark$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, y = value)) +
+  geom_point(color = "#0096c5") +
+  ggtheme_dark() +
+  facet_wrap(
+    ~ statistic,
+    scales = "free",
+    labeller = as_labeller(
+      c(
+        cc1_2 = "CC[1/2]",
+        r_free = "R[free]",
+        r_work = "R[work]",
+        completeness_percent = "'Completeness (%)'",
+        mean_i_sigma_i = "Mean~I/σ(I)",
+        wilson_b_factor = "Wilson~B-factor"
+      ),
+      label_parsed
+    )
+  )
+ggplots$Light$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = pseudohelix_dose, y = value)) +
+  geom_point(color = "#b8008c") +
+  ggtheme_dark() +
+  facet_wrap(
+    ~ statistic,
+    scales = "free",
+    labeller = as_labeller(
+      c(
+        cc1_2 = "CC[1/2]",
+        r_free = "R[free]",
+        r_work = "R[work]",
+        completeness_percent = "'Completeness (%)'",
+        mean_i_sigma_i = "Mean~I/σ(I)",
+        wilson_b_factor = "Wilson~B-factor"
+      ),
+      label_parsed
+    )
+  )
+ggplots$Light$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, y = value)) +
+  geom_point(color = "#0096c5") +
+  ggtheme_dark() +
+  facet_wrap(
+    ~ statistic,
+    scales = "free",
+    labeller = as_labeller(
+      c(
+        cc1_2 = "CC[1/2]",
+        r_free = "R[free]",
+        r_work = "R[work]",
+        completeness_percent = "'Completeness (%)'",
+        mean_i_sigma_i = "Mean~I/σ(I)",
+        wilson_b_factor = "Wilson~B-factor"
+      ),
+      label_parsed
+    )
+  )
+
 # Trend plotting ----------------------------------------------------------
 
 dark.trend <- function(trend, datasetType) {
   ggplot(
-    filter(longData[[datasetType]], Trend != "Contrast" & Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
+    filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
     aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
     geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
@@ -344,12 +417,12 @@ dark.trend <- function(trend, datasetType) {
       size = 5,
     ) +
     geom_point( # Individual trend plotting
-      aes(color = Trend), 
+      aes(color = Estimate), 
       size = 5,
       alpha = 0.6
     ) +
     geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Trend == "TrendA" & Measurement == trend),
+      data = filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
       aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
@@ -361,7 +434,7 @@ dark.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Trend == "TrendB" & Measurement == trend),
+      data = filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
       aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
@@ -417,7 +490,7 @@ dark.trend <- function(trend, datasetType) {
 }
 light.trend <- function(trend, datasetType) {
   ggplot(
-    filter(longData[[datasetType]], Trend != "Contrast" & Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
+    filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
     aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
     geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
@@ -445,12 +518,12 @@ light.trend <- function(trend, datasetType) {
       size = 5,
     ) +
     geom_point( # Individual trend plotting
-      aes(color = Trend), 
+      aes(color = Estimate), 
       size = 5,
       alpha = 0.6
     ) +
     geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Trend == "TrendA" & Measurement == trend),
+      data = filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
       aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
@@ -462,7 +535,7 @@ light.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Trend == "TrendB" & Measurement == trend),
+      data = filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
       aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)

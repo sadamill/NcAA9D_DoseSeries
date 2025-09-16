@@ -35,7 +35,12 @@ wideData <- list(
 )
 
 make_long <- function(datasetType) {
-  pivot_longer(
+  compiled <- rbind(
+    regressionSummaries$Occupancies[[datasetType]],
+    regressionSummaries$Distances[[datasetType]],
+    regressionSummaries$Angles[[datasetType]]
+  )
+  reformatted_wide <- pivot_longer(
     wideData[[datasetType]],
     cols = Coefficient_TrendA:PValue_Contrast,
     names_to = c("Type", "Trend"),
@@ -44,15 +49,21 @@ make_long <- function(datasetType) {
     id_cols = c(Trend, Residue, Measurement),
     names_from = Type,
     values_from = value
-  ) %>% mutate(Significance = ifelse(
-    PValue <= 0.001, "***", 
-    ifelse(
-      PValue <= 0.01, "**", 
+  )
+  Corrected_PValue <- reformatted_wide$PValue
+  full_table <- cbind(
+    compiled, Corrected_PValue
+  ) %>% mutate(
+    Significance = ifelse(
+      PValue <= 0.001, "***", 
       ifelse(
-        PValue <= 0.05, "*", " "
+        PValue <= 0.01, "**", 
+        ifelse(
+          PValue <= 0.05, "*", " "
+        )
       )
-    )
-  ))
+    ))
+  return(full_table)
 }
 
 longData <- list(
