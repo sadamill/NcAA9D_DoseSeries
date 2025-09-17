@@ -290,7 +290,7 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
   scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
-    values = c("#0096c5", "#b8008c"), 
+    values = c("#0096c5", "#b8008c")
   ) +
   coord_cartesian(expand = FALSE) +
   labs(
@@ -304,7 +304,7 @@ ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, colo
   scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
-    values = c("#0096c5", "#b8008c"), 
+    values = c("#0096c5", "#b8008c")
   ) +
   coord_cartesian(expand = FALSE) +
   labs(
@@ -312,12 +312,18 @@ ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, colo
     y = "Density-Weighted Dose (MGy)"
   )
 
-ggplots$Dark$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = pseudohelix_dose, y = value)) +
-  geom_point(color = "#b8008c") +
+ggplots$Dark$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = dataset_number, y = value, color = dataset_type)) +
+  geom_point() +
   ggtheme_dark() +
+  scale_color_manual(
+    "Dataset Type",
+    labels = c("Wedges", "Pseudohelices"), 
+    values = c("#0096c5", "#b8008c")
+  ) +
   facet_wrap(
-    ~ statistic,
+    . ~ statistic,
     scales = "free",
+    ncol = 3,
     labeller = as_labeller(
       c(
         cc1_2 = "CC[1/2]",
@@ -325,7 +331,7 @@ ggplots$Dark$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = 
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
-        mean_i_sigma_i = "Mean~I/σ(I)",
+        mean_i_sigma_i = "'Mean '*I/σ[I]",
         wilson_b_factor = "'Wilson B-factor'",
         rms_angles = "RMS[angles]",
         rms_bonds = "RMS[bonds]"
@@ -333,37 +339,20 @@ ggplots$Dark$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = 
       label_parsed
     )
   ) +
-  theme(axis.title.y = element_blank()) +
-  labs(x = "Dose (MGy)")
-ggplots$Dark$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, y = value)) +
-  geom_point(color = "#0096c5") +
-  ggtheme_dark() +
-  facet_wrap(
-    ~ statistic,
-    scales = "free",
-    labeller = as_labeller(
-      c(
-        cc1_2 = "CC[1/2]",
-        multiplicity = "Multiplicity",
-        r_free = "R[free]",
-        r_work = "R[work]",
-        completeness_percent = "'Completeness (%)'",
-        mean_i_sigma_i = "Mean~I/σ(I)",
-        wilson_b_factor = "'Wilson B-factor'",
-        rms_angles = "RMS[angles]",
-        rms_bonds = "RMS[bonds]"
-      ),
-      label_parsed
-    )
-  ) +
-  theme(axis.title.y = element_blank()) +
-  labs(x = "Wedge Number")
-ggplots$Light$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = pseudohelix_dose, y = value)) +
-  geom_point(color = "#b8008c") +
+  theme(axis.title.y = element_blank(), legend.position.inside = c(0.85, 0.1)) +
+  labs(x = "Dataset Number")
+ggplots$Light$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = dataset_number, y = value, color = dataset_type)) +
+  geom_point() +
   ggtheme_light() +
+  scale_color_manual(
+    "Dataset Type",
+    labels = c("Wedges", "Pseudohelices"), 
+    values = c("#0096c5", "#b8008c")
+  ) +
   facet_wrap(
-    ~ statistic,
+    . ~ statistic,
     scales = "free",
+    ncol = 3,
     labeller = as_labeller(
       c(
         cc1_2 = "CC[1/2]",
@@ -371,7 +360,7 @@ ggplots$Light$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x =
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
-        mean_i_sigma_i = "Mean~I/σ(I)",
+        mean_i_sigma_i = "'Mean '*I/σ[I]",
         wilson_b_factor = "'Wilson B-factor'",
         rms_angles = "RMS[angles]",
         rms_bonds = "RMS[bonds]"
@@ -379,31 +368,8 @@ ggplots$Light$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x =
       label_parsed
     )
   ) +
-  theme(axis.title.y = element_blank()) +
-  labs(x = "Dose (MGy)")
-ggplots$Light$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, y = value)) +
-  geom_point(color = "#0096c5") +
-  ggtheme_light() +
-  facet_wrap(
-    ~ statistic,
-    scales = "free",
-    labeller = as_labeller(
-      c(
-        cc1_2 = "CC[1/2]",
-        multiplicity = "Multiplicity",
-        r_free = "R[free]",
-        r_work = "R[work]",
-        completeness_percent = "'Completeness (%)'",
-        mean_i_sigma_i = "Mean~I/σ(I)",
-        wilson_b_factor = "'Wilson B-factor'",
-        rms_angles = "RMS[angles]",
-        rms_bonds = "RMS[bonds]"
-      ),
-      label_parsed
-    )
-  ) +
-  theme(axis.title.y = element_blank()) +
-  labs(x = "Wedge Number")
+  theme(axis.title.y = element_blank(), legend.position.inside = c(0.85, 0.1)) +
+  labs(x = "Dataset Number")
 
 # Trend plotting ----------------------------------------------------------
 

@@ -99,7 +99,7 @@ save_plots <- function(parameter) {
   for(theme in names(ggplots)) {
     for(i in names(ggplots[[theme]][[parameter]])) {
       if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
-        dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"}
+        dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"} else if(i == "CrystalStats") {"CrystalStats"}
         this_parameter = if(parameter %in% c("Angles", "Distances", "Occupancies")) {parameter} else {""}
         ggsave(
           filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}.svg"), 
@@ -109,7 +109,7 @@ save_plots <- function(parameter) {
         )
       } else if("list" %in% class(ggplots[[theme]][[parameter]][[i]])) {
         for(j in names(ggplots[[theme]][[parameter]][[i]])) {
-          dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"} else if(j == "DWDs") {"DWDs"}
+          dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"}
           ggsave(
             filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 

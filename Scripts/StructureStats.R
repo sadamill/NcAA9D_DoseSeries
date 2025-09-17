@@ -1,4 +1,4 @@
-read_crystal_stats <- function(filepath, regressor) {
+read_crystal_stats <- function(filepath, dataset_type) {
   regressor_name <- deparse(substitute(regressor))
   
   data <- read_csv(filepath) %>%
@@ -8,22 +8,31 @@ read_crystal_stats <- function(filepath, regressor) {
     mutate(across(everything(), ~ gsub("\\s*\\(.*\\)", "", .))) %>% # Remove parenthetical stats
     mutate(across(everything(), trimws)) %>% # Clean up trailing white spaces
     mutate(across(where(~ all(grepl("^[0-9 .-]*$", .x))), readr::parse_number)) %>% # Coerce all-number vectors to numeric
-    mutate(!!regressor_name := regressor) %>% 
-    select(!!regressor_name, `Completeness (%)`, `Multiplicity`, `Mean I/sigma(I)`, `Wilson B-factor`, `CC1/2`, `R-work`, `R-free`, `RMS(bonds)`, `RMS(angles)`) %>% 
+    mutate(
+      dataset_number = 1:36,
+      dataset_type = dataset_type
+    ) %>% 
+    select(dataset_number, dataset_type, `Completeness (%)`, `Multiplicity`, `Mean I/sigma(I)`, `Wilson B-factor`, `Average B-factor`, `CC1/2`, `R-work`, `R-free`, `RMS(bonds)`, `RMS(angles)`) %>% 
     clean_names() %>% # Convert column names to snake case
     pivot_longer(
       cols = completeness_percent:rms_angles,
       names_to = "statistic",
-    )
+    ) %>% 
+    mutate(stastic = factor(
+      statistic,
+      levels = c('multiplicity', 'completeness_percent', 'mean_i_sigma_i', 'wilson_b_factor', 'average_b_factor', 'cc_1_2', 'r_work', 'r_free', 'rms_bonds', 'rms_angles')
+    ))
   return(data)
 }
 
 crystal_stats <- list()
 crystal_stats$pseudohelices <- read_crystal_stats(
   filepath = "Input/Crystal_Statistics/Pseudohelix_Statistics.csv",
-  regressor = pseudohelixDose
+  dataset_type = "Pseudohelices"
 )
 crystal_stats$wedges <- read_crystal_stats(
   filepath = "Input/Crystal_Statistics/Wedge_Statistics.csv",
-  regressor = wedgeNumber
+  dataset_type = "Wedges"
 )
+
+crystal_stats$combined <- rbind(crystal_stats$pseudohelices, crystal_stats$wedges)
