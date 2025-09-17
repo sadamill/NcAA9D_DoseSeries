@@ -18,7 +18,7 @@ read_crystal_stats <- function(filepath, dataset_type) {
       cols = completeness_percent:rms_angles,
       names_to = "statistic",
     ) %>% 
-    mutate(stastic = factor(
+    mutate(statistic = factor(
       statistic,
       levels = c('multiplicity', 'completeness_percent', 'mean_i_sigma_i', 'wilson_b_factor', 'average_b_factor', 'cc_1_2', 'r_work', 'r_free', 'rms_bonds', 'rms_angles')
     ))

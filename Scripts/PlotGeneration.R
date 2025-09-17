@@ -337,7 +337,8 @@ ggplots$Dark$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = datase
         mean_i_sigma_i = "'Mean '*I/σ[I]",
         wilson_b_factor = "'Wilson B-factor'",
         rms_angles = "RMS[angles]",
-        rms_bonds = "RMS[bonds]"
+        rms_bonds = "RMS[bonds]",
+        average_b_factor = "'Average B-factor'"
       ),
       label_parsed
     )
@@ -367,7 +368,8 @@ ggplots$Light$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = datas
         mean_i_sigma_i = "'Mean '*I/σ[I]",
         wilson_b_factor = "'Wilson B-factor'",
         rms_angles = "RMS[angles]",
-        rms_bonds = "RMS[bonds]"
+        rms_bonds = "RMS[bonds]",
+        average_b_factor = "'Average B-factor'"
       ),
       label_parsed
     )
