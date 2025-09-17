@@ -95,7 +95,7 @@ source("Scripts/WedgeCVAnalysis.R")
 # Data write-out ----------------------------------------------------------
 
 #Save all the plots
-save_plots <- function(parameter) {
+save_plots <- function(parameter, height = 5, width = 7) {
   for(theme in names(ggplots)) {
     for(i in names(ggplots[[theme]][[parameter]])) {
       if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
@@ -104,8 +104,8 @@ save_plots <- function(parameter) {
         ggsave(
           filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}.svg"), 
           plot = ggplots[[theme]][[parameter]][[i]], 
-          height = 5, 
-          width = 7
+          height = height, 
+          width = width
         )
       } else if("list" %in% class(ggplots[[theme]][[parameter]][[i]])) {
         for(j in names(ggplots[[theme]][[parameter]][[i]])) {
@@ -113,8 +113,8 @@ save_plots <- function(parameter) {
           ggsave(
             filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 
-            height = 5, 
-            width = 7
+            height = height, 
+            width = width
           )
         }
       }
@@ -128,7 +128,7 @@ save_plots('Distances')
 save_plots('Angles')
 save_plots('CVs')
 save_plots('Dose')
-save_plots('Stats')
+save_plots('Stats', height = 8)
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
