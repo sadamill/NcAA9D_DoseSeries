@@ -2,11 +2,6 @@
 
 ggtheme_dark <- function() {
   list(
-    scale_color_manual(
-      "Molecule", 
-      labels = c("A", "B"), 
-      values = c("#5cb344", "#8100b6")
-    ), 
     theme_dark(), 
     theme(
       #Overall elements
@@ -29,11 +24,6 @@ ggtheme_dark <- function() {
 } # Define a custom ggplot dark theme
 ggtheme_light <- function() {
   list(
-    scale_color_manual(
-      "Molecule", 
-      labels = c("A", "B"), 
-      values = c("#5cb344", "#8100b6"), 
-    ), 
     theme_bw(), 
     theme(
       #Overall elements
@@ -144,6 +134,12 @@ scales <- function(facetVar) {
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
   ggplot(data, mapping) +
+    scale_color_manual(
+      "Molecule", 
+      labels = c("A", "B"), 
+      breaks = c("A", "B"),
+      values = c("#5cb344", "#8100b6"), 
+    ) +
     stat_smooth(
       method = "lm", 
       linewidth = 0, 
@@ -175,6 +171,12 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
 } #Make scatter plot with fitted linear regression
 scatter_light <- function(data, mapping, facetVar, datasetType) {
   ggplot(data, mapping) +
+    scale_color_manual(
+      "Molecule", 
+      labels = c("A", "B"), 
+      breaks = c("A", "B"),
+      values = c("#5cb344", "#8100b6"), 
+    ) +
     stat_smooth(
       method = "lm", 
       linewidth = 0, 
@@ -400,9 +402,15 @@ dark.trend <- function(trend, datasetType) {
       alpha = 0.5
     ) +
     scale_color_manual( # Significant contrasts get colored light blue
-      values = c("gray", "skyblue2"), 
+      values = c("gray", "skyblue2")
     ) +
     new_scale_color() + # Need new color scale for dots
+    scale_color_manual(
+      "Molecule", 
+      labels = c("A", "B"), 
+      breaks = c("TrendA", "TrendB"),
+      values = c("#5cb344", "#8100b6"), 
+    ) +
     ggtheme_dark() +
     geom_point( # Blocks out geom_segment to allow for transparent dots
       color = "black", 
@@ -501,9 +509,16 @@ light.trend <- function(trend, datasetType) {
       alpha = 0.5
     ) +
     scale_color_manual( # Significant contrasts get colored light blue
-      values = c("gray", "skyblue2"), 
+      breaks = c(FALSE, TRUE),
+      values = c("gray", "skyblue2")
     ) +
     new_scale_color() + # Need new color scale for dots
+    scale_color_manual(
+      "Molecule", 
+      labels = c("A", "B"), 
+      breaks = c("TrendA", "TrendB"),
+      values = c("#5cb344", "#8100b6"), 
+    ) +
     ggtheme_light() +
     geom_point( # Blocks out geom_segment to allow for transparent dots
       color = "white", 

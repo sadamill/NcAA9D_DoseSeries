@@ -20,7 +20,7 @@ read_crystal_stats <- function(filepath, dataset_type) {
     ) %>% 
     mutate(statistic = factor(
       statistic,
-      levels = c('multiplicity', 'completeness_percent', 'mean_i_sigma_i', 'wilson_b_factor', 'average_b_factor', 'cc_1_2', 'r_work', 'r_free', 'rms_bonds', 'rms_angles')
+      levels = c('multiplicity', 'completeness_percent', 'mean_i_sigma_i', 'wilson_b_factor', 'average_b_factor', 'cc1_2', 'r_work', 'r_free', 'rms_bonds', 'rms_angles')
     ))
   return(data)
 }
