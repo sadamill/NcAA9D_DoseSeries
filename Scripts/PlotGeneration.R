@@ -290,6 +290,7 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
   scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
     values = c("#0096c5", "#b8008c")
   ) +
   coord_cartesian(expand = FALSE) +
@@ -304,6 +305,7 @@ ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, colo
   scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
     values = c("#0096c5", "#b8008c")
   ) +
   coord_cartesian(expand = FALSE) +
@@ -318,6 +320,7 @@ ggplots$Dark$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = datase
   scale_color_manual(
     "Dataset Type",
     labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
     values = c("#0096c5", "#b8008c")
   ) +
   facet_wrap(
@@ -347,6 +350,7 @@ ggplots$Light$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = datas
   scale_color_manual(
     "Dataset Type",
     labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
     values = c("#0096c5", "#b8008c")
   ) +
   facet_wrap(
