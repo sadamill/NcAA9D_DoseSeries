@@ -321,11 +321,14 @@ ggplots$Dark$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x = 
     labeller = as_labeller(
       c(
         cc1_2 = "CC[1/2]",
+        multiplicity = "Multiplicity",
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
         mean_i_sigma_i = "Mean~I/σ(I)",
-        wilson_b_factor = "Wilson~B-factor"
+        wilson_b_factor = "'Wilson B-factor'",
+        rms_angles = "RMS[angles]",
+        rms_bonds = "RMS[bonds]"
       ),
       label_parsed
     )
@@ -341,11 +344,14 @@ ggplots$Dark$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number, 
     labeller = as_labeller(
       c(
         cc1_2 = "CC[1/2]",
+        multiplicity = "Multiplicity",
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
         mean_i_sigma_i = "Mean~I/σ(I)",
-        wilson_b_factor = "Wilson~B-factor"
+        wilson_b_factor = "'Wilson B-factor'",
+        rms_angles = "RMS[angles]",
+        rms_bonds = "RMS[bonds]"
       ),
       label_parsed
     )
@@ -361,11 +367,14 @@ ggplots$Light$Stats$Pseudohelices <- ggplot(crystal_stats$pseudohelices, aes(x =
     labeller = as_labeller(
       c(
         cc1_2 = "CC[1/2]",
+        multiplicity = "Multiplicity",
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
         mean_i_sigma_i = "Mean~I/σ(I)",
-        wilson_b_factor = "Wilson~B-factor"
+        wilson_b_factor = "'Wilson B-factor'",
+        rms_angles = "RMS[angles]",
+        rms_bonds = "RMS[bonds]"
       ),
       label_parsed
     )
@@ -381,11 +390,14 @@ ggplots$Light$Stats$Wedges <- ggplot(crystal_stats$wedges, aes(x = wedge_number,
     labeller = as_labeller(
       c(
         cc1_2 = "CC[1/2]",
+        multiplicity = "Multiplicity",
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
         mean_i_sigma_i = "Mean~I/σ(I)",
-        wilson_b_factor = "Wilson~B-factor"
+        wilson_b_factor = "'Wilson B-factor'",
+        rms_angles = "RMS[angles]",
+        rms_bonds = "RMS[bonds]"
       ),
       label_parsed
     )

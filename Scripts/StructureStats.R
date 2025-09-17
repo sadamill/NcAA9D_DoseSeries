@@ -9,10 +9,10 @@ read_crystal_stats <- function(filepath, regressor) {
     mutate(across(everything(), trimws)) %>% # Clean up trailing white spaces
     mutate(across(where(~ all(grepl("^[0-9 .-]*$", .x))), readr::parse_number)) %>% # Coerce all-number vectors to numeric
     mutate(!!regressor_name := regressor) %>% 
-    select(!!regressor_name, `Completeness (%)`, `Mean I/sigma(I)`, `Wilson B-factor`, `CC1/2`, `R-work`, `R-free`) %>% 
+    select(!!regressor_name, `Completeness (%)`, `Multiplicity`, `Mean I/sigma(I)`, `Wilson B-factor`, `CC1/2`, `R-work`, `R-free`, `RMS(bonds)`, `RMS(angles)`) %>% 
     clean_names() %>% # Convert column names to snake case
     pivot_longer(
-      cols = completeness_percent:r_free,
+      cols = completeness_percent:rms_angles,
       names_to = "statistic",
     )
   return(data)
