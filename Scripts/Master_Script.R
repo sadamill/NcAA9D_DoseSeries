@@ -45,6 +45,7 @@ source("Scripts/RADDOSE.R")
 
 #Prep vectors containing all density-weighted dose values
 pseudohelixDose <- filter(dwds, datasetType == "Pseudohelices")$dwd_MGy
+wedgeDose <- filter(dwds, datasetType == "Wedges")$dwd_MGy
 
 # Global Functions and Objects --------------------------------------------
 
