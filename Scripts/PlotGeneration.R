@@ -469,14 +469,14 @@ dark.trend <- function(trend, datasetType) {
       "Glu" = bquote(Glu[30])
     )) +
     labs(
-      y = if(trend %in% c("Occupancies", "BFactors")) {
+      x = if(trend %in% c("Occupancies", "BFactors")) {
         "Residue"
       } else if(trend == "Distances") {
         "Atom Pair"
       } else if(trend == "Angles") {
         "Angle ID"
       } else {stop("Invalid trend input for trend visualization")},
-      x = if(trend == "Occupancies") {
+      y = if(trend == "Occupancies") {
         "Occupancy Trend (Δ/MGy)"
       } else if(trend == "BFactors") {
         bquote("B-Factor Trend (" * Å^2 * "/MGy)")
@@ -577,14 +577,14 @@ light.trend <- function(trend, datasetType) {
       "Glu" = bquote(Glu[30])
     )) +
     labs(
-      y = if(trend %in% c("Occupancies", "BFactors")) {
+      x = if(trend %in% c("Occupancies", "BFactors")) {
         "Residue"
       } else if(trend == "Distances") {
         "Atom Pair"
       } else if(trend == "Angles") {
         "Angle ID"
       } else {stop("Invalid trend input for trend visualization")},
-      x = if(trend == "Occupancies") {
+      y = if(trend == "Occupancies") {
         "Occupancy Trend (Δ/MGy)"
       } else if(trend == "BFactors") {
         bquote("B-Factor Trend (" * Å^2 * "/MGy)")

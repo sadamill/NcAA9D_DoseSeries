@@ -16,7 +16,7 @@ require(webshot2)
 require(htmlwidgets)
 require(janitor)
 
-options(scipen = 7) #I don"t like viewing things in scientific notation
+options(scipen = 7) #I don't like viewing things in scientific notation
 mem.maxVSize(vsize = 30000) #Set max memory size to allow space for large distance matrices
 
 # Raw Data Extraction/Preparation -----------------------------------------
