@@ -21,7 +21,7 @@ orthogonal.vector <- function(a, b, c) {
 vector.angle <- function(v1, v2) {
   c(v1, v2) %>% 
     matrix(nrow = 2, byrow = TRUE) %>% #Make a 3x2 matrix containing the two vectors, one in each row
-    {(dot(.[1, ], .[2, ]))/(sqrt(sum(.[1, 1]^2, .[1, 2]^2, .[1, 3]^2))*sqrt(sum(.[2, 1]^2, .[2, 2]^2, .[2, 3]^2)))} %>% 
+    {(geometry::dot(.[1, ], .[2, ]))/(sqrt(sum(.[1, 1]^2, .[1, 2]^2, .[1, 3]^2))*sqrt(sum(.[2, 1]^2, .[2, 2]^2, .[2, 3]^2)))} %>% 
     acos() %>% 
     {.*180/pi}
 }

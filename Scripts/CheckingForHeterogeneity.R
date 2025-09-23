@@ -1,5 +1,5 @@
 # Occupancy Pairwise Comparisons ------------------------------------------
-combinations <- combn(seq(36), 2) %>% t()
+combinations <- expand_grid(reference = 1:36, comparison = 1:36)
 pseudohelix_occ <- sapply(pseudohelixAtoms, function(atoms) {atoms$o})
 pseudohelix_occ_rmsd <- apply(combinations, 1, function(pair) {
   {(pseudohelix_occ[,pair[1]] - pseudohelix_occ[,pair[2]]) ** 2} %>% mean() %>% sqrt()
@@ -11,7 +11,7 @@ wedge_occ_rmsd <- apply(combinations, 1, function(pair) {
 }) %>% as_tibble_col(column_name = "rmsd") %>% 
   mutate(type = "wedges") %>% cbind(combinations)
 rmsd_occ <- rbind(pseudohelix_occ_rmsd, wedge_occ_rmsd) %>% 
-  rename(ref_dataset = "1", comp_dataset = "2") %>% mutate(parameter = "occupancies")
+  rename(ref_dataset = "reference", comp_dataset = "comparison") %>% mutate(parameter = "occupancies")
 
 # B-factor Pairwise Comparisons -------------------------------------------
 pseudohelix_bf <- sapply(pseudohelixAtoms, function(atoms) {atoms$b})
@@ -25,69 +25,112 @@ wedge_bf_rmsd <- apply(combinations, 1, function(pair) {
 }) %>% as_tibble_col(column_name = "rmsd") %>% 
   mutate(type = "wedges") %>% cbind(combinations)
 rmsd_b <- rbind(pseudohelix_bf_rmsd, wedge_bf_rmsd) %>% 
-  rename(ref_dataset = "1", comp_dataset = "2") %>% mutate(parameter = "b_factors")
+  rename(ref_dataset = "reference", comp_dataset = "comparison") %>% mutate(parameter = "b_factors")
 
 # XYZ Pairwise Comparisons ------------------------------------------------
-pseudohelix_xyz <- sapply(pseudohelixList, function(pdb) {
+pseudohelix_coord <- sapply(pseudohelixList, function(pdb) {
   pdb$xyz %>% as.numeric()
 }) %>% t()
-wedge_xyz <- sapply(wedgeList, function(pdb) {
+wedge_coord <- sapply(wedgeList, function(pdb) {
   pdb$xyz %>% as.numeric()
 }) %>% t()
-pseudohelix_rmsd <- rmsd(pseudohelix_xyz)
-wedge_rmsd <- rmsd(wedge_xyz)
+pseudohelix_rmsd <- rmsd(pseudohelix_coord)
+wedge_rmsd <- rmsd(wedge_coord)
 
-pseudohelix_xyz_rmsd <- apply(combinations, 1, function(pair) {
+pseudohelix_coord_rmsd <- apply(combinations, 1, function(pair) {
   row <- pair[1]
   col <- pair[2]
   return(pseudohelix_rmsd[row,col])
 }) %>% as_tibble_col(column_name = "rmsd") %>% 
   mutate(type = "pseudohelices") %>% cbind(combinations)
-wedge_xyz_rmsd <- apply(combinations, 1, function(pair) {
+wedge_coord_rmsd <- apply(combinations, 1, function(pair) {
   row <- pair[1]
   col <- pair[2]
   return(wedge_rmsd[row,col])
 }) %>% as_tibble_col(column_name = "rmsd") %>% 
   mutate(type = "wedges") %>% cbind(combinations)
-rmsd_xyz <- rbind(pseudohelix_xyz_rmsd, wedge_xyz_rmsd) %>% 
-  rename(ref_dataset = "1", comp_dataset = "2") %>% mutate(parameter = "xyz")
+rmsd_coord <- rbind(pseudohelix_coord_rmsd, wedge_coord_rmsd) %>% 
+  rename(ref_dataset = "reference", comp_dataset = "comparison") %>% mutate(parameter = "coordinates")
 
-# RMSD Plotting -----------------------------------------------------------
-all_rmsds <- rbind(rmsd_occ, rmsd_b, rmsd_xyz)
-rmsd_plot <- ggplot() +
-  geom_tile(
-    data = all_rmsds %>% filter(parameter == "occupancies"),
-    mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
-  ) +
-  scale_fill_viridis_c(name = "Occupancy RMSD") +
-  new_scale_fill() +
-  geom_tile(
-    data = all_rmsds %>% filter(parameter == "b_factors"),
-    mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
-  ) +
-  scale_fill_viridis_c(name = "B-Factor RMSD") +
-  new_scale_fill() +
-  geom_tile(
-    data = all_rmsds %>% filter(parameter == "xyz"),
-    mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
-  ) +
-  scale_fill_viridis_c(name = "Coordinate RMSD") +
-  facet_grid(
-    type ~ parameter,
-    labeller = labeller(
-      .default = str_to_title,
-      parameter = c(b_factors = "B-Factors", xyz = "Coordinates")
+all_rmsds <- rbind(rmsd_occ, rmsd_b, rmsd_coord) %>% 
+  mutate(parameter = factor(parameter, levels = c("b_factors", "occupancies", "coordinates")))
+
+# Local RMSDs ---------------------------------------------------------
+make_rmsd_df <- function(parameter, window_size = 5) {
+  wedges_data <- filter(all_rmsds, parameter == !!parameter & type == "wedges")
+  pseudohelices_data <- filter(all_rmsds, parameter == !!parameter & type == "pseudohelices")
+  
+  wedges_df <- tibble(
+    parameter = rep(parameter, 36 - window_size + 1),
+    type = rep("wedges", 36 - window_size + 1),
+    window_middle = seq((window_size+1)/2, 36+1-(window_size+1)/2),
+    local_rmsd = sapply(1:(36 - window_size + 1), function(i) {
+      start_idx <- i
+      end_idx <- i + window_size - 1
+      combinations <- combn(start_idx:end_idx, 2)
+      window_rmsd <- sapply(1:ncol(combinations), function(col) {
+        ref <- combinations[1, col]
+        comp <- combinations[2, col]
+        rmsd <- filter(wedges_data, ref_dataset == ref & comp_dataset == comp)$rmsd
+        return(rmsd)
+      })
+      window_average <- mean(window_rmsd)
+      return(window_average)
+    })
+  )
+  pseudohelices_df <- tibble(
+    parameter = rep(parameter, 36 - window_size + 1),
+    type = rep("pseudohelices", 36 - window_size + 1),
+    window_middle = seq((window_size+1)/2, 36+1-(window_size+1)/2),
+    local_rmsd = sapply(1:(36 - window_size + 1), function(i) {
+      start_idx <- i
+      end_idx <- i + window_size - 1
+      combinations <- combn(start_idx:end_idx, 2)
+      window_rmsd <- sapply(1:ncol(combinations), function(col) {
+        ref <- combinations[1, col]
+        comp <- combinations[2, col]
+        rmsd <- filter(pseudohelices_data, ref_dataset == ref & comp_dataset == comp)$rmsd
+        return(rmsd)
+      })
+      window_average <- mean(window_rmsd)
+      return(window_average)
+    })
+  )
+  
+  combined_df <- rbind(wedges_df, pseudohelices_df)
+  return(combined_df)
+}
+
+local_rmsds <- list()
+local_rmsds$occ <- make_rmsd_df("occupancies")
+local_rmsds$bf <- make_rmsd_df("b_factors")
+local_rmsds$coord <- make_rmsd_df("coordinates")
+local_rmsds$combined <- rbind(local_rmsds$occ, local_rmsds$bf, local_rmsds$coord)
+
+local_rmsd_plot <- local_rmsds$combined %>% 
+  ggplot(aes(x = window_middle, y = local_rmsd, color = type)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(
+    . ~ parameter,
+    scales = "free",
+    labeller = as_labeller(
+      c(
+        b_factors = "B-Factor",
+        coordinates = "Coordinates",
+        occupancies = "Occupancy"
+      )
     )
   ) +
-  theme_bw() +
-  theme(panel.spacing = unit(0, "lines"),
-    text = element_text(color = "black"), 
-    strip.background = element_rect(fill = "white"), 
-    plot.background = element_blank()
+  labs(
+    x = "Window Middle",
+    y = "Local Average RMSD"
   ) +
-  scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3), minor_breaks = seq(0, 36, 1)) +
-  scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3), minor_breaks = seq(0, 36, 1)) +
-  labs(x = "Reference Dataset", y = "Comparison Dataset")
-
-# general shit ------------------------------------------------------------
-avg_occ <- apply(wedge_occ, 2, mean)
+  ggtheme_light() +
+  scale_color_manual(
+    name = "Dataset Type", 
+    labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("wedges", "pseudohelices"),
+    values = c("#0096c5", "#b8008c")
+  ) +
+  theme(legend.position = "bottom")
