@@ -1,6 +1,7 @@
 # Packages ----------------------------------------------------------------
 
 require(reticulate)
+require(cowplot)
 require(tidyverse)
 require(bio3d)
 require(plyr)
@@ -40,7 +41,6 @@ pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract ato
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges
 
 #Run dose analysis to prepare dose state vectors
-source("Scripts/CheckingForHeterogeneity.R")
 source("Scripts/RADDOSE.R")
 
 #Prep vectors containing all density-weighted dose values
@@ -90,6 +90,7 @@ source("Scripts/StructureStats.R")
 
 source("Scripts/TrendVisualization.R")
 source("Scripts/PlotGeneration.R")
+source("Scripts/CheckingForHeterogeneity.R")
 source("Scripts/WedgeCVAnalysis.R")
 
 # Data write-out ----------------------------------------------------------
@@ -99,7 +100,7 @@ save_plots <- function(parameter, height = 5, width = 7) {
   for(theme in names(ggplots)) {
     for(i in names(ggplots[[theme]][[parameter]])) {
       if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
-        dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"} else if(i == "CrystalStats") {"CrystalStats"}
+        dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"} else if(i == "CrystalStats") {"CrystalStats"} else if(i == "RMSDs") {"RMSDs"}
         this_parameter = if(parameter %in% c("Angles", "Distances", "Occupancies")) {parameter} else {""}
         ggsave(
           filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}.svg"), 
@@ -129,6 +130,7 @@ save_plots('Angles')
 save_plots('CVs')
 save_plots('Dose')
 save_plots('Stats', height = 8)
+save_plots("Comparisons", width = 7, height = 8)
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")

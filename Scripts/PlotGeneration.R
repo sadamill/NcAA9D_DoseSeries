@@ -379,6 +379,107 @@ ggplots$Light$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = datas
   theme(axis.title.y = element_blank(), legend.position.inside = c(0.85, 0.1)) +
   labs(x = "Dataset Number")
 
+# RMSD Plotting -----------------------------------------------------------
+rmsd_plots <- list()
+
+base_plot <- function() {
+  ggplot(all_rmsds, aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) +
+    geom_tile(
+      data = all_rmsds %>% filter(parameter == "occupancies"),
+      mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
+    ) +
+    scale_fill_viridis_c(name = "Occupancy RMSD", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4) +
+    new_scale_fill() +
+    geom_tile(
+      data = all_rmsds %>% filter(parameter == "b_factors"),
+      mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
+    ) +
+    scale_fill_viridis_c(name = "B-Factor RMSD", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)) +
+    new_scale_fill() +
+    geom_tile(
+      data = all_rmsds %>% filter(parameter == "coordinates"),
+      mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
+    ) +
+    scale_fill_viridis_c(name = "Coordinate RMSD", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4) +
+    facet_grid(
+      parameter ~ type,
+      labeller = labeller(
+        .default = str_to_title,
+        parameter = c(b_factors = "B-Factors", coordinates = "Coordinates")
+      )
+    )
+}
+
+rmsd_plots$base_plots$light <- base_plot() +
+  theme_bw() +
+  theme(
+    panel.spacing = unit(0, "mm"),
+    text = element_text(color = "black"), 
+    panel.border = element_rect(fill = NA, color = "black", borderwidth = 1),
+    strip.background = element_rect(fill = "white"), 
+    plot.background = element_blank(),
+    legend.position = "none"
+  ) +
+  scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  labs(x = "Reference Dataset", y = "Comparison Dataset")
+
+rmsd_plots$base_plots$dark <- base_plot() +
+  theme_dark() + 
+  theme(
+    panel.spacing = unit(0, "mm"),
+    rect = element_blank(),
+    text = element_text(color = "white"), 
+    line = element_line(color = "black"), 
+    panel.border = element_rect(fill = NA, color = "white", borderwidth = 1),
+    strip.background = element_rect(fill = "black", color = "white"),
+    axis.text = element_text(color = 'gray'),
+    axis.ticks = element_line(color = "gray"),
+    legend.position = "none"
+  ) +
+  scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  labs(x = "Reference Dataset", y = "Comparison Dataset")
+
+make_legend <- function(parameter, theme) {
+  p <- all_rmsds %>% filter(parameter == !!parameter) %>% 
+    ggplot(aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) + 
+    geom_tile()
+  
+  p <- switch(
+    parameter,
+    "occupancies" = p + scale_fill_viridis_c(name = "Occupancy", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4),
+    "b_factors" = p + scale_fill_viridis_c(name = "B-Factor", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)),
+    "coordinates" = p + scale_fill_viridis_c(name = "Coordinate", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4)
+  )
+  
+  if(theme == "dark") {
+    p <- p + theme(
+      text = element_text(color = "white"),
+      rect = element_blank()
+    )
+  }
+  
+  legend <- get_legend(p)
+  
+  return(legend)
+}
+
+rmsd_plots$legends$light$occ <- make_legend("occupancies", "light")
+rmsd_plots$legends$dark$occ <- make_legend("occupancies", "dark")
+rmsd_plots$legends$light$bfact <- make_legend("b_factors", "light")
+rmsd_plots$legends$dark$bfact <- make_legend("b_factors", "dark")
+rmsd_plots$legends$light$coord <- make_legend("coordinates", "light")
+rmsd_plots$legends$dark$coord <- make_legend("coordinates", "dark")
+
+rmsd_plots$legends$light$combined <- plot_grid(rmsd_plots$legends$light$bfact, rmsd_plots$legends$light$occ, rmsd_plots$legends$light$coord, ncol = 1) +
+  draw_label("RMSD", fontface = "bold", y = 0.99, vjust = 1)
+rmsd_plots$legends$dark$combined <- plot_grid(rmsd_plots$legends$dark$bfact, rmsd_plots$legends$dark$occ, rmsd_plots$legends$dark$coord, ncol = 1) +
+  draw_label("RMSD", fontface = "bold", y = 0.99, vjust = 1, color = "white")
+
+ggplots$Light$Comparisons$RMSDs <- plot_grid(rmsd_plots$base_plots$light, rmsd_plots$legends$light$combined, ncol = 2, rel_widths = c(1, 0.15))
+ggplots$Dark$Comparisons$RMSDs <- plot_grid(rmsd_plots$base_plots$dark, rmsd_plots$legends$dark$combined, ncol = 2, rel_widths = c(1, 0.15))
+
 # Trend plotting ----------------------------------------------------------
 
 dark.trend <- function(trend, datasetType) {
