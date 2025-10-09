@@ -18,7 +18,7 @@ distanceMatrices <- list(
 
 trimmedDistances <- list(
   Pseudohelices = lapply(distanceMatrices$Pseudohelices, function(dis) {
-    data.frame(
+    tibble(
       CuTyr = c(dis[1449, 3986], dis[3435, 3987]), #Extract value from two cells in pseudohelixDMatList, the first containing distance for subunit A, and the other for subunit B
       CuNterm = c(dis[1, 3986], dis[1943, 3987]), #Repeat for all the desired values
       CuHis1ND1 = c(dis[7, 3986], dis[1949, 3987]), 
@@ -30,11 +30,11 @@ trimmedDistances <- list(
       Molecule = c("A", "B")
     )
   }) %>% 
-    ldply() %>% #Data is generated as a list; ldply turns it into a data frame
+    bind_rows() %>% #Data is generated as a list; ldply turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
     data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
   Wedges = lapply(distanceMatrices$Wedges, function(dis) {
-    data.frame(
+    tibble(
       CuTyr = c(dis[1449, 3986], dis[3435, 3987]), #Extract value from two cells in wedgeDMatList, the first containing distance for subunit A, and the other for subunit B
       CuNterm = c(dis[1, 3986], dis[1943, 3987]), #Repeat for all the desired values
       CuHis1ND1 = c(dis[7, 3986], dis[1949, 3987]), 
@@ -46,7 +46,7 @@ trimmedDistances <- list(
       Molecule = c("A", "B")
     )
   }) %>% 
-    ldply() %>% #Data is generated as a list; ldply turns it into a data frame
+    bind_rows() %>% #Data is generated as a list; ldply turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
     data.frame(1:36, .) #Amend a column containing doses to the data frame
 )

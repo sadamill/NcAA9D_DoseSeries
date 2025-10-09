@@ -1,15 +1,12 @@
 # Packages ----------------------------------------------------------------
 
-require(reticulate)
 require(cowplot)
 require(tidyverse)
 require(bio3d)
-require(plyr)
 require(geometry)
 require(emmeans)
 require(officedown)
 require(officer)
-require(RcppCNPy)
 require(ggh4x)
 require(ggnewscale)
 require(plotly)
@@ -85,12 +82,12 @@ source("Scripts/OccupancyAnalysis.R")
 source("Scripts/DistanceAnalysis.R")
 source("Scripts/AngleAnalysis.R")
 source("Scripts/StructureStats.R")
+source("Scripts/CheckingForHeterogeneity.R")
 
 # Data Visualization ------------------------------------------------------
 
 source("Scripts/TrendVisualization.R")
 source("Scripts/PlotGeneration.R")
-source("Scripts/CheckingForHeterogeneity.R")
 source("Scripts/WedgeCVAnalysis.R")
 
 # Data write-out ----------------------------------------------------------
