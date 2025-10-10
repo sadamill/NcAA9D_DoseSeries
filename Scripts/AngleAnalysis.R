@@ -100,7 +100,7 @@ allAngles <- list(
       Molecule = c("A", "B")
     )
   }) %>%
-    ldply() %>% #Data is generated as a list; ldply turns it into a data frame
+    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating subunits, this will order the data frame by subunit
     data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
   Wedges = lapply(wedgeList, function(pdb) {
@@ -154,7 +154,7 @@ allAngles <- list(
       Molecule = c("A", "B")
     )
   }) %>%
-    ldply() %>% #Data is generated as a list; ldply turns it into a data frame
+    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecules, this will order the data frame by subunit
     data.frame(1:36, .) #Amend a column containing doses to the data frame
 )

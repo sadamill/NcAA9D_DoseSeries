@@ -15,7 +15,7 @@ require(htmlwidgets)
 require(janitor)
 
 options(scipen = 7) #I don't like viewing things in scientific notation
-mem.maxVSize(vsize = 30000) #Set max memory size to allow space for large distance matrices
+mem.maxVSize(vsize = 100000) #Set max memory size to allow space for large distance matrices
 
 # Raw Data Extraction/Preparation -----------------------------------------
 
@@ -82,12 +82,12 @@ source("Scripts/OccupancyAnalysis.R")
 source("Scripts/DistanceAnalysis.R")
 source("Scripts/AngleAnalysis.R")
 source("Scripts/StructureStats.R")
-source("Scripts/CheckingForHeterogeneity.R")
 
 # Data Visualization ------------------------------------------------------
 
 source("Scripts/TrendVisualization.R")
 source("Scripts/PlotGeneration.R")
+source("Scripts/CheckingForHeterogeneity.R")
 source("Scripts/WedgeCVAnalysis.R")
 
 # Data write-out ----------------------------------------------------------

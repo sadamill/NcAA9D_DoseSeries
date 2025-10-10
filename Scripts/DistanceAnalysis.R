@@ -30,7 +30,7 @@ trimmedDistances <- list(
       Molecule = c("A", "B")
     )
   }) %>% 
-    bind_rows() %>% #Data is generated as a list; ldply turns it into a data frame
+    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
     data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
   Wedges = lapply(distanceMatrices$Wedges, function(dis) {
@@ -46,7 +46,7 @@ trimmedDistances <- list(
       Molecule = c("A", "B")
     )
   }) %>% 
-    bind_rows() %>% #Data is generated as a list; ldply turns it into a data frame
+    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
     data.frame(1:36, .) #Amend a column containing doses to the data frame
 )
