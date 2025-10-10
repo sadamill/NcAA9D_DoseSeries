@@ -14,14 +14,14 @@ pseudohelixOccupancies <- lapply(pseudohelixAtoms, function(atoms) atoms$o) %>% 
   t() #Transpose the data frame to swap rows and columns
 row.names(pseudohelixOccupancies) <- 1:36 #Set row names to be comprehensible
 pseudohelixOccupancies <- data.frame(pseudohelixOccupancies, pseudohelixDose) #Add column for doses
-colnames(pseudohelixOccupancies) <- c(str_glue("atom_{1:nrow(pseudohelixOccupancies)}"), "dose_MGy") #Change column names
+colnames(pseudohelixOccupancies) <- c(str_glue("atom_{1:nrow(pseudohelixAtoms[[1]])}"), "dose_MGy") #Change column names
 
 wedgeOccupancies <- lapply(wedgeAtoms, function(atoms) atoms$o) %>% #Pull occupancies from pseudohelices
   as.data.frame() %>% #Coerce the list into a data frame
   t() #Transpose the data frame to swap rows and columns
 row.names(wedgeOccupancies) <- 1:36 #Set row names to be comprehensible
 wedgeOccupancies <- data.frame(wedgeOccupancies, 1:36) #Add column for doses
-colnames(wedgeOccupancies) <- c(str_glue("atom_{1:nrow(wedgeOccupancies)}"), "WedgeNumber") #Change column names
+colnames(wedgeOccupancies) <- c(str_glue("atom_{1:nrow(wedgeAtoms[[1]])}"), "WedgeNumber") #Change column names
 
 #Combine the dataframes to provide a singular data frame to pull from
 trimmedOccupancies <- list(
