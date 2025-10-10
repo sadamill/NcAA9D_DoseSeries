@@ -33,6 +33,37 @@ wedgeList <- lapply(1:36, function(x) {
   )
 }) #Extract wedge PDBs
 
+atoms <- list( # Make list of atom and xyz indices
+  cu_a = atom.select(pseudohelixList[[1]], resno = 1, chain = "C"),
+  nterm_a = atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "N"),
+  his1nd_a = atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "ND1"),
+  his1ne_a =  atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "NE2"),
+  his1cg_a = atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "CG"),
+  his84nd_a = atom.select(pseudohelixList[[1]], resno = 84, chain = "A", elety = "ND1"),
+  his84ne_a = atom.select(pseudohelixList[[1]], resno = 84, chain = "A", elety = "NE2"),
+  his84cg_a = atom.select(pseudohelixList[[1]], resno = 84, chain = "A", elety = "CG"),
+  h2oax_a = list(atom = filter(pseudohelixList[[1]]$atom, resno == 841, alt == "A")$eleno),
+  h2oeq_a = list(atom = filter(pseudohelixList[[1]]$atom, resno == 639, alt == "A")$eleno),
+  tyr168oh_a = atom.select(pseudohelixList[[1]], resno = 168, chain = "A", elety = "OH"),
+  oxy_a = atom.select(pseudohelixList[[1]], resno = 1, chain = "D", elety = "O2"),
+  glu30_b = atom.select(pseudohelixList[[1]], resno = 30, chain = "A", elety = "CD", alt = "A"),
+  
+  cu_b = atom.select(pseudohelixList[[1]], resno = 2, chain = "C"),
+  nterm_b = atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "N"),
+  his1nd_b = atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "ND1"),
+  his1ne_b =  atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "NE2"),
+  his1cg_b = atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "CG"),
+  his84nd_b = atom.select(pseudohelixList[[1]], resno = 84, chain = "B", elety = "ND1"),
+  his84ne_b = atom.select(pseudohelixList[[1]], resno = 84, chain = "B", elety = "NE2"),
+  his84cg_b = atom.select(pseudohelixList[[1]], resno = 84, chain = "B", elety = "CG"),
+  h2oax_b = list(atom = filter(pseudohelixList[[1]]$atom, resno == 642, alt == "A")$eleno),
+  h2oeq_b = list(atom = filter(pseudohelixList[[1]]$atom, resno == 512, alt == "A")$eleno),
+  tyr168oh_b = atom.select(pseudohelixList[[1]], resno = 168, chain = "B", elety = "OH"),
+  oxy_b = atom.select(pseudohelixList[[1]], resno = 1, chain = "D", elety = "O2"),
+  glu30_a = atom.select(pseudohelixList[[1]], resno = 30, chain = "A", elety = "CD", alt = "A"),
+  co2_b = atom.select(pseudohelixList[[1]], resno = 243, chain = "B", elety = "C")
+)
+
 #Extract the atom element of the PDB files into new lists
 pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract atoms from pseudohelices
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges

@@ -13,15 +13,15 @@ pseudohelixOccupancies <- lapply(pseudohelixAtoms, function(atoms) atoms$o) %>% 
   as.data.frame() %>% #Coerce the list into a data frame
   t() #Transpose the data frame to swap rows and columns
 row.names(pseudohelixOccupancies) <- 1:36 #Set row names to be comprehensible
-pseudohelixOccupancies <- data.frame(pseudohelixDose, pseudohelixOccupancies) #Add column for doses
-colnames(pseudohelixOccupancies) <- c("dose_MGy", 1:5102) #Change column names
+pseudohelixOccupancies <- data.frame(pseudohelixOccupancies, pseudohelixDose) #Add column for doses
+colnames(pseudohelixOccupancies) <- c(str_glue("atom_{1:nrow(pseudohelixOccupancies)}"), "dose_MGy") #Change column names
 
 wedgeOccupancies <- lapply(wedgeAtoms, function(atoms) atoms$o) %>% #Pull occupancies from pseudohelices
   as.data.frame() %>% #Coerce the list into a data frame
   t() #Transpose the data frame to swap rows and columns
 row.names(wedgeOccupancies) <- 1:36 #Set row names to be comprehensible
-wedgeOccupancies <- data.frame(1:36, wedgeOccupancies) #Add column for doses
-colnames(wedgeOccupancies) <- c("WedgeNumber", 1:5102) #Change column names
+wedgeOccupancies <- data.frame(wedgeOccupancies, 1:36) #Add column for doses
+colnames(wedgeOccupancies) <- c(str_glue("atom_{1:nrow(wedgeOccupancies)}"), "WedgeNumber") #Change column names
 
 #Combine the dataframes to provide a singular data frame to pull from
 trimmedOccupancies <- list(
@@ -29,23 +29,23 @@ trimmedOccupancies <- list(
     dose_MGy = rep(pseudohelixOccupancies$dose_MGy, 2), 
     CO2 = c(
       rep(NA, 36), 
-      pseudohelixOccupancies$`3983`
+      pseudohelixOccupancies[,atoms$co2_b$atom]
     ), 
     Ax = c(
-      pseudohelixOccupancies$`4903`, 
-      pseudohelixOccupancies$`4715`
+      pseudohelixOccupancies[,atoms$h2oax_a$atom], 
+      pseudohelixOccupancies[,atoms$h2oax_b$atom]
     ), 
     Eq = c(
-      pseudohelixOccupancies$`4711`, 
-      pseudohelixOccupancies$`4580`
+      pseudohelixOccupancies[,atoms$h2oeq_a$atom], 
+      pseudohelixOccupancies[,atoms$h2oeq_b$atom]
     ), 
     Oxy = c(
-      pseudohelixOccupancies$`5099`, 
-      pseudohelixOccupancies$`5101`
+      pseudohelixOccupancies[,atoms$oxy_a$atom], 
+      pseudohelixOccupancies[,atoms$oxy_b$atom]
     ), 
     Glu = c(
-      pseudohelixOccupancies$`266`, 
-      pseudohelixOccupancies$`2195`
+      pseudohelixOccupancies[,atoms$glu30_b$atom], 
+      pseudohelixOccupancies[,atoms$glu30_a$atom]
     ), 
     Molecule = c(
       rep("A", 36), 
@@ -56,23 +56,23 @@ trimmedOccupancies <- list(
     WedgeNumber = rep(1:36, 2), 
     CO2 = c(
       rep(NA, 36), 
-      wedgeOccupancies$`3983`
+      wedgeOccupancies[,atoms$co2_b$atom]
     ), 
     Ax = c(
-      wedgeOccupancies$`4903`, 
-      wedgeOccupancies$`4715`
+      wedgeOccupancies[,atoms$h2oax_a$atom], 
+      wedgeOccupancies[,atoms$h2oax_b$atom]
     ), 
     Eq = c(
-      wedgeOccupancies$`4711`, 
-      wedgeOccupancies$`4580`
+      wedgeOccupancies[,atoms$h2oeq_a$atom], 
+      wedgeOccupancies[,atoms$h2oeq_b$atom]
     ), 
     Oxy = c(
-      wedgeOccupancies$`5099`, 
-      wedgeOccupancies$`5101`
+      wedgeOccupancies[,atoms$oxy_a$atom], 
+      wedgeOccupancies[,atoms$oxy_b$atom]
     ), 
     Glu = c(
-      wedgeOccupancies$`266`, 
-      wedgeOccupancies$`2195`
+      wedgeOccupancies[,atoms$glu30_b$atom], 
+      wedgeOccupancies[,atoms$glu30_a$atom]
     ), 
     Molecule = c(
       rep("A", 36), 

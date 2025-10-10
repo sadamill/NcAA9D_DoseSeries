@@ -19,14 +19,12 @@ distanceMatrices <- list(
 trimmedDistances <- list(
   Pseudohelices = lapply(distanceMatrices$Pseudohelices, function(dis) {
     tibble(
-      CuTyr = c(dis[1449, 3986], dis[3435, 3987]), #Extract value from two cells in pseudohelixDMatList, the first containing distance for subunit A, and the other for subunit B
-      CuNterm = c(dis[1, 3986], dis[1943, 3987]), #Repeat for all the desired values
-      CuHis1ND1 = c(dis[7, 3986], dis[1949, 3987]), 
-      CuHis84NE2 = c(dis[760, 3986], dis[2694, 3987]), 
-      CuEq = c(dis[3986, 4711], dis[3987, 4580]), 
-      CuAx = c(dis[3986, 4903], dis[3987, 4715]), 
-      CuO1 = c(dis[3986, 5099], dis[3987, 5101]), 
-      CuO2 = c(dis[3986, 5100], dis[3987, 5102]), 
+      CuTyr = c(dis[atoms$cu_a$atom, atoms$tyr168oh_a$atom], dis[atoms$cu_b$atom, atoms$tyr168oh_b$atom]), #Extract value from two cells in pseudohelixDMatList, the first containing distance for subunit A, and the other for subunit B
+      CuNterm = c(dis[atoms$cu_a$atom, atoms$nterm_a$atom], dis[atoms$cu_b$atom, atoms$nterm_b$atom]), #Repeat for all the desired values
+      CuHis1ND1 = c(dis[atoms$cu_a$atom, atoms$his1nd_a$atom], dis[atoms$cu_b$atom, atoms$his1nd_b$atom]), 
+      CuHis84NE2 = c(dis[atoms$cu_a$atom, atoms$his84ne_a$atom], dis[atoms$cu_b$atom, atoms$his84ne_b$atom]), 
+      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
+      CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
       Molecule = c("A", "B")
     )
   }) %>% 
@@ -35,14 +33,12 @@ trimmedDistances <- list(
     data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
   Wedges = lapply(distanceMatrices$Wedges, function(dis) {
     tibble(
-      CuTyr = c(dis[1449, 3986], dis[3435, 3987]), #Extract value from two cells in wedgeDMatList, the first containing distance for subunit A, and the other for subunit B
-      CuNterm = c(dis[1, 3986], dis[1943, 3987]), #Repeat for all the desired values
-      CuHis1ND1 = c(dis[7, 3986], dis[1949, 3987]), 
-      CuHis84NE2 = c(dis[760, 3986], dis[2694, 3987]), 
-      CuEq = c(dis[3986, 4711], dis[3987, 4580]), 
-      CuAx = c(dis[3986, 4903], dis[3987, 4715]), 
-      CuO1 = c(dis[3986, 5099], dis[3987, 5101]), 
-      CuO2 = c(dis[3986, 5100], dis[3987, 5102]), 
+      CuTyr = c(dis[atoms$cu_a$atom, atoms$tyr168oh_a$atom], dis[atoms$cu_b$atom, atoms$tyr168oh_b$atom]), #Extract value from two cells in wedgeDMatList, the first containing distance for subunit A, and the other for subunit B
+      CuNterm = c(dis[atoms$cu_a$atom, atoms$nterm_a$atom], dis[atoms$cu_b$atom, atoms$nterm_b$atom]), #Repeat for all the desired values
+      CuHis1ND1 = c(dis[atoms$cu_a$atom, atoms$his1nd_a$atom], dis[atoms$cu_b$atom, atoms$his1nd_b$atom]), 
+      CuHis84NE2 = c(dis[atoms$cu_a$atom, atoms$his84ne_a$atom], dis[atoms$cu_b$atom, atoms$his84ne_b$atom]), 
+      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
+      CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
       Molecule = c("A", "B")
     )
   }) %>% 
