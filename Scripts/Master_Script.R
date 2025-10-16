@@ -22,13 +22,13 @@ mem.maxVSize(vsize = 100000) #Set max memory size to allow space for large dista
 #Extract PDB files
 pseudohelixList <- lapply(1:36, function(x) {
   read.pdb(
-    file = str_glue("Input/Files_From_Analysis_Cluster/Pseudohelix_{x}/Refine_1/Phenix_refine_001.pdb"), 
+    file = str_glue("Input/Files_From_Analysis_Cluster/Pseudohelix_{x}/Refine_2/Phenix_refine_001.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract pseudohelix PDBs
 wedgeList <- lapply(1:36, function(x) {
   read.pdb(
-    file = str_glue("Input/Files_From_Analysis_Cluster/Wedge_{x}/Refine_1/Phenix_refine_001.pdb"), 
+    file = str_glue("Input/Files_From_Analysis_Cluster/Wedge_{x}/Refine_2/Phenix_refine_001.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract wedge PDBs
