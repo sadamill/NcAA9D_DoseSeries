@@ -249,7 +249,7 @@ ggdarklight <- function(data, key) {
         color = Molecule
       ),
       facetVar = facetStr,
-      datasetType = "Pseudohelix"
+      datasetType = "Wedge"
     )
   )
   
@@ -272,7 +272,7 @@ ggdarklight <- function(data, key) {
         color = Molecule
       ),
       facetVar = facetStr,
-      datasetType = "Pseudohelix"
+      datasetType = "Wedge"
     )
   )
   
@@ -483,6 +483,8 @@ ggplots$Dark$Comparisons$RMSDs <- plot_grid(rmsd_plots$base_plots$dark, rmsd_plo
 # Trend plotting ----------------------------------------------------------
 
 dark.trend <- function(trend, datasetType) {
+  regressor <- ifelse(datasetType == "Pseudohelices", "MGy", "Wedge Number")
+  
   ggplot(
     filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
     aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
@@ -578,18 +580,18 @@ dark.trend <- function(trend, datasetType) {
         "Angle ID"
       } else {stop("Invalid trend input for trend visualization")},
       y = if(trend == "Occupancies") {
-        "Occupancy Trend (Δ/MGy)"
-      } else if(trend == "BFactors") {
-        bquote("B-Factor Trend (" * Å^2 * "/MGy)")
+        str_glue("Occupancy Trend (Δ/{regressor})")
       } else if(trend == "Distances") {
-        "Distance Trend (ΔÅ/MGy)"
+        str_glue("Distance Trend (ΔÅ/{regressor})")
       } else if(trend == "Angles") {
-        "Angle Trend (Δ°/MGy)"
+        str_glue("Angle Trend (Δ°/{regressor})")
       } else {stop("Invalid trend input for trend visualization")}
     ) +
     coord_flip() # Flip coordinates back
 }
 light.trend <- function(trend, datasetType) {
+  regressor <- ifelse(datasetType == "Pseudohelices", "MGy", "Wedge Number")
+  
   ggplot(
     filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
     aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
@@ -686,13 +688,11 @@ light.trend <- function(trend, datasetType) {
         "Angle ID"
       } else {stop("Invalid trend input for trend visualization")},
       y = if(trend == "Occupancies") {
-        "Occupancy Trend (Δ/MGy)"
-      } else if(trend == "BFactors") {
-        bquote("B-Factor Trend (" * Å^2 * "/MGy)")
+        str_glue("Occupancy Trend (Δ/{regressor})")
       } else if(trend == "Distances") {
-        "Distance Trend (ΔÅ/MGy)"
-      } else if(trend == "Angles") {
-        "Angle Trend (Δ°/MGy)"
+        str_glue("Distance Trend (ΔÅ/{regressor})")
+      } else if(trend == "AnglesBf") {
+        str_glue("Angle Trend (Δ°/{regressor})")
       } else {stop("Invalid trend input for trend visualization")}
     ) +
     coord_flip()
