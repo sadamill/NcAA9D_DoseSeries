@@ -1,11 +1,11 @@
 # Data preparation --------------------------------------------------------
 compile_widen <- function(datasetType) {
-  compiled <- rbind(
+  compiled <<- rbind(
     regressionSummaries$Occupancies[[datasetType]],
     regressionSummaries$Distances[[datasetType]],
     regressionSummaries$Angles[[datasetType]]
   )
-  df_wider <- compiled %>% 
+  df_wider <<- compiled %>% 
     pivot_wider(
       id_cols = Residue, 
       names_from = Estimate, 
@@ -16,11 +16,6 @@ compile_widen <- function(datasetType) {
         filter(Estimate == "Contrast") %>%
         select(Residue, Measurement),
       by = "Residue"
-    ) %>% 
-    mutate(
-      PValue_TrendA = p.adjust(PValue_TrendA, method = "BY"),
-      PValue_TrendB = p.adjust(PValue_TrendB, method = "BY"),
-      PValue_Contrast = p.adjust(PValue_Contrast, method = "BY")
     ) %>% arrange(
       pmax(Coefficient_TrendA, Coefficient_TrendB, na.rm = TRUE)
     ) %>% mutate(
@@ -35,25 +30,13 @@ wideData <- list(
 )
 
 make_long <- function(datasetType) {
-  compiled <- rbind(
+  compiled <<- rbind(
     regressionSummaries$Occupancies[[datasetType]],
     regressionSummaries$Distances[[datasetType]],
     regressionSummaries$Angles[[datasetType]]
   )
-  reformatted_wide <- pivot_longer(
-    wideData[[datasetType]],
-    cols = Coefficient_TrendA:PValue_Contrast,
-    names_to = c("Type", "Trend"),
-    names_sep = "_"
-  ) %>% pivot_wider(
-    id_cols = c(Trend, Residue, Measurement),
-    names_from = Type,
-    values_from = value
-  )
-  Corrected_PValue <- reformatted_wide$PValue
-  full_table <- cbind(
-    compiled, Corrected_PValue
-  ) %>% mutate(
+  
+  full_table <- compiled %>% mutate(
     Significance = ifelse(
       PValue <= 0.001, "***", 
       ifelse(
@@ -62,7 +45,9 @@ make_long <- function(datasetType) {
           PValue <= 0.05, "*", " "
         )
       )
-    ))
+    )
+  )
+  
   return(full_table)
 }
 

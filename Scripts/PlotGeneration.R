@@ -691,7 +691,7 @@ light.trend <- function(trend, datasetType) {
         str_glue("Occupancy Trend (Δ/{regressor})")
       } else if(trend == "Distances") {
         str_glue("Distance Trend (ΔÅ/{regressor})")
-      } else if(trend == "AnglesBf") {
+      } else if(trend == "Angles") {
         str_glue("Angle Trend (Δ°/{regressor})")
       } else {stop("Invalid trend input for trend visualization")}
     ) +

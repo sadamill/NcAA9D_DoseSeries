@@ -90,7 +90,7 @@ emtrends.pvalue <- function(model, regressor) {
     emtrends(model, "Molecule", regressor) %>%
       test() %>% .[, 6], 
     emtrends(model, "Molecule", regressor) %>%
-      pairs() %>%summary() %>% .[, 6]
+      pairs() %>% summary() %>% .[, 6]
   )
 } #Extract p-values from emtrends
 emtrends.se <- function(model, regressor) {
@@ -98,7 +98,7 @@ emtrends.se <- function(model, regressor) {
     emtrends(model, "Molecule", regressor) %>%
       summary() %>% .[, 3], 
     emtrends(model, "Molecule", regressor) %>%
-      pairs() %>%summary() %>% .[, 3]
+      pairs() %>% summary() %>% .[, 3]
   )
 } #Extract standard errors from emtrends
 
@@ -164,12 +164,8 @@ save_plots("Comparisons", width = 7, height = 8)
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
 
 #Save all the tables
-for (i in 1:length(regressionSummaries)) {
-  write.csv(
-    regressionSummaries[[i]], 
-    str_glue("Output/RegressionTables/RegressionSummary_{names(regressionSummaries)[i]}.csv")
-  )
-}
+write_csv(longData$Pseudohelices, "Output/Tables/RegressionSummary_Pseudohelices.csv")
+write_csv(longData$Wedges, "Output/Tables/RegressionSummary_Wedges.csv")
 
 #Make PowerPoint containing figures
 new_figure_slide <- function(ppt, plot_list) {
