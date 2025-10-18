@@ -104,15 +104,15 @@ scales <- function(facetVar) {
   bfactor_window <- 8
   distance_window <- 0.25
   
-  facetted_pos_scales(
+  ggh4x::facetted_pos_scales(
     y = if(facetVar == "AngleID") {
       list(
         scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
         scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
         scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
-        scale_y_continuous(limits = c(180 - angle_window / 2, 180 + angle_window / 2)),
+        scale_y_continuous(limits = c(0 - angle_window / 2, 0 + angle_window / 2)),
         scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
-        scale_y_continuous(limits = c(176 - angle_window / 2, 176 + angle_window / 2)),
+        scale_y_continuous(limits = c(-4 - angle_window / 2, -4 + angle_window / 2)),
         scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
     )} else if(facetVar == "Residue") {
       list(

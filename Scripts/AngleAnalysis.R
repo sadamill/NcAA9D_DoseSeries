@@ -31,6 +31,7 @@ vector.angle <- function(v1, v2) {
 #Calculate angles for all datasets based off XYZ indices calculated earlier
 allAngles <- list(
   Pseudohelices = lapply(pseudohelixList, function(pdb) {
+    
     data.frame(
       T1 = c(
         angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his1nd_a$xyz])), 
@@ -65,18 +66,18 @@ allAngles <- list(
       TH1 = c(
         orthogonal.vector(pdb$xyz[atoms$his1cg_a$xyz], pdb$xyz[atoms$his1nd_a$xyz], pdb$xyz[atoms$his1ne_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his1nd_a$xyz]-pdb$xyz[atoms$cu_a$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}, 
+          {.-90}, 
         orthogonal.vector(pdb$xyz[atoms$his1cg_b$xyz], pdb$xyz[atoms$his1nd_b$xyz], pdb$xyz[atoms$his1ne_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his1nd_b$xyz]-pdb$xyz[atoms$cu_b$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}
+          {.-90}
       ), 
       THN = c(
         orthogonal.vector(pdb$xyz[atoms$his84cg_a$xyz], pdb$xyz[atoms$his84nd_a$xyz], pdb$xyz[atoms$his84ne_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his84nd_a$xyz]-pdb$xyz[atoms$cu_a$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}, 
+          {.-90}, 
         orthogonal.vector(pdb$xyz[atoms$his84cg_b$xyz], pdb$xyz[atoms$his84nd_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his84nd_b$xyz]-pdb$xyz[atoms$cu_b$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}
+          {.-90}
       ),
       Molecule = c("A", "B")
     )
@@ -85,6 +86,7 @@ allAngles <- list(
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating subunits, this will order the data frame by subunit
     data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
   Wedges = lapply(wedgeList, function(pdb) {
+    
     data.frame(
       T1 = c(
         angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his1nd_a$xyz])), 
@@ -119,18 +121,18 @@ allAngles <- list(
       TH1 = c( #TH1/HN angle for His1
         orthogonal.vector(pdb$xyz[atoms$his1cg_a$xyz], pdb$xyz[atoms$his1nd_a$xyz], pdb$xyz[atoms$his1ne_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his1nd_a$xyz]-pdb$xyz[atoms$cu_a$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}, 
+          {.-90}, 
         orthogonal.vector(pdb$xyz[atoms$his1cg_b$xyz], pdb$xyz[atoms$his1nd_b$xyz], pdb$xyz[atoms$his1ne_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his1nd_b$xyz]-pdb$xyz[atoms$cu_b$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}
+          {.-90}
       ), 
       THN = c( #TH1/HN angle for His84
         orthogonal.vector(pdb$xyz[atoms$his84cg_a$xyz], pdb$xyz[atoms$his84nd_a$xyz], pdb$xyz[atoms$his84ne_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his84nd_a$xyz]-pdb$xyz[atoms$cu_a$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}, 
+          {.-90}, 
         orthogonal.vector(pdb$xyz[atoms$his84cg_b$xyz], pdb$xyz[atoms$his84nd_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his84nd_b$xyz]-pdb$xyz[atoms$cu_b$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90+.}
+          {.-90}
       ),
       Molecule = c("A", "B")
     )
