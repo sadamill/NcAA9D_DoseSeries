@@ -13,6 +13,7 @@ require(plotly)
 require(webshot2)
 require(htmlwidgets)
 require(janitor)
+require(systemfonts)
 
 options(scipen = 7) #I don't like viewing things in scientific notation
 mem.maxVSize(vsize = 100000) #Set max memory size to allow space for large distance matrices
@@ -124,7 +125,7 @@ source("Scripts/WedgeCVAnalysis.R")
 # Data write-out ----------------------------------------------------------
 
 #Save all the plots
-save_plots <- function(parameter, height = 5, width = 7) {
+save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight = 5, innerwidth = 8) {
   for(theme in names(ggplots)) {
     for(i in names(ggplots[[theme]][[parameter]])) {
       if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
@@ -133,8 +134,9 @@ save_plots <- function(parameter, height = 5, width = 7) {
         ggsave(
           filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}.svg"), 
           plot = ggplots[[theme]][[parameter]][[i]], 
-          height = height, 
-          width = width
+          height = outerheight, 
+          width = outerwidth,
+          units = "cm"
         )
       } else if("list" %in% class(ggplots[[theme]][[parameter]][[i]])) {
         for(j in names(ggplots[[theme]][[parameter]][[i]])) {
@@ -142,8 +144,9 @@ save_plots <- function(parameter, height = 5, width = 7) {
           ggsave(
             filename = str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 
-            height = height, 
-            width = width
+            height = innerheight, 
+            width = innerwidth,
+            units = "cm"
           )
         }
       }
@@ -152,13 +155,12 @@ save_plots <- function(parameter, height = 5, width = 7) {
 }
 
 save_plots('Occupancies')
-save_plots('BFactors')
 save_plots('Distances')
-save_plots('Angles')
+save_plots('Angles', outerheight = 12)
 save_plots('CVs')
-save_plots('Dose')
-save_plots('Stats', height = 8)
-save_plots("Comparisons", width = 7, height = 8)
+save_plots('Dose', outerwidth = 8.8, outerheight = 7)
+save_plots('Stats', outerwidth = 16, outerheight = 16)
+save_plots("Comparisons", outerheight = 8)
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")

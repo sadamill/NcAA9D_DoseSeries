@@ -2,7 +2,7 @@
 
 ggtheme_dark <- function() {
   list(
-    theme_dark(), 
+    theme_dark(base_size = 8, base_family = "ArialMT"), 
     theme(
       #Overall elements
       rect = element_blank(), 
@@ -18,13 +18,14 @@ ggtheme_dark <- function() {
       legend.key = element_blank(), #panel.background automatically maps to legend.key; I want to override this
       legend.background = element_rect(fill = "black", color = "white"), 
       strip.background = element_rect(fill = "black", color = "white"),
-      axis.text = element_text(color = 'gray')
+      axis.text = element_text(color = 'gray'),
+      legend.key.height = unit(3, "mm")
     )
   )
 } # Define a custom ggplot dark theme
 ggtheme_light <- function() {
   list(
-    theme_bw(), 
+    theme_bw(base_size = 8, base_family = "ArialMT"), 
     theme(
       #Overall elements
       text = element_text(color = "black"), 
@@ -36,7 +37,8 @@ ggtheme_light <- function() {
       #Manual override of desired theme elements
       legend.background = element_rect(fill = "white", color = "black"), 
       strip.background = element_rect(fill = "white"), 
-      plot.background = element_blank()
+      plot.background = element_blank(),
+      legend.key.height = unit(3, "mm")
     )
   )
 } # Define a custom ggplot light theme
@@ -134,6 +136,12 @@ scales <- function(facetVar) {
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
   ggplot(data, mapping) +
+    scale_shape_manual(
+      "Molecule", 
+      labels = c("A", "B"), 
+      breaks = c("A", "B"),
+      values = c(16, 17), 
+    ) +
     scale_color_manual(
       "Molecule", 
       labels = c("A", "B"), 
@@ -150,14 +158,14 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
     ) + #Standard error plotting
     stat_smooth(
       method = "lm", 
-      linetype = 2, 
+      linetype = 5, 
+      size = 0.5,
       se = FALSE,
       na.rm = TRUE,
       fullrange = TRUE
     ) + #Linear regression line
     geom_point(
-      size = 0.3, 
-      show.legend = FALSE
+      size = 1, 
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_dark() +
@@ -171,6 +179,12 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
 } #Make scatter plot with fitted linear regression
 scatter_light <- function(data, mapping, facetVar, datasetType) {
   ggplot(data, mapping) +
+    scale_shape_manual(
+      "Molecule", 
+      labels = c("A", "B"), 
+      breaks = c("A", "B"),
+      values = c(16, 17), 
+    ) +
     scale_color_manual(
       "Molecule", 
       labels = c("A", "B"), 
@@ -187,14 +201,14 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     ) + #Standard error plotting
     stat_smooth(
       method = "lm", 
-      linetype = 2, 
+      linetype = 5, 
+      size = 0.5,
       se = FALSE,
       na.rm = TRUE,
       fullrange = TRUE
     ) + #Linear regression line
     geom_point(
-      size = 0.3, 
-      show.legend = FALSE
+      size = 1, 
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_light() +
@@ -236,7 +250,8 @@ ggdarklight <- function(data, key) {
       mapping = aes(
         x = Dose,
         y = .data[[yvar]],
-        color = Molecule
+        color = Molecule,
+        shape = Molecule
       ),
       facetVar = facetStr,
       datasetType = "Pseudohelix"
@@ -246,7 +261,8 @@ ggdarklight <- function(data, key) {
       mapping = aes(
         x = WedgeNumber,
         y = .data[[yvar]],
-        color = Molecule
+        color = Molecule,
+        shape = Molecule
       ),
       facetVar = facetStr,
       datasetType = "Wedge"
@@ -259,7 +275,8 @@ ggdarklight <- function(data, key) {
       mapping = aes(
         x = Dose,
         y = .data[[yvar]],
-        color = Molecule
+        color = Molecule,
+        shape = Molecule
       ),
       facetVar = facetStr,
       datasetType = "Pseudohelix"
@@ -269,7 +286,8 @@ ggdarklight <- function(data, key) {
       mapping = aes(
         x = WedgeNumber,
         y = .data[[yvar]],
-        color = Molecule
+        color = Molecule,
+        shape = Molecule
       ),
       facetVar = facetStr,
       datasetType = "Wedge"
@@ -296,9 +314,12 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
     values = c("#0096c5", "#b8008c")
   ) +
   coord_cartesian(expand = FALSE) +
+  theme(
+    legend.position.inside = c(0.75, 0.22)
+  ) +
   labs(
     x = "Dataset Number",
-    y = "Density-Weighted Dose (MGy)"
+    y = "Diffraction-Weighted Dose (MGy)"
   )
 
 ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
@@ -311,9 +332,12 @@ ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, colo
     values = c("#0096c5", "#b8008c")
   ) +
   coord_cartesian(expand = FALSE) +
+  theme(
+    legend.position.inside = c(0.75, 0.22)
+  ) +
   labs(
     x = "Dataset Number",
-    y = "Density-Weighted Dose (MGy)"
+    y = "Diffraction-Weighted Dose (MGy)"
   )
 
 ggplots$Dark$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = dataset_number, y = value, color = dataset_type)) +
@@ -501,7 +525,7 @@ dark.trend <- function(trend, datasetType) {
       ), 
       show.legend = FALSE, 
       inherit.aes = FALSE, 
-      linewidth = 5,
+      linewidth = 3,
       alpha = 0.5
     ) +
     scale_color_manual( # Significant contrasts get colored light blue
@@ -517,11 +541,11 @@ dark.trend <- function(trend, datasetType) {
     ggtheme_dark() +
     geom_point( # Blocks out geom_segment to allow for transparent dots
       color = "black", 
-      size = 5,
+      size = 3,
     ) +
     geom_point( # Individual trend plotting
       aes(color = Estimate), 
-      size = 5,
+      size = 3,
       alpha = 0.6
     ) +
     geom_text( # Asterisks for significance
@@ -531,8 +555,8 @@ dark.trend <- function(trend, datasetType) {
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient,
       ),
-      size = 6, 
-      position = position_nudge(x = 0.1),
+      size = 3, 
+      position = position_nudge(x = 0.25),
       color = '#B2DEAB',
       inherit.aes = FALSE
     ) +
@@ -543,8 +567,8 @@ dark.trend <- function(trend, datasetType) {
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient,
       ),
-      size = 6, 
-      position = position_nudge(x = 0.2),
+      size = 3, 
+      position = position_nudge(x = 0.3),
       color = '#BD9ADB',
       inherit.aes = FALSE
     ) +
@@ -608,7 +632,7 @@ light.trend <- function(trend, datasetType) {
       ), 
       show.legend = FALSE, 
       inherit.aes = FALSE, 
-      linewidth = 5,
+      linewidth = 3,
       alpha = 0.5
     ) +
     scale_color_manual( # Significant contrasts get colored light blue
@@ -625,11 +649,11 @@ light.trend <- function(trend, datasetType) {
     ggtheme_light() +
     geom_point( # Blocks out geom_segment to allow for transparent dots
       color = "white", 
-      size = 5,
+      size = 3,
     ) +
     geom_point( # Individual trend plotting
       aes(color = Estimate), 
-      size = 5,
+      size = 3,
       alpha = 0.6
     ) +
     geom_text( # Asterisks for significance
@@ -639,8 +663,8 @@ light.trend <- function(trend, datasetType) {
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient,
       ),
-      size = 6, 
-      position = position_nudge(x = 0.15),
+      size = 3, 
+      position = position_nudge(x = 0.25),
       color = '#4F9437',
       inherit.aes = FALSE
     ) +
@@ -651,8 +675,8 @@ light.trend <- function(trend, datasetType) {
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient,
       ),
-      size = 6, 
-      position = position_nudge(x = 0.25),
+      size = 3, 
+      position = position_nudge(x = 0.3),
       color = '#8100b6',
       inherit.aes = FALSE
     ) +

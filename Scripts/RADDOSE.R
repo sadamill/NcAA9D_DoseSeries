@@ -271,7 +271,8 @@ plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
   layout(
     plot, 
     font = list(
-      color = linecolor
+      color = linecolor,
+      family = "arial"
     ),
     paper_bgcolor = bgcolor,
     scene = list(
