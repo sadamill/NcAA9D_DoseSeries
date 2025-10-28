@@ -45,7 +45,7 @@ trimmedOccupancies <- list(
     ), 
     Glu = c(
       pseudohelixOccupancies[,atoms$glu30_b$atom], 
-      pseudohelixOccupancies[,atoms$glu30_a$atom]
+      rep(NA, 36)
     ), 
     Molecule = c(
       rep("A", 36), 
@@ -72,7 +72,7 @@ trimmedOccupancies <- list(
     ), 
     Glu = c(
       wedgeOccupancies[,atoms$glu30_b$atom], 
-      wedgeOccupancies[,atoms$glu30_a$atom]
+      rep(NA, 36)
     ), 
     Molecule = c(
       rep("A", 36), 
@@ -138,14 +138,14 @@ pseudohelixOccSlopes <- pseudohelixOccSlopes * 1000 #Scale the numbers by 1000
 multipleRegressions$Occupancies <- list(
   Pseudohelices = list(
     Oxy = lm(Oxy ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices), 
-    Glu = lm(Glu ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices), 
+    Glu = lm(Glu ~ dose_MGy, data = subset(trimmedOccupancies$Pseudohelices, Molecule == "A")), 
     CO2 = lm(CO2 ~ dose_MGy, data = subset(trimmedOccupancies$Pseudohelices, Molecule == "B")), 
     Ax = lm(Ax ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices), 
     Eq = lm(Eq ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices)
   ), 
   Wedges = list(
     Oxy = lm(Oxy ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges), 
-    Glu = lm(Glu ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges), 
+    Glu = lm(Glu ~ WedgeNumber, data = subset(trimmedOccupancies$Wedges, Molecule == "A")), 
     CO2 = lm(CO2 ~ WedgeNumber, data = subset(trimmedOccupancies$Wedges, Molecule == "B")), 
     Ax = lm(Ax ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges), 
     Eq = lm(Eq ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges)
@@ -166,7 +166,9 @@ regressionSummaries$Occupancies <- list(
     Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
     Coefficient = c(
       emtrends.coefficient(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
-      emtrends.coefficient(multipleRegressions$Occupancies$Pseudohelices$Glu, "dose_MGy"), 
+      NA,
+      summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$coefficients[2, 2], 
+      NA,
       NA, 
       summary(multipleRegressions$Occupancies$Pseudohelices$CO2)$coefficients[2, 2], 
       NA, 
@@ -175,7 +177,9 @@ regressionSummaries$Occupancies <- list(
     ), 
     StandardError = c(
       emtrends.se(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
-      emtrends.se(multipleRegressions$Occupancies$Pseudohelices$Glu, "dose_MGy"), 
+      NA, 
+      summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$coefficients[2, 4], 
+      NA,
       NA, 
       summary(multipleRegressions$Occupancies$Pseudohelices$CO2)$coefficients[2, 4], 
       NA, 
@@ -184,7 +188,9 @@ regressionSummaries$Occupancies <- list(
     ), 
     ModelRSquared = c(
       rep(summary(multipleRegressions$Occupancies$Pseudohelices$Oxy)$r.squared, 3), 
-      rep(summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$r.squared, 3), 
+      NA, 
+      summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$r.squared, 
+      NA, 
       NA, 
       summary(multipleRegressions$Occupancies$Pseudohelices$CO2)$r.squared, 
       NA, 
@@ -193,7 +199,9 @@ regressionSummaries$Occupancies <- list(
     ), 
     PValue = c(
       emtrends.pvalue(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
-      emtrends.pvalue(multipleRegressions$Occupancies$Pseudohelices$Glu, "dose_MGy"), 
+      NA, 
+      summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$coefficients[2, 4], 
+      NA, 
       NA, 
       summary(multipleRegressions$Occupancies$Pseudohelices$CO2)$coefficients[2, 4], 
       NA, 
@@ -213,7 +221,9 @@ regressionSummaries$Occupancies <- list(
     Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
     Coefficient = c(
       emtrends.coefficient(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 
-      emtrends.coefficient(multipleRegressions$Occupancies$Wedges$Glu, "WedgeNumber"), 
+      NA, 
+      summary(multipleRegressions$Occupancies$Wedges$Glu)$coefficients[2, 2], 
+      NA,
       NA, 
       summary(multipleRegressions$Occupancies$Wedges$CO2)$coefficients[2, 2], 
       NA, 
@@ -222,7 +232,9 @@ regressionSummaries$Occupancies <- list(
     ), 
     StandardError = c(
       emtrends.se(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 
-      emtrends.se(multipleRegressions$Occupancies$Wedges$Glu, "WedgeNumber"), 
+      NA, 
+      summary(multipleRegressions$Occupancies$Wedges$Glu)$coefficients[2, 4], 
+      NA, 
       NA, 
       summary(multipleRegressions$Occupancies$Wedges$CO2)$coefficients[2, 4], 
       NA, 
@@ -231,7 +243,9 @@ regressionSummaries$Occupancies <- list(
     ), 
     ModelRSquared = c(
       rep(summary(multipleRegressions$Occupancies$Wedges$Oxy)$r.squared, 3), 
-      rep(summary(multipleRegressions$Occupancies$Wedges$Glu)$r.squared, 3), 
+      NA, 
+      summary(multipleRegressions$Occupancies$Wedges$Glu)$r.squared, 
+      NA, 
       NA, 
       summary(multipleRegressions$Occupancies$Wedges$CO2)$r.squared, 
       NA, 
@@ -240,7 +254,9 @@ regressionSummaries$Occupancies <- list(
     ), 
     PValue = c(
       emtrends.pvalue(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 
-      emtrends.pvalue(multipleRegressions$Occupancies$Wedges$Glu, "WedgeNumber"), 
+      NA, 
+      summary(multipleRegressions$Occupancies$Wedges$Glu)$coefficients[2, 4], 
+      NA,
       NA, 
       summary(multipleRegressions$Occupancies$Wedges$CO2)$coefficients[2, 4], 
       NA, 

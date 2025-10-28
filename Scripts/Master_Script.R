@@ -168,6 +168,9 @@ write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColored
 #Save all the tables
 write_csv(longData$Pseudohelices, "Output/Tables/RegressionSummary_Pseudohelices.csv")
 write_csv(longData$Wedges, "Output/Tables/RegressionSummary_Wedges.csv")
+write_csv(occ_table, "Output/Tables/all_occupancies.csv")
+write_csv(angle_table, "Output/Tables/all_angles.csv")
+write_csv(distance_table, "Output/Tables/all_distances.csv")
 
 #Make PowerPoint containing figures
 new_figure_slide <- function(ppt, plot_list) {

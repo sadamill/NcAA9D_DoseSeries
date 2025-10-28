@@ -49,14 +49,14 @@ faceting <- function(facetVar, datasetType) {
       "CO2" = "CO[2]", 
       "Ax"  = "H[2]*O[Ax]", 
       "Eq"  = "H[2]*O[Eq]", 
-      "Glu" = "Glu[30]", 
+      "Glu" = "Intact*' '*Glu[30]", 
       "Oxy" = "'Dioxygen'"
     ),
     AtomPair = c(
-      "Cu-Tyr" = "Cu-Tyr[168]",
+      "Cu-Tyr" = "Cu-Tyr[168]*O",
       "Cu-NTerm" = "Cu-N[term]",
-      "Cu-His1ND1" = "Cu-His[1]*Nδ[1]",
-      "Cu-His84NE2" = "Cu-His[84]*Nε[2]",
+      "Cu-His1ND1" = "Cu-His[1]*N[δ]",
+      "Cu-His84NE2" = "Cu-His[84]*N[ε]",
       "Cu-Eq" = "Cu-H[2]*O[Eq]",
       "Cu-Ax" = "Cu-H[2]*O[Ax]"
     ),
@@ -148,7 +148,7 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       breaks = c("A", "B"),
       values = c("#5cb344", "#8100b6"), 
     ) +
-    stat_smooth(
+    geom_smooth(
       method = "lm", 
       linewidth = 0, 
       fill = "gray", 
@@ -156,10 +156,11 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       na.rm = TRUE,
       fullrange = TRUE
     ) + #Standard error plotting
-    stat_smooth(
+    geom_smooth(
       method = "lm", 
       linetype = 5, 
       size = 0.5,
+      show.legend = FALSE,
       se = FALSE,
       na.rm = TRUE,
       fullrange = TRUE
@@ -191,7 +192,7 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
       breaks = c("A", "B"),
       values = c("#5cb344", "#8100b6"), 
     ) +
-    stat_smooth(
+    geom_smooth(
       method = "lm", 
       linewidth = 0, 
       fill = "gray", 
@@ -199,10 +200,11 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
       na.rm = TRUE,
       fullrange = TRUE
     ) + #Standard error plotting
-    stat_smooth(
+    geom_smooth(
       method = "lm", 
       linetype = 5, 
       size = 0.5,
+      show.legend = FALSE,
       se = FALSE,
       na.rm = TRUE,
       fullrange = TRUE
@@ -304,14 +306,23 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
-  geom_point() +
+ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
+  geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
+  geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
+  geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
+  geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
   ggtheme_dark() +
   scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
     values = c("#0096c5", "#b8008c")
+  ) +
+  scale_shape_manual(
+    "Dataset Type", 
+    labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
+    values = c(16, 15)
   ) +
   coord_cartesian(expand = FALSE) +
   theme(
@@ -322,14 +333,23 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
     y = "Diffraction-Weighted Dose (MGy)"
   )
 
-ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType)) +
-  geom_point() +
+ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
+  geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
+  geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
+  geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
+  geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
   ggtheme_light() +
   scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
     values = c("#0096c5", "#b8008c")
+  ) +
+  scale_shape_manual(
+    "Dataset Type", 
+    labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
+    values = c(16, 15)
   ) +
   coord_cartesian(expand = FALSE) +
   theme(
@@ -573,7 +593,7 @@ dark.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     theme(
-      legend.position.inside = c(0.9, 0.15), 
+      legend.position.inside = c(0.87, 0.2), 
       panel.grid.major.y = element_blank()
     ) +
     scale_x_discrete(labels = c(
@@ -584,16 +604,16 @@ dark.trend <- function(trend, datasetType) {
       "THN" = bquote(θ[HN]), 
       "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
-      "CuAx" = bquote(Cu-H[2]*O[Ax]), 
       "CuNterm" = bquote(Cu-N[term]),
+      "CuAx" = bquote(Cu-H[2]*O[Ax]), 
       "CuEq" = bquote(Cu-H[2]*O[Eq]), 
-      "CuHis1ND1" = bquote(Cu-His[1]*Nδ[1]), 
-      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]),
-      "CuTyr" = bquote(Cu-Tyr[168]), 
+      "CuHis1ND1" = bquote(Cu-His[1]*N[δ]), 
+      "CuHis84NE2" = bquote(Cu-His[84]*N[ε]),
+      "CuTyr" = bquote(Cu-Tyr[168]*O),
       "Ax" = bquote(H[2]*O[Ax]), 
       "Eq" = bquote(H[2]*O[Eq]), 
       "CO2" = bquote(CO[2]), 
-      "Glu" = bquote(Glu[30])
+      "Glu" = bquote(Intact*" "*Glu[30])
     )) +
     labs(
       x = if(trend %in% c("Occupancies", "BFactors")) {
@@ -681,7 +701,7 @@ light.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     theme(
-      legend.position.inside = c(0.9, 0.15), 
+      legend.position.inside = c(0.87, 0.2), 
       panel.grid.major.y = element_blank()
     ) +
     scale_x_discrete(labels = c(
@@ -695,13 +715,13 @@ light.trend <- function(trend, datasetType) {
       "CuNterm" = bquote(Cu-N[term]),
       "CuAx" = bquote(Cu-H[2]*O[Ax]), 
       "CuEq" = bquote(Cu-H[2]*O[Eq]), 
-      "CuHis1ND1" = bquote(Cu-His[1]*Nδ[1]), 
-      "CuHis84NE2" = bquote(Cu-His[84]*Nε[2]),
-      "CuTyr" = bquote(Cu-Tyr[168]),
+      "CuHis1ND1" = bquote(Cu-His[1]*N[δ]), 
+      "CuHis84NE2" = bquote(Cu-His[84]*N[ε]),
+      "CuTyr" = bquote(Cu-Tyr[168]*O),
       "Ax" = bquote(H[2]*O[Ax]), 
       "Eq" = bquote(H[2]*O[Eq]), 
       "CO2" = bquote(CO[2]), 
-      "Glu" = bquote(Glu[30])
+      "Glu" = bquote(Intact*" "*Glu[30])
     )) +
     labs(
       x = if(trend %in% c("Occupancies", "BFactors")) {
