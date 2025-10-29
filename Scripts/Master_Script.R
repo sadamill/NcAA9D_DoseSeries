@@ -117,13 +117,12 @@ source("Scripts/StructureStats.R")
 
 # Data Visualization ------------------------------------------------------
 
-source("Scripts/TrendVisualization.R")
+source("Scripts/TablePrep.R")
 source("Scripts/CheckingForHeterogeneity.R")
 source("Scripts/PlotGeneration.R")
-source("Scripts/WedgeCVAnalysis.R")
 
 # Data write-out ----------------------------------------------------------
-
+ 
 #Save all the plots
 save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight = 5, innerwidth = 8) {
   for(theme in names(ggplots)) {
@@ -157,10 +156,9 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
 save_plots('Occupancies')
 save_plots('Distances')
 save_plots('Angles', outerheight = 12)
-save_plots('CVs')
 save_plots('Dose', outerwidth = 8.8, outerheight = 7)
 save_plots('Stats', outerwidth = 16, outerheight = 16)
-save_plots("Comparisons", outerheight = 8)
+save_plots("Comparisons", outerheight = 16)
 
 #Save all associated PDBs
 write.pdb(pdb = OccupancyColoredPDB, file = "Output/ColoredPDBs/OccupancyColoredPDB.pdb")
