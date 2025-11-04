@@ -1,6 +1,6 @@
 # Function setup ----------------------------------------------------------
 
-theme_dark <- function() {
+ggtheme_dark <- function() {
   list(
     ggplot2::theme_dark(base_size = 8, base_family = "ArialMT"), 
     ggplot2::theme(
@@ -159,7 +159,7 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
     geom_smooth(
       method = "lm", 
       linetype = 5, 
-      size = 0.5,
+      linewidth = 0.5,
       show.legend = FALSE,
       se = FALSE,
       na.rm = TRUE,
@@ -169,7 +169,7 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       size = 1, 
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
-    ggplot2::theme_dark() +
+    ggtheme_dark() +
     coord_cartesian(expand = FALSE) +
     scales(facetVar = facetVar) +
     if(facetVar == "AngleID") {
@@ -203,7 +203,7 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     geom_smooth(
       method = "lm", 
       linetype = 5, 
-      size = 0.5,
+      linewidth = 0.5,
       show.legend = FALSE,
       se = FALSE,
       na.rm = TRUE,
@@ -248,7 +248,7 @@ ggdarklight <- function(data, key) {
   
   lightplots <- list(
     Pseudohelices = scatter_light(
-      data = data$Pseudohelices,
+      data = dplyr::filter(data$Pseudohelices, !is.na(!!yvar)),
       mapping = ggplot2::aes(
         x = Dose,
         y = .data[[yvar]],
@@ -259,7 +259,7 @@ ggdarklight <- function(data, key) {
       datasetType = "Pseudohelix"
     ),
     Wedges = scatter_light(
-      data = data$Wedges,
+      data = dplyr::filter(data$Wedges, !is.na(!!yvar)),
       mapping = ggplot2::aes(
         x = WedgeNumber,
         y = .data[[yvar]],
@@ -273,7 +273,7 @@ ggdarklight <- function(data, key) {
   
   darkplots <- list(
     Pseudohelices = scatter_dark(
-      data = data$Pseudohelices,
+      data = dplyr::filter(data$Pseudohelices, !is.na(!!yvar)),
       mapping = ggplot2::aes(
         x = Dose,
         y = .data[[yvar]],
@@ -284,7 +284,7 @@ ggdarklight <- function(data, key) {
       datasetType = "Pseudohelix"
     ),
     Wedges = scatter_dark(
-      data = data$Wedges,
+      data = dplyr::filter(data$Wedges, !is.na(!!yvar)),
       mapping = ggplot2::aes(
         x = WedgeNumber,
         y = .data[[yvar]],
@@ -311,7 +311,7 @@ ggplots$Dark$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber, 
   ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
   ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  ggplot2::theme_dark() +
+  ggtheme_dark() +
   ggplot2::scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
@@ -362,7 +362,7 @@ ggplots$Light$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber,
 
 ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = dataset_number, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
-  ggplot2::theme_dark() +
+  ggtheme_dark() +
   ggplot2::scale_color_manual(
     "Dataset Type",
     labels = c("Wedges", "Pseudohelices"), 
@@ -428,73 +428,73 @@ rmsd_plots <- list()
 
 base_plot <- function() {
   ggplot2::ggplot(all_rmsds, ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) +
-    geom_tile(
+    ggplot2::geom_tile(
       data = all_rmsds %>% dplyr::filter(parameter == "occupancies"),
       mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
-    scale_fill_viridis_c(name = "Occupancy RMSD", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4) +
-    new_scale_fill() +
-    geom_tile(
+    ggplot2::scale_fill_viridis_c(name = "Occupancy RMSD", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4) +
+    ggnewscale::new_scale_fill() +
+    ggplot2::geom_tile(
       data = all_rmsds %>% dplyr::filter(parameter == "b_factors"),
       mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
-    scale_fill_viridis_c(name = "B-Factor RMSD", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)) +
-    new_scale_fill() +
-    geom_tile(
+    ggplot2::scale_fill_viridis_c(name = "B-Factor RMSD", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)) +
+    ggnewscale::new_scale_fill() +
+    ggplot2::geom_tile(
       data = all_rmsds %>% dplyr::filter(parameter == "coordinates"),
       mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
-    scale_fill_viridis_c(name = "Coordinate RMSD", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4) +
-    facet_grid(
+    ggplot2::scale_fill_viridis_c(name = "Coordinate RMSD", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4) +
+    ggplot2::facet_grid(
       parameter ~ type,
       labeller = ggplot2::labeller(
         .default = str_to_title,
-        parameter = c(b_factors = "B-Factors", coordinates = "Coordinates")
+        parameter = c(b_factors = "B-Factors", coordinates = "Coordinates", occupancies = "Occupancy")
       )
     )
 }
 
 rmsd_plots$base_plots$light <- base_plot() +
-  ggplot2::theme_bw() +
+  ggplot2::theme_bw(base_size = 8, base_family = "ArialMT") +
   ggplot2::theme(
     panel.spacing = unit(0, "mm"),
     text = ggplot2::element_text(color = "black"), 
-    panel.border = ggplot2::element_rect(fill = NA, color = "black", borderwidth = 1),
+    panel.border = ggplot2::element_rect(fill = NA, color = "black", linewidth = 1),
     strip.background = ggplot2::element_rect(fill = "white"), 
     plot.background = ggplot2::element_blank(),
     legend.position = "none"
   ) +
-  scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
-  scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  ggplot2::scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  ggplot2::scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
   ggplot2::labs(x = "Reference Dataset", y = "Comparison Dataset")
 
 rmsd_plots$base_plots$dark <- base_plot() +
-  ggplot2::theme_dark() + 
+  ggtheme_dark() + 
   ggplot2::theme(
     panel.spacing = unit(0, "mm"),
     rect = ggplot2::element_blank(),
     text = ggplot2::element_text(color = "white"), 
     line = ggplot2::element_line(color = "black"), 
-    panel.border = ggplot2::element_rect(fill = NA, color = "white", borderwidth = 1),
+    panel.border = ggplot2::element_rect(fill = NA, color = "white", linewidth = 1),
     strip.background = ggplot2::element_rect(fill = "black", color = "white"),
     axis.text = ggplot2::element_text(color = 'gray'),
     axis.ticks = ggplot2::element_line(color = "gray"),
     legend.position = "none"
   ) +
-  scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
-  scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  ggplot2::scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
+  ggplot2::scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
   ggplot2::labs(x = "Reference Dataset", y = "Comparison Dataset")
 
 make_legend <- function(parameter, theme) {
   p <- all_rmsds %>% dplyr::filter(parameter == !!parameter) %>% 
     ggplot2::ggplot(ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) + 
-    geom_tile()
+    ggplot2::geom_tile()
   
   p <- switch(
     parameter,
-    "occupancies" = p + scale_fill_viridis_c(name = "Occupancy", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4),
-    "b_factors" = p + scale_fill_viridis_c(name = "B-Factor", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)),
-    "coordinates" = p + scale_fill_viridis_c(name = "Coordinate", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4)
+    "occupancies" = p + ggplot2::scale_fill_viridis_c(name = "Occupancy", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4),
+    "b_factors" = p + ggplot2::scale_fill_viridis_c(name = "B-Factor", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)),
+    "coordinates" = p + ggplot2::scale_fill_viridis_c(name = "Coordinate", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4)
   )
   
   if(theme == "dark") {
@@ -504,7 +504,7 @@ make_legend <- function(parameter, theme) {
     )
   }
   
-  legend <- get_legend(p)
+  legend <- cowplot::get_legend(p)
   
   return(legend)
 }
@@ -516,13 +516,13 @@ rmsd_plots$legends$dark$bfact <- make_legend("b_factors", "dark")
 rmsd_plots$legends$light$coord <- make_legend("coordinates", "light")
 rmsd_plots$legends$dark$coord <- make_legend("coordinates", "dark")
 
-rmsd_plots$legends$light$combined <- plot_grid(rmsd_plots$legends$light$bfact, rmsd_plots$legends$light$occ, rmsd_plots$legends$light$coord, ncol = 1) +
-  draw_label("RMSD", fontface = "bold", y = 0.99, vjust = 1)
-rmsd_plots$legends$dark$combined <- plot_grid(rmsd_plots$legends$dark$bfact, rmsd_plots$legends$dark$occ, rmsd_plots$legends$dark$coord, ncol = 1) +
-  draw_label("RMSD", fontface = "bold", y = 0.99, vjust = 1, color = "white")
+rmsd_plots$legends$light$combined <- cowplot::plot_grid(rmsd_plots$legends$light$bfact, rmsd_plots$legends$light$occ, rmsd_plots$legends$light$coord, ncol = 1) +
+  cowplot::draw_label("RMSD", fontface = "bold", y = 0.99, vjust = 1)
+rmsd_plots$legends$dark$combined <- cowplot::plot_grid(rmsd_plots$legends$dark$bfact, rmsd_plots$legends$dark$occ, rmsd_plots$legends$dark$coord, ncol = 1) +
+  cowplot::draw_label("RMSD", fontface = "bold", y = 0.99, vjust = 1, color = "white")
 
-ggplots$Light$Comparisons$RMSDs <- plot_grid(rmsd_plots$base_plots$light, rmsd_plots$legends$light$combined, ncol = 2, rel_widths = c(1, 0.15))
-ggplots$Dark$Comparisons$RMSDs <- plot_grid(rmsd_plots$base_plots$dark, rmsd_plots$legends$dark$combined, ncol = 2, rel_widths = c(1, 0.15))
+ggplots$Light$Comparisons$RMSDs <- suppressWarnings(cowplot::plot_grid(rmsd_plots$base_plots$light, rmsd_plots$legends$light$combined, ncol = 2, rel_widths = c(1, 0.15)))
+ggplots$Dark$Comparisons$RMSDs <- suppressWarnings(cowplot::plot_grid(rmsd_plots$base_plots$dark, rmsd_plots$legends$dark$combined, ncol = 2, rel_widths = c(1, 0.15)))
 
 # Trend plotting ----------------------------------------------------------
 
@@ -558,7 +558,7 @@ dark.trend <- function(trend, datasetType) {
       breaks = c("TrendA", "TrendB"),
       values = c("#8100b6", "#5cb344"), 
     ) +
-    ggplot2::theme_dark() +
+    ggtheme_dark() +
     ggplot2::geom_point( # Blocks out ggplot2::geom_segment to allow for transparent dots
       color = "black", 
       size = 3,

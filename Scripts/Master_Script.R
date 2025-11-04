@@ -149,12 +149,12 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
   }
 }
 
-save_plots('Occupancies')
-save_plots('Distances')
-save_plots('Angles', outerheight = 12)
-save_plots('Dose', outerwidth = 8.8, outerheight = 7)
-save_plots('Stats', outerwidth = 16, outerheight = 16)
-save_plots("Comparisons", outerheight = 16)
+suppressWarnings(save_plots('Occupancies'))
+suppressWarnings(save_plots('Distances'))
+suppressWarnings(save_plots('Angles', outerheight = 12))
+suppressWarnings(save_plots('Dose', outerwidth = 8.8, outerheight = 7))
+suppressWarnings(save_plots('Stats', outerwidth = 16, outerheight = 16))
+suppressWarnings(save_plots("Comparisons", outerheight = 16))
 
 #Save all the tables
 readr::write_csv(longData$Pseudohelices, "Output/Tables/RegressionSummary_Pseudohelices.csv")
