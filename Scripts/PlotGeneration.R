@@ -1,47 +1,47 @@
 # Function setup ----------------------------------------------------------
 
-ggtheme_dark <- function() {
+theme_dark <- function() {
   list(
-    theme_dark(base_size = 8, base_family = "ArialMT"), 
-    theme(
+    ggplot2::theme_dark(base_size = 8, base_family = "ArialMT"), 
+    ggplot2::theme(
       #Overall elements
-      rect = element_blank(), 
-      text = element_text(color = "white"), 
-      line = element_line(color = "black"), 
+      rect = ggplot2::element_blank(), 
+      text = ggplot2::element_text(color = "white"), 
+      line = ggplot2::element_line(color = "black"), 
       
       #Legend positioning
       legend.position = "inside", 
       legend.position.inside = c(0.85, 0.25), 
       
-      #Manual override of desired theme elements
-      panel.background = element_rect(fill = "black", color = "white"), 
-      legend.key = element_blank(), #panel.background automatically maps to legend.key; I want to override this
-      legend.background = element_rect(fill = "black", color = "white"), 
-      strip.background = element_rect(fill = "black", color = "white"),
-      axis.text = element_text(color = 'gray'),
+      #Manual override of desired ggplot2::theme elements
+      panel.background = ggplot2::element_rect(fill = "black", color = "white"), 
+      legend.key = ggplot2::element_blank(), #panel.background automatically maps to legend.key; I want to override this
+      legend.background = ggplot2::element_rect(fill = "black", color = "white"), 
+      strip.background = ggplot2::element_rect(fill = "black", color = "white"),
+      axis.text = ggplot2::element_text(color = 'gray'),
       legend.key.height = unit(3, "mm")
     )
   )
-} # Define a custom ggplot dark theme
+} # Define a custom ggplot2::ggplot dark ggplot2::theme
 ggtheme_light <- function() {
   list(
-    theme_bw(base_size = 8, base_family = "ArialMT"), 
-    theme(
+    ggplot2::theme_bw(base_size = 8, base_family = "ArialMT"), 
+    ggplot2::theme(
       #Overall elements
-      text = element_text(color = "black"), 
+      text = ggplot2::element_text(color = "black"), 
       
       #Legend positioning
       legend.position = "inside", 
       legend.position.inside = c(0.85, 0.25), 
       
-      #Manual override of desired theme elements
-      legend.background = element_rect(fill = "white", color = "black"), 
-      strip.background = element_rect(fill = "white"), 
-      plot.background = element_blank(),
+      #Manual override of desired ggplot2::theme elements
+      legend.background = ggplot2::element_rect(fill = "white", color = "black"), 
+      strip.background = ggplot2::element_rect(fill = "white"), 
+      plot.background = ggplot2::element_blank(),
       legend.key.height = unit(3, "mm")
     )
   )
-} # Define a custom ggplot light theme
+} # Define a custom ggplot2::ggplot light ggplot2::theme
 faceting <- function(facetVar, datasetType) {
   # Create a list containing all the necessary facet variables
   mapping_list <- list(
@@ -73,16 +73,16 @@ faceting <- function(facetVar, datasetType) {
   
   list(
     # Dynamically create a faceting layer based on the input facetVar string
-    facet_wrap(
+    ggplot2::facet_wrap(
       as.formula(paste("~", facetVar)), # Create a formula based on the input facetVar string
       scales = 'free',
-      labeller = labeller(
-        # Use a custom labeller from the mapping list; use tidy eval (!! to inject the user-supplied string and := to allow for LHS evaluation; R coerces the input string into a symbol)
-        !!facetVar := as_labeller(mapping_list[[facetVar]], label_parsed), # 
+      labeller = ggplot2::labeller(
+        # Use a custom ggplot2::labeller from the mapping list; use tidy eval (!! to inject the user-supplied string and := to allow for LHS evaluation; R coerces the input string into a symbol)
+        !!facetVar := ggplot2::as_labeller(mapping_list[[facetVar]], label_parsed), # 
         .default = label_parsed
       )),
     # Dynamically assign axis labels depending on the data type and facet used
-    labs(
+    ggplot2::labs(
       x = if(datasetType == 'Pseudohelix') {
         "Dose (MGy)"
       } else if(datasetType == "Wedge") {
@@ -109,44 +109,44 @@ scales <- function(facetVar) {
   ggh4x::facetted_pos_scales(
     y = if(facetVar == "AngleID") {
       list(
-        scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
-        scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
-        scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
-        scale_y_continuous(limits = c(0 - angle_window / 2, 0 + angle_window / 2)),
-        scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
-        scale_y_continuous(limits = c(-4 - angle_window / 2, -4 + angle_window / 2)),
-        scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
+        ggplot2::scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(0 - angle_window / 2, 0 + angle_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(-4 - angle_window / 2, -4 + angle_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
     )} else if(facetVar == "Residue") {
       list(
-        scale_y_continuous(limits = c(0.6 - occupancy_window / 2, 0.6 + occupancy_window / 2)),
-        scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
-        scale_y_continuous(limits = c(0.35 - occupancy_window / 2, 0.35 + occupancy_window / 2)),
-        scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
-        scale_y_continuous(limits = c(0.65 - occupancy_window / 2, 0.65 + occupancy_window / 2))
+        ggplot2::scale_y_continuous(limits = c(0.6 - occupancy_window / 2, 0.6 + occupancy_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(0.35 - occupancy_window / 2, 0.35 + occupancy_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(0.65 - occupancy_window / 2, 0.65 + occupancy_window / 2))
     )} else if(facetVar == "AtomPair") {
       list(
-        scale_y_continuous(limits = c(2.375 - distance_window / 2, 2.375 + distance_window / 2)),
-        scale_y_continuous(limits = c(1.99 - distance_window / 2, 1.99 + distance_window / 2)),
-        scale_y_continuous(limits = c(1.95 - distance_window / 2, 1.95 + distance_window / 2)),
-        scale_y_continuous(limits = c(1.98 - distance_window / 2, 1.98 + distance_window / 2)),
-        scale_y_continuous(limits = c(2.18 - distance_window / 2, 2.18 + distance_window / 2)),
-        scale_y_continuous(limits = c(2.66 - distance_window / 2, 2.66 + distance_window / 2))
+        ggplot2::scale_y_continuous(limits = c(2.375 - distance_window / 2, 2.375 + distance_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(1.99 - distance_window / 2, 1.99 + distance_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(1.95 - distance_window / 2, 1.95 + distance_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(1.98 - distance_window / 2, 1.98 + distance_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(2.18 - distance_window / 2, 2.18 + distance_window / 2)),
+        ggplot2::scale_y_continuous(limits = c(2.66 - distance_window / 2, 2.66 + distance_window / 2))
     )} else {NULL}) # If input facetVar isn't known, just automatically scale the axes
 }
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
-  ggplot(data, mapping) +
+  ggplot2::ggplot(data, mapping) +
     scale_shape_manual(
-      "Molecule", 
+      "Chain", 
       labels = c("A", "B"), 
       breaks = c("A", "B"),
       values = c(16, 17), 
     ) +
-    scale_color_manual(
-      "Molecule", 
+    ggplot2::scale_color_manual(
+      "Chain", 
       labels = c("A", "B"), 
       breaks = c("A", "B"),
-      values = c("#5cb344", "#8100b6"), 
+      values = c("#8100b6", "#5cb344"), 
     ) +
     geom_smooth(
       method = "lm", 
@@ -165,32 +165,32 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       na.rm = TRUE,
       fullrange = TRUE
     ) + #Linear regression line
-    geom_point(
+    ggplot2::geom_point(
       size = 1, 
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
-    ggtheme_dark() +
+    ggplot2::theme_dark() +
     coord_cartesian(expand = FALSE) +
     scales(facetVar = facetVar) +
     if(facetVar == "AngleID") {
-      theme(legend.position.inside = c(0.85, 0.15))
+      ggplot2::theme(legend.position.inside = c(0.85, 0.15))
     } else if(facetVar == "AtomPair") {
-      theme(legend.position = "right")
+      ggplot2::theme(legend.position = "right")
     }
 } #Make scatter plot with fitted linear regression
 scatter_light <- function(data, mapping, facetVar, datasetType) {
-  ggplot(data, mapping) +
+  ggplot2::ggplot(data, mapping) +
     scale_shape_manual(
-      "Molecule", 
+      "Chain", 
       labels = c("A", "B"), 
       breaks = c("A", "B"),
       values = c(16, 17), 
     ) +
-    scale_color_manual(
-      "Molecule", 
+    ggplot2::scale_color_manual(
+      "Chain", 
       labels = c("A", "B"), 
       breaks = c("A", "B"),
-      values = c("#5cb344", "#8100b6"), 
+      values = c("#8100b6", "#5cb344"), 
     ) +
     geom_smooth(
       method = "lm", 
@@ -209,7 +209,7 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
       na.rm = TRUE,
       fullrange = TRUE
     ) + #Linear regression line
-    geom_point(
+    ggplot2::geom_point(
       size = 1, 
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
@@ -217,9 +217,9 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     coord_cartesian(expand = FALSE) +
     scales(facetVar = facetVar) +
     if(facetVar == "AngleID") {
-      theme(legend.position.inside = c(0.85, 0.15))
+      ggplot2::theme(legend.position.inside = c(0.85, 0.15))
     } else if(facetVar == "AtomPair") {
-      theme(legend.position = "right")
+      ggplot2::theme(legend.position = "right")
     }
 } #Make scatter plot with fitted linear regression
 
@@ -249,7 +249,7 @@ ggdarklight <- function(data, key) {
   lightplots <- list(
     Pseudohelices = scatter_light(
       data = data$Pseudohelices,
-      mapping = aes(
+      mapping = ggplot2::aes(
         x = Dose,
         y = .data[[yvar]],
         color = Molecule,
@@ -260,7 +260,7 @@ ggdarklight <- function(data, key) {
     ),
     Wedges = scatter_light(
       data = data$Wedges,
-      mapping = aes(
+      mapping = ggplot2::aes(
         x = WedgeNumber,
         y = .data[[yvar]],
         color = Molecule,
@@ -274,7 +274,7 @@ ggdarklight <- function(data, key) {
   darkplots <- list(
     Pseudohelices = scatter_dark(
       data = data$Pseudohelices,
-      mapping = aes(
+      mapping = ggplot2::aes(
         x = Dose,
         y = .data[[yvar]],
         color = Molecule,
@@ -285,7 +285,7 @@ ggdarklight <- function(data, key) {
     ),
     Wedges = scatter_dark(
       data = data$Wedges,
-      mapping = aes(
+      mapping = ggplot2::aes(
         x = WedgeNumber,
         y = .data[[yvar]],
         color = Molecule,
@@ -306,17 +306,17 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
+ggplots$Dark$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
-  geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
+  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  ggtheme_dark() +
-  scale_color_manual(
+  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
+  ggplot2::theme_dark() +
+  ggplot2::scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
-    values = c("#0096c5", "#b8008c")
+    values = c("#016ad6", "#c2db4d")
   ) +
   scale_shape_manual(
     "Dataset Type", 
@@ -325,25 +325,25 @@ ggplots$Dark$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color
     values = c(16, 15)
   ) +
   coord_cartesian(expand = FALSE) +
-  theme(
+  ggplot2::theme(
     legend.position.inside = c(0.75, 0.22)
   ) +
-  labs(
+  ggplot2::labs(
     x = "Dataset Number",
     y = "Diffraction-Weighted Dose (MGy)"
   )
 
-ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
+ggplots$Light$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
-  geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
+  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
+  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
   ggtheme_light() +
-  scale_color_manual(
+  ggplot2::scale_color_manual(
     "Dataset Type", 
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
-    values = c("#0096c5", "#b8008c")
+    values = c("#016ad6", "#c2db4d")
   ) +
   scale_shape_manual(
     "Dataset Type", 
@@ -352,28 +352,28 @@ ggplots$Light$Dose$DWDs <- ggplot(dwds, aes(x = datasetNumber, y = dwd_MGy, colo
     values = c(16, 15)
   ) +
   coord_cartesian(expand = FALSE) +
-  theme(
+  ggplot2::theme(
     legend.position.inside = c(0.75, 0.22)
   ) +
-  labs(
+  ggplot2::labs(
     x = "Dataset Number",
     y = "Diffraction-Weighted Dose (MGy)"
   )
 
-ggplots$Dark$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = dataset_number, y = value, color = dataset_type)) +
-  geom_point() +
-  ggtheme_dark() +
-  scale_color_manual(
+ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = dataset_number, y = value, color = dataset_type)) +
+  ggplot2::geom_point() +
+  ggplot2::theme_dark() +
+  ggplot2::scale_color_manual(
     "Dataset Type",
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
-    values = c("#0096c5", "#b8008c")
+    values = c("#016ad6", "#c2db4d")
   ) +
-  facet_wrap(
+  ggplot2::facet_wrap(
     . ~ statistic,
     scales = "free",
     ncol = 3,
-    labeller = as_labeller(
+    labeller = ggplot2::as_labeller(
       c(
         cc1_2 = "CC[1/2]",
         multiplicity = "Multiplicity",
@@ -389,22 +389,22 @@ ggplots$Dark$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = datase
       label_parsed
     )
   ) +
-  theme(axis.title.y = element_blank(), legend.position.inside = c(0.85, 0.1)) +
-  labs(x = "Dataset Number")
-ggplots$Light$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = dataset_number, y = value, color = dataset_type)) +
-  geom_point() +
+  ggplot2::theme(axis.title.y = ggplot2::element_blank(), legend.position.inside = c(0.85, 0.1)) +
+  ggplot2::labs(x = "Dataset Number")
+ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = dataset_number, y = value, color = dataset_type)) +
+  ggplot2::geom_point() +
   ggtheme_light() +
-  scale_color_manual(
+  ggplot2::scale_color_manual(
     "Dataset Type",
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
-    values = c("#0096c5", "#b8008c")
+    values = c("#016ad6", "#c2db4d")
   ) +
-  facet_wrap(
+  ggplot2::facet_wrap(
     . ~ statistic,
     scales = "free",
     ncol = 3,
-    labeller = as_labeller(
+    labeller = ggplot2::as_labeller(
       c(
         cc1_2 = "CC[1/2]",
         multiplicity = "Multiplicity",
@@ -420,34 +420,34 @@ ggplots$Light$Stats$CrystalStats <- ggplot(crystal_stats$combined, aes(x = datas
       label_parsed
     )
   ) +
-  theme(axis.title.y = element_blank(), legend.position.inside = c(0.85, 0.1)) +
-  labs(x = "Dataset Number")
+  ggplot2::theme(axis.title.y = ggplot2::element_blank(), legend.position.inside = c(0.85, 0.1)) +
+  ggplot2::labs(x = "Dataset Number")
 
 # RMSD Plotting -----------------------------------------------------------
 rmsd_plots <- list()
 
 base_plot <- function() {
-  ggplot(all_rmsds, aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) +
+  ggplot2::ggplot(all_rmsds, ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) +
     geom_tile(
-      data = all_rmsds %>% filter(parameter == "occupancies"),
-      mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
+      data = all_rmsds %>% dplyr::filter(parameter == "occupancies"),
+      mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
     scale_fill_viridis_c(name = "Occupancy RMSD", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4) +
     new_scale_fill() +
     geom_tile(
-      data = all_rmsds %>% filter(parameter == "b_factors"),
-      mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
+      data = all_rmsds %>% dplyr::filter(parameter == "b_factors"),
+      mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
     scale_fill_viridis_c(name = "B-Factor RMSD", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)) +
     new_scale_fill() +
     geom_tile(
-      data = all_rmsds %>% filter(parameter == "coordinates"),
-      mapping = aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
+      data = all_rmsds %>% dplyr::filter(parameter == "coordinates"),
+      mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
     scale_fill_viridis_c(name = "Coordinate RMSD", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4) +
     facet_grid(
       parameter ~ type,
-      labeller = labeller(
+      labeller = ggplot2::labeller(
         .default = str_to_title,
         parameter = c(b_factors = "B-Factors", coordinates = "Coordinates")
       )
@@ -455,39 +455,39 @@ base_plot <- function() {
 }
 
 rmsd_plots$base_plots$light <- base_plot() +
-  theme_bw() +
-  theme(
+  ggplot2::theme_bw() +
+  ggplot2::theme(
     panel.spacing = unit(0, "mm"),
-    text = element_text(color = "black"), 
-    panel.border = element_rect(fill = NA, color = "black", borderwidth = 1),
-    strip.background = element_rect(fill = "white"), 
-    plot.background = element_blank(),
+    text = ggplot2::element_text(color = "black"), 
+    panel.border = ggplot2::element_rect(fill = NA, color = "black", borderwidth = 1),
+    strip.background = ggplot2::element_rect(fill = "white"), 
+    plot.background = ggplot2::element_blank(),
     legend.position = "none"
   ) +
   scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
   scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
-  labs(x = "Reference Dataset", y = "Comparison Dataset")
+  ggplot2::labs(x = "Reference Dataset", y = "Comparison Dataset")
 
 rmsd_plots$base_plots$dark <- base_plot() +
-  theme_dark() + 
-  theme(
+  ggplot2::theme_dark() + 
+  ggplot2::theme(
     panel.spacing = unit(0, "mm"),
-    rect = element_blank(),
-    text = element_text(color = "white"), 
-    line = element_line(color = "black"), 
-    panel.border = element_rect(fill = NA, color = "white", borderwidth = 1),
-    strip.background = element_rect(fill = "black", color = "white"),
-    axis.text = element_text(color = 'gray'),
-    axis.ticks = element_line(color = "gray"),
+    rect = ggplot2::element_blank(),
+    text = ggplot2::element_text(color = "white"), 
+    line = ggplot2::element_line(color = "black"), 
+    panel.border = ggplot2::element_rect(fill = NA, color = "white", borderwidth = 1),
+    strip.background = ggplot2::element_rect(fill = "black", color = "white"),
+    axis.text = ggplot2::element_text(color = 'gray'),
+    axis.ticks = ggplot2::element_line(color = "gray"),
     legend.position = "none"
   ) +
   scale_x_continuous(expand = c(0, 0), breaks = seq(0, 36, 3)) +
   scale_y_reverse(expand = c(0, 0), breaks = seq(0, 36, 3)) +
-  labs(x = "Reference Dataset", y = "Comparison Dataset")
+  ggplot2::labs(x = "Reference Dataset", y = "Comparison Dataset")
 
 make_legend <- function(parameter, theme) {
-  p <- all_rmsds %>% filter(parameter == !!parameter) %>% 
-    ggplot(aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) + 
+  p <- all_rmsds %>% dplyr::filter(parameter == !!parameter) %>% 
+    ggplot2::ggplot(ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) + 
     geom_tile()
   
   p <- switch(
@@ -498,9 +498,9 @@ make_legend <- function(parameter, theme) {
   )
   
   if(theme == "dark") {
-    p <- p + theme(
-      text = element_text(color = "white"),
-      rect = element_blank()
+    p <- p + ggplot2::theme(
+      text = ggplot2::element_text(color = "white"),
+      rect = ggplot2::element_blank()
     )
   }
   
@@ -529,14 +529,14 @@ ggplots$Dark$Comparisons$RMSDs <- plot_grid(rmsd_plots$base_plots$dark, rmsd_plo
 dark.trend <- function(trend, datasetType) {
   regressor <- ifelse(datasetType == "Pseudohelices", "MGy", "Wedge Number")
   
-  ggplot(
-    filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
-    aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
+  ggplot2::ggplot(
+    dplyr::filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
+    ggplot2::aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
-    geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
-    geom_segment( # Line portion of barbell
-      data = filter(wideData[[datasetType]], Measurement == trend),
-      aes(
+    ggplot2::geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
+    ggplot2::geom_segment( # Line portion of barbell
+      data = dplyr::filter(wideData[[datasetType]], Measurement == trend),
+      ggplot2::aes(
         x = Residue, 
         xend = Residue, 
         y = Coefficient_TrendA, 
@@ -548,55 +548,55 @@ dark.trend <- function(trend, datasetType) {
       linewidth = 3,
       alpha = 0.5
     ) +
-    scale_color_manual( # Significant contrasts get colored light blue
+    ggplot2::scale_color_manual( # Significant contrasts get colored light blue
       values = c("gray", "skyblue2")
     ) +
-    new_scale_color() + # Need new color scale for dots
-    scale_color_manual(
-      "Molecule", 
+    ggnewscale::new_scale_color() + # Need new color scale for dots
+    ggplot2::scale_color_manual(
+      "Chain", 
       labels = c("A", "B"), 
       breaks = c("TrendA", "TrendB"),
-      values = c("#5cb344", "#8100b6"), 
+      values = c("#8100b6", "#5cb344"), 
     ) +
-    ggtheme_dark() +
-    geom_point( # Blocks out geom_segment to allow for transparent dots
+    ggplot2::theme_dark() +
+    ggplot2::geom_point( # Blocks out ggplot2::geom_segment to allow for transparent dots
       color = "black", 
       size = 3,
     ) +
-    geom_point( # Individual trend plotting
-      aes(color = Estimate), 
+    ggplot2::geom_point( # Individual trend plotting
+      ggplot2::aes(color = Estimate), 
       size = 3,
       alpha = 0.6
     ) +
-    geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
-      aes(
+    ggplot2::geom_text( # Asterisks for significance
+      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
+      ggplot2::aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient,
       ),
       size = 3, 
-      position = position_nudge(x = 0.25),
-      color = '#B2DEAB',
+      position = ggplot2::position_nudge(x = 0.25),
+      color = '#bd9adb',
       inherit.aes = FALSE
     ) +
-    geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
-      aes(
+    ggplot2::geom_text( # Asterisks for significance
+      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
+      ggplot2::aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient,
       ),
       size = 3, 
-      position = position_nudge(x = 0.3),
-      color = '#BD9ADB',
+      position = ggplot2::position_nudge(x = 0.3),
+      color = '#b2deab',
       inherit.aes = FALSE
     ) +
-    theme(
+    ggplot2::theme(
       legend.position.inside = c(0.87, 0.2), 
-      panel.grid.major.y = element_blank()
+      panel.grid.major.y = ggplot2::element_blank()
     ) +
-    scale_x_discrete(labels = c(
+    ggplot2::scale_x_discrete(labels = c(
       "T1" = bquote(θ[1]), 
       "T2" = bquote(θ[2]), 
       "T3" = bquote(θ[3]), 
@@ -615,7 +615,7 @@ dark.trend <- function(trend, datasetType) {
       "CO2" = bquote(CO[2]), 
       "Glu" = bquote(Intact*" "*Glu[30])
     )) +
-    labs(
+    ggplot2::labs(
       x = if(trend %in% c("Occupancies", "BFactors")) {
         "Residue"
       } else if(trend == "Distances") {
@@ -624,26 +624,26 @@ dark.trend <- function(trend, datasetType) {
         "Angle ID"
       } else {stop("Invalid trend input for trend visualization")},
       y = if(trend == "Occupancies") {
-        str_glue("Occupancy Trend (Δ/{regressor})")
+        stringr::str_glue("Occupancy Trend (Δ/{regressor})")
       } else if(trend == "Distances") {
-        str_glue("Distance Trend (ΔÅ/{regressor})")
+        stringr::str_glue("Distance Trend (ΔÅ/{regressor})")
       } else if(trend == "Angles") {
-        str_glue("Angle Trend (Δ°/{regressor})")
+        stringr::str_glue("Angle Trend (Δ°/{regressor})")
       } else {stop("Invalid trend input for trend visualization")}
     ) +
-    coord_flip() # Flip coordinates back
+    ggplot2::coord_flip() # Flip coordinates back
 }
 light.trend <- function(trend, datasetType) {
   regressor <- ifelse(datasetType == "Pseudohelices", "MGy", "Wedge Number")
   
-  ggplot(
-    filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
-    aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
+  ggplot2::ggplot(
+    dplyr::filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
+    ggplot2::aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
-    geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
-    geom_segment( # Line portion of barbell
-      data = filter(wideData[[datasetType]], Measurement == trend),
-      aes(
+    ggplot2::geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
+    ggplot2::geom_segment( # Line portion of barbell
+      data = dplyr::filter(wideData[[datasetType]], Measurement == trend),
+      ggplot2::aes(
         x = Residue, 
         xend = Residue, 
         y = Coefficient_TrendA, 
@@ -655,56 +655,56 @@ light.trend <- function(trend, datasetType) {
       linewidth = 3,
       alpha = 0.5
     ) +
-    scale_color_manual( # Significant contrasts get colored light blue
+    ggplot2::scale_color_manual( # Significant contrasts get colored light blue
       breaks = c(FALSE, TRUE),
       values = c("gray", "skyblue2")
     ) +
-    new_scale_color() + # Need new color scale for dots
-    scale_color_manual(
-      "Molecule", 
+    ggnewscale::new_scale_color() + # Need new color scale for dots
+    ggplot2::scale_color_manual(
+      "Chain", 
       labels = c("A", "B"), 
       breaks = c("TrendA", "TrendB"),
-      values = c("#5cb344", "#8100b6"), 
+      values = c("#8100b6", "#5cb344"), 
     ) +
     ggtheme_light() +
-    geom_point( # Blocks out geom_segment to allow for transparent dots
+    ggplot2::geom_point( # Blocks out ggplot2::geom_segment to allow for transparent dots
       color = "white", 
       size = 3,
     ) +
-    geom_point( # Individual trend plotting
-      aes(color = Estimate), 
+    ggplot2::geom_point( # Individual trend plotting
+      ggplot2::aes(color = Estimate), 
       size = 3,
       alpha = 0.6
     ) +
-    geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
-      aes(
+    ggplot2::geom_text( # Asterisks for significance
+      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
+      ggplot2::aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
         y = Coefficient,
       ),
       size = 3, 
-      position = position_nudge(x = 0.25),
-      color = '#4F9437',
-      inherit.aes = FALSE
-    ) +
-    geom_text( # Asterisks for significance
-      data = filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
-      aes(
-        label = Significance,
-        x = Residue, # Offset vertically for only trend A (proportional to number of data points)
-        y = Coefficient,
-      ),
-      size = 3, 
-      position = position_nudge(x = 0.3),
+      position = ggplot2::position_nudge(x = 0.25),
       color = '#8100b6',
       inherit.aes = FALSE
     ) +
-    theme(
-      legend.position.inside = c(0.87, 0.2), 
-      panel.grid.major.y = element_blank()
+    ggplot2::geom_text( # Asterisks for significance
+      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
+      ggplot2::aes(
+        label = Significance,
+        x = Residue, # Offset vertically for only trend A (proportional to number of data points)
+        y = Coefficient,
+      ),
+      size = 3, 
+      position = ggplot2::position_nudge(x = 0.3),
+      color = '#4f9437',
+      inherit.aes = FALSE
     ) +
-    scale_x_discrete(labels = c(
+    ggplot2::theme(
+      legend.position.inside = c(0.87, 0.2), 
+      panel.grid.major.y = ggplot2::element_blank()
+    ) +
+    ggplot2::scale_x_discrete(labels = c(
       "T1" = bquote(θ[1]), 
       "T2" = bquote(θ[2]), 
       "T3" = bquote(θ[3]), 
@@ -723,7 +723,7 @@ light.trend <- function(trend, datasetType) {
       "CO2" = bquote(CO[2]), 
       "Glu" = bquote(Intact*" "*Glu[30])
     )) +
-    labs(
+    ggplot2::labs(
       x = if(trend %in% c("Occupancies", "BFactors")) {
         "Residue"
       } else if(trend == "Distances") {
@@ -732,14 +732,14 @@ light.trend <- function(trend, datasetType) {
         "Angle ID"
       } else {stop("Invalid trend input for trend visualization")},
       y = if(trend == "Occupancies") {
-        str_glue("Occupancy Trend (Δ/{regressor})")
+        stringr::str_glue("Occupancy Trend (Δ/{regressor})")
       } else if(trend == "Distances") {
-        str_glue("Distance Trend (ΔÅ/{regressor})")
+        stringr::str_glue("Distance Trend (ΔÅ/{regressor})")
       } else if(trend == "Angles") {
-        str_glue("Angle Trend (Δ°/{regressor})")
+        stringr::str_glue("Angle Trend (Δ°/{regressor})")
       } else {stop("Invalid trend input for trend visualization")}
     ) +
-    coord_flip()
+    ggplot2::coord_flip()
 }
 darklighttrend <- function(trend) {
   

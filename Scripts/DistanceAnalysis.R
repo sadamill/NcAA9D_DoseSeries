@@ -9,40 +9,40 @@
 #Generate lists containing all-atom distance matrices for all datasets
 distanceMatrices <- list(
   Pseudohelices = lapply(pseudohelixList, function(pdb) {
-    pdb$xyz %>% dm()
+    pdb$xyz %>% bio3d::dm()
   }), 
   Wedges = lapply(wedgeList, function(pdb) {
-    pdb$xyz %>% dm()
+    pdb$xyz %>% bio3d::dm()
   })
 )
 
 trimmedDistances <- list(
   Pseudohelices = lapply(distanceMatrices$Pseudohelices, function(dis) {
-    tibble(
+    tibble::tibble(
       CuTyr = c(dis[atoms$tyr168oh_a$atom, atoms$cu_a$atom], dis[atoms$tyr168oh_b$atom, atoms$cu_b$atom]), #Extract value from two cells in pseudohelixDMatList, the first containing distance for subunit A, and the other for subunit B
       CuNterm = c(dis[atoms$nterm_a$atom, atoms$cu_a$atom], dis[atoms$nterm_b$atom, atoms$cu_b$atom]), #Repeat for all the desired values
       CuHis1ND1 = c(dis[atoms$his1nd_a$atom, atoms$cu_a$atom], dis[atoms$his1nd_b$atom, atoms$cu_b$atom]), 
       CuHis84NE2 = c(dis[atoms$his84ne_a$atom, atoms$cu_a$atom], dis[atoms$his84ne_b$atom, atoms$cu_b$atom]), 
-      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
+      CuEq = c(dis[atoms$h2oeq_a$atom, atoms$cu_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
       CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
       Molecule = c("A", "B")
     )
   }) %>% 
-    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
+    dplyr::bind_rows() %>% #Data is generated as a list; dplyr::bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
     data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
   Wedges = lapply(distanceMatrices$Wedges, function(dis) {
-    tibble(
+    tibble::tibble(
       CuTyr = c(dis[atoms$tyr168oh_a$atom, atoms$cu_a$atom], dis[atoms$tyr168oh_b$atom, atoms$cu_b$atom]), #Extract value from two cells in pseudohelixDMatList, the first containing distance for subunit A, and the other for subunit B
       CuNterm = c(dis[atoms$nterm_a$atom, atoms$cu_a$atom], dis[atoms$nterm_b$atom, atoms$cu_b$atom]), #Repeat for all the desired values
       CuHis1ND1 = c(dis[atoms$his1nd_a$atom, atoms$cu_a$atom], dis[atoms$his1nd_b$atom, atoms$cu_b$atom]), 
       CuHis84NE2 = c(dis[atoms$his84ne_a$atom, atoms$cu_a$atom], dis[atoms$his84ne_b$atom, atoms$cu_b$atom]), 
-      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
+      CuEq = c(dis[atoms$h2oeq_a$atom, atoms$cu_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
       CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
       Molecule = c("A", "B")
     )
   }) %>% 
-    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
+    dplyr::bind_rows() %>% #Data is generated as a list; dplyr::bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
     data.frame(1:36, .) #Amend a column containing doses to the data frame
 )
@@ -51,7 +51,7 @@ colnames(trimmedDistances$Pseudohelices)[1] <- "dose_MGy"
 colnames(trimmedDistances$Wedges)[1] <- "WedgeNumber"
 
 stackedDistances <- list(
-  Pseudohelices = tibble(
+  Pseudohelices = tibble::tibble(
     Dose = rep(trimmedDistances$Pseudohelices$dose_MGy, 6), 
     AtomPair = c(
       rep("Cu-Tyr", 72), 
@@ -71,7 +71,7 @@ stackedDistances <- list(
     ), 
     Molecule = rep(trimmedDistances$Pseudohelices$Molecule, 6)
   ),
-  Wedges = tibble(
+  Wedges = tibble::tibble(
     WedgeNumber = rep(trimmedDistances$Wedges$WedgeNumber, 6), 
     AtomPair = c(
       rep("Cu-Tyr", 72), 
@@ -116,11 +116,11 @@ multipleRegressions$Distances <- list(
 )
 
 regressionSummaries$Distances <- list(
-  Pseudohelices = bind_rows(
+  Pseudohelices = dplyr::bind_rows(
     lapply(
       c("CuTyr", "CuNterm", "CuHis1ND1", "CuHis84NE2", "CuEq", "CuAx"), 
       function(atom) {
-        tibble(
+        tibble::tibble(
           Measurement = "Distances",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
@@ -132,11 +132,11 @@ regressionSummaries$Distances <- list(
       }
     )
   ), 
-  Wedges = bind_rows(
+  Wedges = dplyr::bind_rows(
     lapply(
       c("CuTyr", "CuNterm", "CuHis1ND1", "CuHis84NE2", "CuEq", "CuAx"), 
       function(atom) {
-        tibble(
+        tibble::tibble(
           Measurement = "Distances",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
@@ -149,3 +149,4 @@ regressionSummaries$Distances <- list(
     )
   )
 )
+

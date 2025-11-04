@@ -32,18 +32,18 @@ vector.angle <- function(v1, v2) {
 allAngles <- list(
   Pseudohelices = lapply(pseudohelixList, function(pdb) {
     
-    data.frame(
+    tibble::tibble(
       T1 = c(
-        angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his1nd_a$xyz])), 
-        angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his1nd_b$xyz]))
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his1nd_a$xyz])), 
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his1nd_b$xyz]))
       ), 
       T2 = c(
-        angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
-        angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
       ), 
       T3 = c(
-        angle.xyz(c(pdb$xyz[atoms$his1nd_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
-        angle.xyz(c(pdb$xyz[atoms$his1nd_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
+        bio3d::angle.xyz(c(pdb$xyz[atoms$his1nd_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
+        bio3d::angle.xyz(c(pdb$xyz[atoms$his1nd_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
       ), 
       TT = c(
         orthogonal.vector(pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$his1nd_a$xyz]) %>% #Find the vector orthogonal to the Cu-Nterm-Nd1 plane
@@ -82,23 +82,23 @@ allAngles <- list(
       Molecule = c("A", "B")
     )
   }) %>%
-    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
+    dplyr::bind_rows() %>% #Data is generated as a list; dplyr::bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating subunits, this will order the data frame by subunit
-    data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
+    tibble::tibble(rep(pseudohelixDose, 2), .), #Amend a column containing doses to the data frame
   Wedges = lapply(wedgeList, function(pdb) {
     
     data.frame(
       T1 = c(
-        angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his1nd_a$xyz])), 
-        angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his1nd_b$xyz]))
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his1nd_a$xyz])), 
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his1nd_b$xyz]))
       ), 
       T2 = c(
-        angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
-        angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
+        bio3d::angle.xyz(c(pdb$xyz[atoms$nterm_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
       ), 
       T3 = c(
-        angle.xyz(c(pdb$xyz[atoms$his1nd_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
-        angle.xyz(c(pdb$xyz[atoms$his1nd_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
+        bio3d::angle.xyz(c(pdb$xyz[atoms$his1nd_a$xyz], pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$his84ne_a$xyz])), 
+        bio3d::angle.xyz(c(pdb$xyz[atoms$his1nd_b$xyz], pdb$xyz[atoms$cu_b$xyz], pdb$xyz[atoms$his84ne_b$xyz]))
       ), 
       TT = c(
         orthogonal.vector(pdb$xyz[atoms$cu_a$xyz], pdb$xyz[atoms$nterm_a$xyz], pdb$xyz[atoms$his1nd_a$xyz]) %>% #Find the vector orthogonal to the Cu-Nterm-Nd1 plane
@@ -137,16 +137,16 @@ allAngles <- list(
       Molecule = c("A", "B")
     )
   }) %>%
-    bind_rows() %>% #Data is generated as a list; bind_rows turns it into a data frame
+    dplyr::bind_rows() %>% #Data is generated as a list; dplyr::bind_rows turns it into a data frame
     .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecules, this will order the data frame by subunit
-    data.frame(1:36, .) #Amend a column containing doses to the data frame
+    tibble::tibble(rep(1:36, 2), .) #Amend a column containing doses to the data frame
 )
 
 colnames(allAngles$Pseudohelices)[1] <- "dose_MGy"
 colnames(allAngles$Wedges)[1] <- "WedgeNumber"
 
 stackedAngles <- list(
-  Pseudohelices = tibble(
+  Pseudohelices = tibble::tibble(
     Dose = rep(allAngles$Pseudohelices$dose_MGy, 7), 
     AngleID = c(
       rep("T1", 72), 
@@ -168,7 +168,7 @@ stackedAngles <- list(
     ), 
     Molecule = rep(allAngles$Pseudohelices$Molecule, 7)
   ), 
-  Wedges = tibble(
+  Wedges = tibble::tibble(
     WedgeNumber = rep(allAngles$Wedges$WedgeNumber, 7), 
     AngleID = c(
       rep("T1", 72), 
@@ -216,11 +216,11 @@ multipleRegressions$Angles <- list(
 )
 
 regressionSummaries$Angles <- list(
-  Pseudohelices = bind_rows(
+  Pseudohelices = dplyr::bind_rows(
     lapply(
       c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
-        tibble(
+        tibble::tibble(
           Measurement = "Angles",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
@@ -232,11 +232,11 @@ regressionSummaries$Angles <- list(
       }
     )
   ), 
-  Wedges = bind_rows(
+  Wedges = dplyr::bind_rows(
     lapply(
       c("T1", "T2", "T3", "TT", "THH", "TH1", "THN"), 
       function(atom) {
-        tibble(
+        tibble::tibble(
           Measurement = "Angles",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 

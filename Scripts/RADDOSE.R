@@ -4,24 +4,24 @@ allData <- list() # Initalize a list to contain all the raw data
 
 allData$wedgeDoseState <- lapply(1:38, function(i) {
   read.csv(paste0('Input/RADDOSE/Output/Wedges/Wedge', i, '/output-DoseState.csv'), header = FALSE) %>% 
-    rename(x = V1, y = V2, z = V3, dose = V4, fluence = V5, elasticScattering = V6) %>% 
-    mutate(number = paste(!!i), datatype = 'Wedge')
+    dplyr::rename(x = V1, y = V2, z = V3, dose = V4, fluence = V5, elasticScattering = V6) %>% 
+    dplyr::mutate(number = paste(!!i), datatype = 'Wedge')
 }) # Import all voxel dose state files for the wedges (to be used for dose state isosurfaces)
 
 allData$pseudohelixDoseState <- lapply(1:36, function(i) {
   read.csv(paste0('Input/RADDOSE/Output/Pseudohelices/Pseudohelix', i, '/output-DoseState.csv'), header = FALSE) %>% 
-    rename(x = V1, y = V2, z = V3, dose = V4, fluence = V5, elasticScattering = V6) %>% 
-    mutate(number = paste(!!i), datatype = 'Pseudohelix')
+    dplyr::rename(x = V1, y = V2, z = V3, dose = V4, fluence = V5, elasticScattering = V6) %>% 
+    dplyr::mutate(number = paste(!!i), datatype = 'Pseudohelix')
 }) # Import all voxel dose state files for the pseudohelices (to be used for dose state isosurfaces)
 
 allData$wedgeDWDs <- lapply(1:38, function(i) {
   read.csv(paste0('Input/RADDOSE/Output/Wedges/Wedge', i, '/output-DWDs.csv'), header = TRUE) %>% 
-    mutate(number = paste(!!i), datatype = 'Wedge')
+    dplyr::mutate(number = paste(!!i), datatype = 'Wedge')
 }) # Import all wedge DWD traces for the wedges (for wedge and pseudohelix DWD calculations)
 
 # DWD Analysis ------------------------------------------------------------
 
-dwds <- tibble(
+dwds <- tibble::tibble(
   datasetNumber = rep(1:36)
 ) # Initialize a data frame to put all the doses in
 
@@ -38,7 +38,7 @@ dwds$pseudohelices <- sapply(2:37, function(pseudohelixNumber) {
   subwedgeAverages <- sapply(2:37, function(subwedgeNumber) {
     wedge <- allData$wedgeDWDs[[subwedgeNumber]]
     startAngle <- ((pseudohelixNumber - 1) * 5) + ((subwedgeNumber - 2) * 5) # Start angle depends on both the pseudohelix number and subwedge you are calculating
-    subwedgeAverage <- filter(wedge, DWD.Angle >= startAngle & DWD.Angle <= startAngle + 4)$DWD %>% # Extract the DWD column for angles within a target subwedge (5 frames = 4° angular range) 
+    subwedgeAverage <- dplyr::filter(wedge, DWD.Angle >= startAngle & DWD.Angle <= startAngle + 4)$DWD %>% # Extract the DWD column for angles within a target subwedge (5 frames = 4° angular range) 
       mean() # Average the extracted DWDs
     return(subwedgeAverage)
   }) # Creates a vector of subwedge average DWDs
@@ -47,7 +47,7 @@ dwds$pseudohelices <- sapply(2:37, function(pseudohelixNumber) {
 })
 
 # Reshape the dwd tibble so the wedge and pseudohelix dwds are stacked and labeled. This allows for proper ggplotting
-dwds <- tibble(
+dwds <- tibble::tibble(
   datasetNumber = rep(1:36, 2),
   dwd_MGy = c(dwds$wedges, dwds$pseudohelices),
   datasetType = c(rep("Wedges", 36), rep("Pseudohelices", 36))
@@ -86,7 +86,7 @@ edges <- lapply(1:nrow(edgeIndices), function(i) {
   )
 })
 
-edges <- tibble(
+edges <- tibble::tibble(
   x = sapply(edges,'[[',1) %>% 
     sapply(function(column) {
       x <- c(column)
@@ -106,10 +106,10 @@ edges <- tibble(
 steps <- list()
 
 # Create an empty plotly object
-base_fig <- plot_ly()
+base_fig <- plotly::plot_ly()
 
 add_dummy_points <- function(plot, linecolor) {
-  plot <- plot %>% add_trace( # Add dummy scatter3d traces to act as placeholders for the legend
+  plot <- plot %>% plotly::add_trace( # Add dummy scatter3d traces to act as placeholders for the legend
     p = plot,
     type = 'scatter3d',
     mode = 'markers',
@@ -125,7 +125,7 @@ add_dummy_points <- function(plot, linecolor) {
     ),
     name = "1 MGy"
   ) %>%
-    add_trace(
+    plotly::add_trace(
       type = 'scatter3d',
       mode = 'markers',
       x = c(max(xrange) * 10), y = c(max(yrange) * 10), z = c(max(zrange) * 10),
@@ -141,7 +141,7 @@ add_dummy_points <- function(plot, linecolor) {
       ,
       name = "5 MGy"
     ) %>%
-    add_trace(
+    plotly::add_trace(
       type = 'scatter3d',
       mode = 'markers',
       x = c(max(xrange) * 10), y = c(max(yrange) * 10), z = c(max(zrange) * 10),
@@ -156,7 +156,7 @@ add_dummy_points <- function(plot, linecolor) {
       ),
       name = "20 MGy"
     ) %>% 
-    add_trace(
+    plotly::add_trace(
       type = 'scatter3d',
       mode = 'lines',
       x = edges$x,
@@ -174,7 +174,7 @@ add_static_isosurface_traces <- function(plot, dataset, dataset_type) {
   
   # Add necessary traces for the dataset (isosurfaces for 1, 5, and 20 MGy)
   plot <- plot %>% 
-    add_trace(
+    plotly::add_trace(
       data = dataset,
       type = 'isosurface',
       x = ~x, y = ~y, z = ~z,
@@ -185,7 +185,7 @@ add_static_isosurface_traces <- function(plot, dataset, dataset_type) {
       showscale = FALSE,
       colorscale = list(c(0, 'red'), c(1, 'red'))
     ) %>% 
-    add_trace(
+    plotly::add_trace(
       data = dataset,
       type = 'isosurface',
       x = ~x, y = ~y, z = ~z,
@@ -196,7 +196,7 @@ add_static_isosurface_traces <- function(plot, dataset, dataset_type) {
       showscale = FALSE,
       colorscale = list(c(0, 'dodgerblue'), c(1, 'dodgerblue'))
     ) %>%
-    add_trace(
+    plotly::add_trace(
       data = dataset,
       type = 'isosurface',
       x = ~x, y = ~y, z = ~z,
@@ -215,7 +215,7 @@ add_interactive_isosurface_traces <- function(plot, dataset, dataset_type) {
   # Add necessary traces for all the wedges (isosurfaces for 1, 5, and 20 MGy)
   for (i in 1:length(dataset)) {
     plot <- plot %>% 
-      add_trace(
+      plotly::add_trace(
         data = dataset[[i]],
         type = 'isosurface',
         x = ~x, y = ~y, z = ~z,
@@ -227,7 +227,7 @@ add_interactive_isosurface_traces <- function(plot, dataset, dataset_type) {
         showscale = FALSE,
         colorscale = list(c(0, 'red'), c(1, 'red'))
       ) %>% 
-      add_trace(
+      plotly::add_trace(
         data = dataset[[i]],
         type = 'isosurface',
         x = ~x, y = ~y, z = ~z,
@@ -239,7 +239,7 @@ add_interactive_isosurface_traces <- function(plot, dataset, dataset_type) {
         showscale = FALSE,
         colorscale = list(c(0, 'dodgerblue'), c(1, 'dodgerblue'))
       ) %>%
-      add_trace(
+      plotly::add_trace(
         data = dataset[[i]],
         type = 'isosurface',
         x = ~x, y = ~y, z = ~z,
@@ -268,7 +268,7 @@ add_interactive_isosurface_traces <- function(plot, dataset, dataset_type) {
   return(plot)
 }
 plotly_layout <- function(plot, dataset, dataset_type, linecolor, bgcolor) {
-  layout(
+  plotly::layout(
     plot, 
     font = list(
       color = linecolor,
@@ -439,6 +439,5 @@ plotlys$dark$static$pseudohelix18DoseState <- plotly_static_dose(dataset = allDa
 plotlys$dark$static$pseudohelix36DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[36]], theme = "dark")
 plotlys$dark$static$wedge1DoseState <- plotly_static_dose(dataset = allData$wedgeDoseState[[1]], theme = "dark")
 
-saveWidget(as_widget(plotlys$dark$interactive$pseudohelixDoseState), "./Output/PlotlyHTMLs/Pseudohelix.html", selfcontained = FALSE)
-saveWidget(as_widget(plotlys$dark$static$wedge1DoseState), "./Output/PlotlyHTMLs/test.html")
-webshot("./Output/PlotlyHTMLs/test.html", "./Output/Plots/Dark/output.png", vwidth = 2400, vheight = 1200, cliprect = "viewport", zoom = 4)
+htmlwidgets::saveWidget(as_widget(plotlys$dark$interactive$pseudohelixDoseState), "./Output/PlotlyHTMLs/Pseudohelix.html", selfcontained = FALSE)
+htmlwidgets::saveWidget(as_widget(plotlys$dark$static$wedge1DoseState), "./Output/PlotlyHTMLs/test.html")
