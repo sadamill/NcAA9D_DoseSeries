@@ -47,18 +47,18 @@ faceting <- function(facetVar, datasetType) {
   mapping_list <- list(
     Residue = c(
       "CO2" = "CO[2]", 
-      "Ax"  = "H[2]*O[Ax]", 
-      "Eq"  = "H[2]*O[Eq]", 
-      "Glu" = "Intact*' '*Glu[30]", 
+      "Ax"  = "H[2]*O[ax]", 
+      "Eq"  = "H[2]*O[eq]", 
+      "Glu" = "'Intact Glu30'", 
       "Oxy" = "'Dioxygen'"
     ),
     AtomPair = c(
-      "Cu-Tyr" = "Cu-Tyr[168]*O",
+      "Cu-Tyr" = "'Cu-Tyr168Oη'",
       "Cu-NTerm" = "Cu-N[term]",
-      "Cu-His1ND1" = "Cu-His[1]*N[δ]",
-      "Cu-His84NE2" = "Cu-His[84]*N[ε]",
-      "Cu-Eq" = "Cu-H[2]*O[Eq]",
-      "Cu-Ax" = "Cu-H[2]*O[Ax]"
+      "Cu-His1ND1" = "'Cu-His1Nδ'",
+      "Cu-His84NE2" = "'Cu-His84Nε'",
+      "Cu-Eq" = "Cu-H[2]*O[eq]",
+      "Cu-Ax" = "Cu-H[2]*O[ax]"
     ),
     AngleID = c(
       "T1" = "θ[1]", 
@@ -605,15 +605,15 @@ dark.trend <- function(trend, datasetType) {
       "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
       "CuNterm" = bquote(Cu-N[term]),
-      "CuAx" = bquote(Cu-H[2]*O[Ax]), 
-      "CuEq" = bquote(Cu-H[2]*O[Eq]), 
-      "CuHis1ND1" = bquote(Cu-His[1]*N[δ]), 
-      "CuHis84NE2" = bquote(Cu-His[84]*N[ε]),
-      "CuTyr" = bquote(Cu-Tyr[168]*O),
-      "Ax" = bquote(H[2]*O[Ax]), 
-      "Eq" = bquote(H[2]*O[Eq]), 
+      "CuAx" = bquote(Cu-H[2]*O[ax]), 
+      "CuEq" = bquote(Cu-H[2]*O[eq]), 
+      "CuHis1ND1" = bquote(Cu-His1Nδ), 
+      "CuHis84NE2" = bquote(Cu-His84Nε),
+      "CuTyr" = bquote(Cu-Tyr168Oη),
+      "Ax" = bquote(H[2]*O[ax]), 
+      "Eq" = bquote(H[2]*O[eq]), 
       "CO2" = bquote(CO[2]), 
-      "Glu" = bquote(Intact*" "*Glu[30])
+      "Glu" = bquote(Intact*" "*Glu30)
     )) +
     ggplot2::labs(
       x = if(trend %in% c("Occupancies", "BFactors")) {
@@ -713,15 +713,15 @@ light.trend <- function(trend, datasetType) {
       "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
       "CuNterm" = bquote(Cu-N[term]),
-      "CuAx" = bquote(Cu-H[2]*O[Ax]), 
-      "CuEq" = bquote(Cu-H[2]*O[Eq]), 
-      "CuHis1ND1" = bquote(Cu-His[1]*N[δ]), 
-      "CuHis84NE2" = bquote(Cu-His[84]*N[ε]),
-      "CuTyr" = bquote(Cu-Tyr[168]*O),
-      "Ax" = bquote(H[2]*O[Ax]), 
-      "Eq" = bquote(H[2]*O[Eq]), 
+      "CuAx" = bquote(Cu-H[2]*O[ax]), 
+      "CuEq" = bquote(Cu-H[2]*O[eq]), 
+      "CuHis1ND1" = bquote(Cu-His1Nδ), 
+      "CuHis84NE2" = bquote(Cu-His84Nε),
+      "CuTyr" = bquote(Cu-Tyr168Oη),
+      "Ax" = bquote(H[2]*O[ax]), 
+      "Eq" = bquote(H[2]*O[eq]), 
       "CO2" = bquote(CO[2]), 
-      "Glu" = bquote(Intact*" "*Glu[30])
+      "Glu" = bquote(Intact*" "*Glu30)
     )) +
     ggplot2::labs(
       x = if(trend %in% c("Occupancies", "BFactors")) {

@@ -129,15 +129,15 @@ stackedOccupancies <- list(
 multipleRegressions$Occupancies <- list(
   Pseudohelices = list(
     Oxy = lm(Oxy ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices), 
-    Glu = lm(Glu ~ dose_MGy, data = subset(trimmedOccupancies$Pseudohelices, Molecule == "B")), 
-    CO2 = lm(CO2 ~ dose_MGy, data = subset(trimmedOccupancies$Pseudohelices, Molecule == "A")), 
+    Glu = lm(Glu ~ dose_MGy, data = trimmedOccupancies$Pseudohelices, subset = (Molecule == "B")), 
+    CO2 = lm(CO2 ~ dose_MGy, data = trimmedOccupancies$Pseudohelices, subset = (Molecule == "A")), 
     Ax = lm(Ax ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices), 
     Eq = lm(Eq ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices)
   ), 
   Wedges = list(
     Oxy = lm(Oxy ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges), 
-    Glu = lm(Glu ~ WedgeNumber, data = subset(trimmedOccupancies$Wedges, Molecule == "B")), 
-    CO2 = lm(CO2 ~ WedgeNumber, data = subset(trimmedOccupancies$Wedges, Molecule == "A")), 
+    Glu = lm(Glu ~ WedgeNumber, data = trimmedOccupancies$Wedges, subset = (Molecule == "B")), 
+    CO2 = lm(CO2 ~ WedgeNumber, data = trimmedOccupancies$Wedges, subset = (Molecule == "A")), 
     Ax = lm(Ax ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges), 
     Eq = lm(Eq ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges)
   )
