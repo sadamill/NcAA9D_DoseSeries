@@ -47,8 +47,8 @@ faceting <- function(facetVar, datasetType) {
   mapping_list <- list(
     Residue = c(
       "CO2" = "CO[2]", 
-      "Ax"  = "H[2]*O[ax]", 
-      "Eq"  = "H[2]*O[eq]", 
+      "Ax"  = "H[2]*O[ax*',in']", 
+      "Eq"  = "H[2]*O[eq*',in']", 
       "Glu" = "'Intact Glu30'", 
       "Oxy" = "'Dioxygen'"
     ),
@@ -57,8 +57,8 @@ faceting <- function(facetVar, datasetType) {
       "Cu-NTerm" = "Cu-N[term]",
       "Cu-His1ND1" = "'Cu-His1Nδ'",
       "Cu-His84NE2" = "'Cu-His84Nε'",
-      "Cu-Eq" = "Cu-H[2]*O[eq]",
-      "Cu-Ax" = "Cu-H[2]*O[ax]"
+      "Cu-Eq" = "Cu-H[2]*O[eq*',in']",
+      "Cu-Ax" = "Cu-H[2]*O[ax*',in']"
     ),
     AngleID = c(
       "T1" = "θ[1]", 
@@ -605,13 +605,13 @@ dark.trend <- function(trend, datasetType) {
       "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
       "CuNterm" = bquote(Cu-N[term]),
-      "CuAx" = bquote(Cu-H[2]*O[ax]), 
-      "CuEq" = bquote(Cu-H[2]*O[eq]), 
+      "CuAx" = bquote(Cu-H[2]*O[ax*",in"]), 
+      "CuEq" = bquote(Cu-H[2]*O[eq*",in"]), 
       "CuHis1ND1" = bquote(Cu-His1Nδ), 
       "CuHis84NE2" = bquote(Cu-His84Nε),
       "CuTyr" = bquote(Cu-Tyr168Oη),
-      "Ax" = bquote(H[2]*O[ax]), 
-      "Eq" = bquote(H[2]*O[eq]), 
+      "Ax" = bquote(H[2]*O[ax*",in"]), 
+      "Eq" = bquote(H[2]*O[eq*",in"]), 
       "CO2" = bquote(CO[2]), 
       "Glu" = bquote(Intact*" "*Glu30)
     )) +
@@ -713,13 +713,13 @@ light.trend <- function(trend, datasetType) {
       "THH" = bquote(θ[H-H]), 
       "TT" = bquote(θ[T]), 
       "CuNterm" = bquote(Cu-N[term]),
-      "CuAx" = bquote(Cu-H[2]*O[ax]), 
-      "CuEq" = bquote(Cu-H[2]*O[eq]), 
+      "CuAx" = bquote(Cu-H[2]*O[ax*",in"]), 
+      "CuEq" = bquote(Cu-H[2]*O[eq*",in"]), 
       "CuHis1ND1" = bquote(Cu-His1Nδ), 
       "CuHis84NE2" = bquote(Cu-His84Nε),
       "CuTyr" = bquote(Cu-Tyr168Oη),
-      "Ax" = bquote(H[2]*O[ax]), 
-      "Eq" = bquote(H[2]*O[eq]), 
+      "Ax" = bquote(H[2]*O[ax*",in"]), 
+      "Eq" = bquote(H[2]*O[eq*",in"]), 
       "CO2" = bquote(CO[2]), 
       "Glu" = bquote(Intact*" "*Glu30)
     )) +
