@@ -23,7 +23,7 @@ trimmedDistances <- list(
       CuNterm = c(dis[atoms$nterm_a$atom, atoms$cu_a$atom], dis[atoms$nterm_b$atom, atoms$cu_b$atom]), #Repeat for all the desired values
       CuHis1ND1 = c(dis[atoms$his1nd_a$atom, atoms$cu_a$atom], dis[atoms$his1nd_b$atom, atoms$cu_b$atom]), 
       CuHis84NE2 = c(dis[atoms$his84ne_a$atom, atoms$cu_a$atom], dis[atoms$his84ne_b$atom, atoms$cu_b$atom]), 
-      CuEq = c(dis[atoms$h2oeq_a$atom, atoms$cu_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
+      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$h2oeq_b$atom, atoms$cu_b$atom]), 
       CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
       Molecule = c("A", "B")
     )
@@ -37,7 +37,7 @@ trimmedDistances <- list(
       CuNterm = c(dis[atoms$nterm_a$atom, atoms$cu_a$atom], dis[atoms$nterm_b$atom, atoms$cu_b$atom]), #Repeat for all the desired values
       CuHis1ND1 = c(dis[atoms$his1nd_a$atom, atoms$cu_a$atom], dis[atoms$his1nd_b$atom, atoms$cu_b$atom]), 
       CuHis84NE2 = c(dis[atoms$his84ne_a$atom, atoms$cu_a$atom], dis[atoms$his84ne_b$atom, atoms$cu_b$atom]), 
-      CuEq = c(dis[atoms$h2oeq_a$atom, atoms$cu_a$atom], dis[atoms$cu_b$atom, atoms$h2oeq_b$atom]), 
+      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$h2oeq_b$atom, atoms$cu_b$atom]), 
       CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
       Molecule = c("A", "B")
     )
