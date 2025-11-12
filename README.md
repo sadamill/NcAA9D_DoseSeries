@@ -10,3 +10,6 @@ storing atom parameters in a large data frame. Multiple linear regression models
 are then calculated for parameters of interest versus dose and chain ID (see
 the publication for more details). The script also generates plots which were
 used in the paper.
+
+The scripts are packed together as an R project. To run the analysis scripts, 
+simply run renv::restore() upon opening Analysis.Rproj.
