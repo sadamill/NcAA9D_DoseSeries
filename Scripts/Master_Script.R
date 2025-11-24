@@ -1,16 +1,16 @@
 # Packages ----------------------------------------------------------------
 
-require(cowplot)
-require(tidyverse)
-require(bio3d)
-require(geometry)
-require(emmeans)
-require(ggh4x)
-require(ggnewscale)
-require(plotly)
-require(htmlwidgets)
-require(janitor)
-require(systemfonts)
+library(cowplot)
+library(tidyverse)
+library(bio3d)
+library(geometry)
+library(emmeans)
+library(ggh4x)
+library(ggnewscale)
+library(plotly)
+library(htmlwidgets)
+library(janitor)
+library(systemfonts)
 
 options(scipen = 7) #I don't like viewing things in scientific notation
 mem.maxVSize(vsize = 100000) #Set max memory size to allow space for large distance matrices
@@ -131,7 +131,8 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
           plot = ggplots[[theme]][[parameter]][[i]], 
           height = outerheight, 
           width = outerwidth,
-          units = "cm"
+          units = "cm",
+          create.dir = TRUE
         )
       } else if("list" %in% class(ggplots[[theme]][[parameter]][[i]])) {
         for(j in names(ggplots[[theme]][[parameter]][[i]])) {
@@ -141,7 +142,8 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 
             height = innerheight, 
             width = innerwidth,
-            units = "cm"
+            units = "cm",
+            create.dir = TRUE
           )
         }
       }
@@ -149,16 +151,21 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
   }
 }
 
-suppressWarnings(save_plots('Occupancies'))
-suppressWarnings(save_plots('Distances'))
-suppressWarnings(save_plots('Angles', outerheight = 12))
-suppressWarnings(save_plots('Dose', outerwidth = 8.8, outerheight = 7))
-suppressWarnings(save_plots('Stats', outerwidth = 16, outerheight = 16))
-suppressWarnings(save_plots("Comparisons", outerheight = 16))
+save_plots('Occupancies')
+save_plots('Distances')
+save_plots('Angles', outerheight = 12)
+save_plots('Dose', outerwidth = 8.8, outerheight = 7)
+save_plots('Stats', outerwidth = 16, outerheight = 16)
+save_plots("Comparisons", outerheight = 16)
 
 #Save all the tables
+dir.create("Output/Tables", showWarnings = FALSE)
 readr::write_csv(longData$Pseudohelices, "Output/Tables/RegressionSummary_Pseudohelices.csv")
 readr::write_csv(longData$Wedges, "Output/Tables/RegressionSummary_Wedges.csv")
 readr::write_csv(occ_table, "Output/Tables/all_occupancies.csv")
 readr::write_csv(angle_table, "Output/Tables/all_angles.csv")
 readr::write_csv(distance_table, "Output/Tables/all_distances.csv")
+
+dir.create("Output/PlotlyHTMLs", showWarnings = FALSE)
+htmlwidgets::saveWidget(plotly::as_widget(plotlys$dark$interactive$pseudohelixDoseState), "./Output/PlotlyHTMLs/Pseudohelix.html", selfcontained = FALSE)
+

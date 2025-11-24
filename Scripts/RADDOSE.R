@@ -3,19 +3,19 @@
 allData <- list() # Initalize a list to contain all the raw data
 
 allData$wedgeDoseState <- lapply(1:38, function(i) {
-  read.csv(paste0('Input/RADDOSE/Output/Wedges/Wedge', i, '/output-DoseState.csv'), header = FALSE) %>% 
+  read.csv(paste0('Input/RADDOSE/wedge_dose_states/wedge_', i, '.csv'), header = FALSE) %>% 
     dplyr::rename(x = V1, y = V2, z = V3, dose = V4, fluence = V5, elasticScattering = V6) %>% 
     dplyr::mutate(number = paste(!!i), datatype = 'Wedge')
 }) # Import all voxel dose state files for the wedges (to be used for dose state isosurfaces)
 
 allData$pseudohelixDoseState <- lapply(1:36, function(i) {
-  read.csv(paste0('Input/RADDOSE/Output/Pseudohelices/Pseudohelix', i, '/output-DoseState.csv'), header = FALSE) %>% 
+  read.csv(paste0('Input/RADDOSE/pseudohelix_dose_states/pseudohelix_', i, '.csv'), header = FALSE) %>% 
     dplyr::rename(x = V1, y = V2, z = V3, dose = V4, fluence = V5, elasticScattering = V6) %>% 
     dplyr::mutate(number = paste(!!i), datatype = 'Pseudohelix')
 }) # Import all voxel dose state files for the pseudohelices (to be used for dose state isosurfaces)
 
 allData$wedgeDWDs <- lapply(1:38, function(i) {
-  read.csv(paste0('Input/RADDOSE/Output/Wedges/Wedge', i, '/output-DWDs.csv'), header = TRUE) %>% 
+  read.csv(paste0('Input/RADDOSE/wedge_dwds/wedge_', i, '.csv'), header = TRUE) %>% 
     dplyr::mutate(number = paste(!!i), datatype = 'Wedge')
 }) # Import all wedge DWD traces for the wedges (for wedge and pseudohelix DWD calculations)
 
@@ -29,7 +29,6 @@ dwds$wedges <- sapply(2:37, function(wedgeNumber) {
   wedge <- allData$wedgeDWDs[[wedgeNumber]]
   mean(wedge$DWD)
 }) # Wedges 2-37 were used, so calculate the average DWD for all these
-
 
 # Pseudohelix average DWD calculations calculate the average DWD for 5 frames
 # worth of each wedge (subwedge). Calculate the respective subwedge average DWDs
@@ -438,6 +437,3 @@ plotlys$dark$static$pseudohelix1DoseState <- plotly_static_dose(dataset = allDat
 plotlys$dark$static$pseudohelix18DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[18]], theme = "dark")
 plotlys$dark$static$pseudohelix36DoseState <- plotly_static_dose(dataset = allData$pseudohelixDoseState[[36]], theme = "dark")
 plotlys$dark$static$wedge1DoseState <- plotly_static_dose(dataset = allData$wedgeDoseState[[1]], theme = "dark")
-
-htmlwidgets::saveWidget(as_widget(plotlys$dark$interactive$pseudohelixDoseState), "./Output/PlotlyHTMLs/Pseudohelix.html", selfcontained = FALSE)
-htmlwidgets::saveWidget(as_widget(plotlys$dark$static$wedge1DoseState), "./Output/PlotlyHTMLs/test.html")
