@@ -1,7 +1,7 @@
 # *Nc*AA9D Dose Series Analysis Scripts
 
 The scripts in this repository were used to analyze *Nc*AA9D structures for
-["PAPER TITLE HERE"](LINK HERE). A total of 72 X-ray crystal structures were
+["Dose-dependent structural and electron density features in the lytic polysaccharide monooxygenase NcAA9D"](LINK HERE). A total of 72 X-ray crystal structures were
 determined from a single crystal of *Nc*AA9D and used to determine the effects
 of radiation damage on the structure.
 
@@ -13,3 +13,4 @@ used in the paper.
 
 The scripts are packed together as an R project. To run the analysis scripts, 
 simply run renv::restore() upon opening Analysis.Rproj.
+
