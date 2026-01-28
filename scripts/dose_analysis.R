@@ -1,7 +1,7 @@
 # Data import -------------------------------------------------------------
 
 wedgeDWDs <- lapply(1:38, function(i) {
-  read.csv(paste0('input/raddose/wedge_', i, '.csv'), header = TRUE) %>% 
+  read.csv(paste0('input/wedge_', i, '.csv'), header = TRUE) %>% 
     dplyr::mutate(number = paste(!!i), datatype = 'Wedge')
 }) # Import all wedge DWD traces for the wedges (for wedge and pseudohelix DWD calculations)
 
