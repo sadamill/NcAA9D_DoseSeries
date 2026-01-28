@@ -118,7 +118,7 @@ source("Scripts/CheckingForHeterogeneity.R")
 source("Scripts/PlotGeneration.R")
 
 # Data write-out ----------------------------------------------------------
- 
+
 #Save all the plots
 save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight = 5, innerwidth = 8) {
   for(theme in names(ggplots)) {
@@ -127,7 +127,7 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
         dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"} else if(i == "CrystalStats") {"CrystalStats"} else if(i == "RMSDs") {"RMSDs"}
         this_parameter = if(parameter %in% c("Angles", "Distances", "Occupancies")) {parameter} else {""}
         ggplot2::ggsave(
-          filename = stringr::str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}.svg"), 
+          filename = stringr::str_glue("output/plots/{theme}/{dataset_type}_{parameter}.svg"), 
           plot = ggplots[[theme]][[parameter]][[i]], 
           height = outerheight, 
           width = outerwidth,
@@ -138,7 +138,7 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
         for(j in names(ggplots[[theme]][[parameter]][[i]])) {
           dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"}
           ggplot2::ggsave(
-            filename = stringr::str_glue("Output/Plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
+            filename = stringr::str_glue("output/plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 
             height = innerheight, 
             width = innerwidth,
@@ -151,21 +151,17 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
   }
 }
 
-save_plots('Occupancies')
-save_plots('Distances')
-save_plots('Angles', outerheight = 12)
-save_plots('Dose', outerwidth = 8.8, outerheight = 7)
-save_plots('Stats', outerwidth = 16, outerheight = 16)
+save_plots("Occupancies")
+save_plots("Distances")
+save_plots("Angles", outerheight = 12)
+save_plots("Dose", outerwidth = 8.8, outerheight = 7)
+save_plots("Stats", outerwidth = 16, outerheight = 16)
 save_plots("Comparisons", outerheight = 16)
 
 #Save all the tables
-dir.create("Output/Tables", showWarnings = FALSE)
-readr::write_csv(longData$Pseudohelices, "Output/Tables/RegressionSummary_Pseudohelices.csv")
-readr::write_csv(longData$Wedges, "Output/Tables/RegressionSummary_Wedges.csv")
-readr::write_csv(occ_table, "Output/Tables/all_occupancies.csv")
-readr::write_csv(angle_table, "Output/Tables/all_angles.csv")
-readr::write_csv(distance_table, "Output/Tables/all_distances.csv")
-
-dir.create("Output/PlotlyHTMLs", showWarnings = FALSE)
-htmlwidgets::saveWidget(plotly::as_widget(plotlys$dark$interactive$pseudohelixDoseState), "./Output/PlotlyHTMLs/Pseudohelix.html", selfcontained = FALSE)
-
+dir.create("output/tables", showWarnings = FALSE)
+readr::write_csv(longData$Pseudohelices, "output/tables/regression_summary_pseudohelices.csv")
+readr::write_csv(longData$Wedges, "output/tables/regression_summary_wedges.csv")
+readr::write_csv(occ_table, "output/tables/all_occupancies.csv")
+readr::write_csv(angle_table, "output/tables/all_angles.csv")
+readr::write_csv(distance_table, "output/tables/all_distances.csv")
