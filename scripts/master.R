@@ -66,7 +66,7 @@ pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract ato
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges
 
 #Run dose analysis to prepare dose state vectors
-source("Scripts/RADDOSE.R")
+source("scripts/dose_analysis.R")
 
 #Prep vectors containing all density-weighted dose values
 pseudohelixDose <- dplyr::filter(dwds, datasetType == "Pseudohelices")$dwd_MGy
@@ -106,16 +106,16 @@ ggplots <- list()
 
 # Data Analysis -----------------------------------------------------------
 
-source("Scripts/OccupancyAnalysis.R")
-source("Scripts/DistanceAnalysis.R")
-source("Scripts/AngleAnalysis.R")
-source("Scripts/StructureStats.R")
+source("scripts/occupancy_analysis.R")
+source("scripts/distance_analysis.R")
+source("scripts/angle_analysis.R")
+source("scripts/structure_stats.R")
 
 # Data Visualization ------------------------------------------------------
 
-source("Scripts/TablePrep.R")
-source("Scripts/CheckingForHeterogeneity.R")
-source("Scripts/PlotGeneration.R")
+source("scripts/table_cleanup.R")
+source("scripts/heterogeneity_analysis.R")
+source("scripts/plot_generation.R")
 
 # Data write-out ----------------------------------------------------------
 
