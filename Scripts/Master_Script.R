@@ -20,13 +20,13 @@ mem.maxVSize(vsize = 100000) #Set max memory size to allow space for large dista
 #Extract PDB files
 pseudohelixList <- lapply(1:36, function(x) {
   bio3d::read.pdb(
-    file = stringr::str_glue("Input/structures/pseudohelix_{x}.pdb"), 
+    file = stringr::str_glue("input/structures/pseudohelix_{x}.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract pseudohelix PDBs
 wedgeList <- lapply(1:36, function(x) {
   bio3d::read.pdb(
-    file = stringr::str_glue("Input/structures/wedge_{x}.pdb"), 
+    file = stringr::str_glue("input/structures/wedge_{x}.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract wedge PDBs

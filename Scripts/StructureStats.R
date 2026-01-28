@@ -27,11 +27,11 @@ read_crystal_stats <- function(filepath, dataset_type) {
 
 crystal_stats <- list()
 crystal_stats$pseudohelices <- read_crystal_stats(
-  filepath = "Input/Crystal_Statistics/Pseudohelix_Statistics.csv",
+  filepath = "input/crystal_statistics/pseudohelix_statistics.csv",
   dataset_type = "Pseudohelices"
 )
 crystal_stats$wedges <- read_crystal_stats(
-  filepath = "Input/Crystal_Statistics/Wedge_Statistics.csv",
+  filepath = "input/crystal_statistics/wedge_statistics.csv",
   dataset_type = "Wedges"
 )
 
