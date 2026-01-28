@@ -98,41 +98,6 @@ faceting <- function(facetVar, datasetType) {
     )
   )
 }
-scales <- function(facetVar) {
-  
-  # Manually alter the scales of individual facets
-  angle_window <- 7
-  occupancy_window <- 0.4
-  bfactor_window <- 8
-  distance_window <- 0.25
-  
-  ggh4x::facetted_pos_scales(
-    y = if(facetVar == "AngleID") {
-      list(
-        ggplot2::scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(94 - angle_window / 2, 94 + angle_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(171 - angle_window / 2, 171 + angle_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(0 - angle_window / 2, 0 + angle_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(68 - angle_window / 2, 68 + angle_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(-4 - angle_window / 2, -4 + angle_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(5 - angle_window / 2, 5 + angle_window / 2))
-    )} else if(facetVar == "Residue") {
-      list(
-        ggplot2::scale_y_continuous(limits = c(0.6 - occupancy_window / 2, 0.6 + occupancy_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(0.35 - occupancy_window / 2, 0.35 + occupancy_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(0.55 - occupancy_window / 2, 0.55 + occupancy_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(0.65 - occupancy_window / 2, 0.65 + occupancy_window / 2))
-    )} else if(facetVar == "AtomPair") {
-      list(
-        ggplot2::scale_y_continuous(limits = c(2.375 - distance_window / 2, 2.375 + distance_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(1.99 - distance_window / 2, 1.99 + distance_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(1.95 - distance_window / 2, 1.95 + distance_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(1.98 - distance_window / 2, 1.98 + distance_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(2.18 - distance_window / 2, 2.18 + distance_window / 2)),
-        ggplot2::scale_y_continuous(limits = c(2.66 - distance_window / 2, 2.66 + distance_window / 2))
-    )} else {NULL}) # If input facetVar isn't known, just automatically scale the axes
-}
 
 scatter_dark <- function(data, mapping, facetVar, datasetType) {
   ggplot2::ggplot(data, mapping) +
@@ -170,8 +135,6 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_dark() +
-    coord_cartesian(expand = FALSE) +
-    scales(facetVar = facetVar) +
     if(facetVar == "AngleID") {
       ggplot2::theme(legend.position.inside = c(0.85, 0.15))
     } else if(facetVar == "AtomPair") {
@@ -214,8 +177,6 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_light() +
-    coord_cartesian(expand = FALSE) +
-    scales(facetVar = facetVar) +
     if(facetVar == "AngleID") {
       ggplot2::theme(legend.position.inside = c(0.85, 0.15))
     } else if(facetVar == "AtomPair") {
@@ -306,7 +267,7 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
+ggplots$Dark$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = start_angle, y = dwd_MGy, color = datasetType, shape = datasetType)) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
   ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
@@ -324,7 +285,6 @@ ggplots$Dark$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber, 
     breaks = c("Wedges", "Pseudohelices"), 
     values = c(16, 15)
   ) +
-  coord_cartesian(expand = FALSE) +
   ggplot2::theme(
     legend.position.inside = c(0.75, 0.22)
   ) +
@@ -333,7 +293,7 @@ ggplots$Dark$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber, 
     y = "Diffraction-Weighted Dose (MGy)"
   )
 
-ggplots$Light$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber, y = dwd_MGy, color = datasetType, shape = datasetType)) +
+ggplots$Light$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = start_angle, y = dwd_MGy, color = datasetType, shape = datasetType)) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
   ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
   geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
@@ -351,7 +311,6 @@ ggplots$Light$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = datasetNumber,
     breaks = c("Wedges", "Pseudohelices"), 
     values = c(16, 15)
   ) +
-  coord_cartesian(expand = FALSE) +
   ggplot2::theme(
     legend.position.inside = c(0.75, 0.22)
   ) +
@@ -368,6 +327,12 @@ ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplo
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
     values = c("#016ad6", "#c2db4d")
+  ) +
+  scale_shape_manual(
+    "Dataset Type", 
+    labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
+    values = c(16, 15)
   ) +
   ggplot2::facet_wrap(
     . ~ statistic,
@@ -399,6 +364,12 @@ ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggpl
     labels = c("Wedges", "Pseudohelices"), 
     breaks = c("Wedges", "Pseudohelices"), 
     values = c("#016ad6", "#c2db4d")
+  ) +
+  scale_shape_manual(
+    "Dataset Type", 
+    labels = c("Wedges", "Pseudohelices"), 
+    breaks = c("Wedges", "Pseudohelices"), 
+    values = c(16, 15)
   ) +
   ggplot2::facet_wrap(
     . ~ statistic,
