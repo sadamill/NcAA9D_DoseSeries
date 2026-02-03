@@ -6,8 +6,6 @@ library(bio3d)
 library(geometry)
 library(emmeans)
 library(ggnewscale)
-library(plotly)
-library(htmlwidgets)
 library(janitor)
 library(systemfonts)
 
