@@ -71,32 +71,9 @@ wedgeDose <- dplyr::filter(dwds, datasetType == "Wedges")$dwd_MGy
 
 # Global Functions and Objects --------------------------------------------
 
-emtrends.coefficient <- function(model, regressor) {
-  c(
-    emmeans::emtrends(model, "Molecule", regressor) %>%
-      test() %>% .[, 2], 
-    emmeans::emtrends(model, "Molecule", regressor) %>%
-      pairs() %>% summary() %>% .[, 2]
-  )
-} #Extract coefficients from emtrends
-emtrends.pvalue <- function(model, regressor) {
-  c(
-    emmeans::emtrends(model, "Molecule", regressor) %>%
-      test() %>% .[, 6], 
-    emmeans::emtrends(model, "Molecule", regressor) %>%
-      pairs() %>% summary() %>% .[, 6]
-  )
-} #Extract p-values from emtrends
-emtrends.se <- function(model, regressor) {
-  c(
-    emmeans::emtrends(model, "Molecule", regressor) %>%
-      summary() %>% .[, 3], 
-    emmeans::emtrends(model, "Molecule", regressor) %>%
-      pairs() %>% summary() %>% .[, 3]
-  )
-} #Extract standard errors from emtrends
+source("scripts/functions.R")
 
-#Make blank lists to organize all visualization data
+# make blank lists to organize visualizations
 multipleRegressions <- list()
 regressionSummaries <- list()
 ggplots <- list()
