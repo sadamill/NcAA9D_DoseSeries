@@ -101,8 +101,8 @@ After processing the desired datasets, the relevant reflections files and a
 "base" *Nc*AA9D model were used as an input in [phenix.refine](https://phenix-online.org/documentation/reference/refinement.html)
 (vXXXXXXXX) to determine the structure corresponding to each dataset. This is a computationally
 hefty process, so we don't recommend you run the relevant scripts. We have, though,
-included the configuration files, Bash scripts, and file structure used in this
-step of the process to improve clarity.
+included the configuration files and Bash scripts used in this step of the
+process to improve clarity.
 
 ### 6. Structure Analysis
 
