@@ -1,47 +1,5 @@
 # Function setup ----------------------------------------------------------
 
-ggtheme_dark <- function() {
-  list(
-    ggplot2::theme_dark(base_size = 8, base_family = "ArialMT"), 
-    ggplot2::theme(
-      #Overall elements
-      rect = ggplot2::element_blank(), 
-      text = ggplot2::element_text(color = "white"), 
-      line = ggplot2::element_line(color = "black"), 
-      
-      #Legend positioning
-      legend.position = "inside", 
-      legend.position.inside = c(0.85, 0.25), 
-      
-      #Manual override of desired ggplot2::theme elements
-      panel.background = ggplot2::element_rect(fill = "black", color = "white"), 
-      legend.key = ggplot2::element_blank(), #panel.background automatically maps to legend.key; I want to override this
-      legend.background = ggplot2::element_rect(fill = "black", color = "white"), 
-      strip.background = ggplot2::element_rect(fill = "black", color = "white"),
-      axis.text = ggplot2::element_text(color = 'gray'),
-      legend.key.height = unit(3, "mm")
-    )
-  )
-} # Define a custom ggplot2::ggplot dark ggplot2::theme
-ggtheme_light <- function() {
-  list(
-    ggplot2::theme_bw(base_size = 8, base_family = "ArialMT"), 
-    ggplot2::theme(
-      #Overall elements
-      text = ggplot2::element_text(color = "black"), 
-      
-      #Legend positioning
-      legend.position = "inside", 
-      legend.position.inside = c(0.85, 0.25), 
-      
-      #Manual override of desired ggplot2::theme elements
-      legend.background = ggplot2::element_rect(fill = "white", color = "black"), 
-      strip.background = ggplot2::element_rect(fill = "white"), 
-      plot.background = ggplot2::element_blank(),
-      legend.key.height = unit(3, "mm")
-    )
-  )
-} # Define a custom ggplot2::ggplot light ggplot2::theme
 faceting <- function(facetVar, datasetType) {
   # Create a list containing all the necessary facet variables
   mapping_list <- list(

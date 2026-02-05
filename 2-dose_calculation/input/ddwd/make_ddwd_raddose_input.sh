@@ -74,7 +74,7 @@ do
 
 	DecayParam 0.02635943, 7.22368080, 0.02917785
 	    # γ, B0, and β, respectively
-	    # γ: describes the behavior of the Gaussian scale factor (MGy^-1)
+	    # γ: describes the dose-dependent behavior of the Gaussian scale factor (MGy^-1)
 	    # B0: the overall B-factor at zero dose (Å^2)
 	    # β: the rate increase of B-factor per unit dose (Å^2 MGy^-1)
 
