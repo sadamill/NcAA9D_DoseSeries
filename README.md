@@ -6,22 +6,27 @@ perform statistical analyses for the article
 This repository is organized with the intent of being transparent in methodology
 and processing flow. Five directories—numbered by their order in the pipeline—hold
 the scripts and majority of input data (file size allowing) used in our analyses.
-If desired, following the instructions below should allow you to fully reproduce
-the data used in our article.
 
 Due to the large dataset size, our analysis relied on heavy use of Bash
 and R scripts to organize files, improve efficiency, minimize human error,
-and maximize reproducibility/transparency. Linux and Mac users may simply run
-`bash path/to/script/script_name.sh` from the terminal (ensure your current working directory
-is NcAA9D_DoseSeries-main). Windows users may run these scripts using a Bash
-interpreter such as Git Bash. R may be downloaded from the [R Project website](https://www.r-project.org/)
-or from the [RStudio website](https://posit.co/download/rstudio-desktop/).
+and maximize reproducibility/transparency. In this repository, we not only
+include the R scripts for statistical analysis, but also the Bash scripts used
+to ease the burden of the large dataset size. If desired, following the
+instructions below should allow you to fully reproduce the data and plots used
+in our article.
 
-If you would like to replicate any results obtained from R scripts, please open
-r_analysis.Rproj and run the command `renv::restore()` (if you haven't used R before
-you will need to download renv with `install.packages("renv")`) . The desired
-script may then be run by typing the command `source("path/to/script/script_name.R")`
-into the R terminal.
+To run Bash scripts, Linux and Mac users may simply run
+`bash path/to/script/script_name.sh` from the terminal (ensure your current
+working directory is NcAA9D_DoseSeries-main). Windows users may run them
+using a Bash interpreter such as Git Bash.
+
+If you would like to replicate any results obtained from R scripts, you must
+download R, which can be done from the [R Project website](https://www.r-project.org/)
+or from the [RStudio website](https://posit.co/download/rstudio-desktop/).
+Open r_analysis.Rproj and run the command `renv::restore()` (if you haven't used
+R before you will need to download renv with `install.packages("renv")`) . The
+desired script may then be run by running the command
+`source("path/to/script/script_name.R")` from the R terminal.
 
 ### 1. Diffraction Decay Parameter Estimation
 
