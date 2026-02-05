@@ -93,7 +93,15 @@ the line `set.seed(12)` from the script and run it again.
 
 ### 4. Data Processing
 
+After the sample set was determined by section 3, we processed the diffraction
+images in [DIALS](https://dials.github.io/index.html) (v3.26) to obtain scaled
+and merged reflections files appropriate for use in structure refinement.
 
+To process the data from scratch, you will need the diffraction images.
+These are available at **LINK HERE**, and should be extracted into
+0-diffraction_images. You may then run the data processing script at
+4-data_processing/...........sh. This will process the necessary datasets and
+export the merged MTZ files.
 
 ### 5. Structure Refinements
 
