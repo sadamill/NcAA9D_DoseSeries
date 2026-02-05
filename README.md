@@ -14,8 +14,8 @@ and R scripts to organize files, improve efficiency, minimize human error,
 and maximize reproducibility/transparency. Linux and Mac users may simply run
 `bash path/to/script/script_name.sh` from the terminal (ensure your current working directory
 is NcAA9D_DoseSeries-main). Windows users may run these scripts using a Bash
-interpreter such as Git Bash. R may be downloaded from the (R Project website)[https://www.r-project.org/]
-or from the (RStudio website)[https://posit.co/download/rstudio-desktop/].
+interpreter such as Git Bash. R may be downloaded from the [R Project website](https://www.r-project.org/)
+or from the [RStudio website](https://posit.co/download/rstudio-desktop/).
 
 If you would like to replicate any results obtained from R scripts, please open
 r_analysis.Rproj and run the command `renv::restore()` (if you haven't used R before
