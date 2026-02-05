@@ -1,19 +1,28 @@
+library(tidyverse)
+source("functions.R")
+
 n_samples <- 36
 max_distance <- 25 
 set.seed(12)
 
-pseudohelix_doses <- filter(doses, dataset_type == "pseudohelix") %>% 
-  select(dataset_number, start_angle, ddwd) %>% 
-  mutate(weight = {diff(c(0, ddwd)) %>% abs()})
+calculate_dose("ddwd")
 
-assured_datasets <- pseudohelix_doses %>% filter(dataset_number %in% seq(1, 176, max_distance))
+pseudohelix_doses <- calculate_dose("ddwd") |> 
+  filter(dataset_type == "pseudohelix") |> 
+  rename(ddwd = dose) |> 
+  select(dataset_number, start_angle, ddwd) |> 
+  mutate(weight = {diff(c(0, ddwd)) |> abs()})
 
-candidate_points <- pseudohelix_doses %>% filter(!dataset_number %in% seq(1, 176, max_distance))
+assured_datasets <- pseudohelix_doses |>
+  filter(dataset_number %in% seq(1, 176, max_distance))
+
+candidate_points <- pseudohelix_doses |>
+  filter(!dataset_number %in% seq(1, 176, max_distance))
 samples <- candidate_points %>% slice_sample(
   n = n_samples-length(seq(1, 176, max_distance)),
-  weight_by = weight
-) %>% 
-  bind_rows(assured_datasets) %>% 
+  weight_by = weights
+) |> 
+  bind_rows(assured_datasets) |> 
   arrange(dataset_number)
 
 pseudohelix_doses <- mutate(pseudohelix_doses, sampled = dataset_number %in% samples$dataset_number)
@@ -34,4 +43,4 @@ ggExtra::ggMarginal(
   yparams = list(binwidth = 0.5)
 )
 
-write_csv(samples, "samples.csv")
+write_csv(samples, "sampling/output/samples.csv")

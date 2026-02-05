@@ -1,0 +1,210 @@
+##############################################################################
+#                                 Crystal Block                              #
+##############################################################################
+
+Crystal
+
+Type Cuboid
+    # Crystal shape can be Cuboid or Spherical
+
+WireframeType Obj
+    # Specify file format of crystal input model (obj is currently the only option)
+
+ModelFile ../CrystalWireframe.obj
+    # Specify filepath to crystal input model
+
+Dimensions 250 1187 250
+    # Dimensions of the crystal in X,Y,Z in µm.
+    # Z is the beam axis, Y the rotation axis and
+    # X completes the right handed set
+    # (vertical if starting face-on).
+
+PixelsPerMicron 0.10000000001
+    # This defines the coarseness of the simulation
+    # (i.e. how many voxels the crystal is divided into.)
+    # Preferably set as high as possible, however for a higher
+    # value the simulation will take longer to complete.
+    # Recommended to try increasing between 0.5 and 5 and ensure
+    # the reported dose value converges as PixelsPerMicron increases.
+    # As a rule of thumb, this needs to be at least 10x the beam
+    # FWHM for a Gaussian beam.
+    # e.g. 20 µm FWHM beam -> 2 µm voxels -> 0.5 voxels/µm
+
+# NOTE: Use AngleP/AngleL if your crystal is not face-on to the beam.
+# See RD3D user guide for more details
+
+AbsCoefCalc RD3D
+    # Absorption Coefficients calculated
+    # using RADDOSE-3D (Zeldin et al. 2013).
+
+UnitCell 68.12  42.23  70.29  90.0  98.3  90.0
+    # unit cell size: a, b, c with alpha, beta and gamma angles default to 90°
+
+NumMonomers 4
+    # number of monomers in unit cell
+
+NumResidues 223
+    # number of residues per monomer
+
+NumCarb 2
+    # number of carbohydrate residues per monomer
+
+ProteinHeavyAtoms Cu 1 S 9
+    # heavy atoms added to protein part of the
+    # monomer, i.e. S, coordinated metals, Se in Se-Met
+
+SolventHeavyConc S 100
+    # concentration of elements in the solvent
+    # in mmol/L. Oxygen and lighter elements
+    # should not be specified
+
+SolventFraction 0.37
+    # fraction of the unit cell occupied by solvent
+
+##############################################################################
+#                                  Beam Block                                #
+##############################################################################
+
+Beam
+
+Type Gaussian
+    # beam profile can be Gaussian or TopHat
+
+Flux 0.49e12
+    # in photons per second (2e12 = 2 * 10^12)
+
+FWHM 40 30
+    # in µm, horizontal by vertical for a Gaussian beam
+
+Energy 12.4
+    # photon energy in keV
+
+Collimation Rectangular 20 20
+    # Horizontal/Vertical collimation of the beam
+    # For 'uncollimated' Gaussians, 3xFWHM recommended
+################################################################################
+#                                  Wedge Block 1                               #
+################################################################################
+
+Wedge 0 179
+    # Start and End rotational angle of the crystal with Start < End
+
+ExposureTime 180
+    # Total time for entire angular range
+
+StartOffset 0 540 0
+    # Offset x y z translation in μm relative to crystal origin
+    # Origin is defined as intersection of beam and aligned goniometer axis
+
+AngularResolution 0.8949999999
+    # Only change from the defaults when using very
+    # small wedges, e.g 5°.
+
+# NOTE: To define more complex geometries (helical, de-centered, or offset),
+# see the StartOffset, TranslatePerDegree, and RotAxBeamOffset keywords
+# in the User Guide
+################################################################################
+#                                  Wedge Block 2                               #
+################################################################################
+
+Wedge 5 184
+    # Start and End rotational angle of the crystal with Start < End
+
+ExposureTime 180
+    # Total time for entire angular range
+
+StartOffset 0 510 0
+    # Offset x y z translation in μm relative to crystal origin
+    # Origin is defined as intersection of beam and aligned goniometer axis
+
+AngularResolution 0.8949999999
+    # Only change from the defaults when using very
+    # small wedges, e.g 5°.
+
+# NOTE: To define more complex geometries (helical, de-centered, or offset),
+# see the StartOffset, TranslatePerDegree, and RotAxBeamOffset keywords
+# in the User Guide
+################################################################################
+#                                  Wedge Block 3                               #
+################################################################################
+
+Wedge 10 189
+    # Start and End rotational angle of the crystal with Start < End
+
+ExposureTime 180
+    # Total time for entire angular range
+
+StartOffset 0 480 0
+    # Offset x y z translation in μm relative to crystal origin
+    # Origin is defined as intersection of beam and aligned goniometer axis
+
+AngularResolution 0.8949999999
+    # Only change from the defaults when using very
+    # small wedges, e.g 5°.
+
+# NOTE: To define more complex geometries (helical, de-centered, or offset),
+# see the StartOffset, TranslatePerDegree, and RotAxBeamOffset keywords
+# in the User Guide
+################################################################################
+#                                  Wedge Block 4                               #
+################################################################################
+
+Wedge 15 194
+    # Start and End rotational angle of the crystal with Start < End
+
+ExposureTime 180
+    # Total time for entire angular range
+
+StartOffset 0 450 0
+    # Offset x y z translation in μm relative to crystal origin
+    # Origin is defined as intersection of beam and aligned goniometer axis
+
+AngularResolution 0.8949999999
+    # Only change from the defaults when using very
+    # small wedges, e.g 5°.
+
+# NOTE: To define more complex geometries (helical, de-centered, or offset),
+# see the StartOffset, TranslatePerDegree, and RotAxBeamOffset keywords
+# in the User Guide
+################################################################################
+#                                  Wedge Block 5                               #
+################################################################################
+
+Wedge 20 199
+    # Start and End rotational angle of the crystal with Start < End
+
+ExposureTime 180
+    # Total time for entire angular range
+
+StartOffset 0 420 0
+    # Offset x y z translation in μm relative to crystal origin
+    # Origin is defined as intersection of beam and aligned goniometer axis
+
+AngularResolution 0.8949999999
+    # Only change from the defaults when using very
+    # small wedges, e.g 5°.
+
+# NOTE: To define more complex geometries (helical, de-centered, or offset),
+# see the StartOffset, TranslatePerDegree, and RotAxBeamOffset keywords
+# in the User Guide
+################################################################################
+#                                  Wedge Block 6                               #
+################################################################################
+
+Wedge 25 204
+    # Start and End rotational angle of the crystal with Start < End
+
+ExposureTime 180
+    # Total time for entire angular range
+
+StartOffset 0 390 0
+    # Offset x y z translation in μm relative to crystal origin
+    # Origin is defined as intersection of beam and aligned goniometer axis
+
+AngularResolution 0.8949999999
+    # Only change from the defaults when using very
+    # small wedges, e.g 5°.
+
+# NOTE: To define more complex geometries (helical, de-centered, or offset),
+# see the StartOffset, TranslatePerDegree, and RotAxBeamOffset keywords
+# in the User Guide
