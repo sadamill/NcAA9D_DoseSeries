@@ -4,7 +4,7 @@
 
 for wedge_number in {1..38}
 do
-	cat <<-EOF > wedge${wedge_number}.txt
+	cat <<-EOF > 3-ddwd_calculation/input/raddose_input/wedge${wedge_number}.txt
 	##############################################################################
 	#                                 Crystal Block                              #
 	##############################################################################
@@ -17,7 +17,7 @@ do
 	WireframeType Obj
 	    # Specify file format of crystal input model (obj is currently the only option)
 
-	ModelFile ../CrystalWireframe.obj
+	ModelFile ../../../input/raddose_input/CrystalWireframe.obj
 	    # Specify filepath to crystal input model
 
 	Dimensions 250 1187 250
@@ -45,35 +45,36 @@ do
 	    # using RADDOSE-3D (Zeldin et al. 2013).
 
 	UnitCell 68.12  42.23  70.29  90.0  98.3  90.0
-	    # unit cell size: a, b, c with alpha, beta and gamma angles default to 90°
+	    # Unit cell size: a, b, c with α, β and γ angles default to 90°
 
 	NumMonomers 4
-	    # number of monomers in unit cell
+	    # Number of monomers in unit cell
 
 	NumResidues 223
-	    # number of residues per monomer
+	    # Number of residues per monomer
 
 	NumCarb 2
-	    # number of carbohydrate residues per monomer
+	    # Number of carbohydrate residues per monomer
 
 	ProteinHeavyAtoms Cu 1 S 9
-	    # heavy atoms added to protein part of the
+	    # Heavy atoms added to protein part of the
 	    # monomer, i.e. S, coordinated metals, Se in Se-Met
 
 	SolventHeavyConc S 100
-	    # concentration of elements in the solvent
+	    # Concentration of elements in the solvent
 	    # in mmol/L. Oxygen and lighter elements
 	    # should not be specified
 
 	SolventFraction 0.37
-	    # fraction of the unit cell occupied by solvent
+	    # Fraction of the unit cell occupied by solvent
 
 	DDM Leal
-	    # specifies the dose decay model used by RADDOSE-3D
+	    # Specifies the dose decay model used by RADDOSE-3D
 	    # If no DDM is specified, no intensity decay is mdoelled by deault
 
 	DecayParam 0.02635943, 7.22368080, 0.02917785
 	    # γ, B0, and β, respectively
+		# CALCULATED BY PROCESSES IN 2-decay_parameter_estimation
 	    # γ: describes the dose-dependent behavior of the Gaussian scale factor (MGy^-1)
 	    # B0: the overall B-factor at zero dose (Å^2)
 	    # β: the rate increase of B-factor per unit dose (Å^2 MGy^-1)
@@ -85,7 +86,7 @@ do
 	Beam
 
 	Type Gaussian
-	    # beam profile can be Gaussian or TopHat
+	    # Beam profile can be Gaussian or TopHat
 
 	Flux 0.49e12
 	    # in photons per second (2e12 = 2 * 10^12)
@@ -94,10 +95,10 @@ do
 	    # in µm, horizontal by vertical for a Gaussian beam
 
 	Energy 12.4
-	    # photon energy in keV
+	    # Photon energy in keV
 
 	Collimation Rectangular 20 20
-	    # Horizontal/Vertical collimation of the beam
+	    # Horizontal/Vertical collimation of the beam.
 	    # For 'uncollimated' Gaussians, 3xFWHM recommended
 	EOF
 done
@@ -136,6 +137,6 @@ AngularResolution $angular_resolution
 " "$subwedge")
 
   for wedge_number in $(seq ${subwedge} 38); do
-    echo "$block" >> wedge${wedge_number}.txt
+    echo "$block" >> 3-ddwd_calculation/input/raddose_input/wedge${wedge_number}.txt
   done
 done

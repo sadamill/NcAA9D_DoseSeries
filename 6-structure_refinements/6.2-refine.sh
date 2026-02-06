@@ -12,7 +12,7 @@ datatypes=("pseudohelix" "wedge")
 
 for datatype in ${datatypes[@]}
 do
-    for i in $(seq 1 36)
+    for i in {1..36}
     do
         (
             cd ./${datatype}${i}/refine_1/
