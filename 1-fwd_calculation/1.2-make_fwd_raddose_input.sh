@@ -1,10 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # start every file with a crystal and beam block
-
 for wedge_number in {1..38}
 do
-	cat <<-EOF > 3-ddwd_calculation/input/raddose_input/wedge${wedge_number}.txt
+	cat <<-EOF > 1-fwd_calculation/input/raddose_input/wedge${wedge_number}.txt
 	##############################################################################
 	#                                 Crystal Block                              #
 	##############################################################################
@@ -68,17 +67,6 @@ do
 	SolventFraction 0.37
 	    # Fraction of the unit cell occupied by solvent
 
-	DDM Leal
-	    # Specifies the dose decay model used by RADDOSE-3D
-	    # If no DDM is specified, no intensity decay is mdoelled by deault
-
-	DecayParam 0.02635943, 7.22368080, 0.02917785
-	    # γ, B0, and β, respectively
-		# CALCULATED BY PROCESSES IN 2-decay_parameter_estimation
-	    # γ: describes the dose-dependent behavior of the Gaussian scale factor (MGy^-1)
-	    # B0: the overall B-factor at zero dose (Å^2)
-	    # β: the rate increase of B-factor per unit dose (Å^2 MGy^-1)
-
 	##############################################################################
 	#                                  Beam Block                                #
 	##############################################################################
@@ -137,6 +125,6 @@ AngularResolution $angular_resolution
 " "$subwedge")
 
   for wedge_number in $(seq ${subwedge} 38); do
-    echo "$block" >> 3-ddwd_calculation/input/raddose_input/wedge${wedge_number}.txt
+    echo "$block" >> 1-fwd_calculation/input/raddose_input/wedge${wedge_number}.txt
   done
 done

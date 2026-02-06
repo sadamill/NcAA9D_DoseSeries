@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 pwait() {
     while [[ $(jobs | wc -l) -ge $1 ]]
@@ -15,8 +15,8 @@ do
     for i in {1..36}
     do
         (
-            cd ./${datatype}${i}/refine_1/
-            phenix.refine --overwrite ../../starting_coords.pdb ../starting_map/${datatype}${i}_merged.mtz ../../params.eff
+            cd 6-structure_refinements/output/${datatype}${i}_refined
+            phenix.refine --overwrite ../../input/starting_coords.pdb ../../input/starting_maps/${datatype}${i}_merged.mtz ../../input/params.eff
         ) &
         pwait $MAX_PROCESSES
     done

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 for start_frame in {1..25}
 do

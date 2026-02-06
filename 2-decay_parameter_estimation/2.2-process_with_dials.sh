@@ -1,15 +1,4 @@
-#!/bin/bash
-
-# directory setup
-for i in {1..36}
-do
-	mkdir -p $(printf "2-decay_parameter_estimation/output/dials_output/wedge%02d" "$i")
-done
-
-for i in {1..25}
-do
-	mkdir -p $(printf "2-decay_parameter_estimation/output/dials_output/start_frame_%02d/subwedges" "$i")
-done
+#!/usr/bin/env bash
 
 # import and bin images
 for i in {2..37}
