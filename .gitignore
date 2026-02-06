@@ -99,6 +99,3 @@ rsconnect/
 # Ignore all bulky output files from dials
 2-decay_parameter_estimation/output/dials_output/start_frame_*
 2-decay_parameter_estimation/output/dials_output/wedge*
-
-
-
