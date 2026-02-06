@@ -91,11 +91,14 @@ rsconnect/
 
 # End of https://www.toptal.com/developers/gitignore/api/r,macos
 
-# Ignore all diffraction images
+# ignore all diffraction images
 0-diffraction_images/*
 # except for a README, which keeps the directory intact
 \!0-diffraction_images/README.md
 
-# Ignore all bulky output files from dials
+# ignore bulky raddose outputs
+1-fwd_calculation/output/raddose_output
+
+# ignore all bulky output files from dials
 2-decay_parameter_estimation/output/dials_output/start_frame_*
 2-decay_parameter_estimation/output/dials_output/wedge*
