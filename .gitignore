@@ -96,5 +96,5 @@ rsconnect/
 # except for a README, which keeps the directory intact
 \!0-diffraction_images/README.md
 
-# Ignore all bulky output files from decay-parameter estimation
-1-decay_parameter_estimation/output
+# Ignore all bulky output files from decay-parameter
+2-decay_parameter_estimation/output
