@@ -91,5 +91,10 @@ rsconnect/
 
 # End of https://www.toptal.com/developers/gitignore/api/r,macos
 
-#All manually-set ignores
-Output
+# Ignore all diffraction images
+0-diffraction_images/*
+# except for a README, which keeps the directory intact
+\!0-diffraction_images/README.md
+
+# Ignore all bulky output files from decay-parameter estimation
+1-decay_parameter_estimation/output
