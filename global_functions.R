@@ -4,8 +4,12 @@
 calculate_dose <- function(type) {
   if (!type %in% c("fwd", "ddwd")) {stop("invalid dose type provided")}
   
+  directory <- switch(type,
+                      "fwd" = "1-fwd_calculation/input/r_input",
+                      "ddwd" = "3-ddwd_calculation/input/r_input")
+  
   raddose_output <- lapply(1:38, function(i) {
-    read.csv(stringr::str_glue("dose_calculation/output/{type}/wedge_{i}.csv"), header = TRUE) |> 
+    read.csv(stringr::str_glue("{directory}/wedge{i}.csv"), header = TRUE) |> 
       dplyr::rename(angle = DWD.Angle)
   })
   
