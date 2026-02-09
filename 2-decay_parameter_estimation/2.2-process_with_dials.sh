@@ -27,6 +27,6 @@ do
 	    dials.index combined.expt combined.refl space_group=P1211
 	    dials.refine indexed.expt indexed.refl
 	    dials.integrate refined.expt refined.refl
-		dials.export integrated.expt refined.refl
+		dials.export integrated.expt integrated.refl
 	)
 done

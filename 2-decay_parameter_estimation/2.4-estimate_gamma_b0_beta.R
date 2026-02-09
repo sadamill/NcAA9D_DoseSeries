@@ -1,14 +1,19 @@
 # calculate γ, β, and B0 for RADDOSE input
 
 library(tidyverse)
+library(cowplot)
 
 source("scripts/functions.R")
 
 scaling_params <- dplyr::bind_cols(
-  readr::read_csv(file = "input/raddose/scaling_params.csv"),
-  dplyr::select(calculate_dose("fwd"), dose)[1:25,]
+  readr::read_csv(file = "2-decay_parameter_estimation/input/r_input/fwds.csv",
+                  col_select = dplyr::select(dataset_num, dose),
+                  col_names = c("dataset_num", "fwd")),
+  readr::read_csv(file = "2-decay_parameter_estimation/input/r_input/ccp4_wilson_b.csv",
+                  col_names = "wilson_b"),
+  readr::read_csv(file = "2-decay_parameter_estimation/input/r_input/ccp4_wilson_scale.csv",
+                  col_names = "scale")
 ) |>
-  dplyr::rename(fwd = dose) |> 
   dplyr::mutate(k = 1/scale) |> 
   dplyr::mutate(
     b_used = c(rep(TRUE, 9), rep(FALSE, 16)),
@@ -21,7 +26,7 @@ scale_fit <- lm(log(k) ~ {fwd^2}, scaling_params, subset = 1:17)$coefficients |>
 scale_fit[1] <- exp(scale_fit[1])
 scale_fit[2] <- sqrt(-scale_fit[2])
 
-b_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = wilson_b, color = b_used)) +
+wilson_b_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = wilson_b, color = b_used)) +
   ggplot2::geom_point() +
   ggplot2::geom_abline(
     slope = wilson_b_fit$coefficients[2],
@@ -47,7 +52,7 @@ b_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = wilson_b, co
     y = bquote("Wilson B-Factor ("*Å^2*")")
   )
 
-g_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = k, color = k_used)) +
+scales_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = k, color = k_used)) +
   ggplot2::geom_point() +
   ggplot2::geom_function(
     fun = \(fwd) {scale_fit[1] * exp(-(scale_fit[2]^2) * (fwd^2))},
@@ -72,4 +77,11 @@ g_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = k, color = k
     y = "Scale Factor K"
   )
 
-cowplot::plot_grid(b_plot, g_plot, ncol = 1)
+ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/wilson_b_plot.svg",
+                plot = wilson_b_plot,
+                height = 5, width = 8,
+                unit = "cm")
+ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/scales_plot",
+                plot = scales_plot,
+                height = 5, width = 8,
+                unit = "cm")
