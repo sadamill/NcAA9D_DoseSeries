@@ -86,9 +86,11 @@ scales_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = k, colo
 ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/wilson_b_plot.svg",
                 plot = wilson_b_plot,
                 height = 5, width = 8,
-                unit = "cm")
+                unit = "cm",
+                create.dir = TRUE)
 ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/scales_plot.svg",
                 plot = scales_plot,
                 height = 5, width = 8,
-                unit = "cm")
+                unit = "cm",
+                create.dir = TRUE)
 readr::write_csv(parameters, "2-decay_parameter_estimation/output/r_output/decay_params.csv")
