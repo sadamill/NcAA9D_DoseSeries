@@ -23,7 +23,7 @@ done
 wait
 
 # move raddose results to folder for R input
-for i in {1..36}
+for i in {1..38}
 do
-	cp 1-fwd_calculation/output/raddose_output/wedge${i}/output-DWDs.csv 1-fwd_calculation/input/r_input/wedge${i}_fwds.csv
+	cp 1-fwd_calculation/output/raddose_output/wedge${i}/output-DWDs.csv 1-fwd_calculation/input/r_input/wedge${i}.csv
 done
