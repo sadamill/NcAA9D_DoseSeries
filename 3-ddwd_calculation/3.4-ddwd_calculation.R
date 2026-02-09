@@ -1,11 +1,13 @@
+library(tidyverse)
+
 source("scripts/functions.R")
 
 doses <- dplyr::bind_rows(
-  calculate_dose("fwd"),
+  readr::read_csv("3-ddwd_calculation/input/r_input/fwds.csv"),
   calculate_dose("ddwd")
 )
 
-ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, color = dose_type)) +
+doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, color = dose_type)) +
   ggplot2::geom_point() +
   ggplot2::scale_color_manual(
     "Dose Type",
@@ -13,7 +15,14 @@ ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, color = dose_type
     breaks = c("fwd", "ddwd"),
     values = c("#fa8a15", "#c688ff")
   ) +
-  ggplot2::facet_wrap(~ dataset_type) +
-  ggplot2::labs(x = "Start Angle (φ, °)", y = "Dose (MGy)") +
+  ggplot2::facet_wrap(~ dataset_type, ncol = 1) +
+  ggplot2::labs(x = "Start Angle (φ, °)", y = "Average Dose (MGy)") +
   ggplot2::theme_bw() +
   ggplot2::theme(legend.position = "top")
+
+readr::write_csv(doses, "3-ddwd_calculation/output/r_output/fwd_ddwd.csv")
+ggplot2::ggsave("3-ddwd_calculation/output/r_output/fwd_ddwd.svg",
+                                plot = doses_plot,
+                                height = 10, width = 8,
+                                unit = "cm",
+                                create.dir = TRUE)
