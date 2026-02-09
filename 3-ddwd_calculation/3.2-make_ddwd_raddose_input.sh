@@ -73,7 +73,7 @@ do
 	    # Specifies the dose decay model used by RADDOSE-3D
 	    # If no DDM is specified, no intensity decay is mdoelled by deault
 
-	DecayParam 0.02635943, 7.22368080, 0.02917785
+	DecayParam 0.0256 7.2151 0.0306
 	    # γ, B0, and β, respectively
 		# CALCULATED BY PROCESSES IN 2-decay_parameter_estimation
 	    # γ: describes the dose-dependent behavior of the Gaussian scale factor (MGy^-1)

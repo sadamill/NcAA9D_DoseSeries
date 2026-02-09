@@ -3,17 +3,17 @@
 library(tidyverse)
 library(cowplot)
 
-source("scripts/functions.R")
+source("global_functions.R")
 
 scaling_params <- dplyr::bind_cols(
   readr::read_csv(file = "2-decay_parameter_estimation/input/r_input/fwds.csv",
-                  col_select = dplyr::select(dataset_num, dose),
-                  col_names = c("dataset_num", "fwd")),
+                  col_select = dataset_number | dose)[1:25,],
   readr::read_csv(file = "2-decay_parameter_estimation/input/r_input/ccp4_wilson_b.csv",
                   col_names = "wilson_b"),
   readr::read_csv(file = "2-decay_parameter_estimation/input/r_input/ccp4_wilson_scale.csv",
                   col_names = "scale")
 ) |>
+  dplyr::rename(fwd = dose) |> 
   dplyr::mutate(k = 1/scale) |> 
   dplyr::mutate(
     b_used = c(rep(TRUE, 9), rep(FALSE, 16)),

@@ -21,7 +21,7 @@ for i in {1..38}
 do
     (
     	cd 3-ddwd_calculation/output/raddose_output/wedge_$i
-    	java -jar ~/Applications/RADDOSE-3D-master/raddose3d.jar -i ../../../input/raddose_input/wedge${i}.txt
+    	java -jar /Applications/RADDOSE-3D-master/raddose3d.jar -i ../../../input/raddose_input/wedge${i}.txt
     ) &
     pwait $MAX_PROCESSES
 done
