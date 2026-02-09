@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # directory setup
+mkdir 2-decay_parameter_estimation/output/r_output
+
 for i in {1..36}
 do
 	mkdir -p $(printf "2-decay_parameter_estimation/output/dials_output/wedge%02d" "$i")
