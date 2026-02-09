@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 # directory setup
+for i in {1..38}
+do
+	mkdir -p 3-ddwd_calculation/output/raddose_output/wedge$i
+done
+
 mkdir  3-ddwd_calculation/output/r_output
 
 # copy input files from previous step

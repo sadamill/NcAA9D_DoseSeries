@@ -1,6 +1,6 @@
 library(tidyverse)
 
-source("scripts/functions.R")
+source("global_functions.R")
 
 doses <- dplyr::bind_rows(
   readr::read_csv("3-ddwd_calculation/input/r_input/fwds.csv"),
@@ -11,7 +11,7 @@ doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, col
   ggplot2::geom_point() +
   ggplot2::scale_color_manual(
     "Dose Type",
-    labels = c("Fluence-Weighted Dose", "Diffraction Decay-Weighted Dose"),
+    labels = c("FWD", "DDWD"),
     breaks = c("fwd", "ddwd"),
     values = c("#fa8a15", "#c688ff")
   ) +
@@ -20,7 +20,7 @@ doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, col
   ggplot2::theme_bw() +
   ggplot2::theme(legend.position = "top")
 
-filter(doses, dose_type = "ddwd") |> 
+filter(doses, dose_type == "ddwd") |> 
   readr::write_csv("3-ddwd_calculation/output/r_output/ddwds.csv")
 ggplot2::ggsave("3-ddwd_calculation/output/r_output/fwd_ddwd.svg",
                                 plot = doses_plot,
