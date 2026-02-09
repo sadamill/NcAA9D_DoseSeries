@@ -20,7 +20,8 @@ doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, col
   ggplot2::theme_bw() +
   ggplot2::theme(legend.position = "top")
 
-readr::write_csv(doses, "3-ddwd_calculation/output/r_output/fwd_ddwd.csv")
+filter(doses, dose_type = "ddwd") |> 
+  readr::write_csv("3-ddwd_calculation/output/r_output/ddwds.csv")
 ggplot2::ggsave("3-ddwd_calculation/output/r_output/fwd_ddwd.svg",
                                 plot = doses_plot,
                                 height = 10, width = 8,
