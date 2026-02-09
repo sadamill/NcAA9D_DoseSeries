@@ -26,6 +26,12 @@ scale_fit <- lm(log(k) ~ {fwd^2}, scaling_params, subset = 1:17)$coefficients |>
 scale_fit[1] <- exp(scale_fit[1])
 scale_fit[2] <- sqrt(-scale_fit[2])
 
+parameters <- tibble::tibble(
+  gamma = scale_fit[2],
+  b_naught = wilson_b_fit$coefficients[1],
+  beta = wilson_b_fit$coefficients[2]
+)
+
 wilson_b_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = wilson_b, color = b_used)) +
   ggplot2::geom_point() +
   ggplot2::geom_abline(
@@ -81,7 +87,8 @@ ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/wilson_b_plot.svg"
                 plot = wilson_b_plot,
                 height = 5, width = 8,
                 unit = "cm")
-ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/scales_plot",
+ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/scales_plot.svg",
                 plot = scales_plot,
                 height = 5, width = 8,
                 unit = "cm")
+readr::write_csv(parameters, "2-decay_parameter_estimation/output/r_output/decay_params.csv")
