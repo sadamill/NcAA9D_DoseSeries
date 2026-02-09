@@ -12,4 +12,4 @@ do
 done
 
 # copy input files from previous step
-cp 1-fwd_calculation/output/r_output/* 2-decay_parameter_estimation/input/r_input/
+cp 1-fwd_calculation/output/r_output/fwds.csv 2-decay_parameter_estimation/input/r_input/
