@@ -86,7 +86,7 @@ Collimation Rectangular 20 20
 #                                  Wedge Block 1                               #
 ################################################################################
 
-Wedge 0 179
+Wedge 0 180
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180

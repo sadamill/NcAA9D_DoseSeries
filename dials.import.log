@@ -1,0 +1,8 @@
+DIALS (2018) Acta Cryst. D74, 85-97. https://doi.org/10.1107/S2059798317017235
+DIALS 3.26
+The following parameters have been modified:
+
+input {
+  template = "../../../../0-diffraction_images/wedge02/HR00498_Pn5_wedge_02.####.gz"
+}
+

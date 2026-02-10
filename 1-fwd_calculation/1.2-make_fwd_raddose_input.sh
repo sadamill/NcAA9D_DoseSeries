@@ -95,7 +95,7 @@ done
 
 for subwedge in $(seq 1 38); do
   start=$(( (subwedge - 1) * 5 ))
-  end=$(( start + 179 ))
+  end=$(( start + 180 ))
   position=$(( subwedge * -30 + 570 ))
   angular_range=179
   frames=180

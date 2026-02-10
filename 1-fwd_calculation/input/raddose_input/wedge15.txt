@@ -86,7 +86,7 @@ Collimation Rectangular 20 20
 #                                  Wedge Block 1                               #
 ################################################################################
 
-Wedge 0 179
+Wedge 0 180
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -107,7 +107,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 2                               #
 ################################################################################
 
-Wedge 5 184
+Wedge 5 185
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -128,7 +128,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 3                               #
 ################################################################################
 
-Wedge 10 189
+Wedge 10 190
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -149,7 +149,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 4                               #
 ################################################################################
 
-Wedge 15 194
+Wedge 15 195
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -170,7 +170,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 5                               #
 ################################################################################
 
-Wedge 20 199
+Wedge 20 200
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -191,7 +191,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 6                               #
 ################################################################################
 
-Wedge 25 204
+Wedge 25 205
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -212,7 +212,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 7                               #
 ################################################################################
 
-Wedge 30 209
+Wedge 30 210
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -233,7 +233,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 8                               #
 ################################################################################
 
-Wedge 35 214
+Wedge 35 215
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -254,7 +254,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 9                               #
 ################################################################################
 
-Wedge 40 219
+Wedge 40 220
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -275,7 +275,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 10                              #
 ################################################################################
 
-Wedge 45 224
+Wedge 45 225
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -296,7 +296,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 11                              #
 ################################################################################
 
-Wedge 50 229
+Wedge 50 230
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -317,7 +317,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 12                              #
 ################################################################################
 
-Wedge 55 234
+Wedge 55 235
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -338,7 +338,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 13                              #
 ################################################################################
 
-Wedge 60 239
+Wedge 60 240
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -359,7 +359,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 14                              #
 ################################################################################
 
-Wedge 65 244
+Wedge 65 245
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -380,7 +380,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 15                              #
 ################################################################################
 
-Wedge 70 249
+Wedge 70 250
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
