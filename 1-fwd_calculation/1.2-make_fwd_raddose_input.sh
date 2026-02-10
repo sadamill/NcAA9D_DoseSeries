@@ -97,7 +97,7 @@ for subwedge in $(seq 1 38); do
   start=$(( (subwedge - 1) * 5 ))
   end=$(( start + 180 ))
   position=$(( subwedge * -30 + 570 ))
-  angular_range=179
+  angular_range=180
   frames=180
   angular_resolution=$(printf "%.10g" "$(echo "$angular_range / 200 - 0.0000000001" | bc -l)")
 

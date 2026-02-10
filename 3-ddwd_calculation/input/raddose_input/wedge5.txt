@@ -65,7 +65,7 @@ DDM Leal
     # Specifies the dose decay model used by RADDOSE-3D
     # If no DDM is specified, no intensity decay is mdoelled by deault
 
-DecayParam 0.0256 7.2151 0.0306
+DecayParam 0.0257 7.2160 0.0307
     # γ, B0, and β, respectively
 # CALCULATED BY PROCESSES IN 2-decay_parameter_estimation
     # γ: describes the dose-dependent behavior of the Gaussian scale factor (MGy^-1)
@@ -97,7 +97,7 @@ Collimation Rectangular 20 20
 #                                  Wedge Block 1                               #
 ################################################################################
 
-Wedge 0 179
+Wedge 0 180
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -107,7 +107,7 @@ StartOffset 0 540 0
     # Offset x y z translation in μm relative to crystal origin
     # Origin is defined as intersection of beam and aligned goniometer axis
 
-AngularResolution 0.8949999999
+AngularResolution 0.8999999999
     # Only change from the defaults when using very
     # small wedges, e.g 5°.
 
@@ -118,7 +118,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 2                               #
 ################################################################################
 
-Wedge 5 184
+Wedge 5 185
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -128,7 +128,7 @@ StartOffset 0 510 0
     # Offset x y z translation in μm relative to crystal origin
     # Origin is defined as intersection of beam and aligned goniometer axis
 
-AngularResolution 0.8949999999
+AngularResolution 0.8999999999
     # Only change from the defaults when using very
     # small wedges, e.g 5°.
 
@@ -139,7 +139,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 3                               #
 ################################################################################
 
-Wedge 10 189
+Wedge 10 190
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -149,7 +149,7 @@ StartOffset 0 480 0
     # Offset x y z translation in μm relative to crystal origin
     # Origin is defined as intersection of beam and aligned goniometer axis
 
-AngularResolution 0.8949999999
+AngularResolution 0.8999999999
     # Only change from the defaults when using very
     # small wedges, e.g 5°.
 
@@ -160,7 +160,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 4                               #
 ################################################################################
 
-Wedge 15 194
+Wedge 15 195
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -170,7 +170,7 @@ StartOffset 0 450 0
     # Offset x y z translation in μm relative to crystal origin
     # Origin is defined as intersection of beam and aligned goniometer axis
 
-AngularResolution 0.8949999999
+AngularResolution 0.8999999999
     # Only change from the defaults when using very
     # small wedges, e.g 5°.
 
@@ -181,7 +181,7 @@ AngularResolution 0.8949999999
 #                                  Wedge Block 5                               #
 ################################################################################
 
-Wedge 20 199
+Wedge 20 200
     # Start and End rotational angle of the crystal with Start < End
 
 ExposureTime 180
@@ -191,7 +191,7 @@ StartOffset 0 420 0
     # Offset x y z translation in μm relative to crystal origin
     # Origin is defined as intersection of beam and aligned goniometer axis
 
-AngularResolution 0.8949999999
+AngularResolution 0.8999999999
     # Only change from the defaults when using very
     # small wedges, e.g 5°.
 

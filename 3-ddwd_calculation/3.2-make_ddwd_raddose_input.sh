@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-# TODO MAKE CSV READER FOR DECAY PARAMS
+# transcribe output values from step 2
+gamma=0.0257
+b_naught=7.2160
+beta=0.0307
 
 # start every file with a crystal and beam block
 for wedge_number in {1..38}
@@ -73,7 +76,7 @@ do
 	    # Specifies the dose decay model used by RADDOSE-3D
 	    # If no DDM is specified, no intensity decay is mdoelled by deault
 
-	DecayParam 0.0256 7.2151 0.0306
+	DecayParam $gamma $b_naught $beta
 	    # γ, B0, and β, respectively
 		# CALCULATED BY PROCESSES IN 2-decay_parameter_estimation
 	    # γ: describes the dose-dependent behavior of the Gaussian scale factor (MGy^-1)
@@ -108,9 +111,9 @@ done
 
 for subwedge in $(seq 1 38); do
   start=$(( (subwedge - 1) * 5 ))
-  end=$(( start + 179 ))
+  end=$(( start + 180 ))
   position=$(( subwedge * -30 + 570 ))
-  angular_range=179
+  angular_range=180
   frames=180
   angular_resolution=$(printf "%.10g" "$(echo "$angular_range / 200 - 0.0000000001" | bc -l)")
 

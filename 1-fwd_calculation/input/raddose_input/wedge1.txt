@@ -96,7 +96,7 @@ StartOffset 0 540 0
     # Offset x y z translation in μm relative to crystal origin
     # Origin is defined as intersection of beam and aligned goniometer axis
 
-AngularResolution 0.8949999999
+AngularResolution 0.8999999999
     # Only change from the defaults when using very
     # small wedges, e.g 5°.
 

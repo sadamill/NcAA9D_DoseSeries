@@ -13,7 +13,7 @@ do
 	)
 done
 
-grep "Least squares" start_frame_*/ccp4_wilson.txt | sed -r "s/(^.*B  =  |        SCALE.*$)//g" > 2-decay_parameter_estimation/output/dials_output/ccp4_wilson_b.csv
-grep "Least squares" start_frame_*/ccp4_wilson.txt | sed -r "s/(^.*SCALE  =  )//g" > 2-decay_parameter_estimation/output/dials_output/ccp4_wilson_scale.csv
+grep "Least squares" 2-decay_parameter_estimation/output/dials_output/start_frame_*/ccp4_wilson.txt | sed -r "s/(^.*B  =  |        SCALE.*$)//g" > 2-decay_parameter_estimation/output/dials_output/ccp4_wilson_b.csv
+grep "Least squares" 2-decay_parameter_estimation/output/dials_output/start_frame_*/ccp4_wilson.txt | sed -r "s/(^.*SCALE  =  )//g" > 2-decay_parameter_estimation/output/dials_output/ccp4_wilson_scale.csv
 
 cp 2-decay_parameter_estimation/output/dials_output/*.csv 2-decay_parameter_estimation/input/r_input

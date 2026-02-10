@@ -16,7 +16,7 @@ do
 done
 
 # start frames obtained from weighted random sampling
-start_frames=(1 2 3 4 5 6 9 10 11 12 13 14 16 17 18 21 26 27 30 51 72 76 101 107 110 126 151 152 161 169 170 171 173 174 175 176)
+start_frames=(1 2 3 4 5 6 8 9 10 11 13 15 20 23 26 27 32 37 51 76 77 92 101 118 126 149 151 166 167 168 169 171 173 174 175 176)
 
 # iterate through indices of array to process pseudohelices
 for i in ${!start_frames[@]}

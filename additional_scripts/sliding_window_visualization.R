@@ -35,10 +35,14 @@ calculate_dose <- function(type) {
       wedge_number = as.integer(wedge_number),
       angle = as.integer(angle)
     ) |> 
-    arrange(wedge_number)
+    arrange(wedge_number) |> 
+    bind_cols(rep(0:179, 36)) |> 
+    rename(delta_angle = ...4)
     
   return(subwedges)
 }
+
+ddwds <- calculate_dose("ddwd")
 
 ggplot2::ggplot(ddwds, aes(x = wedge_number, y = delta_angle, fill = ddwd)) +
   geom_tile() +
