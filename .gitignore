@@ -112,4 +112,7 @@ rsconnect/
 6-structure_refinements/input/starting_maps/pseudohelix*
 6-structure_refinements/input/starting_maps/wedge*
 
-7-structure_statistics/input/unmerged_data/
+# ignore bulky input files for structure statistics calculation
+7-structure_statistics/input/unmerged_data/pseudohelix*
+7-structure_statistics/input/unmerged_data/wedge*
+

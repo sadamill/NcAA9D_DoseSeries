@@ -6,7 +6,7 @@ mkdir 6-structure_refinements/input/starting_maps
 for i in {1..36}
 do
 	mkdir -p 6-structure_refinements/output/wedge${i}_refined 
-	mkdir -p 6-structure_refinementsoutput/pseudohelix${i}_refined
+	mkdir -p 6-structure_refinements/output/pseudohelix${i}_refined
 done
 
 # copy output files from previous step
