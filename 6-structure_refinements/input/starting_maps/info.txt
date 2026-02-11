@@ -1,0 +1,3 @@
+This directory is purposefully empty! This is where the phenix.refine input maps are stored; they are very large and can't be stored in a repository. If you'd like to see or work with them, run scripts 5.1 through 6.1.
+
+These files are also available by request from the authors.

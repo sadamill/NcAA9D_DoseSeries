@@ -107,3 +107,7 @@ rsconnect/
 
 # ignore all bulky output files from raddose
 3-ddwd_calculation/output/raddose_output/wedge*
+
+# ignore bulky input files for structure refinement
+6-structure_refinements/input/starting_maps/pseudohelix*
+6-structure_refinements/input/starting_maps/wedge*
