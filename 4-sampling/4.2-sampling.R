@@ -45,3 +45,4 @@ samples_plot <- ggExtra::ggMarginal(
 ggplot2::ggsave("4-sampling/output/samples.svg", samples_plot, 
                 height = 5, width = 8, unit = "cm")
 write_csv(samples, "4-sampling/output/samples.csv")
+write_csv(pseudohelix_doses, "4-sampling/output/all_datasets.csv")

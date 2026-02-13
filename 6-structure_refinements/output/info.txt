@@ -1,3 +1,0 @@
-This directory is purposefully empty! This is where the phenix.refine output files are stored; they are very large and can't be stored in a repository.
-
-These files are also available by request from the authors.

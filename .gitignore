@@ -111,6 +111,7 @@ rsconnect/
 # ignore bulky input files for structure refinement
 6-structure_refinements/input/starting_maps/pseudohelix*
 6-structure_refinements/input/starting_maps/wedge*
+6-structure_refinements/output/*
 
 # ignore bulky input files for structure statistics calculation
 7-structure_statistics/input/*/pseudohelix*
