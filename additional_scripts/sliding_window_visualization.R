@@ -1,4 +1,11 @@
 library(tidyverse)
+library(gganimate)
+library(magick)
+
+samples_doses <- readr::read_csv("4-sampling/output/all_datasets.csv") |> 
+  arrange(sampled)
+samples_doses_anim <- samples_doses |> 
+  mutate(pseudohelix = c(rep(0, 140), 1:36))
 
 calculate_dose <- function(type) {
   if (!type %in% c("fwd", "ddwd")) {stop("invalid dose type provided")}
@@ -38,22 +45,124 @@ calculate_dose <- function(type) {
     arrange(wedge_number) |> 
     bind_cols(rep(0:179, 36)) |> 
     rename(delta_angle = ...4)
-    
+  
   return(subwedges)
 }
 
 ddwds <- calculate_dose("ddwd")
 
-ggplot2::ggplot(ddwds, aes(x = wedge_number, y = delta_angle, fill = ddwd)) +
-  geom_tile() +
+starts <- sapply(filter(samples_doses, sampled == TRUE)$start_angle, function(angle) {
+  seq(angle, angle + 175, 5)
+}) |> as.vector()
+pseudohelix <- rep(1:36, 36) |> sort()
+
+dose_rects <- tibble::tibble(
+  pseudohelix = pseudohelix,
+  wedge = rep(1:36, 36),
+  start = starts
+) |> group_by(pseudohelix) |> 
+  mutate(min_start = min(start)) |> 
+  ungroup()
+
+ggplot2::ggplot() +
+  geom_tile(data = ddwds, aes(x = wedge_number, y = delta_angle, fill = ddwd)) +
   scale_fill_viridis_c(option = "inferno", name = "DDWD") +
   coord_cartesian(expand = FALSE) + 
   theme_classic() +
   labs(x = "Wedge Number", y = "Δφ Angle (°)")
 
-ggplot2::ggplot(ddwds, aes(x = wedge_number, y = angle, fill = ddwd)) +
-  geom_tile() +
+samples_plot <- ggplot2::ggplot(samples_doses, aes(x = start_angle, y = ddwd, color = sampled)) +
+  geom_point() +
+  geom_point(
+    data = filter(samples_doses_anim, pseudohelix >= 1),
+    size = 3,
+    color = "red2"
+  ) +
+  scale_color_manual(
+    "",
+    breaks = c(TRUE, FALSE),
+    labels = c("Sampled", "Not Sampled"),
+    values = c("red2", "gray90")
+  ) +
+  theme_bw() +
+  labs(
+    x = "Start Angle (φ, °)",
+    y = "DDWD (MGy)"
+  ) +
+  theme(
+    legend.position = "inside",
+    legend.justification = c(1, 0),
+    legend.position.inside = c(0.95, 0.1),
+    legend.background = element_blank()
+  ) +
+  gganimate::transition_states(pseudohelix, transition_length = 0)
+
+angles_plot <- ggplot2::ggplot() +
+  geom_rect(
+    data = ddwds, 
+    aes(xmin = wedge_number-0.5, 
+        xmax = wedge_number+0.5, 
+        ymin = angle, 
+        ymax = angle+1, 
+        fill = ddwd)
+  ) +
   scale_fill_viridis_c(option = "inferno", name = "DDWD") +
+  scale_x_continuous(
+    breaks       = seq(1, 36, 3),
+    minor_breaks = seq(0.5, 36.5, 1)
+  ) +
   coord_cartesian(expand = FALSE) + 
   theme_classic() +
-  labs(x = "Wedge Number", y = "φ Angle (°)")
+  theme(
+    panel.grid.minor.x    = element_line(color = "gray80", linewidth = 0.2),
+    legend.position       = "inside",
+    legend.justification   = c(1, 0),
+    legend.position.inside = c(1, 0),
+    legend.background      = element_blank()
+  ) +
+  labs(x = "Wedge Number", y = "φ Angle (°)") +
+  geom_rect(
+    data = dose_rects, 
+    aes(xmin = wedge-0.5, 
+        xmax = wedge+0.5, 
+        ymin = start, 
+        ymax = start + 5), 
+    alpha = 0.2, 
+    fill = "white", 
+    color = "white", 
+    linewidth = 0.2
+  ) +
+  geom_text(
+    data = dose_rects,
+    aes(label = stringr::str_glue("Pseudohelix {pseudohelix}\nφ = {min_start}-{min_start+180}")),
+    stat = "unique",
+    x = 4,
+    y = 300,
+    color = "black",
+    hjust = 0,
+    size = 7
+  ) + gganimate::transition_states(pseudohelix, transition_length = 0)
+
+samples_gif <- gganimate::animate(plot = samples_plot,
+                                  height = 300, width = 1200,
+                                  fps = 100, nframes = 100,
+                                  renderer = magick_renderer())
+angles_gif <- gganimate::animate(plot = angles_plot, 
+                                 height = 800, width = 1200,
+                                 fps = 100, nframes = 100,
+                                 renderer = magick_renderer())
+
+new_gif <- magick::image_append(c(samples_gif[1], angles_gif[1]), stack = TRUE)
+for(i in 2:100) {
+  combined <- magick::image_append(c(samples_gif[i], angles_gif[i]), stack = TRUE)
+  new_gif <- c(new_gif, combined)
+}
+
+image_write(new_gif, "additional_scripts/output/samples_anim.gif")
+
+gganimate::anim_save(
+  "additional_scripts/output/samples_anim.gif",
+  animation = angles_plot, 
+  height = 800, width = 1200,
+  fps = 30, nframes = 500
+)
