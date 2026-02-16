@@ -5,7 +5,6 @@ n_samples <- 36
 max_distance <- 25 
 set.seed(12)
 
-
 pseudohelix_doses <- readr::read_csv("4-sampling/input/ddwds.csv") |> 
   dplyr::filter(dataset_type == "pseudohelix") |> 
   dplyr::rename(ddwd = dose) |> 
