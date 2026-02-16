@@ -6,91 +6,79 @@
 
 # Distance Calculations ---------------------------------------------------
 
-#Generate lists containing all-atom distance matrices for all datasets
-distanceMatrices <- list(
-  Pseudohelices = lapply(pseudohelixList, function(pdb) {
-    pdb$xyz %>% bio3d::dm()
-  }), 
-  Wedges = lapply(wedgeList, function(pdb) {
-    pdb$xyz %>% bio3d::dm()
-  })
-)
-
-trimmedDistances <- list(
-  Pseudohelices = lapply(distanceMatrices$Pseudohelices, function(dis) {
-    tibble::tibble(
-      CuTyr = c(dis[atoms$tyr168oh_a$atom, atoms$cu_a$atom], dis[atoms$tyr168oh_b$atom, atoms$cu_b$atom]), #Extract value from two cells in pseudohelixDMatList, the first containing distance for subunit A, and the other for subunit B
-      CuNterm = c(dis[atoms$nterm_a$atom, atoms$cu_a$atom], dis[atoms$nterm_b$atom, atoms$cu_b$atom]), #Repeat for all the desired values
-      CuHis1ND1 = c(dis[atoms$his1nd_a$atom, atoms$cu_a$atom], dis[atoms$his1nd_b$atom, atoms$cu_b$atom]), 
-      CuHis84NE2 = c(dis[atoms$his84ne_a$atom, atoms$cu_a$atom], dis[atoms$his84ne_b$atom, atoms$cu_b$atom]), 
-      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$h2oeq_b$atom, atoms$cu_b$atom]), 
-      CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
-      Molecule = c("A", "B")
-    )
-  }) %>% 
-    dplyr::bind_rows() %>% #Data is generated as a list; dplyr::bind_rows turns it into a data frame
-    .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
-    data.frame(pseudohelixDose, .), #Amend a column containing doses to the data frame
-  Wedges = lapply(distanceMatrices$Wedges, function(dis) {
-    tibble::tibble(
-      CuTyr = c(dis[atoms$tyr168oh_a$atom, atoms$cu_a$atom], dis[atoms$tyr168oh_b$atom, atoms$cu_b$atom]), #Extract value from two cells in pseudohelixDMatList, the first containing distance for subunit A, and the other for subunit B
-      CuNterm = c(dis[atoms$nterm_a$atom, atoms$cu_a$atom], dis[atoms$nterm_b$atom, atoms$cu_b$atom]), #Repeat for all the desired values
-      CuHis1ND1 = c(dis[atoms$his1nd_a$atom, atoms$cu_a$atom], dis[atoms$his1nd_b$atom, atoms$cu_b$atom]), 
-      CuHis84NE2 = c(dis[atoms$his84ne_a$atom, atoms$cu_a$atom], dis[atoms$his84ne_b$atom, atoms$cu_b$atom]), 
-      CuEq = c(dis[atoms$cu_a$atom, atoms$h2oeq_a$atom], dis[atoms$h2oeq_b$atom, atoms$cu_b$atom]), 
-      CuAx = c(dis[atoms$cu_a$atom, atoms$h2oax_a$atom], dis[atoms$cu_b$atom, atoms$h2oax_b$atom]), 
-      Molecule = c("A", "B")
-    )
-  }) %>% 
-    dplyr::bind_rows() %>% #Data is generated as a list; dplyr::bind_rows turns it into a data frame
-    .[order(.$Molecule), ] %>% #Data frame is ordered by alternating molecule, this will order the data frame by subunit
-    data.frame(1:36, .) #Amend a column containing doses to the data frame
-)
-
-colnames(trimmedDistances$Pseudohelices)[1] <- "dose_MGy"
-colnames(trimmedDistances$Wedges)[1] <- "WedgeNumber"
-
 stackedDistances <- list(
-  Pseudohelices = tibble::tibble(
-    Dose = rep(trimmedDistances$Pseudohelices$dose_MGy, 6), 
-    AtomPair = c(
-      rep("Cu-Tyr", 72), 
-      rep("Cu-NTerm", 72), 
-      rep("Cu-His1ND1", 72), 
-      rep("Cu-His84NE2", 72), 
-      rep("Cu-Eq", 72), 
-      rep("Cu-Ax", 72)
-    ), 
-    Distance = c(
-      trimmedDistances$Pseudohelices$CuTyr, 
-      trimmedDistances$Pseudohelices$CuNterm, 
-      trimmedDistances$Pseudohelices$CuHis1ND1, 
-      trimmedDistances$Pseudohelices$CuHis84NE2, 
-      trimmedDistances$Pseudohelices$CuEq, 
-      trimmedDistances$Pseudohelices$CuAx
-    ), 
-    Molecule = rep(trimmedDistances$Pseudohelices$Molecule, 6)
-  ),
-  Wedges = tibble::tibble(
-    WedgeNumber = rep(trimmedDistances$Wedges$WedgeNumber, 6), 
-    AtomPair = c(
-      rep("Cu-Tyr", 72), 
-      rep("Cu-NTerm", 72), 
-      rep("Cu-His1ND1", 72), 
-      rep("Cu-His84NE2", 72), 
-      rep("Cu-Eq", 72), 
-      rep("Cu-Ax", 72)
-    ), 
-    Distance = c(
-      trimmedDistances$Wedges$CuTyr, 
-      trimmedDistances$Wedges$CuNterm, 
-      trimmedDistances$Wedges$CuHis1ND1, 
-      trimmedDistances$Wedges$CuHis84NE2, 
-      trimmedDistances$Wedges$CuEq, 
-      trimmedDistances$Wedges$CuAx
-    ), 
-    Molecule = rep(trimmedDistances$Wedges$Molecule, 6)
-  )
+  Pseudohelices = purrr::map2(pseudohelixDose, pseudohelixList, \(dose, structure) {
+    dmat <- structure$xyz |> bio3d::dm()
+    
+    # extract distances of interest
+    cu_eq_a <- dmat[atoms$cu_a$atom, atoms$h2oeq_a$atom]
+    cu_eq_b <- dmat[atoms$h2oeq_b$atom, atoms$cu_b$atom]
+    cu_ax_a <- dmat[atoms$cu_a$atom, atoms$h2oax_a$atom]
+    cu_ax_b <- dmat[atoms$cu_b$atom, atoms$h2oax_b$atom]
+    cu_tyr_a <- dmat[atoms$tyr168oh_a$atom, atoms$cu_a$atom]
+    cu_tyr_b <- dmat[atoms$tyr168oh_b$atom, atoms$cu_b$atom]
+    cu_nterm_a <- dmat[atoms$nterm_a$atom, atoms$cu_a$atom]
+    cu_nterm_b <- dmat[atoms$nterm_b$atom, atoms$cu_b$atom]
+    cu_his1_nd1_a <- dmat[atoms$his1nd_a$atom, atoms$cu_a$atom]
+    cu_his1_nd1_b <- dmat[atoms$his1nd_b$atom, atoms$cu_b$atom]
+    cu_his84_ne2_a <- dmat[atoms$his84ne_a$atom, atoms$cu_a$atom]
+    cu_his84_ne2_b <- dmat[atoms$his84ne_b$atom, atoms$cu_b$atom]
+    
+    # make a tibble to contain target values
+    distances <- tibble::tibble(
+      Dose     = rep(dose, 12),
+      AtomPair = c(rep("Cu-Tyr", 2),
+                   rep("Cu-NTerm", 2), 
+                   rep("Cu-His1ND1", 2), 
+                   rep("Cu-His84NE2", 2), 
+                   rep("Cu-Eq", 2), 
+                   rep("Cu-Ax", 2)),
+      Molecule = factor(rep(c("A", "B"), 6),
+                        levels = c("A", "B")),
+      Distance = c(cu_eq_a, cu_eq_b,
+                   cu_ax_a, cu_ax_b,
+                   cu_tyr_a, cu_tyr_b,
+                   cu_nterm_a, cu_nterm_b,
+                   cu_his1_nd1_a, cu_his1_nd1_b,
+                   cu_his84_ne2_a, cu_his84_ne2_b)
+    )
+  }) |> purrr::list_rbind(),
+  Wedges = purrr::map2(1:36, wedgeList, \(wedge_number, structure) {
+    dmat <- structure$xyz |> bio3d::dm()
+    
+    # extract distances of interest
+    cu_eq_a <- dmat[atoms$cu_a$atom, atoms$h2oeq_a$atom]
+    cu_eq_b <- dmat[atoms$h2oeq_b$atom, atoms$cu_b$atom]
+    cu_ax_a <- dmat[atoms$cu_a$atom, atoms$h2oax_a$atom]
+    cu_ax_b <- dmat[atoms$cu_b$atom, atoms$h2oax_b$atom]
+    cu_tyr_a <- dmat[atoms$tyr168oh_a$atom, atoms$cu_a$atom]
+    cu_tyr_b <- dmat[atoms$tyr168oh_b$atom, atoms$cu_b$atom]
+    cu_nterm_a <- dmat[atoms$nterm_a$atom, atoms$cu_a$atom]
+    cu_nterm_b <- dmat[atoms$nterm_b$atom, atoms$cu_b$atom]
+    cu_his1_nd1_a <- dmat[atoms$his1nd_a$atom, atoms$cu_a$atom]
+    cu_his1_nd1_b <- dmat[atoms$his1nd_b$atom, atoms$cu_b$atom]
+    cu_his84_ne2_a <- dmat[atoms$his84ne_a$atom, atoms$cu_a$atom]
+    cu_his84_ne2_b <- dmat[atoms$his84ne_b$atom, atoms$cu_b$atom]
+    
+    # make a tibble to contain target values
+    distances <- tibble::tibble(
+      WedgeNumber = rep(wedge_number, 12),
+      AtomPair     = c(rep("Cu-Tyr", 2),
+                       rep("Cu-NTerm", 2), 
+                       rep("Cu-His1ND1", 2), 
+                       rep("Cu-His84NE2", 2), 
+                       rep("Cu-Eq", 2), 
+                       rep("Cu-Ax", 2)),
+      Molecule     = factor(rep(c("A", "B"), 6),
+                            levels = c("A", "B")),
+      Distance     = c(cu_eq_a, cu_eq_b,
+                       cu_ax_a, cu_ax_b,
+                       cu_tyr_a, cu_tyr_b,
+                       cu_nterm_a, cu_nterm_b,
+                       cu_his1_nd1_a, cu_his1_nd1_b,
+                       cu_his84_ne2_a, cu_his84_ne2_b)
+    )
+  }) |> purrr::list_rbind()
 )
 
 # Linear Regression Analysis ----------------------------------------------
@@ -98,20 +86,20 @@ stackedDistances <- list(
 #Prepare a list of multiple linear regression models for each atom pair of interest
 multipleRegressions$Distances <- list(
   Pseudohelices = list(
-    CuTyr = lm(CuTyr ~ dose_MGy * Molecule, data = trimmedDistances$Pseudohelices), 
-    CuNterm = lm(CuNterm ~ dose_MGy * Molecule, data = trimmedDistances$Pseudohelices), 
-    CuHis1ND1 = lm(CuHis1ND1 ~ dose_MGy * Molecule, data = trimmedDistances$Pseudohelices), 
-    CuHis84NE2 = lm(CuHis84NE2 ~ dose_MGy * Molecule, data = trimmedDistances$Pseudohelices), 
-    CuEq = lm(CuEq ~ dose_MGy * Molecule, data = trimmedDistances$Pseudohelices), 
-    CuAx = lm(CuAx ~ dose_MGy * Molecule, data = trimmedDistances$Pseudohelices)
+    CuTyr = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Tyr"), 
+    CuNterm = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-NTerm"), 
+    CuHis1ND1 = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-His1ND1"), 
+    CuHis84NE2 = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-His84NE2"), 
+    CuEq = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Eq"), 
+    CuAx = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Ax")
   ), 
   Wedges = list(
-    CuTyr = lm(CuTyr ~ WedgeNumber * Molecule, data = trimmedDistances$Wedges), 
-    CuNterm = lm(CuNterm ~ WedgeNumber * Molecule, data = trimmedDistances$Wedges), 
-    CuHis1ND1 = lm(CuHis1ND1 ~ WedgeNumber * Molecule, data = trimmedDistances$Wedges), 
-    CuHis84NE2 = lm(CuHis84NE2 ~ WedgeNumber * Molecule, data = trimmedDistances$Wedges), 
-    CuEq = lm(CuEq ~ WedgeNumber * Molecule, data = trimmedDistances$Wedges), 
-    CuAx = lm(CuAx ~ WedgeNumber * Molecule, data = trimmedDistances$Wedges)
+    CuTyr = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Tyr"), 
+    CuNterm = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-NTerm"), 
+    CuHis1ND1 = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-His1ND1"), 
+    CuHis84NE2 = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-His84NE2"), 
+    CuEq = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Eq"), 
+    CuAx = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Ax")
   )
 )
 
@@ -124,10 +112,10 @@ regressionSummaries$Distances <- list(
           Measurement = "Distances",
           Residue = atom, 
           Estimate = c("TrendA", "TrendB", "Contrast"), 
-          Coefficient = emtrends.coefficient(multipleRegressions$Distances$Pseudohelices[[atom]], "dose_MGy"), 
-          StandardError = emtrends.se(multipleRegressions$Distances$Pseudohelices[[atom]], "dose_MGy"), 
+          Coefficient = emtrends.coefficient(multipleRegressions$Distances$Pseudohelices[[atom]], "Dose"), 
+          StandardError = emtrends.se(multipleRegressions$Distances$Pseudohelices[[atom]], "Dose"), 
           ModelRSquared = summary(multipleRegressions$Distances$Pseudohelices[[atom]])$r.squared, 
-          PValue = emtrends.pvalue(multipleRegressions$Distances$Pseudohelices[[atom]], "dose_MGy")
+          PValue = emtrends.pvalue(multipleRegressions$Distances$Pseudohelices[[atom]], "Dose")
         )
       }
     )
