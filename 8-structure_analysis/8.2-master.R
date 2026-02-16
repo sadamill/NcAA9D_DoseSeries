@@ -17,13 +17,13 @@ mem.maxVSize(vsize = 100000) #Set max memory size to allow space for large dista
 #Extract PDB files
 pseudohelixList <- lapply(1:36, function(x) {
   bio3d::read.pdb(
-    file = stringr::str_glue("input/structures/pseudohelix_{x}.pdb"), 
+    file = stringr::str_glue("8-structure_analysis/input/structures/pseudohelix_{x}.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract pseudohelix PDBs
 wedgeList <- lapply(1:36, function(x) {
   bio3d::read.pdb(
-    file = stringr::str_glue("input/structures/wedge_{x}.pdb"), 
+    file = stringr::str_glue("8-structure_analysis/input/structures/wedge_{x}.pdb"), 
     rm.alt = FALSE
   )
 }) #Extract wedge PDBs
@@ -62,16 +62,15 @@ atoms <- list( # Make list of atom and xyz indices
 pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract atoms from pseudohelices
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges
 
-#Run dose analysis to prepare dose state vectors
-source("scripts/dose_analysis_alt.R")
-
-#Prep vectors containing all density-weighted dose values
-pseudohelixDose <- dplyr::filter(dwds, datasetType == "Pseudohelices")$dwd_MGy
-wedgeDose <- dplyr::filter(dwds, datasetType == "Wedges")$dwd_MGy
+#Prep vectors containing all ddwd values
+pseudohelixDose <- readr::read_csv("8-structure_analysis/input/samples.csv")$ddwd
+wedgeDose <- readr::read_csv("8-structure_analysis/input/ddwds.csv") |> 
+  filter(dataset_type == "wedge", dose_type == "ddwd") |> 
+  pull("dose")
 
 # Global Functions and Objects --------------------------------------------
 
-source("scripts/functions.R")
+source("global_functions.R")
 
 # make blank lists to organize visualizations
 multipleRegressions <- list()
@@ -80,16 +79,16 @@ ggplots <- list()
 
 # Data Analysis -----------------------------------------------------------
 
-source("scripts/occupancy_analysis.R")
-source("scripts/distance_analysis.R")
-source("scripts/angle_analysis.R")
-source("scripts/structure_stats.R")
+source("8-structure_analysis/occupancy_analysis.R")
+source("8-structure_analysis/distance_analysis.R")
+source("8-structure_analysis/angle_analysis.R")
+source("8-structure_analysis/structure_stats.R")
 
 # Data Visualization ------------------------------------------------------
 
-source("scripts/table_cleanup.R")
-source("scripts/heterogeneity_analysis.R")
-source("scripts/plot_generation.R")
+source("8-structure_analysis/table_cleanup.R")
+source("8-structure_analysis/heterogeneity_analysis.R")
+source("8-structure_analysis/plot_generation.R")
 
 # Data write-out ----------------------------------------------------------
 
