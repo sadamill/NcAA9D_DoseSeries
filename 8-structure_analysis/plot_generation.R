@@ -225,9 +225,9 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Stats$CrystalStats <- crystal_stats$combined |> 
+ggplots$Dark$Stats$CrystalStats <- crystal_stats |> 
   filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2", 
-                          "completeness_percent", "total_reflections", "average_b_factor",
+                          "completeness_percent", "mean_i_sigma_i", "average_b_factor",
                           "r_work", "r_free")) |> 
   ggplot2::ggplot(ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
@@ -252,7 +252,7 @@ ggplots$Dark$Stats$CrystalStats <- crystal_stats$combined |>
       c(
         cc1_2 = "CC[1/2]",
         unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
-        total_reflections = "'Total Reflections'", 
+        mean_i_sigma_i = "group(langle, 'I/'*σ[I], rangle)", 
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
@@ -264,9 +264,10 @@ ggplots$Dark$Stats$CrystalStats <- crystal_stats$combined |>
   ) +
   ggplot2::theme(axis.title.y = ggplot2::element_blank(), legend.position.inside = c(0.85, 0.1)) +
   ggplot2::labs(x = "Start Angle (φ, °)")
-ggplots$Light$Stats$CrystalStats <- crystal_stats$combined |> 
+
+ggplots$Light$Stats$CrystalStats <- crystal_stats |> 
   filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2", 
-         "completeness_percent", "total_reflections", "average_b_factor",
+         "completeness_percent", "mean_i_sigma_i", "average_b_factor",
          "r_work", "r_free")) |> 
   ggplot2::ggplot(ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
@@ -291,7 +292,7 @@ ggplots$Light$Stats$CrystalStats <- crystal_stats$combined |>
       c(
         cc1_2 = "CC[1/2]",
         unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
-        total_reflections = "'Total Reflections'", 
+        mean_i_sigma_i = "group(langle, 'I/'*σ[I], rangle)", 
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
