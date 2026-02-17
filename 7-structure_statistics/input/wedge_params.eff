@@ -3,8 +3,8 @@ data_labels = None
 table_one {
   structure {
     name = "wedge_1"
-    pdb_file = "../analysis_cluster_refinement/wedge1/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge1/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge1.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge1_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -15,7 +15,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge1_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge1_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -25,8 +25,8 @@ table_one {
   }
   structure {
     name = "wedge_2"
-    pdb_file = "../analysis_cluster_refinement/wedge2/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge2/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge2.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge2_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -37,7 +37,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge2_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge2_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -47,8 +47,8 @@ table_one {
   }
   structure {
     name = "wedge_3"
-    pdb_file = "../analysis_cluster_refinement/wedge3/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge3/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge3.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge3_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -59,7 +59,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge3_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge3_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -69,8 +69,8 @@ table_one {
   }
   structure {
     name = "wedge_4"
-    pdb_file = "../analysis_cluster_refinement/wedge4/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge4/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge4.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge4_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -81,7 +81,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge4_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge4_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -91,8 +91,8 @@ table_one {
   }
   structure {
     name = "wedge_5"
-    pdb_file = "../analysis_cluster_refinement/wedge5/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge5/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge5.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge5_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -103,7 +103,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge5_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge5_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -113,8 +113,8 @@ table_one {
   }
   structure {
     name = "wedge_6"
-    pdb_file = "../analysis_cluster_refinement/wedge6/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge6/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge6.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge6_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -125,7 +125,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge6_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge6_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -135,8 +135,8 @@ table_one {
   }
   structure {
     name = "wedge_7"
-    pdb_file = "../analysis_cluster_refinement/wedge7/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge7/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge7.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge7_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -147,7 +147,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge7_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge7_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -157,8 +157,8 @@ table_one {
   }
   structure {
     name = "wedge_8"
-    pdb_file = "../analysis_cluster_refinement/wedge8/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge8/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge8.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge8_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -169,7 +169,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge8_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge8_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -179,8 +179,8 @@ table_one {
   }
   structure {
     name = "wedge_9"
-    pdb_file = "../analysis_cluster_refinement/wedge9/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge9/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge9.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge9_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -191,7 +191,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge9_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge9_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -201,8 +201,8 @@ table_one {
   }
   structure {
     name = "wedge_10"
-    pdb_file = "../analysis_cluster_refinement/wedge10/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge10/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge10.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge10_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -213,7 +213,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge10_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge10_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -223,8 +223,8 @@ table_one {
   }
   structure {
     name = "wedge_11"
-    pdb_file = "../analysis_cluster_refinement/wedge11/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge11/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge11.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge11_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -235,7 +235,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge11_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge11_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -245,8 +245,8 @@ table_one {
   }
   structure {
     name = "wedge_12"
-    pdb_file = "../analysis_cluster_refinement/wedge12/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge12/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge12.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge12_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -257,7 +257,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge12_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge12_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -267,8 +267,8 @@ table_one {
   }
   structure {
     name = "wedge_13"
-    pdb_file = "../analysis_cluster_refinement/wedge13/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge13/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge13.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge13_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -279,7 +279,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge13_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge13_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -289,8 +289,8 @@ table_one {
   }
   structure {
     name = "wedge_14"
-    pdb_file = "../analysis_cluster_refinement/wedge14/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge14/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge14.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge14_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -301,7 +301,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge14_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge14_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -311,8 +311,8 @@ table_one {
   }
   structure {
     name = "wedge_15"
-    pdb_file = "../analysis_cluster_refinement/wedge15/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge15/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge15.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge15_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -323,7 +323,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge15_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge15_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -333,8 +333,8 @@ table_one {
   }
   structure {
     name = "wedge_16"
-    pdb_file = "../analysis_cluster_refinement/wedge16/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge16/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge16.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge16_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -345,7 +345,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge16_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge16_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -355,8 +355,8 @@ table_one {
   }
   structure {
     name = "wedge_17"
-    pdb_file = "../analysis_cluster_refinement/wedge17/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge17/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge17.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge17_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -367,7 +367,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge17_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge17_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -377,8 +377,8 @@ table_one {
   }
   structure {
     name = "wedge_18"
-    pdb_file = "../analysis_cluster_refinement/wedge18/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge18/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge18.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge18_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -389,7 +389,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge18_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge18_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -399,8 +399,8 @@ table_one {
   }
   structure {
     name = "wedge_19"
-    pdb_file = "../analysis_cluster_refinement/wedge19/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge19/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge19.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge19_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -411,7 +411,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge19_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge19_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -421,8 +421,8 @@ table_one {
   }
   structure {
     name = "wedge_20"
-    pdb_file = "../analysis_cluster_refinement/wedge20/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge20/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge20.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge20_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -433,7 +433,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge20_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge20_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -443,8 +443,8 @@ table_one {
   }
   structure {
     name = "wedge_21"
-    pdb_file = "../analysis_cluster_refinement/wedge21/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge21/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge21.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge21_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -455,7 +455,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge21_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge21_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -465,8 +465,8 @@ table_one {
   }
   structure {
     name = "wedge_22"
-    pdb_file = "../analysis_cluster_refinement/wedge22/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge22/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge22.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge22_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -477,7 +477,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge22_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge22_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -487,8 +487,8 @@ table_one {
   }
   structure {
     name = "wedge_23"
-    pdb_file = "../analysis_cluster_refinement/wedge23/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge23/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge23.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge23_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -499,7 +499,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge23_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge23_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -509,8 +509,8 @@ table_one {
   }
   structure {
     name = "wedge_24"
-    pdb_file = "../analysis_cluster_refinement/wedge24/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge24/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge24.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge24_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -521,7 +521,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge24_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge24_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -531,8 +531,8 @@ table_one {
   }
   structure {
     name = "wedge_25"
-    pdb_file = "../analysis_cluster_refinement/wedge25/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge25/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge25.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge25_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -543,7 +543,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge25_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge25_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -553,8 +553,8 @@ table_one {
   }
   structure {
     name = "wedge_26"
-    pdb_file = "../analysis_cluster_refinement/wedge26/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge26/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge26.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge26_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -565,7 +565,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge26_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge26_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -575,8 +575,8 @@ table_one {
   }
   structure {
     name = "wedge_27"
-    pdb_file = "../analysis_cluster_refinement/wedge27/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge27/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge27.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge27_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -587,7 +587,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge27_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge27_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -597,8 +597,8 @@ table_one {
   }
   structure {
     name = "wedge_28"
-    pdb_file = "../analysis_cluster_refinement/wedge28/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge28/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge28.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge28_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -609,7 +609,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge28_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge28_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -619,8 +619,8 @@ table_one {
   }
   structure {
     name = "wedge_29"
-    pdb_file = "../analysis_cluster_refinement/wedge29/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge29/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge29.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge29_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -631,7 +631,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge29_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge29_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -641,8 +641,8 @@ table_one {
   }
   structure {
     name = "wedge_30"
-    pdb_file = "../analysis_cluster_refinement/wedge30/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge30/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge30.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge30_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -653,7 +653,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge30_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge30_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -663,8 +663,8 @@ table_one {
   }
   structure {
     name = "wedge_31"
-    pdb_file = "../analysis_cluster_refinement/wedge31/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge31/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge31.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge31_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -675,7 +675,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge31_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge31_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -685,8 +685,8 @@ table_one {
   }
   structure {
     name = "wedge_32"
-    pdb_file = "../analysis_cluster_refinement/wedge32/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge32/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge32.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge32_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -697,7 +697,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge32_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge32_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -707,8 +707,8 @@ table_one {
   }
   structure {
     name = "wedge_33"
-    pdb_file = "../analysis_cluster_refinement/wedge33/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge33/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge33.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge33_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -719,7 +719,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge33_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge33_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -729,8 +729,8 @@ table_one {
   }
   structure {
     name = "wedge_34"
-    pdb_file = "../analysis_cluster_refinement/wedge34/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge34/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge34.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge34_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -741,7 +741,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge34_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge34_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -751,8 +751,8 @@ table_one {
   }
   structure {
     name = "wedge_35"
-    pdb_file = "../analysis_cluster_refinement/wedge35/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge35/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge35.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge35_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -763,7 +763,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge35_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge35_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -773,8 +773,8 @@ table_one {
   }
   structure {
     name = "wedge_36"
-    pdb_file = "../analysis_cluster_refinement/wedge36/refine_1/Phenix_refine_001.pdb"
-    mtz_file = "../analysis_cluster_refinement/wedge36/refine_1/Phenix_refine_001.mtz"
+    pdb_file = "7-structure_statistics/input/pdbs/wedge36.pdb"
+    mtz_file = "7-structure_statistics/input/merged_data/wedge36_merged.mtz"
     cif_file = None
     data_labels = None
     r_free_flags_label = None
@@ -785,7 +785,7 @@ table_one {
     high_resolution = None
     n_bins = None
     data_type = *xray neutron electron
-    unmerged_data = "./unmerged_data/wedge36_unmerged.mtz"
+    unmerged_data = "7-structure_statistics/input/unmerged_data/wedge36_unmerged.mtz"
     unmerged_labels = "I,SIGI"
     use_internal_variance = False
     enable_twinning = True
@@ -797,8 +797,8 @@ table_one {
   output {
     directory = None
     show_missing_fields = True
-    format = *txt *csv *rtf
-    base_name = "wedge_statistics"
+    format = txt *csv rtf
+    base_name = "7-structure_statistics/output/wedge_statistics"
     verbose = "True"
     text_field_separation = 2
   }
