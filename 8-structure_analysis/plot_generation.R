@@ -225,7 +225,11 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
+ggplots$Dark$Stats$CrystalStats <- crystal_stats$combined |> 
+  filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2", 
+                          "completeness_percent", "total_reflections", "average_b_factor",
+                          "r_work", "r_free")) |> 
+  ggplot2::ggplot(ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
   ggtheme_dark() +
   ggplot2::scale_color_manual(
@@ -247,22 +251,24 @@ ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplo
     labeller = ggplot2::as_labeller(
       c(
         cc1_2 = "CC[1/2]",
-        multiplicity = "Multiplicity",
+        unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
+        total_reflections = "'Total Reflections'", 
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
-        mean_i_sigma_i = "'Mean '*I/σ[I]",
-        wilson_b_factor = "'Wilson B-factor'",
-        rms_angles = "RMS[angles]",
-        rms_bonds = "RMS[bonds]",
-        average_b_factor = "'Average B-factor'"
+        wilson_b_factor = "'Wilson B-factor ('*Å^2*')'",
+        average_b_factor = "'Average B-factor ('*Å^2*')'"
       ),
       label_parsed
     )
   ) +
   ggplot2::theme(axis.title.y = ggplot2::element_blank(), legend.position.inside = c(0.85, 0.1)) +
   ggplot2::labs(x = "Start Angle (φ, °)")
-ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
+ggplots$Light$Stats$CrystalStats <- crystal_stats$combined |> 
+  filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2", 
+         "completeness_percent", "total_reflections", "average_b_factor",
+         "r_work", "r_free")) |> 
+  ggplot2::ggplot(ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
   ggtheme_light() +
   ggplot2::scale_color_manual(
@@ -284,15 +290,13 @@ ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggpl
     labeller = ggplot2::as_labeller(
       c(
         cc1_2 = "CC[1/2]",
-        multiplicity = "Multiplicity",
+        unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
+        total_reflections = "'Total Reflections'", 
         r_free = "R[free]",
         r_work = "R[work]",
         completeness_percent = "'Completeness (%)'",
-        mean_i_sigma_i = "'Mean '*I/σ[I]",
-        wilson_b_factor = "'Wilson B-factor'",
-        rms_angles = "RMS[angles]",
-        rms_bonds = "RMS[bonds]",
-        average_b_factor = "'Average B-factor'"
+        wilson_b_factor = "'Wilson B-factor ('*Å^2*')'",
+        average_b_factor = "'Average B-factor ('*Å^2*')'"
       ),
       label_parsed
     )

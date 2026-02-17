@@ -9,27 +9,26 @@ read_crystal_stats <- function(filepath, dataset_type) {
       filter(dataset_type == "wedge", dose_type == "ddwd") |> pull(start_angle)
   }
   
-  data <- readr::read_csv(filepath) %>%
-    {.[[1]] <- make.unique(as.character(.[[1]])); .} %>% # Make all parameter names unique
-    tibble::column_to_rownames(var = colnames(.)[1]) %>% # Convert parameter name to row names to prep for transposition
-    t() %>% as_tibble() |>  # Transpose and convert back to tibble
-    dplyr::mutate(dplyr::across(dplyr::everything(), ~ gsub("\\s*\\(.*\\)", "", .))) %>% # Remove parenthetical stats
-    dplyr::mutate(dplyr::across(dplyr::everything(), trimws)) %>% # Clean up trailing white spaces
-    dplyr::mutate(dplyr::across(dplyr::where(~ all(grepl("^[0-9 .-]*$", .x))), readr::parse_number)) %>% # Coerce all-number vectors to numeric
-    dplyr::mutate(
-      start_angle = start_angles,
-      dataset_type = dataset_type
-    ) %>% 
-    dplyr::select(start_angle, dataset_type, `Completeness (%)`, `Multiplicity`, `Mean I/sigma(I)`, `Wilson B-factor`, `Average B-factor`, `CC1/2`, `R-work`, `R-free`, `RMS(bonds)`, `RMS(angles)`) %>% 
-    janitor::clean_names() %>% # Convert column names to snake case
-    tidyr::pivot_longer(
-      cols = completeness_percent:rms_angles,
-      names_to = "statistic",
-    ) %>% 
-    dplyr::mutate(statistic = factor(
-      statistic,
-      levels = c('multiplicity', 'completeness_percent', 'mean_i_sigma_i', 'wilson_b_factor', 'average_b_factor', 'cc1_2', 'r_work', 'r_free', 'rms_bonds', 'rms_angles')
-    ))
+  data <- readr::read_csv(filepath) |> 
+    mutate(...1 = make.unique(...1)) |> 
+    t() |> 
+    as_tibble() |> 
+    row_to_names(row_number = 1) |> 
+    clean_names() |> 
+    dplyr::mutate(dplyr::across(dplyr::everything(), ~ gsub("\\s*\\(.*\\)", "", .)),
+                  unit_cell = { str_split(unit_cell, pattern = " ") |> 
+                      purrr::map(\(x) setNames(x, c("a", "b", "c", "alpha", "beta", "gamma"))) },
+                  resolution_range = { str_split(resolution_range, pattern = "  - ") |> 
+                      purrr::map(\(x) setNames(x, c("resolution_high", "resolution_low"))) }) |> 
+    tidyr::unnest_wider(c(unit_cell, resolution_range)) |> 
+    select(!where(~ all(is.na(.))) & !space_group) |> 
+    purrr::map(\(x) as.numeric(x)) |> 
+    bind_cols() |> 
+    mutate(unit_cell_volume = { a * b * c * sqrt(1 + 2 * cos((alpha * pi) / 180) * cos((beta * pi) / 180) * cos((gamma * pi) / 180) - (cos((alpha * pi) / 180)^2) - (cos((beta * pi) / 180)^2) - (cos((gamma * pi) / 180)^2)) },
+           start_angle = start_angles,
+           dataset_type = dataset_type) |> 
+    pivot_longer(cols = !c(dataset_type, start_angle),
+                 names_to = "statistic")
   
   return(data)
 }
