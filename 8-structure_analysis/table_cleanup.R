@@ -58,64 +58,60 @@ longData <- list(
 
 occ_table <- dplyr::bind_rows(
   tidyr::pivot_wider(
-    stackedOccupancies$Pseudohelices,
+    bind_cols(
+      rep(stringr::str_glue("Pseudohelix {1:36}"), 10),
+      stackedOccupancies$Pseudohelices
+    ),
     names_from = Residue,
     values_from = Occupancy
-  ) %>% cbind(
-    Dataset = rep(c(stringr::str_glue("Pseudohelix {1:36}")), 2),
-    .
   ),
-  
-  tidyr::pivot_wider(
-    stackedOccupancies$Wedges,
-    names_from = Residue,
-    values_from = Occupancy
-  ) %>% mutate(
-    Dataset = rep(c(stringr::str_glue("Wedge {1:36}")), 2),
-    Dose = rep(wedgeDose, 2)
-  ) %>% 
+  bind_cols(
+    rep(stringr::str_glue("Wedge {1:36}"), 10),
+    stackedOccupancies$Wedges
+  ) |> 
+    tidyr::pivot_wider(
+      names_from = Residue,
+      values_from = Occupancy
+    ) |>  mutate(Dose = rep(wedgeDose, 2)) |> 
     dplyr::select(!WedgeNumber)
-)
-
-angle_table <- dplyr::bind_rows(
-  tidyr::pivot_wider(
-    stackedAngles$Pseudohelices,
-    names_from = AngleID,
-    values_from = Angle
-  ) %>% cbind(
-    Dataset = rep(c(stringr::str_glue("Pseudohelix {1:36}")), 2),
-    .
-  ),
-  
-  tidyr::pivot_wider(
-    stackedAngles$Wedges,
-    names_from = AngleID,
-    values_from = Angle
-  ) %>% dplyr::mutate(
-    Dataset = rep(c(stringr::str_glue("Wedge {1:36}")), 2),
-    Dose = rep(wedgeDose, 2)
-  ) %>% 
-    dplyr::select(!WedgeNumber)
-)
+) |> rename(Dataset = ...1)
 
 distance_table <- dplyr::bind_rows(
   tidyr::pivot_wider(
-    stackedDistances$Pseudohelices,
+    bind_cols(
+      stringr::str_glue("Pseudohelix {sort(rep(1:36, 12))}"),
+      stackedDistances$Pseudohelices
+    ),
     names_from = AtomPair,
     values_from = Distance
-  ) %>% cbind(
-    Dataset = rep(c(stringr::str_glue("Pseudohelix {1:36}")), 2),
-    .
   ),
-  
-  pivot_wider(
-    stackedDistances$Wedges,
-    names_from = AtomPair,
-    values_from = Distance
-  ) %>% dplyr::mutate(
-    Dataset = rep(c(stringr::str_glue("Wedge {1:36}")), 2),
-    Dose = rep(wedgeDose, 2)
-  ) %>% 
+  bind_cols(
+    stringr::str_glue("Wedge {sort(rep(1:36, 12))}"),
+    stackedDistances$Wedges
+  ) |> 
+    tidyr::pivot_wider(
+      names_from = AtomPair,
+      values_from = Distance
+    ) |>  mutate(Dose = rep(wedgeDose, 2)) |> 
     dplyr::select(!WedgeNumber)
-)
+) |> rename(Dataset = ...1)
 
+angle_table <- dplyr::bind_rows(
+  tidyr::pivot_wider(
+    bind_cols(
+      rep(stringr::str_glue("Pseudohelix {1:36}"), 14),
+      stackedAngles$Pseudohelices
+    ),
+    names_from = AngleID,
+    values_from = Angle
+  ),
+  bind_cols(
+    rep(stringr::str_glue("Wedge {1:36}"), 14),
+    stackedAngles$Wedges
+  ) |> 
+    tidyr::pivot_wider(
+      names_from = AngleID,
+      values_from = Angle
+    ) |>  mutate(Dose = rep(wedgeDose, 2)) |> 
+    dplyr::select(!WedgeNumber)
+) |> rename(Dataset = ...1)
