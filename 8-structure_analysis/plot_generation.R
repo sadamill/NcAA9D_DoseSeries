@@ -225,7 +225,7 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = dataset_number, y = value, color = dataset_type)) +
+ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
   ggtheme_dark() +
   ggplot2::scale_color_manual(
@@ -261,8 +261,8 @@ ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplo
     )
   ) +
   ggplot2::theme(axis.title.y = ggplot2::element_blank(), legend.position.inside = c(0.85, 0.1)) +
-  ggplot2::labs(x = "Dataset Number")
-ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = dataset_number, y = value, color = dataset_type)) +
+  ggplot2::labs(x = "Start Angle (φ, °)")
+ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
   ggtheme_light() +
   ggplot2::scale_color_manual(
@@ -298,7 +298,7 @@ ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggpl
     )
   ) +
   ggplot2::theme(axis.title.y = ggplot2::element_blank(), legend.position.inside = c(0.85, 0.1)) +
-  ggplot2::labs(x = "Dataset Number")
+  ggplot2::labs(x = "Start Angle (φ, °)")
 
 # RMSD Plotting -----------------------------------------------------------
 rmsd_plots <- list()
