@@ -10,7 +10,6 @@ library(janitor)
 library(systemfonts)
 
 options(scipen = 7) #I don't like viewing things in scientific notation
-mem.maxVSize(vsize = 100000) #Set max memory size to allow space for large distance matrices
 
 # Raw Data Extraction/Preparation -----------------------------------------
 
@@ -100,7 +99,7 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
         dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"} else if(i == "CrystalStats") {"CrystalStats"} else if(i == "RMSDs") {"RMSDs"}
         this_parameter = if(parameter %in% c("Angles", "Distances", "Occupancies")) {parameter} else {""}
         ggplot2::ggsave(
-          filename = stringr::str_glue("output/plots/{theme}/{dataset_type}_{parameter}.svg"), 
+          filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{dataset_type}_{parameter}.svg"), 
           plot = ggplots[[theme]][[parameter]][[i]], 
           height = outerheight, 
           width = outerwidth,
@@ -111,7 +110,7 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
         for(j in names(ggplots[[theme]][[parameter]][[i]])) {
           dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"}
           ggplot2::ggsave(
-            filename = stringr::str_glue("output/plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
+            filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 
             height = innerheight, 
             width = innerwidth,
@@ -127,14 +126,13 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
 save_plots("Occupancies")
 save_plots("Distances")
 save_plots("Angles", outerheight = 12)
-save_plots("Dose", outerwidth = 8.8, outerheight = 7)
 save_plots("Stats", outerwidth = 16, outerheight = 16)
 save_plots("Comparisons", outerheight = 16)
 
 #Save all the tables
-dir.create("output/tables", showWarnings = FALSE)
-readr::write_csv(longData$Pseudohelices, "output/tables/regression_summary_pseudohelices.csv")
-readr::write_csv(longData$Wedges, "output/tables/regression_summary_wedges.csv")
-readr::write_csv(occ_table, "output/tables/all_occupancies.csv")
-readr::write_csv(angle_table, "output/tables/all_angles.csv")
-readr::write_csv(distance_table, "output/tables/all_distances.csv")
+dir.create("8-structure_analysis/output/tables", showWarnings = FALSE)
+readr::write_csv(longData$Pseudohelices, "8-structure_analysis/output/tables/regression_summary_pseudohelices.csv")
+readr::write_csv(longData$Wedges, "8-structure_analysis/output/tables/regression_summary_wedges.csv")
+readr::write_csv(occ_table, "8-structure_analysis/output/tables/all_occupancies.csv")
+readr::write_csv(angle_table, "8-structure_analysis/output/tables/all_angles.csv")
+readr::write_csv(distance_table, "8-structure_analysis/output/tables/all_distances.csv")

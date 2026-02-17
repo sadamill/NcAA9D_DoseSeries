@@ -225,58 +225,6 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = start_angle, y = dwd_MGy, color = datasetType, shape = datasetType)) +
-  geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
-  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
-  geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  ggtheme_dark() +
-  ggplot2::scale_color_manual(
-    "Dataset Type", 
-    labels = c("Wedges", "Pseudohelices"), 
-    breaks = c("Wedges", "Pseudohelices"), 
-    values = c("#016ad6", "#c2db4d")
-  ) +
-  scale_shape_manual(
-    "Dataset Type", 
-    labels = c("Wedges", "Pseudohelices"), 
-    breaks = c("Wedges", "Pseudohelices"), 
-    values = c(16, 15)
-  ) +
-  ggplot2::theme(
-    legend.position.inside = c(0.75, 0.22)
-  ) +
-  ggplot2::labs(
-    x = "Dataset Number",
-    y = "Diffraction-Weighted Dose (MGy)"
-  )
-
-ggplots$Light$Dose$DWDs <- ggplot2::ggplot(dwds, ggplot2::aes(x = start_angle, y = dwd_MGy, color = datasetType, shape = datasetType)) +
-  geom_line(data = dplyr::filter(dwds, datasetType == "Wedges")) +
-  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Wedges")) +
-  geom_line(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  ggplot2::geom_point(data = dplyr::filter(dwds, datasetType == "Pseudohelices")) +
-  ggtheme_light() +
-  ggplot2::scale_color_manual(
-    "Dataset Type", 
-    labels = c("Wedges", "Pseudohelices"), 
-    breaks = c("Wedges", "Pseudohelices"), 
-    values = c("#016ad6", "#c2db4d")
-  ) +
-  scale_shape_manual(
-    "Dataset Type", 
-    labels = c("Wedges", "Pseudohelices"), 
-    breaks = c("Wedges", "Pseudohelices"), 
-    values = c(16, 15)
-  ) +
-  ggplot2::theme(
-    legend.position.inside = c(0.75, 0.22)
-  ) +
-  ggplot2::labs(
-    x = "Dataset Number",
-    y = "Diffraction-Weighted Dose (MGy)"
-  )
-
 ggplots$Dark$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggplot2::aes(x = dataset_number, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
   ggtheme_dark() +
@@ -355,25 +303,45 @@ ggplots$Light$Stats$CrystalStats <- ggplot2::ggplot(crystal_stats$combined, ggpl
 # RMSD Plotting -----------------------------------------------------------
 rmsd_plots <- list()
 
+all_rmsds |> 
+  filter(parameter == "occupancies", rmsd > 0) |> 
+  pull(rmsd) |> 
+  ( \(x) quantile(x, probs = c(0.05, 0.95)) )()
+
 base_plot <- function() {
-  ggplot2::ggplot(all_rmsds, ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) +
+  
+  occ_range <- all_rmsds |> 
+    filter(parameter == "occupancies", rmsd > 0) |> 
+    pull(rmsd) |> 
+    ( \(x) quantile(x, probs = c(0.05, 0.95)) )()
+  b_range <- all_rmsds |> 
+    filter(parameter == "b_factors", rmsd > 0) |> 
+    pull(rmsd) |> 
+    ( \(x) quantile(x, probs = c(0.05, 0.95)) )()
+  coord_range <- all_rmsds |> 
+    filter(parameter == "coordinates", rmsd > 0) |> 
+    pull(rmsd) |> 
+    ( \(x) quantile(x, probs = c(0.05, 0.95)) )()
+  
+  
+  base_plot <- ggplot2::ggplot(all_rmsds, ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) +
     ggplot2::geom_tile(
       data = all_rmsds %>% dplyr::filter(parameter == "occupancies"),
       mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
-    ggplot2::scale_fill_viridis_c(name = "Occupancy RMSD", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4) +
+    ggplot2::scale_fill_viridis_c(name = "Occupancy RMSD", limits = occ_range, oob = scales::squish, n.breaks = 4) +
     ggnewscale::new_scale_fill() +
     ggplot2::geom_tile(
       data = all_rmsds %>% dplyr::filter(parameter == "b_factors"),
       mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
-    ggplot2::scale_fill_viridis_c(name = "B-Factor RMSD", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)) +
+    ggplot2::scale_fill_viridis_c(name = "B-Factor RMSD", limits = b_range, oob = scales::squish, n.breaks = 4) +
     ggnewscale::new_scale_fill() +
     ggplot2::geom_tile(
       data = all_rmsds %>% dplyr::filter(parameter == "coordinates"),
       mapping = ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)
     ) +
-    ggplot2::scale_fill_viridis_c(name = "Coordinate RMSD", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4) +
+    ggplot2::scale_fill_viridis_c(name = "Coordinate RMSD", limits = coord_range, oob = scales::squish, n.breaks = 4) +
     ggplot2::facet_grid(
       parameter ~ type,
       labeller = ggplot2::labeller(
@@ -381,6 +349,8 @@ base_plot <- function() {
         parameter = c(b_factors = "B-Factors", coordinates = "Coordinates", occupancies = "Occupancy")
       )
     )
+  
+  return(base_plot)
 }
 
 rmsd_plots$base_plots$light <- base_plot() +
@@ -415,15 +385,29 @@ rmsd_plots$base_plots$dark <- base_plot() +
   ggplot2::labs(x = "Reference Dataset", y = "Comparison Dataset")
 
 make_legend <- function(parameter, theme) {
+  
+  occ_range <- all_rmsds |> 
+    filter(parameter == "occupancies", rmsd > 0) |> 
+    pull(rmsd) |> 
+    ( \(x) quantile(x, probs = c(0.05, 0.95)) )()
+  b_range <- all_rmsds |> 
+    filter(parameter == "b_factors", rmsd > 0) |> 
+    pull(rmsd) |> 
+    ( \(x) quantile(x, probs = c(0.05, 0.95)) )()
+  coord_range <- all_rmsds |> 
+    filter(parameter == "coordinates", rmsd > 0) |> 
+    pull(rmsd) |> 
+    ( \(x) quantile(x, probs = c(0.05, 0.95)) )()
+  
   p <- all_rmsds %>% dplyr::filter(parameter == !!parameter) %>% 
     ggplot2::ggplot(ggplot2::aes(x = ref_dataset, y = comp_dataset, fill = rmsd)) + 
     ggplot2::geom_tile()
   
   p <- switch(
     parameter,
-    "occupancies" = p + ggplot2::scale_fill_viridis_c(name = "Occupancy", limits = c(0.01, 0.025), oob = scales::squish, n.breaks = 4),
-    "b_factors" = p + ggplot2::scale_fill_viridis_c(name = "B-Factor", limits = c(0, 1.2), oob = scales::squish, breaks = c(0, 0.4, 0.8, 1.2)),
-    "coordinates" = p + ggplot2::scale_fill_viridis_c(name = "Coordinate", limits = c(0.04, 0.16), oob = scales::squish, n.breaks = 4)
+    "occupancies" = p + ggplot2::scale_fill_viridis_c(name = "Occupancy", limits = occ_range, oob = scales::squish, n.breaks = 4),
+    "b_factors" = p + ggplot2::scale_fill_viridis_c(name = "B-Factor", limits = b_range, oob = scales::squish, n.breaks = 4),
+    "coordinates" = p + ggplot2::scale_fill_viridis_c(name = "Coordinate", limits = coord_range, oob = scales::squish, n.breaks = 4)
   )
   
   if(theme == "dark") {
@@ -659,7 +643,7 @@ light.trend <- function(trend, datasetType) {
         "Atom Pair"
       } else if(trend == "Angles") {
         "Angle ID"
-      } else {stop("Invalid trend input for trend visualization")},
+      } else {stop("In'[valid trend input for trend visualization")},
       y = if(trend == "Occupancies") {
         stringr::str_glue("Occupancy Trend (Δ/{regressor})")
       } else if(trend == "Distances") {
