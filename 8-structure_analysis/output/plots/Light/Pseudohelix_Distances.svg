@@ -845,7 +845,7 @@
 <polyline points='27.41,209.32 29.40,209.32 ' style='stroke-width: 0.78; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='27.41,182.08 29.40,182.08 ' style='stroke-width: 0.78; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='27.41,154.85 29.40,154.85 ' style='stroke-width: 0.78; stroke: #333333; stroke-linecap: butt;' />
-<text x='218.74' y='277.79' text-anchor='middle' style='font-size: 8.00px; font-family: "Arial";' textLength='117.59px' lengthAdjust='spacingAndGlyphs'>Diffraction-Weighted Dose (MGy)</text>
+<text x='218.74' y='277.79' text-anchor='middle' style='font-size: 8.00px; font-family: "Arial";' textLength='81.25px' lengthAdjust='spacingAndGlyphs'>Average DDWD (MGy)</text>
 <text transform='translate(9.72,139.49) rotate(-90)' text-anchor='middle' style='font-size: 8.00px; font-family: "Arial";' textLength='44.05px' lengthAdjust='spacingAndGlyphs'>Distance (Å)</text>
 <rect x='416.06' y='121.30' width='33.50' height='36.38' style='stroke-width: 0.78; fill: #FFFFFF;' />
 <text x='420.04' y='131.86' style='font-size: 8.00px; font-family: "Arial";' textLength='20.92px' lengthAdjust='spacingAndGlyphs'>Chain</text>

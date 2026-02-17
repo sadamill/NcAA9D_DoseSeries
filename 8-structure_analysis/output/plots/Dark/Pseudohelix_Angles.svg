@@ -960,7 +960,7 @@
 <polyline points='22.08,288.59 24.07,288.59 ' style='stroke-width: 0.39; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='22.08,266.77 24.07,266.77 ' style='stroke-width: 0.39; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='22.08,244.95 24.07,244.95 ' style='stroke-width: 0.39; stroke: #333333; stroke-linecap: butt;' />
-<text x='236.82' y='334.49' text-anchor='middle' style='font-size: 8.00px;fill: #FFFFFF; font-family: "Arial";' textLength='117.59px' lengthAdjust='spacingAndGlyphs'>Diffraction-Weighted Dose (MGy)</text>
+<text x='236.82' y='334.49' text-anchor='middle' style='font-size: 8.00px;fill: #FFFFFF; font-family: "Arial";' textLength='81.25px' lengthAdjust='spacingAndGlyphs'>Average DDWD (MGy)</text>
 <text transform='translate(9.72,167.41) rotate(-90)' text-anchor='middle' style='font-size: 8.00px;fill: #FFFFFF; font-family: "Arial";' textLength='31.25px' lengthAdjust='spacingAndGlyphs'>Angle (°)</text>
 <rect x='368.99' y='254.12' width='33.50' height='36.38' style='stroke-width: 0.75; stroke: #FFFFFF; fill: #000000;' />
 <text x='372.97' y='264.67' style='font-size: 8.00px;fill: #FFFFFF; font-family: "Arial";' textLength='20.92px' lengthAdjust='spacingAndGlyphs'>Chain</text>

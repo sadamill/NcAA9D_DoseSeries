@@ -42,7 +42,7 @@ faceting <- function(facetVar, datasetType) {
     # Dynamically assign axis labels depending on the data type and facet used
     ggplot2::labs(
       x = if(datasetType == 'Pseudohelix') {
-        "Diffraction-Weighted Dose (MGy)"
+        "Average DDWD (MGy)"
       } else if(datasetType == "Wedge") {
         "Wedge Number"
       },
