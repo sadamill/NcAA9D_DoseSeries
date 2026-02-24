@@ -90,6 +90,7 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
     ) + #Linear regression line
     ggplot2::geom_point(
       size = 1, 
+      na.rm = TRUE
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_dark() +
@@ -132,6 +133,7 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
     ) + #Linear regression line
     ggplot2::geom_point(
       size = 1, 
+      na.rm = TRUE
     ) + #Point for each occupancy value
     faceting(facetVar = facetVar, datasetType = datasetType) +
     ggtheme_light() +
@@ -226,9 +228,9 @@ ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
 ggplots$Dark$Stats$CrystalStats <- crystal_stats |> 
-  filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2", 
-                          "completeness_percent", "mean_i_sigma_i", "average_b_factor",
-                          "r_work", "r_free")) |> 
+  filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2_highest_shell", 
+                          "completeness_percent_highest_shell", "mean_i_sigma_i_highest_shell", "average_b_factor",
+                          "r_work_overall", "r_free_overall")) |> 
   ggplot2::ggplot(ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
   ggtheme_dark() +
@@ -250,12 +252,12 @@ ggplots$Dark$Stats$CrystalStats <- crystal_stats |>
     ncol = 3,
     labeller = ggplot2::as_labeller(
       c(
-        cc1_2 = "CC[1/2]",
+        cc1_2_highest_shell = "CC[1/2]*' (highest shell)'",
         unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
-        mean_i_sigma_i = "group(langle, 'I/'*σ[I], rangle)", 
-        r_free = "R[free]",
-        r_work = "R[work]",
-        completeness_percent = "'Completeness (%)'",
+        mean_i_sigma_i_highest_shell = "group(langle, 'I/'*σ[I], rangle)*' (highest shell)'", 
+        r_free_overall = "R[free]",
+        r_work_overall = "R[work]",
+        completeness_percent_highest_shell = "'Completeness (%) (highest shell)'",
         wilson_b_factor = "'Wilson B-factor ('*Å^2*')'",
         average_b_factor = "'Average B-factor ('*Å^2*')'"
       ),
@@ -266,9 +268,9 @@ ggplots$Dark$Stats$CrystalStats <- crystal_stats |>
   ggplot2::labs(x = "Start Angle (φ, °)")
 
 ggplots$Light$Stats$CrystalStats <- crystal_stats |> 
-  filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2", 
-         "completeness_percent", "mean_i_sigma_i", "average_b_factor",
-         "r_work", "r_free")) |> 
+  filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2_highest_shell", 
+                          "completeness_percent_highest_shell", "mean_i_sigma_i_highest_shell", "average_b_factor",
+                          "r_work_overall", "r_free_overall")) |> 
   ggplot2::ggplot(ggplot2::aes(x = start_angle, y = value, color = dataset_type)) +
   ggplot2::geom_point() +
   ggtheme_light() +
@@ -290,12 +292,12 @@ ggplots$Light$Stats$CrystalStats <- crystal_stats |>
     ncol = 3,
     labeller = ggplot2::as_labeller(
       c(
-        cc1_2 = "CC[1/2]",
+        cc1_2_highest_shell = "CC[1/2]*' (highest shell)'",
         unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
-        mean_i_sigma_i = "group(langle, 'I/'*σ[I], rangle)", 
-        r_free = "R[free]",
-        r_work = "R[work]",
-        completeness_percent = "'Completeness (%)'",
+        mean_i_sigma_i_highest_shell = "group(langle, 'I/'*σ[I], rangle)*' (highest shell)'", 
+        r_free_overall = "R[free]",
+        r_work_overall = "R[work]",
+        completeness_percent_highest_shell = "'Completeness (%) (highest shell)'",
         wilson_b_factor = "'Wilson B-factor ('*Å^2*')'",
         average_b_factor = "'Average B-factor ('*Å^2*')'"
       ),
