@@ -1,5 +1,6 @@
 # Packages ----------------------------------------------------------------
 
+library(factoextra)
 library(cowplot)
 library(tidyverse)
 library(bio3d)
@@ -8,6 +9,9 @@ library(emmeans)
 library(ggnewscale)
 library(janitor)
 library(systemfonts)
+library(PCDimension)
+library(ggforce)
+library(paletteer)
 
 # Raw Data Extraction/Preparation -----------------------------------------
 
@@ -80,6 +84,7 @@ source("8-structure_analysis/occupancy_analysis.R")
 source("8-structure_analysis/distance_analysis.R")
 source("8-structure_analysis/angle_analysis.R")
 source("8-structure_analysis/structure_stats.R")
+source("8-structure_analysis/pca_clustering.R")
 
 # Data Visualization ------------------------------------------------------
 
@@ -94,10 +99,10 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
   for(theme in names(ggplots)) {
     for(i in names(ggplots[[theme]][[parameter]])) {
       if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
-        dataset_type = if(i == "Pseudohelices") {"Pseudohelix"} else if(i == "Wedges") {"Wedge"} else if(i == "DWDs") {"DWDs"} else if(i == "CrystalStats") {"CrystalStats"} else if(i == "RMSDs") {"RMSDs"}
-        this_parameter = if(parameter %in% c("Angles", "Distances", "Occupancies")) {parameter} else {""}
+        this_parameter <- parameter
+        dataset_type <- i
         ggplot2::ggsave(
-          filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{dataset_type}_{parameter}.svg"), 
+          filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{dataset_type}_{this_parameter}.svg"), 
           plot = ggplots[[theme]][[parameter]][[i]], 
           height = outerheight, 
           width = outerwidth,
@@ -107,6 +112,7 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
       } else if("list" %in% class(ggplots[[theme]][[parameter]][[i]])) {
         for(j in names(ggplots[[theme]][[parameter]][[i]])) {
           dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"}
+          
           ggplot2::ggsave(
             filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 
@@ -121,6 +127,7 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
   }
 }
 
+save_plots("pca", outerwidth = 16)
 save_plots("Occupancies")
 save_plots("Distances")
 save_plots("Angles", outerheight = 12)
