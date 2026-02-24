@@ -227,7 +227,7 @@ ggdarklight(stackedOccupancies, "Occupancies")
 ggdarklight(stackedDistances, "Distances")
 ggdarklight(stackedAngles, "Angles")
 
-ggplots$Dark$Stats$CrystalStats <- crystal_stats |> 
+ggplots$Dark$CrystalStats$CrystalStats <- crystal_stats |> 
   filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2_highest_shell", 
                           "completeness_percent_highest_shell", "mean_i_sigma_i_highest_shell", "average_b_factor",
                           "r_work_overall", "r_free_overall")) |> 
@@ -267,7 +267,7 @@ ggplots$Dark$Stats$CrystalStats <- crystal_stats |>
   ggplot2::theme(axis.title.y = ggplot2::element_blank(), legend.position.inside = c(0.85, 0.1)) +
   ggplot2::labs(x = "Start Angle (φ, °)")
 
-ggplots$Light$Stats$CrystalStats <- crystal_stats |> 
+ggplots$Light$CrystalStats$CrystalStats <- crystal_stats |> 
   filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2_highest_shell", 
                           "completeness_percent_highest_shell", "mean_i_sigma_i_highest_shell", "average_b_factor",
                           "r_work_overall", "r_free_overall")) |> 
@@ -441,8 +441,8 @@ rmsd_plots$legends$light$combined <- cowplot::plot_grid(rmsd_plots$legends$light
 rmsd_plots$legends$dark$combined <- cowplot::plot_grid(rmsd_plots$legends$dark$bfact, rmsd_plots$legends$dark$occ, rmsd_plots$legends$dark$coord, ncol = 1) +
   cowplot::draw_label("RMSD", fontface = "bold", y = 0.99, vjust = 1, color = "white")
 
-ggplots$Light$Comparisons$RMSDs <- suppressWarnings(cowplot::plot_grid(rmsd_plots$base_plots$light, rmsd_plots$legends$light$combined, ncol = 2, rel_widths = c(1, 0.15)))
-ggplots$Dark$Comparisons$RMSDs <- suppressWarnings(cowplot::plot_grid(rmsd_plots$base_plots$dark, rmsd_plots$legends$dark$combined, ncol = 2, rel_widths = c(1, 0.15)))
+ggplots$Light$RMSDs$RMSDs <- suppressWarnings(cowplot::plot_grid(rmsd_plots$base_plots$light, rmsd_plots$legends$light$combined, ncol = 2, rel_widths = c(1, 0.15)))
+ggplots$Dark$RMSDs$RMSDs <- suppressWarnings(cowplot::plot_grid(rmsd_plots$base_plots$dark, rmsd_plots$legends$dark$combined, ncol = 2, rel_widths = c(1, 0.15)))
 
 # Trend plotting ----------------------------------------------------------
 
