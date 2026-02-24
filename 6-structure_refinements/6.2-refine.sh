@@ -16,7 +16,7 @@ do
     do
         (
             cd 6-structure_refinements/output/${datatype}${i}_refined
-            phenix.refine --overwrite ../../input/starting_coords.pdb ../../input/starting_maps/${datatype}${i}_merged.mtz ../../input/params.eff
+            phenix.refine --overwrite ../../input/starting_coords.cif ../../input/starting_maps/${datatype}${i}_merged.mtz ../../input/params.eff
         ) &
         pwait $MAX_PROCESSES
     done
