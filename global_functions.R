@@ -54,25 +54,25 @@ calculate_dose <- function(type) {
 # emtrends helper functions
 emtrends.coefficient <- function(model, regressor) {
   c(
-    emmeans::emtrends(model, "Molecule", regressor) %>%
+    emmeans::emtrends(model, "Molecule", regressor, mode = "appx-satterthwaite") %>%
       test() %>% .[, 2], 
-    emmeans::emtrends(model, "Molecule", regressor) %>%
+    emmeans::emtrends(model, "Molecule", regressor, mode = "appx-satterthwaite") %>%
       pairs() %>% summary() %>% .[, 2]
   )
 }
 emtrends.pvalue <- function(model, regressor) {
   c(
-    emmeans::emtrends(model, "Molecule", regressor) %>%
+    emmeans::emtrends(model, "Molecule", regressor, mode = "appx-satterthwaite") %>%
       test() %>% .[, 6], 
-    emmeans::emtrends(model, "Molecule", regressor) %>%
+    emmeans::emtrends(model, "Molecule", regressor, mode = "appx-satterthwaite") %>%
       pairs() %>% summary() %>% .[, 6]
   )
 }
 emtrends.se <- function(model, regressor) {
   c(
-    emmeans::emtrends(model, "Molecule", regressor) %>%
+    emmeans::emtrends(model, "Molecule", regressor, mode = "appx-satterthwaite") %>%
       summary() %>% .[, 3], 
-    emmeans::emtrends(model, "Molecule", regressor) %>%
+    emmeans::emtrends(model, "Molecule", regressor, mode = "appx-satterthwaite") %>%
       pairs() %>% summary() %>% .[, 3]
   )
 }
