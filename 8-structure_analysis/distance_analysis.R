@@ -86,20 +86,20 @@ stackedDistances <- list(
 #Prepare a list of multiple linear regression models for each atom pair of interest
 multipleRegressions$Distances <- list(
   Pseudohelices = list(
-    CuTyr = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Tyr"), 
-    CuNterm = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-NTerm"), 
-    CuHis1ND1 = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-His1ND1"), 
-    CuHis84NE2 = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-His84NE2"), 
-    CuEq = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Eq"), 
-    CuAx = lm(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Ax")
+    CuTyr = gls(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Tyr", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuNterm = gls(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-NTerm", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuHis1ND1 = gls(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-His1ND1", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuHis84NE2 = gls(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-His84NE2", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuEq = gls(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Eq", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuAx = gls(Distance ~ Dose * Molecule, data = stackedDistances$Pseudohelices, subset = AtomPair == "Cu-Ax", weights = varIdent(form = ~ 1 | Molecule))
   ), 
   Wedges = list(
-    CuTyr = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Tyr"), 
-    CuNterm = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-NTerm"), 
-    CuHis1ND1 = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-His1ND1"), 
-    CuHis84NE2 = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-His84NE2"), 
-    CuEq = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Eq"), 
-    CuAx = lm(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Ax")
+    CuTyr = gls(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Tyr", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuNterm = gls(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-NTerm", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuHis1ND1 = gls(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-His1ND1", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuHis84NE2 = gls(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-His84NE2", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuEq = gls(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Eq", weights = varIdent(form = ~ 1 | Molecule)), 
+    CuAx = gls(Distance ~ WedgeNumber * Molecule, data = stackedDistances$Wedges, subset = AtomPair == "Cu-Ax", weights = varIdent(form = ~ 1 | Molecule))
   )
 )
 
@@ -114,7 +114,6 @@ regressionSummaries$Distances <- list(
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Distances$Pseudohelices[[atom]], "Dose"), 
           StandardError = emtrends.se(multipleRegressions$Distances$Pseudohelices[[atom]], "Dose"), 
-          ModelRSquared = summary(multipleRegressions$Distances$Pseudohelices[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Distances$Pseudohelices[[atom]], "Dose")
         )
       }
@@ -130,7 +129,6 @@ regressionSummaries$Distances <- list(
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Distances$Wedges[[atom]], "WedgeNumber"), 
           StandardError = emtrends.se(multipleRegressions$Distances$Wedges[[atom]], "WedgeNumber"), 
-          ModelRSquared = summary(multipleRegressions$Distances$Wedges[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Distances$Wedges[[atom]], "WedgeNumber")
         )
       }

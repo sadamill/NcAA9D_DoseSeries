@@ -196,22 +196,22 @@ stackedAngles <- list(
 
 multipleRegressions$Angles <- list(
   Pseudohelices = list (
-    T1 = lm(T1 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    T2 = lm(T2 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    T3 = lm(T3 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    TT = lm(TT ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    THH = lm(THH ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    TH1 = lm(TH1 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices), 
-    THN = lm(THN ~ dose_MGy * Molecule, data = allAngles$Pseudohelices)
+    T1 = gls(T1 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule)), 
+    T2 = gls(T2 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule)), 
+    T3 = gls(T3 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule)), 
+    TT = gls(TT ~ dose_MGy * Molecule, data = allAngles$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule)), 
+    THH = gls(THH ~ dose_MGy * Molecule, data = allAngles$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule)), 
+    TH1 = gls(TH1 ~ dose_MGy * Molecule, data = allAngles$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule)), 
+    THN = gls(THN ~ dose_MGy * Molecule, data = allAngles$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule))
   ), 
   Wedges = list (
-    T1 = lm(T1 ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    T2 = lm(T2 ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    T3 = lm(T3 ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    TT = lm(TT ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    THH = lm(THH ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    TH1 = lm(TH1 ~ WedgeNumber * Molecule, data = allAngles$Wedges), 
-    THN = lm(THN ~ WedgeNumber * Molecule, data = allAngles$Wedges)
+    T1 = gls(T1 ~ WedgeNumber * Molecule, data = allAngles$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
+    T2 = gls(T2 ~ WedgeNumber * Molecule, data = allAngles$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
+    T3 = gls(T3 ~ WedgeNumber * Molecule, data = allAngles$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
+    TT = gls(TT ~ WedgeNumber * Molecule, data = allAngles$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
+    THH = gls(THH ~ WedgeNumber * Molecule, data = allAngles$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
+    TH1 = gls(TH1 ~ WedgeNumber * Molecule, data = allAngles$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
+    THN = gls(THN ~ WedgeNumber * Molecule, data = allAngles$Wedges, weights = varIdent(form = ~ 1 | Molecule))
   )
 )
 
@@ -226,7 +226,6 @@ regressionSummaries$Angles <- list(
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Angles$Pseudohelices[[atom]], "dose_MGy"), 
           StandardError = emtrends.se(multipleRegressions$Angles$Pseudohelices[[atom]], "dose_MGy"), 
-          ModelRSquared = summary(multipleRegressions$Angles$Pseudohelices[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Angles$Pseudohelices[[atom]], "dose_MGy")
         )
       }
@@ -242,7 +241,6 @@ regressionSummaries$Angles <- list(
           Estimate = c("TrendA", "TrendB", "Contrast"), 
           Coefficient = emtrends.coefficient(multipleRegressions$Angles$Wedges[[atom]], "WedgeNumber"), 
           StandardError = emtrends.se(multipleRegressions$Angles$Wedges[[atom]], "WedgeNumber"), 
-          ModelRSquared = summary(multipleRegressions$Angles$Wedges[[atom]])$r.squared, 
           PValue = emtrends.pvalue(multipleRegressions$Angles$Wedges[[atom]], "WedgeNumber")
         )
       }
