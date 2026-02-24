@@ -9,8 +9,6 @@ library(ggnewscale)
 library(janitor)
 library(systemfonts)
 
-options(scipen = 7) #I don't like viewing things in scientific notation
-
 # Raw Data Extraction/Preparation -----------------------------------------
 
 #Extract PDB files
