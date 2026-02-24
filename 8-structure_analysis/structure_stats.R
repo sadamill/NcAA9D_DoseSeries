@@ -15,19 +15,20 @@ read_crystal_stats <- function(filepath, dataset_type) {
     as_tibble() |> 
     row_to_names(row_number = 1) |> 
     clean_names() |> 
-    dplyr::mutate(dplyr::across(dplyr::everything(), ~ gsub("\\s*\\(.*\\)", "", .)),
-                  unit_cell = { str_split(unit_cell, pattern = " ") |> 
-                      purrr::map(\(x) setNames(x, c("a", "b", "c", "alpha", "beta", "gamma"))) },
-                  resolution_range = { str_split(resolution_range, pattern = "  - ") |> 
-                      purrr::map(\(x) setNames(x, c("resolution_high", "resolution_low"))) }) |> 
-    tidyr::unnest_wider(c(unit_cell, resolution_range)) |> 
-    select(!where(~ all(is.na(.))) & !space_group) |> 
-    mutate(across(everything(), ~ as.numeric(.)),
+    select(!where(\(x) all(is.na(x)))) |> 
+    mutate(across(where(\(x) {str_detect(x, "\\(") |> all()}),
+                  ~ {str_split(., pattern = "\\s\\(") |> 
+                      map(\(x) {str_remove(x, "\\)") |>
+                          setNames(c(str_glue("{cur_column()}_overall"), str_glue("{cur_column()}_highest_shell")))})}),
+           unit_cell = { str_split(unit_cell, pattern = " ") |> 
+               purrr::map(\(x) setNames(x, c("a", "b", "c", "alpha", "beta", "gamma"))) }) |> 
+    unnest_wider(where(\(x) is.list(x))) |> 
+    mutate(across(!resolution_range_overall:space_group, ~ as.numeric(.)),
            unit_cell_volume = { a * b * c * sqrt(1 + 2 * cos((alpha * pi) / 180) * cos((beta * pi) / 180) * cos((gamma * pi) / 180) - (cos((alpha * pi) / 180)^2) - (cos((beta * pi) / 180)^2) - (cos((gamma * pi) / 180)^2)) },
            start_angle = start_angles,
            dataset_type = dataset_type) |> 
     relocate(unit_cell_volume, .after = gamma) |> 
-    pivot_longer(cols = !c(dataset_type, start_angle),
+    pivot_longer(cols = !c(dataset_type, start_angle, resolution_range_overall:space_group),
                  names_to = "statistic") |> 
     mutate(statistic = as_factor(statistic))
   
