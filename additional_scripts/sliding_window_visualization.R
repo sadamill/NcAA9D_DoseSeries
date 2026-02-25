@@ -2,6 +2,8 @@ library(tidyverse)
 library(gganimate)
 library(magick)
 
+source("global_functions.R")
+
 samples_doses <- readr::read_csv("4-sampling/output/all_datasets.csv") |> 
   arrange(sampled)
 samples_doses_anim <- samples_doses |> 
@@ -72,11 +74,14 @@ ggplot2::ggplot() +
   labs(x = "Wedge Number", y = "Δφ Angle (°)")
 
 samples_plot <- ggplot2::ggplot(samples_doses, aes(x = start_angle, y = ddwd, color = sampled)) +
-  geom_point() +
+  geom_line(aes(x = start_angle, y = ddwd), inherit.aes = FALSE, color = "gray") +
+  geom_point(data = filter(samples_doses, sampled == TRUE), color = "red2") +
   geom_point(
     data = filter(samples_doses_anim, pseudohelix >= 1),
     size = 3,
-    color = "red2"
+    fill = "red2",
+    color = "red2",
+    shape = 23
   ) +
   scale_color_manual(
     "",
@@ -84,7 +89,7 @@ samples_plot <- ggplot2::ggplot(samples_doses, aes(x = start_angle, y = ddwd, co
     labels = c("Sampled", "Not Sampled"),
     values = c("red2", "gray90")
   ) +
-  theme_bw() +
+  ggtheme_light() +
   labs(
     x = "Start Angle (φ, °)",
     y = "DDWD (MGy)"
@@ -112,19 +117,22 @@ angles_plot <- ggplot2::ggplot() +
     minor_breaks = seq(0.5, 36.5, 1)
   ) +
   coord_cartesian(expand = FALSE) + 
-  theme_classic() +
+  ggtheme_light() +
   theme(
-    panel.grid.minor.x    = element_line(color = "gray80", linewidth = 0.2),
-    legend.position       = "inside",
+    panel.grid.minor.x     = element_line(color = "gray80", linewidth = 0.2),
+    panel.grid.major.x     = element_blank(),
+    legend.position        = "inside",
     legend.justification   = c(1, 0),
     legend.position.inside = c(1, 0),
     legend.background      = element_blank()
   ) +
-  labs(x = "Wedge Number", y = "φ Angle (°)") +
+  labs(x = "Wedge Number", y = "φ Angle (°)")
+
+angles_anim <- angles_plot +
   geom_rect(
     data = dose_rects, 
-    aes(xmin = wedge-0.5, 
-        xmax = wedge+0.5, 
+    aes(xmin = wedge - 0.5, 
+        xmax = wedge + 0.5, 
         ymin = start, 
         ymax = start + 5), 
     alpha = 0.2, 
@@ -141,28 +149,23 @@ angles_plot <- ggplot2::ggplot() +
     color = "black",
     hjust = 0,
     size = 7
-  ) + gganimate::transition_states(pseudohelix, transition_length = 0)
+  ) +
+  gganimate::transition_states(pseudohelix, transition_length = 0)
 
 samples_gif <- gganimate::animate(plot = samples_plot,
                                   height = 300, width = 1200,
-                                  fps = 100, nframes = 100,
+                                  fps = 100, nframes = 500,
                                   renderer = magick_renderer())
-angles_gif <- gganimate::animate(plot = angles_plot, 
+angles_gif <- gganimate::animate(plot = angles_anim, 
                                  height = 800, width = 1200,
-                                 fps = 100, nframes = 100,
+                                 fps = 100, nframes = 500,
                                  renderer = magick_renderer())
 
 new_gif <- magick::image_append(c(samples_gif[1], angles_gif[1]), stack = TRUE)
-for(i in 2:100) {
+for(i in 2:500) {
   combined <- magick::image_append(c(samples_gif[i], angles_gif[i]), stack = TRUE)
   new_gif <- c(new_gif, combined)
 }
 
+ggsave("additional_scripts/output/angles.tiff", angles_plot, height = 10, width = 16, unit = "cm")
 image_write(new_gif, "additional_scripts/output/samples_anim.gif")
-
-gganimate::anim_save(
-  "additional_scripts/output/samples_anim.gif",
-  animation = angles_plot, 
-  height = 800, width = 1200,
-  fps = 30, nframes = 500
-)
