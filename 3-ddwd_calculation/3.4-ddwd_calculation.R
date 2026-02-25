@@ -8,14 +8,18 @@ doses <- dplyr::bind_rows(
 )
 
 doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, color = dose_type)) +
-  ggplot2::geom_point() +
+  ggplot2::geom_line() +
   ggplot2::scale_color_manual(
     "Dose Type",
     labels = c("FWD", "DDWD"),
     breaks = c("fwd", "ddwd"),
     values = c("#fa8a15", "#c688ff")
   ) +
-  ggplot2::facet_wrap(~ dataset_type, ncol = 1) +
+  ggplot2::facet_wrap(~ dataset_type, ncol = 1,
+                      labeller = as_labeller(
+                        c(pseudohelix = "Pseudohelix",
+                          wedge = "Wedge")
+                      )) +
   ggplot2::labs(x = "Start Angle (φ, °)", y = "Average Dose (MGy)") +
   ggplot2::theme_bw() +
   ggplot2::theme(legend.position = "top")
