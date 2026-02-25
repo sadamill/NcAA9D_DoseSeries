@@ -26,8 +26,8 @@ samples <- candidate_points %>% slice_sample(
 pseudohelix_doses <- mutate(pseudohelix_doses, sampled = dataset_number %in% samples$dataset_number)
 
 p <- ggplot(samples, aes(x = start_angle, y = ddwd)) +
-  geom_point(data = filter(pseudohelix_doses, sampled == FALSE), color = "gray95") +
-  geom_point(color = "red3") +
+  geom_line(color = "gray") +
+  geom_point(fill = "red3", color = "red3", size = 0.5, shape = 23) +
   theme_bw() +
   labs(
     x = "Start Angle (φ, °)",
