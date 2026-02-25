@@ -1,6 +1,7 @@
 # Packages ----------------------------------------------------------------
 
 library(factoextra)
+library(nlme)
 library(cowplot)
 library(tidyverse)
 library(bio3d)
@@ -11,7 +12,6 @@ library(janitor)
 library(systemfonts)
 library(PCDimension)
 library(ggforce)
-library(paletteer)
 
 # Raw Data Extraction/Preparation -----------------------------------------
 
@@ -101,8 +101,10 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
       if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
         this_parameter <- parameter
         dataset_type <- i
+        if(dataset_type == "broken_stick") {outerheight <- 16} else {outerheight <- 10}
+        if(dataset_type == parameter) {this_parameter <- ""}
         ggplot2::ggsave(
-          filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{dataset_type}_{this_parameter}.svg"), 
+          filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{this_parameter}_{dataset_type}.svg"), 
           plot = ggplots[[theme]][[parameter]][[i]], 
           height = outerheight, 
           width = outerwidth,
@@ -114,7 +116,7 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
           dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"}
           
           ggplot2::ggsave(
-            filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{dataset_type}_{parameter}{i}.svg"), 
+            filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{this_parameter}_{dataset_type}{i}.svg"), 
             plot = ggplots[[theme]][[parameter]][[i]][[j]], 
             height = innerheight, 
             width = innerwidth,
@@ -131,8 +133,8 @@ save_plots("pca", outerwidth = 16)
 save_plots("Occupancies")
 save_plots("Distances")
 save_plots("Angles", outerheight = 12)
-save_plots("Stats", outerwidth = 16, outerheight = 16)
-save_plots("Comparisons", outerheight = 16)
+save_plots("CrystalStats", outerwidth = 16, outerheight = 16)
+save_plots("RMSDs", outerheight = 16)
 
 #Save all the tables
 dir.create("8-structure_analysis/output/tables", showWarnings = FALSE)
