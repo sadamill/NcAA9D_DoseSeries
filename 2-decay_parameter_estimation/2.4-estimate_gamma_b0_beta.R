@@ -44,17 +44,17 @@ wilson_b_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = wilso
     "Used in Regression?",
     labels = c("Yes", "No"),
     breaks = c(TRUE, FALSE),
-    values = c("black", "gray50")
+    values = c("black", "gray80")
   ) +
-  ggplot2::theme_bw() +
+  ggtheme_light() +
   ggplot2::theme(
     legend.position = "inside",
-    legend.position.inside = c(0.05, 0.95),
-    legend.justification = c(0, 1),
+    legend.position.inside = c(0.95, 0.05),
+    legend.justification = c(1, 0),
     legend.background = ggplot2::element_rect(color = "black")
   ) +
   ggplot2::labs(
-    x = "FWD (MGy)",
+    x = bquote(group(langle, "FWD", rangle)*" MGy"),
     y = bquote("Wilson B-Factor ("*Å^2*")")
   )
 
@@ -69,9 +69,9 @@ scales_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = k, colo
     "Used in Regression?",
     labels = c("Yes", "No"),
     breaks = c(TRUE, FALSE),
-    values = c("black", "gray50")
+    values = c("black", "gray80")
   ) +
-  ggplot2::theme_bw() +
+  ggtheme_light() +
   ggplot2::theme(
     legend.position = "inside",
     legend.position.inside = c(0.05, 0.05),
@@ -79,7 +79,7 @@ scales_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = k, colo
     legend.background = ggplot2::element_rect(color = "black")
   ) +
   ggplot2::labs(
-    x = "FWD (MGy)",
+    x = bquote(group(langle, "FWD", rangle)*" MGy"),
     y = "Scale Factor K"
   )
 
