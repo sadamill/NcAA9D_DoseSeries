@@ -111,19 +111,6 @@ save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight
           units = "cm",
           create.dir = TRUE
         )
-      } else if("list" %in% class(ggplots[[theme]][[parameter]][[i]])) {
-        for(j in names(ggplots[[theme]][[parameter]][[i]])) {
-          dataset_type = if(j == "Pseudohelices") {"Pseudohelix"} else if(j == "Wedges") {"Wedge"}
-          
-          ggplot2::ggsave(
-            filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{this_parameter}_{dataset_type}{i}.svg"), 
-            plot = ggplots[[theme]][[parameter]][[i]][[j]], 
-            height = innerheight, 
-            width = innerwidth,
-            units = "cm",
-            create.dir = TRUE
-          )
-        }
       }
     }
   }
@@ -138,8 +125,7 @@ save_plots("RMSDs", outerheight = 16)
 
 #Save all the tables
 dir.create("8-structure_analysis/output/tables", showWarnings = FALSE)
-readr::write_csv(longData$Pseudohelices, "8-structure_analysis/output/tables/regression_summary_pseudohelices.csv")
-readr::write_csv(longData$Wedges, "8-structure_analysis/output/tables/regression_summary_wedges.csv")
+readr::write_csv(longData, "8-structure_analysis/output/tables/regression_summary_pseudohelices.csv")
 readr::write_csv(occ_table, "8-structure_analysis/output/tables/all_occupancies.csv")
 readr::write_csv(angle_table, "8-structure_analysis/output/tables/all_angles.csv")
 readr::write_csv(distance_table, "8-structure_analysis/output/tables/all_distances.csv")

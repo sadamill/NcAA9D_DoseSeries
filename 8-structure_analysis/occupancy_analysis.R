@@ -16,222 +16,133 @@ row.names(pseudohelixOccupancies) <- 1:36 #Set row names to be comprehensible
 pseudohelixOccupancies <- data.frame(pseudohelixOccupancies, pseudohelixDose) #Add column for doses
 colnames(pseudohelixOccupancies) <- c(stringr::str_glue("atom_{1:nrow(pseudohelixAtoms[[1]])}"), "dose_MGy") #Change column names
 
-wedgeOccupancies <- lapply(wedgeAtoms, function(atoms) atoms$o) %>% #Pull occupancies from pseudohelices
-  as.data.frame() %>% #Coerce the list into a data frame
-  t() #Transpose the data frame to swap rows and columns
-row.names(wedgeOccupancies) <- 1:36 #Set row names to be comprehensible
-wedgeOccupancies <- data.frame(wedgeOccupancies, 1:36) #Add column for doses
-colnames(wedgeOccupancies) <- c(stringr::str_glue("atom_{1:nrow(wedgeAtoms[[1]])}"), "WedgeNumber") #Change column names
-
 #Combine the dataframes to provide a singular data frame to pull from
-trimmedOccupancies <- list(
-  Pseudohelices = tibble::tibble(
-    dose_MGy = rep(pseudohelixOccupancies$dose_MGy, 2), 
-    CO2 = c(
-      pseudohelixOccupancies[,atoms$co2_a$atom],
-      rep(NA, 36)
-    ), 
-    Ax = c(
-      pseudohelixOccupancies[,atoms$h2oax_a$atom], 
-      pseudohelixOccupancies[,atoms$h2oax_b$atom]
-    ), 
-    Eq = c(
-      pseudohelixOccupancies[,atoms$h2oeq_a$atom], 
-      pseudohelixOccupancies[,atoms$h2oeq_b$atom]
-    ), 
-    Oxy = c(
-      pseudohelixOccupancies[,atoms$oxy_a$atom], 
-      pseudohelixOccupancies[,atoms$oxy_b$atom]
-    ), 
-    Glu = c(
-      rep(NA, 36),
-      pseudohelixOccupancies[,atoms$glu30_b$atom]
-    ), 
-    Molecule = c(
-      rep("A", 36), 
-      rep("B", 36)
-    )
+trimmedOccupancies <- tibble::tibble(
+  dose_MGy = rep(pseudohelixOccupancies$dose_MGy, 2), 
+  CO2 = c(
+    pseudohelixOccupancies[,atoms$co2_a$atom],
+    rep(NA, 36)
   ), 
-  Wedges = tibble::tibble(
-    WedgeNumber = rep(1:36, 2), 
-    CO2 = c(
-      pseudohelixOccupancies[,atoms$co2_a$atom],
-      rep(NA, 36)
-    ), 
-    Ax = c(
-      pseudohelixOccupancies[,atoms$h2oax_a$atom], 
-      pseudohelixOccupancies[,atoms$h2oax_b$atom]
-    ), 
-    Eq = c(
-      pseudohelixOccupancies[,atoms$h2oeq_a$atom], 
-      pseudohelixOccupancies[,atoms$h2oeq_b$atom]
-    ), 
-    Oxy = c(
-      pseudohelixOccupancies[,atoms$oxy_a$atom], 
-      pseudohelixOccupancies[,atoms$oxy_b$atom]
-    ), 
-    Glu = c(
-      rep(NA, 36),
-      pseudohelixOccupancies[,atoms$glu30_b$atom]
-    ), 
-    Molecule = c(
-      rep("A", 36), 
-      rep("B", 36)
-    )
+  Ax = c(
+    pseudohelixOccupancies[,atoms$h2oax_a$atom], 
+    pseudohelixOccupancies[,atoms$h2oax_b$atom]
+  ), 
+  Eq = c(
+    pseudohelixOccupancies[,atoms$h2oeq_a$atom], 
+    pseudohelixOccupancies[,atoms$h2oeq_b$atom]
+  ), 
+  Oxy = c(
+    pseudohelixOccupancies[,atoms$oxy_a$atom], 
+    pseudohelixOccupancies[,atoms$oxy_b$atom]
+  ), 
+  Glu = c(
+    rep(NA, 36),
+    pseudohelixOccupancies[,atoms$glu30_b$atom]
+  ), 
+  Molecule = c(
+    rep("A", 36), 
+    rep("B", 36)
   )
 )
 
 #Make a data frame containing occupancies, but stacked so they can be properly faceted in ggplot
-stackedOccupancies <- list(
-  Pseudohelices = tibble::tibble(
-    Dose = rep(trimmedOccupancies$Pseudohelices$dose_MGy, 5), 
-    Occupancy = c(
-      trimmedOccupancies$Pseudohelices$CO2, 
-      trimmedOccupancies$Pseudohelices$Ax, 
-      trimmedOccupancies$Pseudohelices$Eq, 
-      trimmedOccupancies$Pseudohelices$Oxy, 
-      trimmedOccupancies$Pseudohelices$Glu
-    ), 
-    Residue = c(
-      rep("CO2", 72), 
-      rep("Ax", 72), 
-      rep("Eq", 72), 
-      rep("Oxy", 72), 
-      rep("Glu", 72)
-    ), 
-    Molecule = rep(trimmedOccupancies$Pseudohelices$Molecule, 5), 
-  ) %>% 
-    dplyr::mutate(Residue = factor(Residue, levels = c("Oxy", "Glu", "CO2", "Ax", "Eq"))), 
-  Wedges =  tibble::tibble(
-    WedgeNumber = rep(trimmedOccupancies[["Wedges"]]$WedgeNumber, 5), 
-    Occupancy = c(
-      trimmedOccupancies[["Wedges"]]$CO2, 
-      trimmedOccupancies[["Wedges"]]$Ax, 
-      trimmedOccupancies[["Wedges"]]$Eq, 
-      trimmedOccupancies[["Wedges"]]$Oxy, 
-      trimmedOccupancies[["Wedges"]]$Glu
-    ), 
-    Residue = c(
-      rep("CO2", 72), 
-      rep("Ax", 72), 
-      rep("Eq", 72), 
-      rep("Oxy", 72), 
-      rep("Glu", 72)
-    ), 
-    Molecule = rep(trimmedOccupancies[["Wedges"]]$Molecule, 5), 
-  ) %>% 
-    dplyr::mutate(Residue = factor(Residue, levels = c("Oxy", "Glu", "CO2", "Ax", "Eq")))
-)
+stackedOccupancies <- tibble::tibble(
+  Dose = rep(trimmedOccupancies$dose_MGy, 5), 
+  Occupancy = c(
+    trimmedOccupancies$CO2, 
+    trimmedOccupancies$Ax, 
+    trimmedOccupancies$Eq, 
+    trimmedOccupancies$Oxy, 
+    trimmedOccupancies$Glu
+  ), 
+  Residue = c(
+    rep("CO2", 72), 
+    rep("Ax", 72), 
+    rep("Eq", 72), 
+    rep("Oxy", 72), 
+    rep("Glu", 72)
+  ), 
+  Molecule = rep(trimmedOccupancies$Molecule, 5), 
+) %>% 
+  dplyr::mutate(Residue = factor(Residue, levels = c("Oxy", "Glu", "CO2", "Ax", "Eq")))
 
 # Linear regression analysis ----------------------------------------------
 
 #Prepare a list of multiple linear regression models for each atom of interest
 multipleRegressions$Occupancies <- list(
-  Pseudohelices = list(
-    Oxy = gls(Oxy ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices, weights = varIdent(form = ~ 1 | Molecule)), 
-    Glu = lm(Glu ~ dose_MGy, data = trimmedOccupancies$Pseudohelices, subset = (Molecule == "B")), 
-    CO2 = lm(CO2 ~ dose_MGy, data = trimmedOccupancies$Pseudohelices, subset = (Molecule == "A")), 
-    Ax = gls(Ax ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices), 
-    Eq = gls(Eq ~ dose_MGy * Molecule, data = trimmedOccupancies$Pseudohelices)
-  ), 
-  Wedges = list(
-    Oxy = gls(Oxy ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
-    Glu = lm(Glu ~ WedgeNumber, data = trimmedOccupancies$Wedges, subset = (Molecule == "B")), 
-    CO2 = lm(CO2 ~ WedgeNumber, data = trimmedOccupancies$Wedges, subset = (Molecule == "A")), 
-    Ax = gls(Ax ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges, weights = varIdent(form = ~ 1 | Molecule)), 
-    Eq = gls(Eq ~ WedgeNumber * Molecule, data = trimmedOccupancies$Wedges, weights = varIdent(form = ~ 1 | Molecule))
-  )
+  Oxy = gls(Occupancy ~ Dose * Molecule, data = stackedOccupancies, subset = Residue == "Oxy", weights = varIdent(form = ~ 1 | Molecule)), 
+  Glu = gls(Occupancy ~ Dose, data = stackedOccupancies, subset = Molecule == "B" & Residue == "Glu"), 
+  CO2 = gls(Occupancy ~ Dose, data = stackedOccupancies, subset = Molecule == "A" & Residue == "CO2"), 
+  Ax = gls(Occupancy ~ Dose * Molecule, data = stackedOccupancies, subset = Residue == "Ax", weights = varIdent(form = ~ 1 | Molecule)), 
+  Eq = gls(Occupancy ~ Dose * Molecule, data = stackedOccupancies, subset = Residue == "Eq", weights = varIdent(form = ~ 1 | Molecule))
 )
 
 #Prepare summary table of linear regression analysis
-regressionSummaries$Occupancies <- list(
-  Pseudohelices = tibble::tibble(
-    Residue = c(
-      rep("Oxy", 3), 
-      rep("Glu", 3), 
-      rep("CO2", 3), 
-      rep("Ax", 3), 
-      rep("Eq", 3)
-    ), 
-    Measurement = rep("Occupancies", 15),
-    Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
-    Coefficient = c(
-      emtrends.coefficient(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
-      NA,
-      summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$coefficients[2, 1], 
-      NA,
-      summary(multipleRegressions$Occupancies$Pseudohelices$CO2)$coefficients[2, 1], 
-      NA, 
-      NA, 
-      emtrends.coefficient(multipleRegressions$Occupancies$Pseudohelices$Ax, "dose_MGy"), 
-      emtrends.coefficient(multipleRegressions$Occupancies$Pseudohelices$Eq, "dose_MGy")
-    ), 
-    StandardError = c(
-      emtrends.se(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
-      NA,
-      summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$coefficients[2, 2], 
-      NA,
-      summary(multipleRegressions$Occupancies$Pseudohelices$CO2)$coefficients[2, 2], 
-      NA, 
-      NA, 
-      emtrends.se(multipleRegressions$Occupancies$Pseudohelices$Ax, "dose_MGy"), 
-      emtrends.se(multipleRegressions$Occupancies$Pseudohelices$Eq, "dose_MGy")
-    ), 
-    PValue = c(
-      emtrends.pvalue(multipleRegressions$Occupancies$Pseudohelices$Oxy, "dose_MGy"), 
-      NA, 
-      summary(multipleRegressions$Occupancies$Pseudohelices$Glu)$coefficients[2, 4], 
-      NA, 
-      summary(multipleRegressions$Occupancies$Pseudohelices$CO2)$coefficients[2, 4], 
-      NA, 
-      NA, 
-      emtrends.pvalue(multipleRegressions$Occupancies$Pseudohelices$Ax, "dose_MGy"), 
-      emtrends.pvalue(multipleRegressions$Occupancies$Pseudohelices$Eq, "dose_MGy")
-    )
+regressionSummaries$Occupancies <- tibble::tibble(
+  Residue = c(
+    rep("Oxy", 3), 
+    rep("Glu", 3), 
+    rep("CO2", 3), 
+    rep("Ax", 3), 
+    rep("Eq", 3)
   ), 
-  Wedges = tibble::tibble(
-    Residue = c(
-      rep("Oxy", 3), 
-      rep("Glu", 3), 
-      rep("CO2", 3), 
-      rep("Ax", 3), 
-      rep("Eq", 3)
-    ), 
-    Measurement = rep("Occupancies", 15),
-    Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
-    Coefficient = c(
-      emtrends.coefficient(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 
-      NA, 
-      summary(multipleRegressions$Occupancies$Wedges$Glu)$coefficients[2, 1], 
-      NA,
-      summary(multipleRegressions$Occupancies$Wedges$CO2)$coefficients[2, 1], 
-      NA, 
-      NA, 
-      emtrends.coefficient(multipleRegressions$Occupancies$Wedges$Ax, "WedgeNumber"), 
-      emtrends.coefficient(multipleRegressions$Occupancies$Wedges$Eq, "WedgeNumber")
-    ), 
-    StandardError = c(
-      emtrends.se(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 
-      NA, 
-      summary(multipleRegressions$Occupancies$Wedges$Glu)$coefficients[2, 2], 
-      NA, 
-      summary(multipleRegressions$Occupancies$Wedges$CO2)$coefficients[2, 2], 
-      NA, 
-      NA, 
-      emtrends.se(multipleRegressions$Occupancies$Wedges$Ax, "WedgeNumber"), 
-      emtrends.se(multipleRegressions$Occupancies$Wedges$Eq, "WedgeNumber")
-    ), 
-    PValue = c(
-      emtrends.pvalue(multipleRegressions$Occupancies$Wedges$Oxy, "WedgeNumber"), 
-      NA, 
-      summary(multipleRegressions$Occupancies$Wedges$Glu)$coefficients[2, 4], 
-      NA,
-      summary(multipleRegressions$Occupancies$Wedges$CO2)$coefficients[2, 4], 
-      NA, 
-      NA, 
-      emtrends.pvalue(multipleRegressions$Occupancies$Wedges$Ax, "WedgeNumber"), 
-      emtrends.pvalue(multipleRegressions$Occupancies$Wedges$Eq, "WedgeNumber")
-    )
+  Measurement = rep("Occupancies", 15),
+  Estimate = rep(c("TrendA", "TrendB", "Contrast"), 5), 
+  Coefficient = c(
+    emtrends.coefficient(multipleRegressions$Occupancies$Oxy, "Dose"), 
+    NA,
+    summary(multipleRegressions$Occupancies$Glu)$tTable[2, 1], 
+    NA,
+    summary(multipleRegressions$Occupancies$CO2)$tTable[2, 1], 
+    NA, 
+    NA, 
+    emtrends.coefficient(multipleRegressions$Occupancies$Ax, "Dose"), 
+    emtrends.coefficient(multipleRegressions$Occupancies$Eq, "Dose")
+  ), 
+  StandardError = c(
+    emtrends.se(multipleRegressions$Occupancies$Oxy, "Dose"), 
+    NA,
+    summary(multipleRegressions$Occupancies$Glu)$tTable[2, 2], 
+    NA,
+    summary(multipleRegressions$Occupancies$CO2)$tTable[2, 2], 
+    NA, 
+    NA, 
+    emtrends.se(multipleRegressions$Occupancies$Ax, "Dose"), 
+    emtrends.se(multipleRegressions$Occupancies$Eq, "Dose")
+  ), 
+  PValue = c(
+    emtrends.pvalue(multipleRegressions$Occupancies$Oxy, "Dose"), 
+    NA, 
+    summary(multipleRegressions$Occupancies$Glu)$tTable[2, 4], 
+    NA, 
+    summary(multipleRegressions$Occupancies$CO2)$tTable[2, 4], 
+    NA, 
+    NA, 
+    emtrends.pvalue(multipleRegressions$Occupancies$Ax, "Dose"), 
+    emtrends.pvalue(multipleRegressions$Occupancies$Eq, "Dose")
   )
 )
 
+occupancy_scatter <- multipleRegressions$Occupancies |> 
+  purrr::map(\(model) {
+    data <- getData(model)
+    
+    design_matrix <- model.matrix(model, data = data)
+    pred <- predict(model)
+    vcov_matrix <- model$varBeta
+    
+    se <- sqrt(rowSums((design_matrix %*% vcov_matrix) * design_matrix))
+    
+    alpha <- 0.05
+    z_value <- qnorm(1 - alpha / 2)
+    
+    pred <- bind_cols(
+      data,
+      y_hat = pred,
+      lower = pred - se * z_value,
+      upper = pred + se * z_value,
+    )
+    
+    return(pred)
+    
+  }) |> purrr::list_rbind()

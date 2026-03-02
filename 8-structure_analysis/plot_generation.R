@@ -1,6 +1,6 @@
 # Function setup ----------------------------------------------------------
 
-faceting <- function(facetVar, datasetType) {
+faceting <- function(facetVar) {
   # Create a list containing all the necessary facet variables
   mapping_list <- list(
     Residue = c(
@@ -41,11 +41,7 @@ faceting <- function(facetVar, datasetType) {
       )),
     # Dynamically assign axis labels depending on the data type and facet used
     ggplot2::labs(
-      x = if(datasetType == 'Pseudohelix') {
-        "Average DDWD (MGy)"
-      } else if(datasetType == "Wedge") {
-        "Wedge Number"
-      },
+      x = "Average DDWD (MGy)",
       y = if(facetVar == "Residue") {
         "Occupancy"
       } else if(facetVar == 'AtomPair') {
@@ -57,7 +53,7 @@ faceting <- function(facetVar, datasetType) {
   )
 }
 
-scatter_dark <- function(data, mapping, facetVar, datasetType) {
+scatter_dark <- function(data, mapping, facetVar) {
   ggplot2::ggplot(data, mapping) +
     scale_shape_manual(
       "Chain", 
@@ -71,28 +67,23 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       breaks = c("A", "B"),
       values = c("#8100b6", "#5cb344"), 
     ) +
-    geom_smooth(
-      method = "lm", 
-      linewidth = 0, 
-      fill = "gray", 
-      show.legend = FALSE,
-      na.rm = TRUE,
-      fullrange = TRUE
+    geom_ribbon(
+      aes(x = Dose, ymin = lower, ymax = upper, group = Molecule),
+      fill = "gray",
+      alpha = 0.5,
+      inherit.aes = FALSE
     ) + #Standard error plotting
-    geom_smooth(
-      method = "lm", 
+    geom_line(
+      aes(y = y_hat), 
       linetype = 5, 
       linewidth = 0.5,
       show.legend = FALSE,
-      se = FALSE,
-      na.rm = TRUE,
-      fullrange = TRUE
     ) + #Linear regression line
     ggplot2::geom_point(
       size = 1, 
       na.rm = TRUE
     ) + #Point for each occupancy value
-    faceting(facetVar = facetVar, datasetType = datasetType) +
+    faceting(facetVar = facetVar) +
     ggtheme_dark() +
     if(facetVar == "AngleID") {
       ggplot2::theme(legend.position.inside = c(0.85, 0.15))
@@ -100,7 +91,7 @@ scatter_dark <- function(data, mapping, facetVar, datasetType) {
       ggplot2::theme(legend.position = "right")
     }
 } #Make scatter plot with fitted linear regression
-scatter_light <- function(data, mapping, facetVar, datasetType) {
+scatter_light <- function(data, mapping, facetVar) {
   ggplot2::ggplot(data, mapping) +
     scale_shape_manual(
       "Chain", 
@@ -114,28 +105,23 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
       breaks = c("A", "B"),
       values = c("#8100b6", "#5cb344"), 
     ) +
-    geom_smooth(
-      method = "lm", 
-      linewidth = 0, 
-      fill = "gray", 
-      show.legend = FALSE,
-      na.rm = TRUE,
-      fullrange = TRUE
+    geom_ribbon(
+      aes(x = Dose, ymin = lower, ymax = upper, group = Molecule),
+      fill = "gray",
+      alpha = 0.5,
+      inherit.aes = FALSE
     ) + #Standard error plotting
-    geom_smooth(
-      method = "lm", 
+    geom_line(
+      aes(y = y_hat), 
       linetype = 5, 
       linewidth = 0.5,
-      show.legend = FALSE,
-      se = FALSE,
-      na.rm = TRUE,
-      fullrange = TRUE
+      show.legend = FALSE
     ) + #Linear regression line
     ggplot2::geom_point(
       size = 1, 
       na.rm = TRUE
     ) + #Point for each occupancy value
-    faceting(facetVar = facetVar, datasetType = datasetType) +
+    faceting(facetVar = facetVar) +
     ggtheme_light() +
     if(facetVar == "AngleID") {
       ggplot2::theme(legend.position.inside = c(0.85, 0.15))
@@ -145,87 +131,61 @@ scatter_light <- function(data, mapping, facetVar, datasetType) {
 } #Make scatter plot with fitted linear regression
 
 ggdarklight <- function(data, key) {
-  yvar <- if(deparse(substitute(data)) == "stackedOccupancies") {
+  yvar <- if(deparse(substitute(data)) == "occupancy_scatter") {
     'Occupancy'
-  } else if(deparse(substitute(data)) == "stackedBFactors") {
-    'bFactor'
-  } else if(deparse(substitute(data)) == "stackedDistances") {
+  } else if(deparse(substitute(data)) == "distance_scatter") {
     'Distance'
-  } else if(deparse(substitute(data)) == "stackedAngles") {
+  } else if(deparse(substitute(data)) == "angle_scatter") {
     'Angle'
   } else if(deparse(substitute(data)) == "dwds") {
     'Dataset Number'
   } else {stop("Invalid data input")}
   
-  facetStr <- if(deparse(substitute(data)) == "stackedOccupancies") {
+  facetStr <- if(deparse(substitute(data)) == "occupancy_scatter") {
     "Residue"
-  } else if(deparse(substitute(data)) == "stackedDistances") {
+  } else if(deparse(substitute(data)) == "distance_scatter") {
     "AtomPair"
-  } else if(deparse(substitute(data)) == "stackedAngles") {
+  } else if(deparse(substitute(data)) == "angle_scatter") {
     "AngleID"
   } else if(deparse(substitute(data)) == 'dwds') {
     NA
   } else{stop("Invalid data input")}
   
-  lightplots <- list(
-    Pseudohelices = scatter_light(
-      data = dplyr::filter(data$Pseudohelices, !is.na(!!yvar)),
+  lightplot <- list(
+    scatter = scatter_light(
+      data = dplyr::filter(data, !is.na(!!yvar)),
       mapping = ggplot2::aes(
         x = Dose,
         y = .data[[yvar]],
         color = Molecule,
         shape = Molecule
       ),
-      facetVar = facetStr,
-      datasetType = "Pseudohelix"
-    ),
-    Wedges = scatter_light(
-      data = dplyr::filter(data$Wedges, !is.na(!!yvar)),
-      mapping = ggplot2::aes(
-        x = WedgeNumber,
-        y = .data[[yvar]],
-        color = Molecule,
-        shape = Molecule
-      ),
-      facetVar = facetStr,
-      datasetType = "Wedge"
+      facetVar = facetStr
     )
   )
   
-  darkplots <- list(
-    Pseudohelices = scatter_dark(
-      data = dplyr::filter(data$Pseudohelices, !is.na(!!yvar)),
+  darkplot <- list(
+    scatter = scatter_dark(
+      data = dplyr::filter(data, !is.na(!!yvar)),
       mapping = ggplot2::aes(
         x = Dose,
         y = .data[[yvar]],
         color = Molecule,
         shape = Molecule
       ),
-      facetVar = facetStr,
-      datasetType = "Pseudohelix"
-    ),
-    Wedges = scatter_dark(
-      data = dplyr::filter(data$Wedges, !is.na(!!yvar)),
-      mapping = ggplot2::aes(
-        x = WedgeNumber,
-        y = .data[[yvar]],
-        color = Molecule,
-        shape = Molecule
-      ),
-      facetVar = facetStr,
-      datasetType = "Wedge"
+      facetVar = facetStr
     )
   )
   
-  ggplots$Light[[key]] <<- lightplots
-  ggplots$Dark[[key]] <<- darkplots
+  ggplots$Light[[key]] <<- lightplot
+  ggplots$Dark[[key]] <<- darkplot
 } #Combination of scatter_dark and scatter_light to ease the plotting of multiple datasets with multiple themes
 
 # Scatter plots -----------------------------------------------------------
 
-ggdarklight(stackedOccupancies, "Occupancies")
-ggdarklight(stackedDistances, "Distances")
-ggdarklight(stackedAngles, "Angles")
+ggdarklight(occupancy_scatter, "Occupancies")
+ggdarklight(distance_scatter, "Distances")
+ggdarklight(angle_scatter, "Angles")
 
 ggplots$Dark$CrystalStats$CrystalStats <- crystal_stats |> 
   filter(statistic %in% c("wilson_b_factor", "unit_cell_volume", "cc1_2_highest_shell", 
@@ -446,16 +406,16 @@ ggplots$Dark$RMSDs$RMSDs <- suppressWarnings(cowplot::plot_grid(rmsd_plots$base_
 
 # Trend plotting ----------------------------------------------------------
 
-dark.trend <- function(trend, datasetType) {
-  regressor <- ifelse(datasetType == "Pseudohelices", "MGy", "Wedge Number")
+dark.trend <- function(trend) {
+  regressor <- "MGy"
   
   ggplot2::ggplot(
-    dplyr::filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
+    dplyr::filter(longData, Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
     ggplot2::aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
     ggplot2::geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
     ggplot2::geom_segment( # Line portion of barbell
-      data = dplyr::filter(wideData[[datasetType]], Measurement == trend),
+      data = dplyr::filter(wideData, Measurement == trend),
       ggplot2::aes(
         x = Residue, 
         xend = Residue, 
@@ -489,7 +449,7 @@ dark.trend <- function(trend, datasetType) {
       alpha = 0.6
     ) +
     ggplot2::geom_text( # Asterisks for significance
-      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
+      data = dplyr::filter(longData, Estimate == "TrendA", Measurement == trend),
       ggplot2::aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
@@ -501,7 +461,7 @@ dark.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     ggplot2::geom_text( # Asterisks for significance
-      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
+      data = dplyr::filter(longData, Estimate == "TrendB", Measurement == trend),
       ggplot2::aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
@@ -544,25 +504,23 @@ dark.trend <- function(trend, datasetType) {
         "Angle ID"
       } else {stop("Invalid trend input for trend visualization")},
       y = if(trend == "Occupancies") {
-        stringr::str_glue("Occupancy Trend (Δ/{regressor})")
+        stringr::str_glue("Occupancy Trend (Δ/MGy)")
       } else if(trend == "Distances") {
-        stringr::str_glue("Distance Trend (ΔÅ/{regressor})")
+        stringr::str_glue("Distance Trend (ΔÅ/MGy)")
       } else if(trend == "Angles") {
-        stringr::str_glue("Angle Trend (Δ°/{regressor})")
+        stringr::str_glue("Angle Trend (Δ°/MGy)")
       } else {stop("Invalid trend input for trend visualization")}
     ) +
     ggplot2::coord_flip() # Flip coordinates back
 }
 light.trend <- function(trend, datasetType) {
-  regressor <- ifelse(datasetType == "Pseudohelices", "MGy", "Wedge Number")
-  
   ggplot2::ggplot(
-    dplyr::filter(longData[[datasetType]], Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
+    dplyr::filter(longData, Estimate != "Contrast", Measurement == trend), # Plot only trends A and B (exclude contrast coefficients)
     ggplot2::aes(x = Residue, y = Coefficient) # Start off with inverted axes to allow for asterisk offset
   ) + 
     ggplot2::geom_hline(yintercept = 0, color = 'gray') + # Vertical line to show zero mark
     ggplot2::geom_segment( # Line portion of barbell
-      data = dplyr::filter(wideData[[datasetType]], Measurement == trend),
+      data = dplyr::filter(wideData, Measurement == trend),
       ggplot2::aes(
         x = Residue, 
         xend = Residue, 
@@ -597,7 +555,7 @@ light.trend <- function(trend, datasetType) {
       alpha = 0.6
     ) +
     ggplot2::geom_text( # Asterisks for significance
-      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendA", Measurement == trend),
+      data = dplyr::filter(longData, Estimate == "TrendA", Measurement == trend),
       ggplot2::aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
@@ -609,7 +567,7 @@ light.trend <- function(trend, datasetType) {
       inherit.aes = FALSE
     ) +
     ggplot2::geom_text( # Asterisks for significance
-      data = dplyr::filter(longData[[datasetType]], Estimate == "TrendB", Measurement == trend),
+      data = dplyr::filter(longData, Estimate == "TrendB", Measurement == trend),
       ggplot2::aes(
         label = Significance,
         x = Residue, # Offset vertically for only trend A (proportional to number of data points)
@@ -652,36 +610,19 @@ light.trend <- function(trend, datasetType) {
         "Angle ID"
       } else {stop("In'[valid trend input for trend visualization")},
       y = if(trend == "Occupancies") {
-        stringr::str_glue("Occupancy Trend (Δ/{regressor})")
+        stringr::str_glue("Occupancy Trend (Δ/MGy)")
       } else if(trend == "Distances") {
-        stringr::str_glue("Distance Trend (ΔÅ/{regressor})")
+        stringr::str_glue("Distance Trend (ΔÅ/MGy)")
       } else if(trend == "Angles") {
-        stringr::str_glue("Angle Trend (Δ°/{regressor})")
+        stringr::str_glue("Angle Trend (Δ°/MGy)")
       } else {stop("Invalid trend input for trend visualization")}
     ) +
     ggplot2::coord_flip()
 }
+
 darklighttrend <- function(trend) {
-  
-  ggplots$Light[[trend]]$Trends$Pseudohelices <<- light.trend(
-    trend = trend,
-    datasetType = "Pseudohelices"
-  )
-  
-  ggplots$Dark[[trend]]$Trends$Pseudohelices <<- dark.trend(
-    trend = trend,
-    datasetType = "Pseudohelices"
-  )
-  
-  ggplots$Light[[trend]]$Trends$Wedges <<- light.trend(
-    trend = trend,
-    datasetType = "Wedges"
-  )
-  
-  ggplots$Dark[[trend]]$Trends$Wedges <<- dark.trend(
-    trend = trend,
-    datasetType = "Wedges"
-  )
+  ggplots$Light[[trend]]$trends <<- light.trend(trend = trend)
+  ggplots$Dark[[trend]]$trends <<- dark.trend(trend = trend)
 }
 
 darklighttrend("Occupancies")

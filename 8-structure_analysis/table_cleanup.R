@@ -1,11 +1,13 @@
 # Data preparation --------------------------------------------------------
-compile_widen <- function(datasetType) {
-  compiled <<- rbind(
-    regressionSummaries$Occupancies[[datasetType]],
-    regressionSummaries$Distances[[datasetType]],
-    regressionSummaries$Angles[[datasetType]]
+compile_widen <- function() {
+  
+  compiled <- rbind(
+    regressionSummaries$Occupancies,
+    regressionSummaries$Distances,
+    regressionSummaries$Angles
   )
-  df_wider <<- compiled %>% 
+  
+  df_wider <- compiled %>% 
     tidyr::pivot_wider(
       id_cols = Residue, 
       names_from = Estimate, 
@@ -21,97 +23,65 @@ compile_widen <- function(datasetType) {
     ) %>% dplyr::mutate(
       Residue = factor(Residue, levels = Residue)
     )
+  
   return(df_wider)
 }
 
-wideData <- list(
-  Pseudohelices = compile_widen("Pseudohelices"),
-  Wedges = compile_widen("Wedges")
-)
+wideData <- compile_widen()
 
-make_long <- function(datasetType) {
-  compiled <<- rbind(
-    regressionSummaries$Occupancies[[datasetType]],
-    regressionSummaries$Distances[[datasetType]],
-    regressionSummaries$Angles[[datasetType]]
-  )
+make_long <- function() {
   
-  full_table <- compiled %>% dplyr::mutate(
-    Significance = ifelse(
-      PValue <= 0.001, "***", 
-      ifelse(
-        PValue <= 0.01, "**", 
+  full_table <- rbind(
+    regressionSummaries$Occupancies,
+    regressionSummaries$Distances,
+    regressionSummaries$Angles
+  ) %>% 
+    dplyr::mutate(
+      Significance = ifelse(
+        PValue <= 0.001, "***", 
         ifelse(
-          PValue <= 0.05, "*", " "
+          PValue <= 0.01, "**", 
+          ifelse(
+            PValue <= 0.05, "*", " "
+          )
         )
       )
     )
-  )
   
   return(full_table)
 }
 
-longData <- list(
-  Pseudohelices = make_long("Pseudohelices"),
-  Wedges = make_long("Wedges")
-)
+longData <- make_long()
 
 occ_table <- dplyr::bind_rows(
   tidyr::pivot_wider(
     bind_cols(
       rep(stringr::str_glue("Pseudohelix {1:36}"), 10),
-      stackedOccupancies$Pseudohelices
+      stackedOccupancies
     ),
     names_from = Residue,
     values_from = Occupancy
-  ),
-  bind_cols(
-    rep(stringr::str_glue("Wedge {1:36}"), 10),
-    stackedOccupancies$Wedges
-  ) |> 
-    tidyr::pivot_wider(
-      names_from = Residue,
-      values_from = Occupancy
-    ) |>  mutate(Dose = rep(wedgeDose, 2)) |> 
-    dplyr::select(!WedgeNumber)
+  )
 ) |> rename(Dataset = ...1)
 
 distance_table <- dplyr::bind_rows(
   tidyr::pivot_wider(
     bind_cols(
       stringr::str_glue("Pseudohelix {sort(rep(1:36, 12))}"),
-      stackedDistances$Pseudohelices
+      stackedDistances
     ),
     names_from = AtomPair,
     values_from = Distance
-  ),
-  bind_cols(
-    stringr::str_glue("Wedge {sort(rep(1:36, 12))}"),
-    stackedDistances$Wedges
-  ) |> 
-    tidyr::pivot_wider(
-      names_from = AtomPair,
-      values_from = Distance
-    ) |>  mutate(Dose = rep(wedgeDose, 2)) |> 
-    dplyr::select(!WedgeNumber)
+  )
 ) |> rename(Dataset = ...1)
 
 angle_table <- dplyr::bind_rows(
   tidyr::pivot_wider(
     bind_cols(
       rep(stringr::str_glue("Pseudohelix {1:36}"), 14),
-      stackedAngles$Pseudohelices
+      stackedAngles
     ),
     names_from = AngleID,
     values_from = Angle
-  ),
-  bind_cols(
-    rep(stringr::str_glue("Wedge {1:36}"), 14),
-    stackedAngles$Wedges
-  ) |> 
-    tidyr::pivot_wider(
-      names_from = AngleID,
-      values_from = Angle
-    ) |>  mutate(Dose = rep(wedgeDose, 2)) |> 
-    dplyr::select(!WedgeNumber)
+  )
 ) |> rename(Dataset = ...1)
