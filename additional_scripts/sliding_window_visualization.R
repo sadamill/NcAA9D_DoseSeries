@@ -153,11 +153,11 @@ angles_anim <- angles_plot +
   gganimate::transition_states(pseudohelix, transition_length = 0)
 
 samples_gif <- gganimate::animate(plot = samples_plot,
-                                  height = 300, width = 1200,
+                                  height = 8, width = 12, units = "cm", res = 300,
                                   fps = 100, nframes = 500,
                                   renderer = magick_renderer())
 angles_gif <- gganimate::animate(plot = angles_anim, 
-                                 height = 800, width = 1200,
+                                 height = 8, width = 12, units = "cm", res = 300,
                                  fps = 100, nframes = 500,
                                  renderer = magick_renderer())
 
