@@ -94,71 +94,120 @@ pseudohelix_clusters <- bind_cols(dataset_number = 1:36,
                             cluster = factor(pseudohelix_cluster_choice$Best.partition),
                             pca_pseudohelix_filtered)
 
-plot_clusters <- function(data) {
-  outline_pts <- tibble(
-    x = c(0,250,250,0,0,
-          0,-50,-50,0,
-          -50,200,250)/33,
-    y = c(0,0,1188,1188,0,
-          0,50,1238,1188,
-          1238,1238,1188)/33+0.5,
-    id = c(1,1,1,1,1,
-           2,2,2,2,
-           3,3,3)/33
-  )
+plot_clusters <- function(data, dose = pseudohelixDose) {
   
-  deltas <- tibble(
-    x = c(250, rep(c(0,-250,-50,0,50,250), 35), 
-          0,-50,-250,0,50),
-    y = c(0, rep(c(33,0,50,-33,-50,33), 35), 
-          33,50,0,-33,-50)
-  )
+  arg <- deparse(substitute(data))
   
-  cluster_vec <- data$cluster
+  if(arg == "wedge_clusters") {
+    outline_pts <- tibble(
+      x = c(0,250,250,0,0,
+            0,-50,-50,0,
+            -50,200,250)/33,
+      y = c(0,0,1188,1188,0,
+            0,50,1238,1188,
+            1238,1238,1188)/33+0.5,
+      id = c(1,1,1,1,1,
+             2,2,2,2,
+             3,3,3)/33
+    )
+    shadow_pts <- tibble(
+      x = c(0, 0, -50, -50,
+            0, 250, 200, -50)/33,
+      y = c(0, 1188, 1238, 50,
+            1188, 1188, 1238, 1238)/33+0.5,
+      id = c(1, 1, 1, 1,
+             2, 2, 2, 2)
+    )
+    deltas <- tibble(
+      x = c(250, rep(c(0,-250,-50,0,50,250), 35), 
+            0,-50,-250,0,50),
+      y = c(0, rep(c(33,0,50,-33,-50,33), 35), 
+            33,50,0,-33,-50)
+    )
+    cluster_vec <- data$cluster
+    polygon_pts <- purrr::accumulate(
+      seq(1, nrow(deltas)), 
+      \(acc_deltas, idx) {
+        
+        delta_next <- deltas[idx,]
+        x <- acc_deltas$x + delta_next$x
+        y <- acc_deltas$y + delta_next$y
+        
+        point <- tibble(x = x, y = y)
+        return(point)
+      },
+      .init = tibble(x = 0, y = 0)
+    )[-1,] |> 
+      bind_cols(id = sort(rep(1:36, 6)), 
+                cluster = {purrr::map(cluster_vec, \(x) rep(x, 6)) |> list_c()}) |> 
+      mutate(x = x/33,
+             y = y/33+0.5)
+    
+    long_p <- ggplot(polygon_pts, aes(x = x, y = y, fill = cluster, color = cluster, group = id)) +
+      geom_polygon() +
+      geom_polygon(data = shadow_pts, aes(x = x, y = y, group = id), inherit.aes = FALSE, color = "black", alpha = 0.4) +
+      geom_path(data = outline_pts, aes(x = x, y = y), inherit.aes = FALSE) +
+      scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
+      scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
+      coord_cartesian(expand = FALSE) +
+      scale_x_continuous(breaks = NULL) +
+      scale_y_continuous(breaks = seq(1, 36, 2), position = "right") +
+      labs(x = NULL, y = "Dataset Number") +
+      ggtheme_light() +
+      theme(legend.position = "none", panel.grid = element_blank(), panel.border = element_blank())
+    
+    xlab <- "PC1 (42.7%)"
+    ylab <- "PC2 (5.5%)"
+  }
+  if(arg == "pseudohelix_clusters") {
+    
+    line <- tibble(
+      x = c(0.75, 1.25, 1, 1, 0.75, 1.25,
+            1.75, 2.25, 2, 2, 1.75, 2.25,
+            2.75, 3.25, 3, 3, 2.75, 3.25),
+      y = c(1, 1, 1, 9, 9, 9,
+            1, 1, 1, 9, 9, 9,
+            1, 1, 1, 9, 9, 9),
+      id = c(1, 1, 2, 2, 3, 3,
+             4, 4, 5, 5, 6, 6,
+             7, 7, 8, 8, 9, 9)
+    )
+    
+    points <- tibble(
+      x = as.numeric(data$cluster),
+      y = dose,
+      cluster = data$cluster
+    )
+    
+    long_p <- ggplot(points, aes(x = x, y = y, fill = cluster, color = cluster)) +
+      geom_path(data = line, aes(x = x, y = y, group = id), inherit.aes = FALSE, color = "black") +
+      geom_point(size = 2) +
+      coord_cartesian(xlim = c(0, 4)) +
+      scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c75", "#9462ff75", "#ee8cab75")) +  
+      scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c75", "#9462ff75", "#ee8cab75")) +  
+      scale_x_continuous(breaks = NULL) +
+      scale_y_continuous(breaks = 0:10, position = "right") +
+      labs(x = NULL, y = "Average DDWD") +
+      ggtheme_light() +
+      theme(legend.position = "none", panel.border = element_blank(), axis.ticks = element_blank())
+    
+    xlab <- "PC1 (16.6%)"
+    ylab <- "PC2 (12.1%)"
+  }
   
-  polygon_pts <- purrr::accumulate(
-    seq(1, nrow(deltas)), 
-    \(acc_deltas, idx) {
-      
-      delta_next <- deltas[idx,]
-      x <- acc_deltas$x + delta_next$x
-      y <- acc_deltas$y + delta_next$y
-      
-      point <- tibble(x = x, y = y)
-      return(point)
-    },
-    .init = tibble(x = 0, y = 0)
-  )[-1,] |> 
-    bind_cols(id = sort(rep(1:36, 6)), 
-              cluster = {purrr::map(cluster_vec, \(x) rep(x, 6)) |> list_c()}) |> 
-    mutate(x = x/33,
-           y = y/33+0.5)
-  
-  palette <- "PNWColors::Starfish"
-  long_p <- ggplot(polygon_pts, aes(x = x, y = y, fill = cluster, color = cluster, group = id)) +
-    geom_polygon() +
-    geom_path(data = outline_pts, aes(x = x, y = y), inherit.aes = FALSE) +
-    scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
-    scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
-    coord_cartesian(expand = FALSE) +
-    scale_x_continuous(breaks = NULL) +
-    scale_y_continuous(breaks = seq(1, 36, 2), position = "right") +
-    labs(x = NULL, y = "Dataset Number") +
-    ggtheme_light() +
-    theme(legend.position = "none", panel.grid = element_blank(), panel.border = element_blank())
   envelope_p <- data |> 
     ggplot(aes(x = PC1, y = PC2, color = cluster, fill = cluster)) +
-    geom_point(show.legend = FALSE) +
-    ggforce::geom_mark_hull(expand = 0.01, radius = 0.01) +
+    geom_point() +
+    ggforce::geom_mark_hull(expand = 0.015, radius = 0.015) +
     scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
     scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +   
     ggtheme_light() +
-    theme(legend.position = "none")
+    theme(legend.position = "none") +
+    labs(x = xlab, y = ylab)
   legend <- get_legend(
     data |> 
       ggplot(aes(x = PC1, y = PC2, color = cluster, fill = cluster)) +
-      geom_point(show.legend = FALSE) +
-      ggforce::geom_mark_hull(expand = 0, radius = 0) +
+      ggforce::geom_mark_hull() +
       scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
       scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
       labs(fill = "Cluster", color = "Cluster") +
