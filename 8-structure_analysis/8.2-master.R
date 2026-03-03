@@ -127,9 +127,9 @@ purrr::imap(ggplots, \(theme_list, theme_name) {
     purrr::imap(measurement_list, \(plot, plot_name) {
       
       height <- filter(plot_dimensions, measurement == measurement_name & plot == plot_name)$height
-      width <- filter(plot_dimensions, measurement == measurement_name & plot == plot_name)$height
+      width <- filter(plot_dimensions, measurement == measurement_name & plot == plot_name)$width
       
-      ggsave(filename = stringr::str_glue("8-structure_analysis/output/plots/{theme_name}/{plot_name}_{measurement_name}.svg"),
+      ggsave(filename = stringr::str_glue("8-structure_analysis/output/plots/{theme_name}/{measurement_name}_{plot_name}.svg"),
              plot = plot,
              height = height,
              width = width,
