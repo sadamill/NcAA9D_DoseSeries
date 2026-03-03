@@ -31,43 +31,40 @@ wedgeList <- lapply(1:36, function(x) {
 
 atoms <- list( # Make list of atom and xyz indices
   cu_a       = bio3d::atom.select(pseudohelixList[[1]], resno = 230, chain = "A"),
-  nterm_a    = bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "N"),
-  his1nd_a   = bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "ND1"),
-  his1ne_a   =  bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "NE2"),
-  his1cg_a   = bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "A", elety = "CG"),
-  his84nd_a  = bio3d::atom.select(pseudohelixList[[1]], resno = 84, chain = "A", elety = "ND1"),
-  his84ne_a  = bio3d::atom.select(pseudohelixList[[1]], resno = 84, chain = "A", elety = "NE2"),
-  his84cg_a  = bio3d::atom.select(pseudohelixList[[1]], resno = 84, chain = "A", elety = "CG"),
-  h2oax_a    = list(atom = dplyr::filter(pseudohelixList[[1]]$atom, resno == 416, chain == "A", alt == "A")$eleno), # atom.select isn't sensitive to altcons
-  h2oeq_a.   = list(atom = dplyr::filter(pseudohelixList[[1]]$atom, resno == 282, chain == "B", alt == "A")$eleno),
+  nterm_a    = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "A", elety = "N"),
+  his1nd_a   = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "A", elety = "ND1"),
+  his1ne_a   = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "A", elety = "NE2"),
+  his1cg_a   = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "A", elety = "CG"),
+  his84nd_a  = bio3d::atom.select(pseudohelixList[[1]], resno = 84,  chain = "A", elety = "ND1"),
+  his84ne_a  = bio3d::atom.select(pseudohelixList[[1]], resno = 84,  chain = "A", elety = "NE2"),
+  his84cg_a  = bio3d::atom.select(pseudohelixList[[1]], resno = 84,  chain = "A", elety = "CG"),
+  h2oax_a    = list(atom = dplyr::filter(pseudohelixList[[1]]$atom, resno == 416, chain == "A", alt == "A")$eleno), # atom.select isn't sensitive to altcons .-.
+  h2oeq_a    = list(atom = dplyr::filter(pseudohelixList[[1]]$atom, resno == 282, chain == "B", alt == "A")$eleno),
   tyr168oh_a = bio3d::atom.select(pseudohelixList[[1]], resno = 168, chain = "A", elety = "OH"),
   oxy_a      = bio3d::atom.select(pseudohelixList[[1]], resno = 232, chain = "A", elety = "O2"),
   co2_a      = bio3d::atom.select(pseudohelixList[[1]], resno = 228, chain = "B", elety = "C"),
   
   cu_b       = bio3d::atom.select(pseudohelixList[[1]], resno = 229, chain = "B"),
-  nterm_b    = bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "N"),
-  his1nd_b   = bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "ND1"),
-  his1ne_b   =  bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "NE2"),
-  his1cg_b   = bio3d::atom.select(pseudohelixList[[1]], resno = 1, chain = "B", elety = "CG"),
-  his84nd_b  = bio3d::atom.select(pseudohelixList[[1]], resno = 84, chain = "B", elety = "ND1"),
-  his84ne_b  = bio3d::atom.select(pseudohelixList[[1]], resno = 84, chain = "B", elety = "NE2"),
-  his84cg_b  = bio3d::atom.select(pseudohelixList[[1]], resno = 84, chain = "B", elety = "CG"),
+  nterm_b    = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "B", elety = "N"),
+  his1nd_b   = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "B", elety = "ND1"),
+  his1ne_b   = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "B", elety = "NE2"),
+  his1cg_b   = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "B", elety = "CG"),
+  his84nd_b  = bio3d::atom.select(pseudohelixList[[1]], resno = 84,  chain = "B", elety = "ND1"),
+  his84ne_b  = bio3d::atom.select(pseudohelixList[[1]], resno = 84,  chain = "B", elety = "NE2"),
+  his84cg_b  = bio3d::atom.select(pseudohelixList[[1]], resno = 84,  chain = "B", elety = "CG"),
   h2oax_b    = list(atom = dplyr::filter(pseudohelixList[[1]]$atom, resno == 288, chain == "B", alt == "A")$eleno),
   h2oeq_b    = list(atom = dplyr::filter(pseudohelixList[[1]]$atom, resno == 288, chain == "A", alt == "A")$eleno),
   tyr168oh_b = bio3d::atom.select(pseudohelixList[[1]], resno = 168, chain = "B", elety = "OH"),
   oxy_b      = bio3d::atom.select(pseudohelixList[[1]], resno = 231, chain = "A", elety = "O2"),
-  glu30_b    = bio3d::atom.select(pseudohelixList[[1]], resno = 30, chain = "B", elety = "CD", alt = "A")
+  glu30_b    = bio3d::atom.select(pseudohelixList[[1]], resno = 30,  chain = "B", elety = "CD", alt = "A")
 )
 
-#Extract the atom element of the PDB files into new lists
+# Extract the atom element of the PDB files into new lists
 pseudohelixAtoms <- lapply(pseudohelixList, function(pdb) pdb$atom) #Extract atoms from pseudohelices
 wedgeAtoms <- lapply(wedgeList, function(pdb) pdb$atom) #Extract atoms from wedges
 
-#Prep vectors containing all ddwd values
+# Prep vectors containing all ddwd values
 pseudohelixDose <- readr::read_csv("8-structure_analysis/input/samples.csv")$ddwd
-wedgeDose <- readr::read_csv("8-structure_analysis/input/ddwds.csv") |> 
-  filter(dataset_type == "wedge", dose_type == "ddwd") |> 
-  pull("dose")
 
 # Global Functions and Objects --------------------------------------------
 
@@ -141,8 +138,7 @@ purrr::imap(ggplots, \(theme_list, theme_name) {
 })
 
 #Save all the tables
-dir.create("8-structure_analysis/output/tables", showWarnings = FALSE)
-readr::write_csv(longData, "8-structure_analysis/output/tables/regression_summary_pseudohelices.csv")
+readr::write_csv(longData, "8-structure_analysis/output/tables/regression_summary.csv")
 readr::write_csv(occ_table, "8-structure_analysis/output/tables/all_occupancies.csv")
 readr::write_csv(angle_table, "8-structure_analysis/output/tables/all_angles.csv")
 readr::write_csv(distance_table, "8-structure_analysis/output/tables/all_distances.csv")
