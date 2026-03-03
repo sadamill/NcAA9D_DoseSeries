@@ -94,34 +94,51 @@ source("8-structure_analysis/plot_generation.R")
 
 # Data write-out ----------------------------------------------------------
 
-#Save all the plots
-save_plots <- function(parameter, outerheight = 10, outerwidth = 16, innerheight = 5, innerwidth = 8) {
-  for(theme in names(ggplots)) {
-    for(i in names(ggplots[[theme]][[parameter]])) {
-      if("ggplot" %in% class(ggplots[[theme]][[parameter]][[i]])) {
-        this_parameter <- parameter
-        dataset_type <- i
-        if(dataset_type == "broken_stick") {outerheight <- 16} else {outerheight <- 10}
-        if(dataset_type == parameter) {this_parameter <- ""}
-        ggplot2::ggsave(
-          filename = stringr::str_glue("8-structure_analysis/output/plots/{theme}/{this_parameter}_{dataset_type}.svg"), 
-          plot = ggplots[[theme]][[parameter]][[i]], 
-          height = outerheight, 
-          width = outerwidth,
-          units = "cm",
-          create.dir = TRUE
-        )
-      }
-    }
-  }
-}
+plot_dimensions <- tibble(
+  measurement = c(rep("pca", 3),
+                 rep("Occupancies", 2),
+                 rep("Distances", 2),
+                 rep("Angles", 2),
+                 "CrystalStats",
+                 "RMSDs"),
+  plot = c("broken_stick", "wedge_clusters", "pseudohelix_clusters",
+           "scatter", "trends",
+           "scatter", "trends",
+           "scatter", "trends",
+           "CrystalStats",
+           "RMSDs"),
+  height = c(16, 10, 10,
+             10, 5,
+             10, 5,
+             12, 5,
+             16,
+             16),
+  width = c(16, 16, 16,
+            16, 8,
+            16, 8,
+            16, 8,
+            16,
+            16)
+)
 
-save_plots("pca", outerwidth = 16)
-save_plots("Occupancies")
-save_plots("Distances")
-save_plots("Angles", outerheight = 12)
-save_plots("CrystalStats", outerwidth = 16, outerheight = 16)
-save_plots("RMSDs", outerheight = 16)
+#Save all the plots
+purrr::imap(ggplots, \(theme_list, theme_name) {
+  purrr::imap(theme_list, \(measurement_list, measurement_name) {
+    purrr::imap(measurement_list, \(plot, plot_name) {
+      
+      height <- filter(plot_dimensions, measurement == measurement_name & plot == plot_name)$height
+      width <- filter(plot_dimensions, measurement == measurement_name & plot == plot_name)$height
+      
+      ggsave(filename = stringr::str_glue("8-structure_analysis/output/plots/{theme_name}/{plot_name}_{measurement_name}.svg"),
+             plot = plot,
+             height = height,
+             width = width,
+             units = "cm",
+             create.dir = TRUE)
+      
+    })
+  })
+})
 
 #Save all the tables
 dir.create("8-structure_analysis/output/tables", showWarnings = FALSE)
