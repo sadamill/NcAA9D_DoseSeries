@@ -11,24 +11,45 @@ pseudohelix_doses <- readr::read_csv("4-sampling/input/ddwds.csv") |>
   dplyr::select(dataset_number, start_angle, ddwd) |> 
   dplyr::mutate(weight = {diff(c(0, ddwd)) |> abs()})
 
-assured_datasets <- pseudohelix_doses |>
+deterministic_points <- pseudohelix_doses |>
   filter(dataset_number %in% seq(1, 176, max_distance))
 
 candidate_points <- pseudohelix_doses |>
   filter(!dataset_number %in% seq(1, 176, max_distance))
-samples <- candidate_points %>% slice_sample(
+
+random_points <- candidate_points %>% slice_sample(
   n = n_samples-length(seq(1, 176, max_distance)),
   weight_by = weight
 ) |> 
-  bind_rows(assured_datasets) |> 
   arrange(dataset_number)
 
-pseudohelix_doses <- mutate(pseudohelix_doses, sampled = dataset_number %in% samples$dataset_number)
+pseudohelix_doses <- mutate(
+  pseudohelix_doses, 
+  sampled = dataset_number %in% c(random_points$dataset_number, deterministic_points$dataset_number),
+  sample_type = case_when(dataset_number %in% random_points$dataset_number ~ "random",
+                          dataset_number %in% deterministic_points$dataset_number ~ "deterministic",
+                          .default = "none")
+)
 
-p <- ggplot(samples, aes(x = start_angle, y = ddwd)) +
+p <- ggplot(pseudohelix_doses, aes(x = start_angle, y = ddwd)) +
   geom_line(color = "gray") +
-  geom_point(fill = "red3", color = "red3", size = 0.5, shape = 23) +
-  theme_bw() +
+  geom_point(
+    data = filter(pseudohelix_doses, sampled == TRUE), aes(color = sample_type, shape = sample_type)
+  ) +
+  scale_color_manual(
+    "Sample Type",
+    breaks = c("deterministic", "random"),
+    labels = c("Deterministic", "Random"),
+    values = c("#933032", "#97d775")
+  ) +
+  scale_shape_discrete(
+    "Sample Type",
+    breaks = c("deterministic", "random"),
+    labels = c("Deterministic", "Random")
+  ) +
+  ggtheme_light() +
+  theme(legend.justification = c(1, 0),
+        legend.position = c(0.95, 0.05)) +
   labs(
     x = "Start Angle (φ, °)",
     y = "DDWD (MGy)"
