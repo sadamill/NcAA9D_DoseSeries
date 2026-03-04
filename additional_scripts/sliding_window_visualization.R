@@ -73,21 +73,32 @@ ggplot2::ggplot() +
   theme_classic() +
   labs(x = "Wedge Number", y = "Δφ Angle (°)")
 
-samples_plot <- ggplot2::ggplot(samples_doses, aes(x = start_angle, y = ddwd, color = sampled)) +
-  geom_line(aes(x = start_angle, y = ddwd), inherit.aes = FALSE, color = "gray") +
-  geom_point(data = filter(samples_doses, sampled == TRUE), color = "red2") +
-  geom_point(
-    data = filter(samples_doses_anim, pseudohelix >= 1),
-    size = 3,
-    fill = "red2",
-    color = "red2",
-    shape = 23
+samples_plot <- ggplot2::ggplot(
+  samples_doses, aes(
+    x = start_angle,
+    y = ddwd, 
+    color = sample_type, 
+    shape = sample_type
+  )
+) +
+  geom_line(
+    aes(x = start_angle, y = ddwd), 
+    inherit.aes = FALSE, 
+    color = "gray"
   ) +
+  geom_point(data = filter(samples_doses, sampled == TRUE)) +
+  geom_point(data = filter(samples_doses_anim, pseudohelix >= 1),
+             size = 3) +
   scale_color_manual(
-    "",
-    breaks = c(TRUE, FALSE),
-    labels = c("Sampled", "Not Sampled"),
-    values = c("red2", "gray90")
+    "Sample Type",
+    breaks = c("deterministic", "random"),
+    labels = c("Deterministic", "Random"),
+    values = c("#933032", "#97d775")
+  ) +
+  scale_shape_discrete(
+    "Sample Type",
+    breaks = c("deterministic", "random"),
+    labels = c("Deterministic", "Random")
   ) +
   ggtheme_light() +
   labs(

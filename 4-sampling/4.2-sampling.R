@@ -23,6 +23,9 @@ random_points <- candidate_points %>% slice_sample(
 ) |> 
   arrange(dataset_number)
 
+samples <- bind_rows(random_points, deterministic_points) |> 
+  arrange(dataset_number)
+
 pseudohelix_doses <- mutate(
   pseudohelix_doses, 
   sampled = dataset_number %in% c(random_points$dataset_number, deterministic_points$dataset_number),
