@@ -230,5 +230,5 @@ pseudohelix_pca_3d <- plot_ly(pseudohelix_clusters, x = ~PC1, y = ~PC2, z = ~PC3
                       yaxis = list(title = "PC2 (12.1%)"),
                       zaxis = list(title = "PC3 (8.8%)")))
 
-htmlwidgets::saveWidget(as_widget(fig), "8-structure_analysis/output/plots/Light/pca_pseudohelix_clusters_3d.html")
+htmlwidgets::saveWidget(as_widget(pseudohelix_pca_3d), "8-structure_analysis/output/plots/Light/pca_pseudohelix_clusters_3d.html")
 system("rm -r 8-structure_analysis/output/plots/Light/pca_pseudohelix_clusters_3d_files/")
