@@ -222,3 +222,13 @@ plot_clusters <- function(data, dose = pseudohelixDose) {
 
 ggplots$Light$pca$wedge_clusters <- plot_clusters(wedge_clusters)
 ggplots$Light$pca$pseudohelix_clusters <- plot_clusters(pseudohelix_clusters)
+
+pseudohelix_pca_3d <- plot_ly(pseudohelix_clusters, x = ~PC1, y = ~PC2, z = ~PC3, color = ~cluster, colors = c("#01608c", "#9462ff", "#ee8cab")) |> 
+  add_markers() |> 
+  layout(scene = list(camera = list(projection = list(type = "orthographic")),
+                      xaxis = list(title = "PC1 (16.6%)"),
+                      yaxis = list(title = "PC2 (12.1%)"),
+                      zaxis = list(title = "PC3 (8.8%)")))
+
+htmlwidgets::saveWidget(as_widget(fig), "8-structure_analysis/output/plots/Light/pca_pseudohelix_clusters_3d.html")
+system("rm -r 8-structure_analysis/output/plots/Light/pca_pseudohelix_clusters_3d_files/")
