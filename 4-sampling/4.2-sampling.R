@@ -50,12 +50,19 @@ p <- ggplot(pseudohelix_doses, aes(x = start_angle, y = ddwd)) +
     breaks = c("deterministic", "random"),
     labels = c("Deterministic", "Random")
   ) +
+  scale_x_continuous(breaks = seq(5, 185, 90)) +
+  scale_y_continuous(breaks = seq(0, 9, 3)) +
   ggtheme_light() +
   theme(legend.justification = c(1, 0),
         legend.position = c(0.95, 0.05)) +
   labs(
     x = "Start Angle (φ, °)",
     y = "DDWD (MGy)"
+  ) +
+  coord_cartesian(
+    xlim = c(5, 185),
+    ylim = c(0, 9),
+    expand = FALSE
   )
 
 samples_plot <- ggExtra::ggMarginal(
