@@ -77,7 +77,7 @@ scales_plot <- ggplot2::ggplot(scaling_params, ggplot2::aes(x = fwd, y = k, colo
     legend.justification = c(0, 0),
     legend.background = ggplot2::element_rect(color = "black")
   ) +
-  ggplot2::labs(x = bquote(group(langle, "FWD", rangle)*" MGy"),
+  ggplot2::labs(x = "Average FWD (MGy)",
                 y = "Scale Factor K")
 
 ggplot2::ggsave("2-decay_parameter_estimation/output/r_output/wilson_b_plot.svg",
