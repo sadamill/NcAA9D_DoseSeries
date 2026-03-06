@@ -7,27 +7,31 @@ doses <- dplyr::bind_rows(
   calculate_dose("ddwd")
 )
 
-doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, color = dose_type)) +
+doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, color = dose_type, linetype = dataset_type)) +
   ggplot2::geom_line() +
   ggplot2::scale_color_manual(
     "Dose Type",
-    labels = c("FWD", "DDWD"),
-    breaks = c("fwd", "ddwd"),
-    values = c("#fa8a15", "#c688ff")
+    labels = c("DDWD", "FWD"),
+    breaks = c("ddwd", "fwd"),
+    values = c("#c688ff", "#fa8a15")
   ) +
-  ggplot2::facet_wrap(~ dataset_type, ncol = 1,
-                      labeller = as_labeller(
-                        c(pseudohelix = "Pseudohelix",
-                          wedge = "Wedge")
-                      )) +
-  ggplot2::labs(x = "Start Angle (φ, °)", y = "Average Dose (MGy)") +
-  ggplot2::theme_bw() +
-  ggplot2::theme(legend.position = "top")
+  ggplot2::scale_linetype_manual(
+    "Dataset Type",
+    labels = c("Pseudohelix", "Wedge"),
+    breaks = c("pseudohelix", "wedge"),
+    values = c(1, 3)
+  ) +
+  ggplot2::scale_x_continuous(breaks = seq(5, 185, 45)) +
+  ggplot2::scale_y_continuous(breaks = seq(0, 18, 3)) +
+  ggplot2::labs(x = "Start φ Angle (°)", y = "Average Dose (MGy)") +
+  ggtheme_light() +
+  theme(legend.position = "right") +
+  coord_cartesian(xlim = c(5, 185), ylim = c(0, 17), expand = FALSE)
 
 filter(doses, dose_type == "ddwd") |> 
   readr::write_csv("3-ddwd_calculation/output/r_output/ddwds.csv")
 ggplot2::ggsave("3-ddwd_calculation/output/r_output/fwd_ddwd.svg",
                                 plot = doses_plot,
-                                height = 10, width = 8,
+                                height = 5, width = 8,
                                 unit = "cm",
                                 create.dir = TRUE)
