@@ -151,7 +151,7 @@ plot_clusters <- function(data, dose = pseudohelixDose) {
       scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
       coord_cartesian(expand = FALSE) +
       scale_x_continuous(breaks = NULL) +
-      scale_y_continuous(breaks = seq(1, 36, 2), position = "right") +
+      scale_y_continuous(breaks = seq(1, 36, 5), position = "right") +
       labs(x = NULL, y = "Dataset Number") +
       ggtheme_light() +
       theme(legend.position = "none", panel.grid = element_blank(), panel.border = element_blank())
@@ -180,13 +180,13 @@ plot_clusters <- function(data, dose = pseudohelixDose) {
     )
     
     long_p <- ggplot(points, aes(x = x, y = y, fill = cluster, color = cluster)) +
-      geom_path(data = line, aes(x = x, y = y, group = id), inherit.aes = FALSE, color = "black") +
-      geom_point(size = 2) +
+      geom_path(data = line, aes(x = x, y = y, group = id), inherit.aes = FALSE, color = "black", linewidth = 0.2) +
+      geom_point(size = 1.5) +
       coord_cartesian(xlim = c(0, 4)) +
       scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c75", "#9462ff75", "#ee8cab75")) +  
       scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c75", "#9462ff75", "#ee8cab75")) +  
       scale_x_continuous(breaks = NULL) +
-      scale_y_continuous(breaks = 0:10, position = "right") +
+      scale_y_continuous(breaks = seq(0, 9, 3), position = "right") +
       labs(x = NULL, y = "Average DDWD") +
       ggtheme_light() +
       theme(legend.position = "none", panel.border = element_blank(), axis.ticks = element_blank())
@@ -197,7 +197,7 @@ plot_clusters <- function(data, dose = pseudohelixDose) {
   
   envelope_p <- data |> 
     ggplot(aes(x = PC1, y = PC2, color = cluster, fill = cluster)) +
-    geom_point() +
+    geom_point(size = 0.5) +
     ggforce::geom_mark_hull(expand = 0.015, radius = 0.015) +
     scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
     scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +   
@@ -208,14 +208,21 @@ plot_clusters <- function(data, dose = pseudohelixDose) {
     data |> 
       ggplot(aes(x = PC1, y = PC2, color = cluster, fill = cluster)) +
       ggforce::geom_mark_hull() +
-      scale_fill_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
-      scale_color_manual(labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
+      scale_fill_manual(NULL, labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
+      scale_color_manual(NULL, labels = 1:3, breaks = 1:3, values = c("#01608c", "#9462ff", "#ee8cab")) +  
       labs(fill = "Cluster", color = "Cluster") +
-      theme(legend.position = "right", legend.key.height = unit(4, "mm"), rect = element_blank())
+      theme(
+        legend.position = "right", 
+        legend.key.width = unit(4, "mm"),
+        legend.key.height = unit(3, "mm"),
+        legend.key.justification = "center",
+        rect = element_blank()
+      ) +
+      guides(fill = guide_legend(nrow = 3, direction = "vertical"))
   )
   
-  right_col <- plot_grid(legend, long_p, ncol = 1, rel_heights = c(0.25,1))
-  combined_plot <- cowplot::plot_grid(envelope_p, right_col, ncol = 2, rel_widths = c(1, 0.25), align = "h")
+  right_col <- plot_grid(legend, long_p, NULL, ncol = 1, rel_heights = c(0.4, 1 , 0.17))
+  combined_plot <- cowplot::plot_grid(envelope_p, right_col, ncol = 2, rel_widths = c(1, 0.25))
   
   return(combined_plot)
 }
