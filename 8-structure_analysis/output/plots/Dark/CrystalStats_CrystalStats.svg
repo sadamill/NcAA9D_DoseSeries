@@ -916,12 +916,10 @@
 </defs>
 <g clip-path='url(#cpMzIzLjgzfDQ0OS41NnwzLjk5fDE5LjQx)'>
 <rect x='323.83' y='3.99' width='125.72' height='15.43' style='stroke-width: 0.75; stroke: #FFFFFF; fill: #000000;' />
-<text x='356.74' y='13.81' style='font-size: 8.00px;fill: #E5E5E5; font-family: "Symbol";' textLength='2.64px' lengthAdjust='spacingAndGlyphs'>〈</text>
-<text x='361.55' y='13.81' style='font-size: 6.40px;fill: #E5E5E5; font-family: "Arial";' textLength='3.56px' lengthAdjust='spacingAndGlyphs'>I/</text>
-<text x='365.11' y='13.81' style='font-size: 6.40px;fill: #E5E5E5; font-family: "Arial";' textLength='3.94px' lengthAdjust='spacingAndGlyphs'>σ</text>
-<text x='369.05' y='14.97' style='font-size: 4.48px;fill: #E5E5E5; font-family: "Arial";' textLength='1.23px' lengthAdjust='spacingAndGlyphs'>I</text>
-<text x='370.30' y='13.81' style='font-size: 8.00px;fill: #E5E5E5; font-family: "Symbol";' textLength='2.64px' lengthAdjust='spacingAndGlyphs'>〉</text>
-<text x='375.10' y='13.81' style='font-size: 6.40px;fill: #E5E5E5; font-family: "Arial";' textLength='41.55px' lengthAdjust='spacingAndGlyphs'> (highest shell)</text>
+<text x='348.82' y='13.35' style='font-size: 6.40px;fill: #E5E5E5; font-family: "Arial";' textLength='29.02px' lengthAdjust='spacingAndGlyphs'>Average I/</text>
+<text x='377.84' y='13.35' style='font-size: 6.40px;fill: #E5E5E5; font-family: "Arial";' textLength='3.94px' lengthAdjust='spacingAndGlyphs'>σ</text>
+<text x='381.78' y='14.51' style='font-size: 4.48px;fill: #E5E5E5; font-family: "Arial";' textLength='1.23px' lengthAdjust='spacingAndGlyphs'>I</text>
+<text x='383.03' y='13.35' style='font-size: 6.40px;fill: #E5E5E5; font-family: "Arial";' textLength='41.55px' lengthAdjust='spacingAndGlyphs'> (highest shell)</text>
 </g>
 <g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHw0NTMuNTQ=)'>
 <polyline points='31.30,432.64 31.30,430.64 ' style='stroke-width: 0.39; stroke: #333333; stroke-linecap: butt;' />
