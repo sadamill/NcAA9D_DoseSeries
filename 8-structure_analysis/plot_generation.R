@@ -214,7 +214,7 @@ ggplots$Dark$CrystalStats$CrystalStats <- crystal_stats |>
       c(
         cc1_2_highest_shell = "CC[1/2]*' (highest shell)'",
         unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
-        mean_i_sigma_i_highest_shell = "group(langle, 'I/'*σ[I], rangle)*' (highest shell)'", 
+        mean_i_sigma_i_highest_shell = "'Average I/'*σ[I]*' (highest shell)'", 
         r_free_overall = "R[free]",
         r_work_overall = "R[work]",
         completeness_percent_highest_shell = "'Completeness (%) (highest shell)'",
@@ -254,7 +254,7 @@ ggplots$Light$CrystalStats$CrystalStats <- crystal_stats |>
       c(
         cc1_2_highest_shell = "CC[1/2]*' (highest shell)'",
         unit_cell_volume = "'Unit Cell Volume ('*Å^3*')'",
-        mean_i_sigma_i_highest_shell = "group(langle, 'I/'*σ[I], rangle)*' (highest shell)'", 
+        mean_i_sigma_i_highest_shell = "'Average I/'*σ[I]*' (highest shell)'", 
         r_free_overall = "R[free]",
         r_work_overall = "R[work]",
         completeness_percent_highest_shell = "'Completeness (%) (highest shell)'",
