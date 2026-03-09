@@ -1,18 +1,25 @@
 # Packages ----------------------------------------------------------------
 
-library(factoextra)
-library(nlme)
-library(cowplot)
-library(tidyverse)
+# data import/cleaning/wrangling
 library(bio3d)
-library(geometry)
-library(emmeans)
-library(ggnewscale)
 library(janitor)
+library(tidyverse)
+
+# linear models and estimated marginal trends
+library(nlme)
+library(emmeans)
+
+# plotting
+library(cowplot)
+library(ggnewscale)
 library(systemfonts)
-library(PCDimension)
 library(ggforce)
 library(plotly)
+
+# pca/k-means clustering packages
+library(factoextra)
+library(PCDimension)
+library(NbClust)
 
 # Raw Data Extraction/Preparation -----------------------------------------
 
@@ -105,13 +112,13 @@ plot_dimensions <- tibble(
            "scatter", "trends",
            "CrystalStats",
            "RMSDs"),
-  height = c(16, 10, 10,
+  height = c(16, 5, 5,
              10, 5,
              10, 5,
              12, 5,
              16,
              16),
-  width = c(16, 16, 16,
+  width = c(16, 8, 8,
             16, 8,
             16, 8,
             16, 8,

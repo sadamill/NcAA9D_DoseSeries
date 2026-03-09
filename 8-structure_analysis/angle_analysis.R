@@ -17,11 +17,11 @@ orthogonal.vector <- function(a, b, c) {
     )}
 }
 
-#Finds angle between 2 vectors (in degrees), where v1 and v2 are vectors <ijk> to measure the angle between
+# finds angle (°) between vectors v1 and v2
 vector.angle <- function(v1, v2) {
   c(v1, v2) %>% 
-    matrix(nrow = 2, byrow = TRUE) %>% #Make a 3x2 matrix containing the two vectors, one in each row
-    {(geometry::dot(.[1, ], .[2, ]))/(sqrt(sum(.[1, 1]^2, .[1, 2]^2, .[1, 3]^2))*sqrt(sum(.[2, 1]^2, .[2, 2]^2, .[2, 3]^2)))} %>% 
+    matrix(nrow = 2, byrow = TRUE) %>% # make a 3x2 matrix containing the two vectors, one in each row
+    {{(.[1, ] %*% .[2, ])}/(sqrt(sum(.[1, 1]^2, .[1, 2]^2, .[1, 3]^2))*sqrt(sum(.[2, 1]^2, .[2, 2]^2, .[2, 3]^2)))} %>% 
     acos() %>% 
     {.*180/pi}
 }
