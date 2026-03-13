@@ -35,7 +35,7 @@ pseudohelix_doses <- mutate(
 )
 
 p <- ggplot(pseudohelix_doses, aes(x = start_angle, y = ddwd)) +
-  geom_line(color = "gray") +
+  geom_line(color = "gray95") +
   geom_point(
     data = filter(pseudohelix_doses, sampled == TRUE), aes(color = sample_type, shape = sample_type)
   ) +

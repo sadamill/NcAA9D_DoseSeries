@@ -13,13 +13,13 @@ doses_plot <- ggplot2::ggplot(doses, ggplot2::aes(x = start_angle, y = dose, col
     "Dose Type",
     labels = c("DDWD", "FWD"),
     breaks = c("ddwd", "fwd"),
-    values = c("#c688ff", "#fa8a15")
+    values = c("#001e7a", "#e2b8ff")
   ) +
   ggplot2::scale_linetype_manual(
     "Dataset Type",
     labels = c("Pseudohelix", "Wedge"),
     breaks = c("pseudohelix", "wedge"),
-    values = c(1, 3)
+    values = c(1, 2)
   ) +
   ggplot2::scale_x_continuous(breaks = seq(5, 185, 45)) +
   ggplot2::scale_y_continuous(breaks = seq(0, 18, 3)) +
