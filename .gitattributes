@@ -14,4 +14,5 @@
 *.Rproj text
 *.[Rr]md   linguist-detectable
 
+# exclude plotly widget from language stats
 8-structure_analysis/output/plots/Light/pca_pseudohelix_clusters_3d.html linguist-generated=True
