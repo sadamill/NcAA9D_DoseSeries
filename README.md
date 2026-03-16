@@ -24,7 +24,7 @@ Detailed descriptions of each directory follow below:
 4. [Sampling](#4-sampling)
 5. [Data processing](#5-data-processing)
 6. [Model refinements](#6-model-refinements)
-7. [Data/model quality statistics](#7-data-model-quality-statistics)
+7. [Data/model quality statistics](#7-datamodel-quality-statistics)
 8. [Statistical analysis](#8-statistical-analysis)
 
 ## 0. Diffraction Images
