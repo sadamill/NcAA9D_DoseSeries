@@ -1,0 +1,17 @@
+# Basic .gitattributes for a R repo.
+
+# Source files
+# ============
+*.Rdata binary
+*.RData binary
+*.rda   binary
+*.rdb   binary
+*.rds   binary
+*.Rd    text
+*.Rdx   binary
+*.Rmd	  text
+*.R  	  text
+*.Rproj text
+*.[Rr]md   linguist-detectable
+
+8-structure_analysis/output/plots/Light/pca_pseudohelix_clusters_3d.html linguist-generated=True
