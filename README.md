@@ -15,19 +15,6 @@ to ease the burden of the large dataset size. If desired, following the
 instructions below should allow you to fully reproduce the data and plots used
 in our article.
 
-To run Bash scripts, Linux and Mac users may simply run
-`bash path/to/script/script_name.sh` from the terminal (ensure your current
-working directory is NcAA9D_DoseSeries-main). Windows users may run them
-using a Bash interpreter such as Git Bash.
-
-If you would like to replicate any results obtained from R scripts, you must
-download R, which can be done from the [R Project website](https://www.r-project.org/)
-or from the [RStudio website](https://posit.co/download/rstudio-desktop/).
-Open r_analysis.Rproj and run the command `renv::restore()` (if you haven't used
-R before you will need to download renv with `install.packages("renv")`) . The
-desired script may then be run by running the command
-`source("path/to/script/script_name.R")` from the R terminal.
-
 Detailed descriptions of each directory follow below:
 
 0. [Diffraction images](#0-diffraction-images)
@@ -37,7 +24,7 @@ Detailed descriptions of each directory follow below:
 4. [Sampling](#4-sampling)
 5. [Data processing](#5-data-processing)
 6. [Model refinements](#6-model-refinements)
-7. [Data/model quality statistics](#7-data_model-quality-statistics)
+7. [Data/model quality statistics](#7-data-model-quality-statistics)
 8. [Statistical analysis](#8-statistical-analysis)
 
 ## 0. Diffraction Images
