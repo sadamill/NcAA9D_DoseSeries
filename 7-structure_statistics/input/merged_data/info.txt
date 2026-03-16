@@ -1,0 +1,3 @@
+This directory is purposefully empty! This is where the merged MTZs for phenix.table_one are stored; they are very large and can't be stored in a repository. If you'd like to see or work with them, you must run scripts 6.1 through 7.1.
+
+These files are also available by request from the authors.
