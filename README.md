@@ -94,10 +94,12 @@ the pseudohelix datasets, as this can't be done natively with RADDOSE.
 
 ### 4. Sampling
 
-Weighted random sampling was used to select a set of datasets to use in 
+Weighted random sampling was used to select a set of pseudohelix datasets to use in 
 analysis. Higher weights were given to pseudohelices with higher rates of 
 average DDWD accumulation, with the goal of obtaining a sample set
 representative of the whole dose range achieved in our study.
+
+![Plot of the sampled pseudohelix datasets](./additional_files/images/4-sampling.png)
 
 Note that sampling.R hard-codes the random seed to produce the same sample set
 used in our article. If you'd like to see the random sampling in action, remove
