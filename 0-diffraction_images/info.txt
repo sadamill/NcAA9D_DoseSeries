@@ -1,3 +1,5 @@
 This directory is purposefully empty! The raw image files are very large, and can't be stored in a repository. If you'd like to see or work with them, extract the diffraction images into this directory.
 
+The diffraction images aren't yet publically accesible, but we're actively working to deposit them, and this file will include a link and instructions for how to download them as soon as they are available.
+
 These files are also available by request from the authors.
