@@ -74,7 +74,7 @@ decay parameters were then estimated by least-squares regression in R, according
 to the method described in [Dickerson *et al*. (2024)](https://doi.org/10.1002/pro.5005).
 Further details of this analysis are available in our article.
 
-![Image of scatterplots used to determine intensity decay parameters](./misc_files/images/s2-ddwd_parameters.png)
+![Image of scatterplots used to determine intensity decay parameters](./additional_files/images/s2-ddwd_parameters.png)
 
 This directory contains all the scripts used to calculate the intensity decay
 parameters. If you'd like to replicate the analysis from scratch, you will need the 
@@ -91,7 +91,7 @@ fluence-weighted doses (FWDs), which don't require these parameters, were also
 calculated. Finally, an R script was used to calculate the FWDs and DDWDs for
 the pseudohelix datasets, as this can't be done natively with RADDOSE.
 
-![Plot of all wedge and pseudohelix FWDs and DDWDs](./misc_files/images/3-doses.png)
+![Plot of all wedge and pseudohelix FWDs and DDWDs](./additional_files/images/3-doses.png)
 
 This directory contains all the scripts used to calculate DDWDs and FWDs. If
 you'd like to replicate the analysis from scratch, run scripts 3.1-3.4.
