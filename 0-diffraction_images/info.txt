@@ -1,0 +1,3 @@
+This directory is purposefully empty! The raw image files are very large, and can't be stored in a repository. If you'd like to see or work with them, extract the diffraction images into this directory.
+
+These files are also available by request from the authors.

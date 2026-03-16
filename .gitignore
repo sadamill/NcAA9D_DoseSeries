@@ -90,7 +90,7 @@ rsconnect/
 # ignore all diffraction images
 0-diffraction_images/*
 # except for a README, which keeps the directory intact
-\!0-diffraction_images/info.txt
+!0-diffraction_images/info.txt
 
 # ignore bulky raddose outputs
 1-fwd_calculation/output/raddose_output
