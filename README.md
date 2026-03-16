@@ -42,61 +42,59 @@ Detailed descriptions of each directory follow below:
 
 ### 0. Diffraction Images
 
-This directory contains
+This directory contains information on how to obtain the diffraction images used
+in sections 2 and 5. The images will be publically available upon data deposition
+to the Integrated Resource for Reproducibility in Macromolecular Crystallography.
 
 ### 1. FWD Calculations
+
+While the ultimate goal of data analysis was to calculate DDWDs, we first had
+to estimate intensity decay parameters required by RADDOSE-3D. To do this requires
+the calculation of FWDs, which is done in this section.
+
+This directory contains the scripts and input files used to calculate FWDs
+using RADDOSE-3D.
 
 ### 2. Intensity decay parameter estimation
 
 Our unique data collection strategy required us to calculate the average
 **diffraction decay-weighted dose** for each dataset. To calculate this in
-RADDOSE-3D, we three parameters must be estimated:
+RADDOSE-3D, three parameters must be estimated:
 
-1. γ: describes the dose-dependent behavior of the Gaussian scale factor (MGy<sup>-1</sup>)
+1. *γ*: describes the dose-dependent behavior of the Gaussian scale factor (MGy<sup>-1</sup>)
 
-2. B<sub>0</sub>: the Wilson B-factor at zero dose (Å<sup>2</sup>)
+2. *B<sub>0</sub>*: the Wilson B-factor at zero dose (Å<sup>2</sup>)
 
-3. β: the rate of Wilson B-factor increase per unit dose (Å<sup>2</sup>/MGy)
+3. *β*: the rate of Wilson B-factor increase per unit dose (Å<sup>2</sup>/MGy)
 
-The first 25 "sliding window" pseudohelices, corresponding to start angles
-0-24° (0-5°, 1-6°, ... 24-29°) were processed in [DIALS](https://dials.github.io/index.html)
-(v3.26). The integrated (unmerged and unscaled) reflection files were exported,
-and their absolute scale factors and Wilson B-factors were estimated with
+Wilson B-factors and Wilson scale factors were estimated for the first 25 possible
+pseudohelix datasets using [DIALS](https://dials.github.io/index.html) (v3.26) and
 [WILSON](https://www.ccp4.ac.uk/html/wilson.html) (v9.0.011). Diffraction
 decay parameters were then estimated by least-squares regression in R, according
-to the method described in [Dickerson *et al.* (2024)](https://doi.org/10.1002/pro.5005).
+to the method described in [Dickerson *et al*. (2024)](https://doi.org/10.1002/pro.5005).
 Further details of this analysis are available in our article.
 
-To run the analysis from scratch, you will need the diffraction images. These are available
-at **LINK HERE**, and should be extracted into 0-diffraction_images. You may then
-run the data processing script at 1-decay_parameter_estimation/...........sh
-This will process the necessary datasets and output a CSV file with the datasets'
-Wilson B-factors and scale factors.
+![Image of scatterplots used to determine intensity decay parameters](./misc_files/images/s2-ddwd_parameters.png)
 
-If you don't have the computer storage or time to spare, no worries! All the
-input files you need to estimate γ, B<sub>0</sub>, and β are already here
-(1-decay_parameter_estimation/input/wilson_b_scales.csv). The R script
-to do this is located at 1-decay_parameter_estimation/estimate_gamma_b0_beta.R.
-The script will take the input Wilson B-factors and scale factors,
-estimate γ, B<sub>0</sub>, and β, export the values as a CSV file, and export
-the relevant plots.
+This directory contains all the scripts used to calculate the intensity decay
+parameters. If you'd like to replicate the analysis from scratch, you will need the 
+diffraction images. These are available at **LINK HERE**, and should be extracted 
+into 0-diffraction_images. Alternatively, intermediate files used to run the R 
+script are located at 2-decay_parameter_estimation/input/r_input/.
 
 ### 3. DDWD Calculations
 
-After γ, B<sub>0</sub>, and β were estimated, these were used to calculate the
+The decay parameters estimated in Section 2 were used to calculate the
 average diffraction decay-weighted doses (DDWDs) for our wedge datasets in
 [RADDOSE-3D](https://github.com/GarmanGroup/RADDOSE-3D) (v5.01058). The average 
 fluence-weighted doses (FWDs), which don't require these parameters, were also
 calculated. Finally, an R script was used to calculate the FWDs and DDWDs for
 the pseudohelix datasets, as this can't be done natively with RADDOSE.
 
-To calculate DDWDs and FWDs for all the wedge datasets, run 2-dose_calculations/..........sh
-This will generate the relevant RADDOSE-3D input files, calculate the wedge FWDs
-and DDWDs with RADDOSE-3D, and export the relevant output files.
+![Plot of all wedge and pseudohelix FWDs and DDWDs](./misc_files/images/3-doses.png)
 
-All the input files necessary to calculate pseudohelix doses are already here!
-Simply run 2-dose_calculations/fwd_ddwd_calculation.R, which will calculate average
-FWDs/DDWDs and export a CSV file and plot of all the results.
+This directory contains all the scripts used to calculate DDWDs and FWDs. If
+you'd like to replicate the analysis from scratch, run scripts 3.1-3.4.
 
 ### 4. Sampling
 
