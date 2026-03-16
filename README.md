@@ -2,9 +2,9 @@
 
 The scripts and various files in this repository were used to process data and
 perform statistical analyses for the article
-["Dose-dependent structural and electron density features in the lytic polysaccharide monooxygenase NcAA9D"](LINK HERE).
+"Dose-dependent structural and electron density features in the lytic polysaccharide monooxygenase *Nc*AA9D" (currently under review).
 This repository is organized with the intent of being transparent in methodology
-and processing flow. Five directories—numbered by their order in the pipeline—hold
+and processing flow. Eight directories—numbered by their order in the pipeline—hold
 the scripts and majority of input data (file size allowing) used in our analyses.
 
 Due to the large dataset size, our analysis relied on heavy use of Bash
@@ -28,7 +28,25 @@ R before you will need to download renv with `install.packages("renv")`) . The
 desired script may then be run by running the command
 `source("path/to/script/script_name.R")` from the R terminal.
 
-### 1. Diffraction Decay Parameter Estimation
+Detailed descriptions of each directory follow below:
+
+0. [Diffraction images](#0_diffraction_images)
+1. [FWD calculations](#1_fwd_calculations)
+2. [Intensity decay parameter estimation](#2_intensity_decay_parameter_estimation)
+3. [DDWD calculations](#3_ddwd_calculations)
+4. [Sampling](#4_sampling)
+5. [Data processing](#5_data_processing)
+6. [Model refinements](#6_model_refinements)
+7. [Data/model quality statistics](#7_data/model_quality_statistics)
+8. [Statistical analysis](#8_statistical_analysis)
+
+### 0. Diffraction Images
+
+This directory contains
+
+### 1. FWD Calculations
+
+### 2. Intensity decay parameter estimation
 
 Our unique data collection strategy required us to calculate the average
 **diffraction decay-weighted dose** for each dataset. To calculate this in
@@ -63,7 +81,7 @@ The script will take the input Wilson B-factors and scale factors,
 estimate γ, B<sub>0</sub>, and β, export the values as a CSV file, and export
 the relevant plots.
 
-### 2. Dose Calculations
+### 3. DDWD Calculations
 
 After γ, B<sub>0</sub>, and β were estimated, these were used to calculate the
 average diffraction decay-weighted doses (DDWDs) for our wedge datasets in
@@ -80,7 +98,7 @@ All the input files necessary to calculate pseudohelix doses are already here!
 Simply run 2-dose_calculations/fwd_ddwd_calculation.R, which will calculate average
 FWDs/DDWDs and export a CSV file and plot of all the results.
 
-### 3. Sampling
+### 4. Sampling
 
 Weighted random sampling was used to select a set of datasets to use in 
 analysis. Higher weights were given to pseudohelices with higher rates of 
@@ -96,7 +114,7 @@ Note that sampling.R hard-codes the random seed to produce the same sample set
 used in our article. If you'd like to see the random sampling in action, remove
 the line `set.seed(12)` from the script and run it again.
 
-### 4. Data Processing
+### 5. Data Processing
 
 After the sample set was determined by section 3, we processed the diffraction
 images in [DIALS](https://dials.github.io/index.html) (v3.26) to obtain scaled
@@ -108,7 +126,7 @@ These are available at **LINK HERE**, and should be extracted into
 4-data_processing/...........sh. This will process the necessary datasets and
 export the merged MTZ files.
 
-### 5. Structure Refinements
+### 6. Structure Refinements
 
 After processing the desired datasets, the relevant reflections files and a
 "base" *Nc*AA9D model were used as an input in [phenix.refine](https://phenix-online.org/documentation/reference/refinement.html)
@@ -117,7 +135,11 @@ hefty process, so we don't recommend you run the relevant scripts. We have, thou
 included the configuration files and Bash scripts used in this step of the
 process to improve clarity.
 
-### 6. Structure Analysis
+### 7. Data/Model Quality Statistics
+
+
+
+### 8. Statistical Analysis
 
 The analysis pipeline built for this analysis imports and parses the .pdb files, 
 storing structure parameters in a large table. Multiple linear regression models
