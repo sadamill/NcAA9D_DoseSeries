@@ -30,15 +30,15 @@ desired script may then be run by running the command
 
 Detailed descriptions of each directory follow below:
 
-0. [Diffraction images](#0_diffraction_images)
-1. [FWD calculations](#1_fwd_calculations)
-2. [Intensity decay parameter estimation](#2_intensity_decay_parameter_estimation)
-3. [DDWD calculations](#3_ddwd_calculations)
-4. [Sampling](#4_sampling)
-5. [Data processing](#5_data_processing)
-6. [Model refinements](#6_model_refinements)
-7. [Data/model quality statistics](#7_data/model_quality_statistics)
-8. [Statistical analysis](#8_statistical_analysis)
+0. [Diffraction images](#0-diffraction-images)
+1. [FWD calculations](#1-fwd-calculations)
+2. [Intensity decay parameter estimation](#2-intensity-decay-parameter-estimation)
+3. [DDWD calculations](#3-ddwd-calculations)
+4. [Sampling](#4-sampling)
+5. [Data processing](#5-data-processing)
+6. [Model refinements](#6-model-refinements)
+7. [Data/model quality statistics](#7-data/model-quality-statistics)
+8. [Statistical analysis](#8-statistical-analysis)
 
 ### 0. Diffraction Images
 
