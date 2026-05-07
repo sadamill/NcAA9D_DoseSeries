@@ -78,7 +78,7 @@ emtrends.se <- function(model, regressor) {
 }
 
 # custom ggplot themes
-ggtheme_dark <- function() {
+ggtheme_dark <- function(...) {
   list(
     ggplot2::theme_dark(base_size = 8, base_family = "ArialMT"), 
     ggplot2::theme(
@@ -97,11 +97,12 @@ ggtheme_dark <- function() {
       legend.background = ggplot2::element_rect(fill = "black", color = "white"), 
       strip.background = ggplot2::element_rect(fill = "black", color = "white"),
       axis.text = ggplot2::element_text(color = 'gray'),
-      legend.key.height = unit(3, "mm")
-    )
+      legend.key.height = grid::unit(3, "mm")
+    ),
+    ggplot2::theme(...)
   )
 }
-ggtheme_light <- function() {
+ggtheme_light <- function(...) {
   list(
     ggplot2::theme_bw(base_size = 8, base_family = "ArialMT"), 
     ggplot2::theme(
@@ -116,7 +117,8 @@ ggtheme_light <- function() {
       legend.background = ggplot2::element_rect(fill = "white", color = "black"), 
       strip.background = ggplot2::element_rect(fill = "white"), 
       plot.background = ggplot2::element_blank(),
-      legend.key.height = unit(3, "mm")
-    )
+      legend.key.height = grid::unit(3, "mm")
+    ),
+    ggplot2::theme(...)
   )
 }
