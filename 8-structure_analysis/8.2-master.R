@@ -94,6 +94,7 @@ source("8-structure_analysis/angle_analysis.R")
 source("8-structure_analysis/structure_stats.R")
 source("8-structure_analysis/pca_clustering.R")
 source("8-structure_analysis/dose_distribution.R")
+source("8-structure_analysis/publication_comparisons.R")
 
 # Data Visualization ------------------------------------------------------
 
@@ -109,25 +110,33 @@ plot_dimensions <- tibble(
                  rep("Distances", 2),
                  rep("Angles", 2),
                  "CrystalStats",
-                 "RMSDs"),
+                 "RMSDs",
+                 "dose_distribution",
+                 rep("publication_comparisons", 2)),
   plot = c("broken_stick", "wedge_clusters", "pseudohelix_clusters",
            "scatter", "trends",
            "scatter", "trends",
            "scatter", "trends",
            "CrystalStats",
-           "RMSDs"),
+           "RMSDs",
+           "dose_distribution",
+           "dose", "distance"),
   height = c(16, 5, 5,
              10, 5,
              10, 5,
              12, 5,
              16,
-             16),
+             16,
+             16,
+             8, 8),
   width = c(16, 8, 8,
             16, 8,
             16, 8,
             16, 8,
             16,
-            16)
+            16,
+            12,
+            12, 12)
 )
 
 #Save all the plots

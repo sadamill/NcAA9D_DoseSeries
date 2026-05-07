@@ -272,7 +272,7 @@ dose_bin_summary <- pseudohelix_voxel_data |>
 # Plotting ----------------------------------------------------------------
 
 # Make a stacked histogram of weighted dose distributions.
-dose_distribution <- dose_bin_summary |>
+ggplots$Light$dose_distribution$dose_distribution <- dose_bin_summary |>
   ggplot2::ggplot(ggplot2::aes(
     x = dose_middle, 
     ymin = offset, 
@@ -297,8 +297,6 @@ dose_distribution <- dose_bin_summary |>
     high = "darkorchid4",
     aesthetics = c("fill", "color")
   )
-
-ggplot2::ggsave("test.svg", plot = dose_distribution, height = 10, width = 8, units = "cm")
 
 # Make an animated histogram to add in supplementary information.
 anim <- dose_bin_summary |> 
