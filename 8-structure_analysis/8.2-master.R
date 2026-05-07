@@ -4,6 +4,8 @@
 library(bio3d)
 library(janitor)
 library(tidyverse)
+library(fst)
+library(vroom)
 
 # linear models and estimated marginal trends
 library(nlme)
@@ -15,6 +17,7 @@ library(ggnewscale)
 library(systemfonts)
 library(ggforce)
 library(plotly)
+library(gganimate)
 
 # pca/k-means clustering packages
 library(factoextra)
@@ -90,6 +93,7 @@ source("8-structure_analysis/distance_analysis.R")
 source("8-structure_analysis/angle_analysis.R")
 source("8-structure_analysis/structure_stats.R")
 source("8-structure_analysis/pca_clustering.R")
+source("8-structure_analysis/dose_distribution.R")
 
 # Data Visualization ------------------------------------------------------
 
