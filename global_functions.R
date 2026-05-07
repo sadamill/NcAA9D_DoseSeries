@@ -80,7 +80,7 @@ emtrends.se <- function(model, regressor) {
 # custom ggplot themes
 ggtheme_dark <- function(...) {
   list(
-    ggplot2::theme_dark(base_size = 8, base_family = "ArialMT"), 
+    ggplot2::theme_dark(base_size = 8), 
     ggplot2::theme(
       #Overall elements
       rect = ggplot2::element_blank(), 
@@ -104,7 +104,7 @@ ggtheme_dark <- function(...) {
 }
 ggtheme_light <- function(...) {
   list(
-    ggplot2::theme_bw(base_size = 8, base_family = "ArialMT"), 
+    ggplot2::theme_bw(base_size = 8), 
     ggplot2::theme(
       #Overall elements
       text = ggplot2::element_text(color = "black"), 
