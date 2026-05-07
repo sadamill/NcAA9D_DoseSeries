@@ -26,13 +26,13 @@ stackedDistances <- purrr::map2(pseudohelixDose, pseudohelixList, \(dose, struct
   # make a tibble to contain target values
   distances <- tibble::tibble(
     Dose     = rep(dose, 12),
-    AtomPair = c(rep("Cu-Tyr", 2),
+    AtomPair = c(rep("Cu-Eq", 2), 
+                 rep("Cu-Ax", 2),
+                 rep("Cu-Tyr", 2),
                  rep("Cu-NTerm", 2), 
                  rep("Cu-His1ND1", 2), 
-                 rep("Cu-His84NE2", 2), 
-                 rep("Cu-Eq", 2), 
-                 rep("Cu-Ax", 2)),
-    Molecule = factor(rep(c("A", "B"), 6),
+                 rep("Cu-His84NE2", 2)),
+    Molecule = factor(c(rep(c("A", "B"), 6)),
                       levels = c("A", "B")),
     Distance = c(cu_eq_a, cu_eq_b,
                  cu_ax_a, cu_ax_b,
