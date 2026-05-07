@@ -22,7 +22,7 @@ calculate_dose <- function(type) {
   })
   
   # calculate the respective subwedge average doses and average these across wedges
-  # 2-37 to calculate the average DWD for a pseudhelix
+  # 2-37 to calculate the average DWD for a pseudohelix
   subwedge_matrix <- sapply(5:184, function(start_angle) {
     subwedge_averages <- lapply(2:37, function(subwedge_number) {
       wedge <- raddose_output[[subwedge_number]]
