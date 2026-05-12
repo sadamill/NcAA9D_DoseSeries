@@ -127,7 +127,7 @@ plot_dimensions <- tibble(
              12, 5,
              16,
              16,
-             16,
+             20,
              8, 8),
   width = c(16, 8, 8,
             16, 8,
