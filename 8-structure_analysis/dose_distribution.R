@@ -339,12 +339,16 @@ anim <- dose_bin_summary |>
     state_length = 0
   ) +
   gganimate::ease_aes("sine-in-out")
-gganimate::anim_save(
-  "test.gif",
+a <- gganimate::animate(
   anim,
+  renderer = ffmpeg_renderer(format = "mp4"),
   nframes = 100,
   height = 5,
   width = 5,
   units = "in",
   res = 300
+)
+gganimate::anim_save(
+  "8-structure_analysis/output/plots/Light/dose_distribution_evolution.mp4",
+  a
 )
