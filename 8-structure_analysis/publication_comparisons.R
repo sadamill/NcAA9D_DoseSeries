@@ -37,7 +37,7 @@ thresholds <- tibble(
 scientific_10 <- function(x) {
   parse(text = ifelse(
     x == 0, 0,
-    gsub("e\\+*", " %*% 10^", label_scientific()(x))
+    gsub("e\\+*", " %*% 10^", scales::label_scientific()(x))
   ))
 }
 
