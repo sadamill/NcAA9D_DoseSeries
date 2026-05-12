@@ -247,94 +247,99 @@ bins <- seq(0, max_dose, bin_width)
 # Make a tibble containing intensity contributions summed across dose bins.
 # Ensure all frames and bins are filled in with zero values so that plots are
 # completely filled in.
-dose_bin_summary <- pseudohelix_voxel_data |> 
-  dplyr::mutate(bin = cut(voxel_dose,
-                   breaks = bins,
-                   right = FALSE,
-                   include.lowest = TRUE)) |> 
-  dplyr::group_by(pseudohelix_number, bin) |> 
-  dplyr::summarize(
-    contribution = sum(relative_contribution),
-    .groups = "drop"
-  ) |> 
-  tidyr::complete(pseudohelix_number, bin, fill = list(contribution = 0)) |> 
-  dplyr::bind_cols(
-    dose_min = rep(bins[-length(bins)], n_pseudohelices),
-    dose_max = rep(bins[-1], n_pseudohelices),
-    dose_middle = rep(bins[-1] - bin_width/2, n_pseudohelices)
-  ) |> 
-  dplyr::mutate(
-    offset = (pseudohelix_number - 1) * 0.25, 
-    total_offset = offset + contribution
-  ) |> 
-  dplyr::left_join(pseudohelix_ddwd)
+dose_bin_summary <- map(
+  1:36, 
+  \(number) {
+    data <- pseudohelix_voxel_data |> 
+      filter(pseudohelix_number == number)
+    density <- density(
+      x = data$voxel_dose,
+      bw = 0.5,
+      weights = data$relative_contribution,
+      n = 2^10,
+      from = 0,
+      to = 50
+    )
+    tibble(
+      pseudohelix_number = number,
+      dose = density$x,
+      density = density$y * 3,
+      offset = number
+    )
+  }
+) |> 
+  list_rbind() |> 
+  left_join(pseudohelix_ddwd) |> 
+  mutate(pseudohelix_number = fct_rev(as_factor(pseudohelix_number)))
 
 # Plotting ----------------------------------------------------------------
 
-# Make a stacked histogram of weighted dose distributions.
+# Make a stacked histogram of weighted dose distributions
 ggplots$Light$dose_distribution$dose_distribution <- dose_bin_summary |>
   ggplot2::ggplot(ggplot2::aes(
-    x = dose_middle, 
+    x = dose, 
     ymin = offset, 
-    ymax = total_offset, 
-    fill = pseudohelix_number, 
-    color = pseudohelix_number, 
+    ymax = density + offset, 
+    fill = offset, 
     group = pseudohelix_number
   )) +
-  ggplot2::geom_ribbon(alpha = 0.5, linewidth = 0.2) +
-  ggplot2::scale_y_continuous(breaks = NULL) +
-  ggplot2::coord_cartesian(expand = FALSE, xlim = c(0, 30)) +
-  ggplot2::labs(x = "Dose (MGy)", y = "Weighted Contribution") +
+  ggplot2::geom_ribbon(alpha = 1, linewidth = 0.2, color = "black", show.legend = FALSE) +
+  ggplot2::scale_y_continuous(breaks = 1:36) +
+  ggplot2::coord_cartesian(expand = FALSE, xlim = c(0, 25), ylim = c(1, 37)) +
+  ggplot2::labs(x = "Dose (MGy)", y = "Pseudohelix Number") +
   ggtheme_light(
     legend.justification = c(1, 0),
     legend.position.inside = c(0.95, 0.05),
-    legend.key.height = grid::unit(4, "mm")
+    legend.key.height = grid::unit(4, "mm"),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
   ) +
   ggplot2::scale_fill_gradient(
-    "Pseudohelix\nNumber",
-    breaks = c(1, 12, 24, 36),
-    low = "orchid1",
-    high = "darkorchid4",
-    aesthetics = c("fill", "color")
+    low = "thistle1",
+    high = "darkorchid4"
   )
 
 # Make an animated histogram to add in supplementary information.
 anim <- dose_bin_summary |> 
   ggplot2::ggplot(ggplot2::aes(
-    x = dose_middle, 
+    x = dose, 
     ymin = 0, 
-    ymax = contribution, 
-    color = pseudohelix_number, 
-    fill = pseudohelix_number
+    ymax = density, 
+    fill = offset,
+    color = offset
   )) +
-  ggplot2::geom_ribbon(alpha = 0.5) +
+  ggplot2::geom_ribbon(alpha = 0.4) +
   ggplot2::geom_vline(
-    ggplot2::aes(xintercept = ddwd, color = pseudohelix_number),
+    ggplot2::aes(xintercept = ddwd, color = offset),
     stat = "unique", 
     inherit.aes = FALSE
   ) +
-  ggplot2::geom_text(
-    ggplot2::aes(label = stringr::str_glue("Pseudohelix {pseudohelix_number}
+  ggplot2::geom_label(
+    ggplot2::aes(
+      label = stringr::str_glue("Pseudohelix {pseudohelix_number}
                                 Average DDWD = {ddwd}"), 
-        x = ddwd + 1,
-        color = pseudohelix_number
+      x = ddwd + 0.5,
+      color = offset
     ),
     inherit.aes = FALSE,
     stat = "unique",
-    y = 0.175, 
+    y = 0.4, 
     hjust = 0
   ) +
-  ggplot2::coord_cartesian(ylim = c(0, 0.2), xlim = c(0, 40), expand = FALSE) +
-  ggplot2::labs(x = "Dose (MGy)", y = "Weighted Contribution") +
+  ggplot2::coord_cartesian(
+    ylim = c(0, 0.5), 
+    xlim = c(0, 40), 
+    expand = FALSE
+  ) +
+  ggplot2::labs(x = "Dose (MGy)", y = "Density") +
   ggplot2::scale_fill_gradient(
-    breaks = c(1, 12, 24, 36),
     low = "orchid1",
     high = "darkorchid4",
     aesthetics = c("fill", "color")
   ) +
   ggtheme_light(legend.position = "none") +
   gganimate::transition_states(
-    pseudohelix_number,
+    offset,
     transition_length = 5,
     state_length = 0
   ) +
