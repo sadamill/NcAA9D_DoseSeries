@@ -17,8 +17,6 @@ orthogonal.vector <- function(a, b, c) {
     v1[1]*v2[2] - v1[2]*v2[1])
 }
 
-
-
 # finds angle (°) between vectors v1 and v2
 vector.angle <- function(v1, v2) {
   v1_mag <- sqrt(sum(v1^2))
@@ -90,50 +88,50 @@ allAngles <- lapply(pseudohelixList, function(pdb) {
           {90-.}
       ), 
       THH = c(
-        orthogonal.vector(pdb$xyz[atoms$his1cg_a$xyz], 
-                          pdb$xyz[atoms$his1nd_a$xyz],
-                          pdb$xyz[atoms$his1ne_a$xyz]) %>% #Find vector orthogonal to His1 imidazole ring plane
+        orthogonal.vector(pdb$xyz[atoms$his1nd_a$xyz], 
+                          pdb$xyz[atoms$his1ne_a$xyz],
+                          pdb$xyz[atoms$his1cg_a$xyz]) %>% #Find vector orthogonal to His1 imidazole ring plane
           vector.angle(
-            orthogonal.vector(pdb$xyz[atoms$his84cg_a$xyz],
-                              pdb$xyz[atoms$his84nd_a$xyz],
-                              pdb$xyz[atoms$his84ne_a$xyz])#Find angle between the two vectors orthogonal to the His1-His84 imidazole planes
+            orthogonal.vector(pdb$xyz[atoms$his84nd_a$xyz],
+                              pdb$xyz[atoms$his84ne_a$xyz],
+                              pdb$xyz[atoms$his84cg_a$xyz])#Find angle between the two vectors orthogonal to the His1-His84 imidazole planes
           ), 
-        orthogonal.vector(pdb$xyz[atoms$his1cg_b$xyz],
-                          pdb$xyz[atoms$his1nd_b$xyz],
-                          pdb$xyz[atoms$his1ne_b$xyz]) %>% #Repeat for molecule B
+        orthogonal.vector(pdb$xyz[atoms$his1nd_b$xyz],
+                          pdb$xyz[atoms$his1ne_b$xyz],
+                          pdb$xyz[atoms$his1cg_b$xyz]) %>% #Repeat for molecule B
           vector.angle(
-            orthogonal.vector(pdb$xyz[atoms$his84cg_b$xyz],
-                              pdb$xyz[atoms$his84nd_b$xyz],
-                              pdb$xyz[atoms$his84ne_b$xyz])
+            orthogonal.vector(pdb$xyz[atoms$his84nd_b$xyz],
+                              pdb$xyz[atoms$his84ne_b$xyz],
+                              pdb$xyz[atoms$his84cg_b$xyz])
           )
       ), 
       TH1 = c(
-        orthogonal.vector(pdb$xyz[atoms$his1cg_a$xyz], 
-                          pdb$xyz[atoms$his1nd_a$xyz],
-                          pdb$xyz[atoms$his1ne_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
+        orthogonal.vector(pdb$xyz[atoms$his1nd_a$xyz], 
+                          pdb$xyz[atoms$his1ne_a$xyz],
+                          pdb$xyz[atoms$his1cg_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his1nd_a$xyz]-
                          pdb$xyz[atoms$cu_a$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90-.}, 
-        orthogonal.vector(pdb$xyz[atoms$his1cg_b$xyz],
-                          pdb$xyz[atoms$his1nd_b$xyz],
-                          pdb$xyz[atoms$his1ne_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
+          {.-90}, 
+        orthogonal.vector(pdb$xyz[atoms$his1nd_b$xyz],
+                          pdb$xyz[atoms$his1ne_b$xyz],
+                          pdb$xyz[atoms$his1cg_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
           vector.angle(pdb$xyz[atoms$his1nd_b$xyz]-
                          pdb$xyz[atoms$cu_b$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90-.}
+          {.-90}
       ), 
       THN = c(
-        orthogonal.vector(pdb$xyz[atoms$his84cg_a$xyz],
+        orthogonal.vector(pdb$xyz[atoms$his84ne_a$xyz],
                           pdb$xyz[atoms$his84nd_a$xyz],
-                          pdb$xyz[atoms$his84ne_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
-          vector.angle(pdb$xyz[atoms$his84nd_a$xyz]
+                          pdb$xyz[atoms$his84cg_a$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
+          vector.angle(pdb$xyz[atoms$his84ne_a$xyz]
                        -pdb$xyz[atoms$cu_a$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90-.}, 
-        orthogonal.vector(pdb$xyz[atoms$his84cg_b$xyz],
+          {.-90}, 
+        orthogonal.vector(pdb$xyz[atoms$his84ne_b$xyz],
                           pdb$xyz[atoms$his84nd_b$xyz],
-                          pdb$xyz[atoms$his84ne_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
-          vector.angle(pdb$xyz[atoms$his84nd_b$xyz]
+                          pdb$xyz[atoms$his84cg_b$xyz]) %>% #Find the vector orthogonal to the His1 imidazole ring plane
+          vector.angle(pdb$xyz[atoms$his84ne_b$xyz]
                        -pdb$xyz[atoms$cu_b$xyz]) %>% #Find the angle between the orthogonal vector and the Nd1-Cu vector
-          {90-.}
+          {.-90}
       ),
       Molecule = c("A", "B")
     )
