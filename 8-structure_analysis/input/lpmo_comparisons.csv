@@ -1,135 +1,135 @@
-﻿authors,year,pdb_id,protein,soak,temp,source_type,fwd,cu_redox,chain_id,average_protein_b_factor,cu-eq_in_distance,eq_in_occ,eq_in_b,eq_in_id,cu-eq_out_distance,eq_out_occ,eq_out_b,eq_out_id,cu-ax_in_distance,ax_in_occ,ax_in_b,ax_in_id,cu-ax_out_distance,ax_out_occ,ax_out_b,ax_out_id
-Gudmundsson et al.,2014,4ALC,EfAA10A,,cryo,synchrotron,8.27E+04,Cu(II),A,,2.19,1,15.37,HOH,,,,,2.21,1,16.24,HOH,,,,
-Gudmundsson et al.,2014,4ALE,EfAA10A,,cryo,synchrotron,1.65E+05,mixed,A,,2.22,1,19.27,HOH,,,,,2.36,1,17.86,HOH,,,,
-Gudmundsson et al.,2014,4ALR,EfAA10A,,cryo,synchrotron,2.47E+05,mixed,A,,2.2,1,22.31,HOH,,,,,2.29,1,19.31,HOH,,,,
-Gudmundsson et al.,2014,4ALQ,EfAA10A,,cryo,synchrotron,4.94E+05,mixed,A,,2.29,1,20.93,HOH,,,,,2.4,1,19.14,HOH,,,,
-Gudmundsson et al.,2014,4ALS,EfAA10A,,cryo,synchrotron,9.86E+05,Cu(I),A,,,,,,,,,,,,,,,,,
-Gudmundsson et al.,2014,4ALT,EfAA10A,,cryo,synchrotron,1.07E+06,Cu(I),A,,,,,,,,,,,,,,,,,
-Tandrup et al.,2022,7PXI,LsAA9A(f),,cryo,synchrotron,7.88E+03,Cu(II),A,18.81,2.16,1,15.79,HOH,,,,,2.71,1,12.78,HOH,,,,
-Tandrup et al.,2022,7PXJ,LsAA9A(f),,cryo,synchrotron,5.99E+04,mixed,A,18.52,2.29,0.5,15.43,HOH,3.86,0.5,22.17,HOH,2.99,1,15.18,HOH,,,,
-Tandrup et al.,2022,7PXK,LsAA9A(f),,cryo,synchrotron,1.39E+05,mixed,A,17.05,2.32,0.5,15.51,HOH,3.8,0.5,19.33,HOH,3.05,1,18.8,HOH,,,,
-Tandrup et al.,2022,7PXL,LsAA9A(f),,cryo,synchrotron,3.59E+05,mixed,A,16.91,2.28,0.5,16.32,HOH,3.86,0.5,18.67,HOH,3.08,1,20.04,HOH,,,,
-Tandrup et al.,2022,7PXM,LsAA9A(f),,cryo,synchrotron,1.45E+06,mixed,A,17.12,2.25,0.5,20.6,HOH,3.84,0.5,16.65,HOH,,,,,3.23,1,23.23,HOH
-Tandrup et al.,2022,7PXN,LsAA9A(f),,cryo,synchrotron,6.65E+06,mostly Cu(I),A,34.06,2.57,0.5,38.1,HOH,4.05,0.5,25.61,HOH,,,,,3.34,1,43.43,HOH
-Tandrup et al.,2022,7PYL,LsAA9A(Ec),,cryo,synchrotron,1.49E+04,mostly Cu(II),A,17.72,1.9,1,20.04,HOH,,,,,2.6,1,22.84,HOH,,,,
-Tandrup et al.,2022,7PYM,LsAA9A(Ec),,cryo,synchrotron,5.61E+04,mixed,A,17.95,2,1,20.32,HOH,,,,,2.46,0.5,11.6,HOH,3.81,0.5,15.72,HOH
-Tandrup et al.,2022,7PYN,LsAA9A(Ec),,cryo,synchrotron,2.31E+05,mixed,A,13.92,1.8,1,35.15,HOH,,,,,2.44,0.2,12.81,SO4@O3,3.1,1,33.45,HOH
-Tandrup et al.,2022,7PYO,LsAA9A(Ec),,cryo,synchrotron,3.33E+05,Cu(I),A,14.52,,,,,,,,,3.27,0.5,22.4,HOH,4.18,0.5,19.66,
-Tandrup et al.,2022,7PYP,LsAA9A(Ec),,cryo,synchrotron,2.13E+06,Cu(I),A,13.01,,,,,,,,,3.05,0.5,22.85,HOH,4.05,0.5,16.2,
-Tandrup et al.,2022,7PYQ,LsAA9A(Ec),,cryo,synchrotron,6.35E+06,Cu(I),A,22.74,,,,,,,,,,,,,3.77,1,31.07,HOH
-Tandrup et al.,2022,7PXU,LsAA9A(f),ascorbate,cryo,synchrotron,2.08E+03,Cu(I),A,17.92,,,,,4,1,11.18,HOH,,,,,3.7,1,38.62,HOH
-Tandrup et al.,2022,7PXV,LsAA9A(f),ascorbate,cryo,synchrotron,1.70E+07,Cu(I),A,20.13,,,,,4,1,22.33,HOH,,,,,3.5,1,32.93,HOH
-Tandrup et al.,2022,7PXT,LsAA9A(f),,cryo,synchrotron (SSX),7.02E+04,mixed,A,23.15,,,,,3.9,1,30.65,HOH,2.9,1,19.65,HOH,,,,
-Tandrup et al.,2022,7PXR,LsAA9A(f),,ambient,home source,,mixed,A,21.75,2.2,1,15.48,HOH,,,,,2.75,0.8,27.06,CL,,,,
-Tandrup et al.,2022,7PXS,LsAA9A(f),,ambient,synchrotron,1.91E+03,mixed,A,27.94,2.2,1,26.43,HOH,,,,,2.6,1,22.16,HOH,,,,
-Tandrup et al.,2022,7PZ3,TaAA9A,,cryo,synchrotron,5.37E+03,mixed,A,21.79,2.2,1,16.07,HOH,,,,,2,1,21.83,HOH,,,,
-Tandrup et al.,2022,7PZ4,TaAA9A,,cryo,synchrotron,2.07E+04,mixed,A,21.66,2.3,1,27.93,HOH,,,,,2.3,1,23.95,HOH,,,,
-Tandrup et al.,2022,7PZ5,TaAA9A,,cryo,synchrotron,9.56E+04,mixed,A,13.95,2.1,1,21.92,HOH,,,,,2.6,1,25.45,HOH,,,,
-Tandrup et al.,2022,7PZ6,TaAA9A,,cryo,synchrotron,2.22E+05,mixed,A,14.9,2.3,1,32,HOH,,,,,2.7,1,31.28,HOH,,,,
-Tandrup et al.,2022,7PZ7,TaAA9A,,cryo,synchrotron,1.13E+06,mixed,A,11.8,2.6,1,44.19,HOH,,,,,2.81,1,32.65,HOH,3.95,0.6,19.47,EPS@O2S
-Tandrup et al.,2022,7PZ8,TaAA9A,,cryo,synchrotron,3.12E+06,mixed,A,14.51,2.5,1,41.33,HOH,,,,,2.96,1,37.54,HOH,3.92,0.6,21.71,EPS@O2S
-Tandrup et al.,2022,7PYD,LsAA9A(f),cell4,cryo,synchrotron,7.88E+03,,A,44.11,2.3,1,36.68,CL,,,,,,,,,,,,
-Tandrup et al.,2022,7PYE,LsAA9A(f),cell4,cryo,synchrotron,5.99E+04,,A,45.38,2.9,1,58.44,CL,,,,,,,,,,,,
-Tandrup et al.,2022,7PYF,LsAA9A(f),cell4,cryo,synchrotron,1.39E+05,mixed,A,38.89,1.93,0.1,5.84,CL,3.86,0.9,45.56,CL,,,,,,,,
-Tandrup et al.,2022,7PYG,LsAA9A(f),cell4,cryo,synchrotron,3.60E+05,mixed,A,39.49,2.03,0.1,8.81,CL,4.01,0.9,45.94,CL,,,,,,,,
-Tandrup et al.,2022,7PYH,LsAA9A(f),cell4,cryo,synchrotron,1.45E+06,,A,38.64,,,,,3.97,1,46.26,CL,,,,,,,,
-Tandrup et al.,2022,7PYI,LsAA9A(f),cell4,cryo,synchrotron,6.65E+06,,A,55.61,,,,,3.8,1,63.3,CL,,,,,,,,
-Tandrup et al.,2022,7PYU,LsAA9A(Ec),cell3,cryo,synchrotron,1.49E+04,,A,13.21,2.3,1,24.63,CL,,,,,,,,,,,,
-Tandrup et al.,2022,7PYW,LsAA9A(Ec),cell3,cryo,synchrotron,5.62E+04,,A,13.33,2.4,1,32.01,CL,,,,,,,,,,,,
-Tandrup et al.,2022,7PYX,LsAA9A(Ec),cell3,cryo,synchrotron,2.74E+05,,A,10.71,2.7,1,40.36,CL,,,,,,,,,,,,
-Tandrup et al.,2022,7PYY,LsAA9A(Ec),cell3,cryo,synchrotron,5.05E+05,,A,12.55,2.8,1,48.65,CL,,,,,,,,,,,,
-Tandrup et al.,2022,7PYZ,LsAA9A(Ec),cell3,cryo,synchrotron,2.97E+06,,A,10.74,,,,,3.6,1,32.26,CL,,,,,,,,
-Tandrup et al.,2022,7PZ0,LsAA9A(Ec),cell3,cryo,synchrotron,9.81E+06,,A,13.06,,,,,3.8,0.8,24.12,CL,,,,,,,,
-Tandrup et al.,2022,7PXW,LsAA9A(Ec),cell4,cryo,synchrotron,2.14E+06,,A,21.5,2.28,0.6,33.87,HOH,3.92,0.6,25.83,CL,,,,,,,,
-Muderspach et al.,2019,6TBQ,AoAA13,,cryo,synchrotron,2.57E+03,mixed,A,25.2,2.09,1,35.67,HOH,,,,,,,,,,,,
-Muderspach et al.,2019,,AoAA13,,cryo,synchrotron,3.19E+04,Cu(I),A,,,,,,,,,,,,,,,,,
-O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,A,19.03,2.88,1,34.35,HOH,,,,,,,,,3.53,1,28.01,HOH
-O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,B,19.03,,,,,3.47,0.78,41.61,OXY,,,,,3.91,1,28.54,HOH
-O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,C,19.03,,,,,,,,,,,,,3.88,1,28.74,HOH
-O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,D,19.03,,,,,3.59,0.75,41.67,OXY,,,,,4.11,1,29.28,HOH
-Miller et al.,2026,9Z8O,NcAA9D,,cryo,synchrotron,1.23E+06,mixed,A,12.59,1.98,0.73,11.49,HOH,3.47,0.27,19.26,HOH,2.35,0.52,9.98,HOH,3.16,0.48,17.65,HOH
-Miller et al.,2026,9Z8P,NcAA9D,,cryo,synchrotron,1.74E+06,mixed,A,12.67,2,0.59,11.56,HOH,3.47,0.41,19.33,HOH,2.33,0.41,10.05,HOH,3.19,0.59,17.72,HOH
-Miller et al.,2026,9Z8Q,NcAA9D,,cryo,synchrotron,2.07E+06,mixed,A,12.6,1.97,0.59,11.53,HOH,3.46,0.41,19.3,HOH,2.36,0.41,10.02,HOH,3.18,0.59,17.69,HOH
-Miller et al.,2026,9Z8R,NcAA9D,,cryo,synchrotron,2.37E+06,mixed,A,12.68,1.98,0.55,11.66,HOH,3.42,0.45,19.43,HOH,2.38,0.38,10.15,HOH,3.35,0.62,17.82,HOH
-Miller et al.,2026,9Z8S,NcAA9D,,cryo,synchrotron,2.75E+06,mixed,A,12.56,1.98,0.55,11.47,HOH,3.45,0.45,19.24,HOH,2.38,0.43,9.96,HOH,3.12,0.57,17.63,HOH
-Miller et al.,2026,9Z8T,NcAA9D,,cryo,synchrotron,2.99E+06,mixed,A,12.67,2.02,0.52,11.51,HOH,3.41,0.48,19.28,HOH,2.41,0.41,10,HOH,3.23,0.59,17.67,HOH
-Miller et al.,2026,9Z8U,NcAA9D,,cryo,synchrotron,3.21E+06,mixed,A,12.68,1.99,0.57,11.47,HOH,3.5,0.43,19.24,HOH,2.39,0.41,9.96,HOH,3.33,0.59,17.63,HOH
-Miller et al.,2026,9Z8V,NcAA9D,,cryo,synchrotron,3.41E+06,mixed,A,12.8,2.01,0.6,11.58,HOH,3.37,0.4,19.35,HOH,2.38,0.41,10.07,HOH,3.38,0.59,17.74,HOH
-Miller et al.,2026,9Z8W,NcAA9D,,cryo,synchrotron,3.59E+06,mixed,A,12.78,1.97,0.56,11.42,HOH,3.46,0.44,19.19,HOH,2.35,0.42,9.91,HOH,3.26,0.58,17.58,HOH
-Miller et al.,2026,9Z8X,NcAA9D,,cryo,synchrotron,3.85E+06,mixed,A,12.83,1.97,0.57,11.73,HOH,3.4,0.43,19.5,HOH,2.35,0.42,10.22,HOH,3.23,0.58,17.89,HOH
-Miller et al.,2026,9Z8Y,NcAA9D,,cryo,synchrotron,3.98E+06,mixed,A,13.03,1.98,0.55,11.69,HOH,3.48,0.45,19.46,HOH,2.37,0.41,10.18,HOH,3.42,0.59,17.85,HOH
-Miller et al.,2026,9Z8Z,NcAA9D,,cryo,synchrotron,4.11E+06,mixed,A,12.69,2.04,0.58,11.47,HOH,3.42,0.42,19.24,HOH,2.3,0.41,9.96,HOH,3.26,0.59,17.63,HOH
-Miller et al.,2026,9Z90,NcAA9D,,cryo,synchrotron,4.24E+06,mixed,A,12.96,1.95,0.6,11.53,HOH,3.44,0.4,19.3,HOH,2.37,0.46,10.02,HOH,3.27,0.54,17.69,HOH
-Miller et al.,2026,9Z92,NcAA9D,,cryo,synchrotron,4.42E+06,mixed,A,12.9,2.02,0.61,11.61,HOH,3.42,0.39,19.38,HOH,2.36,0.41,10.1,HOH,3.38,0.59,17.77,HOH
-Miller et al.,2026,9Z93,NcAA9D,,cryo,synchrotron,4.53E+06,mixed,A,12.85,2.02,0.6,11.56,HOH,3.38,0.4,19.33,HOH,2.34,0.46,10.05,HOH,3.16,0.54,17.72,HOH
-Miller et al.,2026,9Z94,NcAA9D,,cryo,synchrotron,4.64E+06,mixed,A,12.8,1.96,0.64,11.83,HOH,3.39,0.36,19.6,HOH,2.35,0.45,10.32,HOH,3.31,0.55,17.99,HOH
-Miller et al.,2026,9Z95,NcAA9D,,cryo,synchrotron,4.75E+06,mixed,A,12.97,1.99,0.61,11.77,HOH,3.37,0.39,19.54,HOH,2.35,0.4,10.26,HOH,3.33,0.6,17.93,HOH
-Miller et al.,2026,9Z96,NcAA9D,,cryo,synchrotron,4.84E+06,mixed,A,12.82,1.97,0.61,11.4,HOH,3.36,0.39,19.17,HOH,2.33,0.42,9.89,HOH,3.23,0.58,17.56,HOH
-Miller et al.,2026,9Z97,NcAA9D,,cryo,synchrotron,4.98E+06,mixed,A,13.16,1.98,0.57,11.57,HOH,3.45,0.43,19.34,HOH,2.35,0.43,10.06,HOH,3.33,0.57,17.73,HOH
-Miller et al.,2026,9Z98,NcAA9D,,cryo,synchrotron,5.06E+06,mixed,A,12.73,1.96,0.6,11.45,HOH,3.54,0.4,19.22,HOH,2.33,0.42,9.94,HOH,3.27,0.58,17.61,HOH
-Miller et al.,2026,9Z99,NcAA9D,,cryo,synchrotron,5.14E+06,mixed,A,12.63,2.04,0.57,11.58,HOH,3.42,0.43,19.35,HOH,2.38,0.43,10.07,HOH,3.38,0.57,17.74,HOH
-Miller et al.,2026,9ZA5,NcAA9D,,cryo,synchrotron,5.21E+06,mixed,A,12.53,1.98,0.54,11.46,HOH,3.45,0.46,19.23,HOH,2.35,0.43,9.95,HOH,3.31,0.57,17.62,HOH
-Miller et al.,2026,9ZA6,NcAA9D,,cryo,synchrotron,5.33E+06,mixed,A,12.72,2.02,0.6,11.49,HOH,3.38,0.4,19.26,HOH,2.35,0.39,9.98,HOH,3.24,0.61,17.65,HOH
-Miller et al.,2026,9ZA7,NcAA9D,,cryo,synchrotron,5.41E+06,mixed,A,12.92,2.03,0.62,11.51,HOH,3.35,0.38,19.28,HOH,2.33,0.43,10,HOH,3.28,0.57,17.67,HOH
-Miller et al.,2026,9ZA8,NcAA9D,,cryo,synchrotron,5.48E+06,mixed,A,12.95,2,0.57,11.62,HOH,3.44,0.43,19.39,HOH,2.37,0.38,10.11,HOH,3.31,0.62,17.78,HOH
-Miller et al.,2026,9ZA9,NcAA9D,,cryo,synchrotron,5.55E+06,mixed,A,12.98,1.97,0.55,11.41,HOH,3.4,0.45,19.18,HOH,2.3,0.39,9.9,HOH,3.23,0.61,17.57,HOH
-Miller et al.,2026,9ZAA,NcAA9D,,cryo,synchrotron,5.63E+06,mixed,A,13.14,1.99,0.57,11.46,HOH,3.45,0.43,19.23,HOH,2.37,0.39,9.95,HOH,3.39,0.61,17.62,HOH
-Miller et al.,2026,9ZAB,NcAA9D,,cryo,synchrotron,5.71E+06,mixed,A,13.03,2.03,0.57,11.57,HOH,3.3,0.43,19.34,HOH,2.33,0.39,10.06,HOH,3.24,0.61,17.73,HOH
-Miller et al.,2026,9ZAC,NcAA9D,,cryo,synchrotron,5.78E+06,mixed,A,13.19,1.99,0.57,11.51,HOH,3.41,0.43,19.28,HOH,2.32,0.36,10,HOH,3.35,0.64,17.67,HOH
-Miller et al.,2026,9ZAD,NcAA9D,,cryo,synchrotron,5.84E+06,mixed,A,13.09,2.01,0.49,11.67,HOH,3.42,0.51,19.44,HOH,2.38,0.41,10.16,HOH,3.34,0.59,17.83,HOH
-Miller et al.,2026,9ZAE,NcAA9D,,cryo,synchrotron,5.90E+06,mixed,A,13.23,2,0.53,11.76,HOH,3.38,0.47,19.53,HOH,2.34,0.41,10.25,HOH,3.37,0.59,17.92,HOH
-Miller et al.,2026,9ZAF,NcAA9D,,cryo,synchrotron,5.99E+06,mixed,A,13.05,1.98,0.55,11.74,HOH,3.47,0.45,19.51,HOH,2.39,0.42,10.23,HOH,3.36,0.58,17.9,HOH
-Miller et al.,2026,9ZAH,NcAA9D,,cryo,synchrotron,6.04E+06,mixed,A,13.16,2.02,0.56,11.72,HOH,3.35,0.44,19.49,HOH,2.34,0.41,10.21,HOH,3.22,0.59,17.88,HOH
-Miller et al.,2026,9ZAI,NcAA9D,,cryo,synchrotron,6.10E+06,mixed,A,13.33,2.04,0.55,11.88,HOH,3.39,0.45,19.65,HOH,2.33,0.36,10.37,HOH,3.26,0.64,18.04,HOH
-Miller et al.,2026,9ZAJ,NcAA9D,,cryo,synchrotron,6.15E+06,mixed,A,13.16,2.02,0.49,11.84,HOH,3.48,0.51,19.61,HOH,2.38,0.37,10.33,HOH,3.35,0.63,18,HOH
-Miller et al.,2026,9ZAL,NcAA9D,,cryo,synchrotron,6.20E+06,mixed,A,13.21,1.98,0.5,11.98,HOH,3.4,0.5,19.75,HOH,2.37,0.31,10.47,HOH,3.39,0.69,18.14,HOH
-Miller et al.,2026,9Z8O,NcAA9D,,cryo,synchrotron,1.23E+06,mixed,B,12.59,2.03,0.72,11.49,HOH,,,,,2.43,0.55,10.35,HOH,3.19,0.45,20.87,HOH
-Miller et al.,2026,9Z8P,NcAA9D,,cryo,synchrotron,1.74E+06,mixed,B,12.67,2,0.55,11.56,HOH,,,,,2.41,0.4,10.42,HOH,3.28,0.6,20.94,HOH
-Miller et al.,2026,9Z8Q,NcAA9D,,cryo,synchrotron,2.07E+06,mixed,B,12.6,1.99,0.53,11.53,HOH,,,,,2.43,0.37,10.39,HOH,3.29,0.63,20.91,HOH
-Miller et al.,2026,9Z8R,NcAA9D,,cryo,synchrotron,2.37E+06,mixed,B,12.68,2.01,0.53,11.66,HOH,,,,,2.38,0.36,10.52,HOH,3.43,0.64,21.04,HOH
-Miller et al.,2026,9Z8S,NcAA9D,,cryo,synchrotron,2.75E+06,mixed,B,12.56,1.99,0.55,11.47,HOH,,,,,2.41,0.37,10.33,HOH,3.23,0.63,20.85,HOH
-Miller et al.,2026,9Z8T,NcAA9D,,cryo,synchrotron,2.99E+06,mixed,B,12.67,2.01,0.52,11.51,HOH,,,,,2.4,0.38,10.37,HOH,3.36,0.62,20.89,HOH
-Miller et al.,2026,9Z8U,NcAA9D,,cryo,synchrotron,3.21E+06,mixed,B,12.68,1.99,0.49,11.47,HOH,,,,,2.44,0.38,10.33,HOH,3.42,0.62,20.85,HOH
-Miller et al.,2026,9Z8V,NcAA9D,,cryo,synchrotron,3.41E+06,mixed,B,12.8,2.03,0.54,11.58,HOH,,,,,2.41,0.37,10.44,HOH,3.42,0.63,20.96,HOH
-Miller et al.,2026,9Z8W,NcAA9D,,cryo,synchrotron,3.59E+06,mixed,B,12.78,2.01,0.47,11.42,HOH,,,,,2.42,0.38,10.28,HOH,3.41,0.62,20.8,HOH
-Miller et al.,2026,9Z8X,NcAA9D,,cryo,synchrotron,3.85E+06,mixed,B,12.83,2.04,0.47,11.73,HOH,,,,,2.41,0.38,10.59,HOH,3.32,0.62,21.11,HOH
-Miller et al.,2026,9Z8Y,NcAA9D,,cryo,synchrotron,3.98E+06,mixed,B,13.03,2.06,0.51,11.69,HOH,,,,,2.36,0.41,10.55,HOH,3.34,0.59,21.07,HOH
-Miller et al.,2026,9Z8Z,NcAA9D,,cryo,synchrotron,4.11E+06,mixed,B,12.69,2.03,0.53,11.47,HOH,,,,,2.35,0.38,10.33,HOH,3.44,0.62,20.85,HOH
-Miller et al.,2026,9Z90,NcAA9D,,cryo,synchrotron,4.24E+06,mixed,B,12.96,1.95,0.49,11.53,HOH,,,,,2.38,0.37,10.39,HOH,3.29,0.63,20.91,HOH
-Miller et al.,2026,9Z92,NcAA9D,,cryo,synchrotron,4.42E+06,mixed,B,12.9,2.05,0.44,11.61,HOH,,,,,2.38,0.41,10.47,HOH,3.4,0.59,20.99,HOH
-Miller et al.,2026,9Z93,NcAA9D,,cryo,synchrotron,4.53E+06,mixed,B,12.85,2.04,0.46,11.56,HOH,,,,,2.39,0.36,10.42,HOH,3.43,0.64,20.94,HOH
-Miller et al.,2026,9Z94,NcAA9D,,cryo,synchrotron,4.64E+06,mixed,B,12.8,2.04,0.5,11.83,HOH,,,,,2.35,0.4,10.69,HOH,3.31,0.6,21.21,HOH
-Miller et al.,2026,9Z95,NcAA9D,,cryo,synchrotron,4.75E+06,mixed,B,12.97,2.02,0.5,11.77,HOH,,,,,2.43,0.4,10.63,HOH,3.37,0.6,21.15,HOH
-Miller et al.,2026,9Z96,NcAA9D,,cryo,synchrotron,4.84E+06,mixed,B,12.82,2.05,0.46,11.4,HOH,,,,,2.45,0.4,10.26,HOH,3.44,0.6,20.78,HOH
-Miller et al.,2026,9Z97,NcAA9D,,cryo,synchrotron,4.98E+06,mixed,B,13.16,2,0.52,11.57,HOH,,,,,2.43,0.42,10.43,HOH,3.37,0.58,20.95,HOH
-Miller et al.,2026,9Z98,NcAA9D,,cryo,synchrotron,5.06E+06,mixed,B,12.73,1.97,0.5,11.45,HOH,,,,,2.45,0.41,10.31,HOH,3.4,0.59,20.83,HOH
-Miller et al.,2026,9Z99,NcAA9D,,cryo,synchrotron,5.14E+06,mixed,B,12.63,2.01,0.55,11.58,HOH,,,,,2.45,0.44,10.44,HOH,3.34,0.56,20.96,HOH
-Miller et al.,2026,9ZA5,NcAA9D,,cryo,synchrotron,5.21E+06,mixed,B,12.53,2.09,0.5,11.46,HOH,,,,,2.39,0.4,10.32,HOH,3.26,0.6,20.84,HOH
-Miller et al.,2026,9ZA6,NcAA9D,,cryo,synchrotron,5.33E+06,mixed,B,12.72,2.03,0.52,11.49,HOH,,,,,2.44,0.37,10.35,HOH,3.43,0.63,20.87,HOH
-Miller et al.,2026,9ZA7,NcAA9D,,cryo,synchrotron,5.41E+06,mixed,B,12.92,2.06,0.47,11.51,HOH,,,,,2.39,0.36,10.37,HOH,3.33,0.64,20.89,HOH
-Miller et al.,2026,9ZA8,NcAA9D,,cryo,synchrotron,5.48E+06,mixed,B,12.95,2.02,0.5,11.62,HOH,,,,,2.44,0.39,10.48,HOH,3.42,0.61,21,HOH
-Miller et al.,2026,9ZA9,NcAA9D,,cryo,synchrotron,5.55E+06,mixed,B,12.98,2.07,0.53,11.41,HOH,,,,,2.37,0.37,10.27,HOH,3.4,0.63,20.79,HOH
-Miller et al.,2026,9ZAA,NcAA9D,,cryo,synchrotron,5.63E+06,mixed,B,13.14,1.97,0.5,11.46,HOH,,,,,2.42,0.34,10.32,HOH,3.37,0.66,20.84,HOH
-Miller et al.,2026,9ZAB,NcAA9D,,cryo,synchrotron,5.71E+06,mixed,B,13.03,2.02,0.51,11.57,HOH,,,,,2.42,0.35,10.43,HOH,3.34,0.65,20.95,HOH
-Miller et al.,2026,9ZAC,NcAA9D,,cryo,synchrotron,5.78E+06,mixed,B,13.19,1.95,0.59,11.51,HOH,,,,,2.39,0.4,10.37,HOH,3.35,0.6,20.89,HOH
-Miller et al.,2026,9ZAD,NcAA9D,,cryo,synchrotron,5.84E+06,mixed,B,13.09,2,0.55,11.67,HOH,,,,,2.44,0.39,10.53,HOH,3.36,0.61,21.05,HOH
-Miller et al.,2026,9ZAE,NcAA9D,,cryo,synchrotron,5.90E+06,mixed,B,13.23,1.94,0.54,11.76,HOH,,,,,2.45,0.43,10.62,HOH,3.39,0.57,21.14,HOH
-Miller et al.,2026,9ZAF,NcAA9D,,cryo,synchrotron,5.99E+06,mixed,B,13.05,2,0.55,11.74,HOH,,,,,2.48,0.34,10.6,HOH,3.46,0.66,21.12,HOH
-Miller et al.,2026,9ZAH,NcAA9D,,cryo,synchrotron,6.04E+06,mixed,B,13.16,2.02,0.54,11.72,HOH,,,,,2.39,0.36,10.58,HOH,3.37,0.64,21.1,HOH
-Miller et al.,2026,9ZAI,NcAA9D,,cryo,synchrotron,6.10E+06,mixed,B,13.33,2.01,0.52,11.88,HOH,,,,,2.5,0.46,10.74,HOH,3.48,0.54,21.26,HOH
-Miller et al.,2026,9ZAJ,NcAA9D,,cryo,synchrotron,6.15E+06,mixed,B,13.16,1.98,0.49,11.84,HOH,,,,,2.38,0.4,10.7,HOH,3.35,0.6,21.22,HOH
-Miller et al.,2026,9ZAL,NcAA9D,,cryo,synchrotron,6.20E+06,mixed,B,13.21,1.96,0.41,11.98,HOH,,,,,2.47,0.33,10.84,HOH,3.48,0.67,21.36,HOH
-Li et al.,2012,4EIR,NcAA9D,,cryo,synchrotron,,,A,14.3,1.82,0.5,16.07,HOH,,,,,2.92,0.8,18.63,OXY,,,,
-Li et al.,2012,4EIR,NcAA9D,,cryo,synchrotron,,,B,14.3,1.84,0.49,16.69,HOH,,,,,2.96,0.8,16.77,OXY,,,,
-O'Dell et al.,2017,5TKG,NcAA9D,,cryo,synchrotron,,,A,11.3,1.96,1,12.25,HOH,,,,,2.36,1,16.06,HOH,,,,
-O'Dell et al.,2017,5TKH,NcAA9D,ascorbate,cryo,synchrotron,,Cu(I),A,13.66,1.9,0.59,18.98,PER,,,,,2.36,0.48,28.14,HOH,3.46,0.52,28.02,HOH
-O'Dell et al.,2017,5TKI,NcAA9D,,ambient,joint neutron,,Cu(II),A,21.54,1.98,1,15.1,HOH,,,,,2.43,1,18.52,HOH,,,,
-O'Dell et al.,2017,5TKG,NcAA9D,,cryo,synchrotron,,,B,11.3,2,1,13.68,HOH,,,,,2.44,1,17.33,HOH,,,,
-O'Dell et al.,2017,5TKH,NcAA9D,ascorbate,cryo,synchrotron,,Cu(I),B,13.66,2.07,1,9.44,HOH,,,,,2.23,0.34,29.21,HOH,3.38,0.66,28.35,HOH
-O'Dell et al.,2017,5TKI,NcAA9D,,ambient,joint neutron,,Cu(II),B,21.54,2.47,1,14.13,HOH,,,,,1.94,1,18.45,HOH,,,,
-"Schröder, et al.",2022,7T5C,NcAA9D,low pH,cryo,home source,,,A,13.76,2.11,1,21.88,HOH,,,,,2.43,1,26.24,HOH,,,,
-"Schröder, et al.",2022,7T5D,NcAA9D,ascorbate,ambient,neutron,,Cu(I),A,35.33,1.97,0.70/0.30,33.75/33.83,PEO/OXY,,,,,,,,,,,,
-"Schröder, et al.",2022,7T5E,NcAA9D,low pH,ambient,joint neutron,,Cu(II),A,21.56,2.03,1,15.53,HOH,,,,,2.43,1,20.44,HOH,,,,
-"Schröder, et al.",2022,7T5C,NcAA9D,low pH,cryo,home source,,,B,13.76,2.12,1,22.65,HOH,,,,,2.42,1,22.21,HOH,,,,
-"Schröder, et al.",2022,7T5D,NcAA9D,ascorbate,ambient,neutron,,Cu(I),B,35.33,,,,,,,,,2.24,0.65,33.94,HOH,,,,
-"Schröder, et al.",2022,7T5E,NcAA9D,low pH,ambient,joint neutron,,Cu(II),B,21.56,2.08,1,19.32,HOH,,,,,2.34,1,27.64,HOH,,,,
+﻿authors,year,pdb_id,protein,soak,temp,source_type,fwd,cu_redox,chain_id,average_protein_b_factor,cu_eq_in_distance,eq_in_occ,eq_in_b,eq_in_id,cu_eq_out_distance,eq_out_occ,eq_out_b,eq_out_id,cu_ax_in_distance,ax_in_occ,ax_in_b,ax_in_id,cu_ax_out_distance,ax_out_occ,ax_out_b,ax_out_id,theta_1,theta_2,theta_3,theta_t,theta_hh,theta_h1,theta_hn
+Gudmundsson et al.,2014,4ALC,EfAA10A,,cryo,synchrotron,8.27E+04,Cu(II),A,,2.19,1,15.37,HOH,,,,,2.21,1,16.24,HOH,,,,,,,,,,,
+Gudmundsson et al.,2014,4ALE,EfAA10A,,cryo,synchrotron,1.65E+05,mixed,A,,2.22,1,19.27,HOH,,,,,2.36,1,17.86,HOH,,,,,,,,,,,
+Gudmundsson et al.,2014,4ALR,EfAA10A,,cryo,synchrotron,2.47E+05,mixed,A,,2.2,1,22.31,HOH,,,,,2.29,1,19.31,HOH,,,,,,,,,,,
+Gudmundsson et al.,2014,4ALQ,EfAA10A,,cryo,synchrotron,4.94E+05,mixed,A,,2.29,1,20.93,HOH,,,,,2.4,1,19.14,HOH,,,,,,,,,,,
+Gudmundsson et al.,2014,4ALS,EfAA10A,,cryo,synchrotron,9.86E+05,Cu(I),A,,,,,,,,,,,,,,,,,,,,,,,,
+Gudmundsson et al.,2014,4ALT,EfAA10A,,cryo,synchrotron,1.07E+06,Cu(I),A,,,,,,,,,,,,,,,,,,,,,,,,
+Tandrup et al.,2022,7PXI,LsAA9A(f),,cryo,synchrotron,7.88E+03,Cu(II),A,18.81,2.16,1,15.79,HOH,,,,,2.71,1,12.78,HOH,,,,,92.9,89.6,177.1,1.5,66.9,5.8,4.3
+Tandrup et al.,2022,7PXJ,LsAA9A(f),,cryo,synchrotron,5.99E+04,mixed,A,18.52,2.29,0.5,15.43,HOH,3.86,0.5,22.17,HOH,2.99,1,15.18,HOH,,,,,93.1,90.9,175.2,2.7,64.7,4.7,3.8
+Tandrup et al.,2022,7PXK,LsAA9A(f),,cryo,synchrotron,1.39E+05,mixed,A,17.05,2.32,0.5,15.51,HOH,3.8,0.5,19.33,HOH,3.05,1,18.8,HOH,,,,,92,95.1,172.5,2.2,64.5,0.9,8.6
+Tandrup et al.,2022,7PXL,LsAA9A(f),,cryo,synchrotron,3.59E+05,mixed,A,16.91,2.28,0.5,16.32,HOH,3.86,0.5,18.67,HOH,3.08,1,20.04,HOH,,,,,92.1,96.7,170.3,4.2,63.7,-0.8,7.4
+Tandrup et al.,2022,7PXM,LsAA9A(f),,cryo,synchrotron,1.45E+06,mixed,A,17.12,2.25,0.5,20.6,HOH,3.84,0.5,16.65,HOH,3.23,1,23.23,HOH,,,,,93.3,96.6,169.6,3.1,63,-3.2,8.6
+Tandrup et al.,2022,7PXN,LsAA9A(f),,cryo,synchrotron,6.65E+06,mostly Cu(I),A,34.06,2.57,0.5,38.1,HOH,4.05,0.5,25.61,HOH,3.34,1,43.43,HOH,,,,,91.7,99.7,167.5,5.1,58.6,-3.2,7.4
+Tandrup et al.,2022,7PYL,LsAA9A(Ec),,cryo,synchrotron,1.49E+04,mostly Cu(II),A,17.72,1.9,1,20.04,HOH,,,,,2.6,1,22.84,HOH,,,,,91.8,94.9,172.6,3.3,66.2,0.5,6.7
+Tandrup et al.,2022,7PYM,LsAA9A(Ec),,cryo,synchrotron,5.61E+04,mixed,A,17.95,2,1,20.32,HOH,,,,,2.46,0.5,11.6,HOH,3.81,0.5,15.72,HOH,92.9,96.3,168.6,6.7,64.3,-6.1,6.8
+Tandrup et al.,2022,7PYN,LsAA9A(Ec),,cryo,synchrotron,2.31E+05,mixed,A,13.92,1.8,1,35.15,HOH,,,,,2.44,0.2,12.81,SO4@O3,3.1,1,33.45,HOH,92.6,97.9,168.8,4,65.8,-6.8,10.1
+Tandrup et al.,2022,7PYO,LsAA9A(Ec),,cryo,synchrotron,3.33E+05,Cu(I),A,14.52,,,,,,,,,3.27,0.5,22.4,HOH,4.18,0.5,19.66,,92.3,99.8,167.2,4,64.2,-9.9,11.1
+Tandrup et al.,2022,7PYP,LsAA9A(Ec),,cryo,synchrotron,2.13E+06,Cu(I),A,13.01,,,,,,,,,3.05,0.5,22.85,HOH,4.05,0.5,16.2,,92.7,99.6,167,4.3,64.3,-8.4,11.5
+Tandrup et al.,2022,7PYQ,LsAA9A(Ec),,cryo,synchrotron,6.35E+06,Cu(I),A,22.74,,,,,,,,,3.77,1,31.07,HOH,,,,,93.3,102.9,162.5,7.8,62.8,-13.3,11.3
+Tandrup et al.,2022,7PXU,LsAA9A(f),ascorbate,cryo,synchrotron,2.08E+03,Cu(I),A,17.92,4,1,11.18,HOH,,,,,3.7,1,38.62,HOH,,,,,94.8,96.3,168.4,3.4,65.1,-3.7,9.7
+Tandrup et al.,2022,7PXV,LsAA9A(f),ascorbate,cryo,synchrotron,1.70E+07,Cu(I),A,20.13,4,1,22.33,HOH,,,,,3.5,1,32.93,HOH,,,,,93.2,97.4,168.6,4.4,59.3,-4.9,9.8
+Tandrup et al.,2022,7PXT,LsAA9A(f),,cryo,synchrotron (SSX),7.02E+04,mixed,A,23.15,3.9,1,30.65,HOH,,,,,2.9,1,19.65,HOH,,,,,84.9,99.6,171.5,7.1,69.9,-4.1,11.1
+Tandrup et al.,2022,7PXR,LsAA9A(f),,ambient,home source,,mixed,A,21.75,2.2,1,15.48,HOH,,,,,2.75,0.8,27.06,CL,,,,,88.6,92.9,176.6,3.3,66.3,5.7,3.8
+Tandrup et al.,2022,7PXS,LsAA9A(f),,ambient,synchrotron,1.91E+03,mixed,A,27.94,2.2,1,26.43,HOH,,,,,2.6,1,22.16,HOH,,,,,92.7,94.7,170.5,5.9,63.7,0.6,3.5
+Tandrup et al.,2022,7PZ3,TaAA9A,,cryo,synchrotron,5.37E+03,mixed,A,21.79,2.2,1,16.07,HOH,,,,,2,1,21.83,HOH,,,,,94,91.4,174.6,-1,74.7,2.6,12.2
+Tandrup et al.,2022,7PZ4,TaAA9A,,cryo,synchrotron,2.07E+04,mixed,A,21.66,2.3,1,27.93,HOH,,,,,2.3,1,23.95,HOH,,,,,94.4,89.3,176,-1.5,82.2,12.4,11.6
+Tandrup et al.,2022,7PZ5,TaAA9A,,cryo,synchrotron,9.56E+04,mixed,A,13.95,2.1,1,21.92,HOH,,,,,2.6,1,25.45,HOH,,,,,93.7,93.8,172.5,-0.2,75.4,-1.8,10.1
+Tandrup et al.,2022,7PZ6,TaAA9A,,cryo,synchrotron,2.22E+05,mixed,A,14.9,2.3,1,32,HOH,,,,,2.7,1,31.28,HOH,,,,,94.8,92.9,172.3,0.5,76.9,-0.6,10.8
+Tandrup et al.,2022,7PZ7,TaAA9A,,cryo,synchrotron,1.13E+06,mixed,A,11.8,2.6,1,44.19,HOH,,,,,2.81,1,32.65,HOH,3.95,0.6,19.47,EPS,94.6,95.2,170.3,0.5,75.3,-3.7,14.1
+Tandrup et al.,2022,7PZ8,TaAA9A,,cryo,synchrotron,3.12E+06,mixed,A,14.51,2.5,1,41.33,HOH,,,,,2.96,1,37.54,HOH,3.92,0.6,21.71,EPS,94.6,96.1,169.3,1,74.4,-4.1,14.4
+Tandrup et al.,2022,7PYD,LsAA9A(f),cell4,cryo,synchrotron,7.88E+03,,A,44.11,2.3,1,36.68,CL,,,,,,,,,,,,,96.4,94.1,161.1,15.6,71,-12.6,16.1
+Tandrup et al.,2022,7PYE,LsAA9A(f),cell4,cryo,synchrotron,5.99E+04,,A,45.38,2.9,1,58.44,CL,,,,,,,,,,,,,95.6,100.2,154.1,20.4,64.3,-18.1,17.5
+Tandrup et al.,2022,7PYF,LsAA9A(f),cell4,cryo,synchrotron,1.39E+05,mixed,A,38.89,1.93,0.1,5.84,CL,3.86,0.9,45.56,CL,,,,,,,,,90.8,102,152.9,23.5,55.3,-20.8,7.1
+Tandrup et al.,2022,7PYG,LsAA9A(f),cell4,cryo,synchrotron,3.60E+05,mixed,A,39.49,2.03,0.1,8.81,CL,4.01,0.9,45.94,CL,,,,,,,,,92.9,103.7,153.7,20,60.1,-20.8,13.6
+Tandrup et al.,2022,7PYH,LsAA9A(f),cell4,cryo,synchrotron,1.45E+06,,A,38.64,3.97,1,46.26,CL,,,,,,,,,,,,,94.8,107.2,150.9,18.4,57.7,-20.7,17.9
+Tandrup et al.,2022,7PYI,LsAA9A(f),cell4,cryo,synchrotron,6.65E+06,,A,55.61,3.8,1,63.3,CL,,,,,,,,,,,,,98.1,110.1,147.9,14.5,55.4,-21.7,24.1
+Tandrup et al.,2022,7PYU,LsAA9A(Ec),cell3,cryo,synchrotron,1.49E+04,,A,13.21,2.3,1,24.63,CL,,,,,,,,,,,,,91.3,91.7,169.2,10.4,67.7,-6.2,4.9
+Tandrup et al.,2022,7PYW,LsAA9A(Ec),cell3,cryo,synchrotron,5.62E+04,,A,13.33,2.4,1,32.01,CL,,,,,,,,,,,,,92.3,93.6,169.2,9,66.4,-8.3,8.8
+Tandrup et al.,2022,7PYX,LsAA9A(Ec),cell3,cryo,synchrotron,2.74E+05,,A,10.71,2.7,1,40.36,CL,,,,,,,,,,,,,92.6,96.8,167.4,8.3,65.3,-8.9,10.6
+Tandrup et al.,2022,7PYY,LsAA9A(Ec),cell3,cryo,synchrotron,5.05E+05,,A,12.55,2.8,1,48.65,CL,,,,,,,,,,,,,92.5,97.2,167.2,8.3,64.7,-10,11.2
+Tandrup et al.,2022,7PYZ,LsAA9A(Ec),cell3,cryo,synchrotron,2.97E+06,,A,10.74,3.6,1,32.26,CL,,,,,,,,,,,,,92.8,98.8,165.8,8.1,64.2,-9.1,11
+Tandrup et al.,2022,7PZ0,LsAA9A(Ec),cell3,cryo,synchrotron,9.81E+06,,A,13.06,3.8,0.8,24.12,CL,,,,,,,,,,,,,93,98.8,165.7,8.2,63.4,-11.5,10
+Tandrup et al.,2022,7PXW,LsAA9A(Ec),cell4,cryo,synchrotron,2.14E+06,,A,21.5,2.28,0.6,33.87,HOH,3.92,0.6,25.83,CL,,,,,,,,,92.4,99.5,165.3,8.5,62.3,-10.4,8
+Muderspach et al.,2019,6TBQ,AoAA13,,cryo,synchrotron,2.57E+03,mixed,A,25.2,2.09,1,35.67,HOH,,,,,,,,,,,,,,,,,,,
+Muderspach et al.,2019,,AoAA13,,cryo,synchrotron,3.19E+04,Cu(I),A,,,,,,,,,,,,,,,,,,,,,,,,
+O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,A,19.03,2.88,1,34.35,HOH,,,,,3.53,1,28.01,HOH,,,,,,,,,,,
+O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,B,19.03,3.47,0.78,41.61,OXY,,,,,3.91,1,28.54,HOH,,,,,,,,,,,
+O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,C,19.03,,,,,,,,,3.88,1,28.74,HOH,,,,,,,,,,,
+O'Dell et al.,2016,5TKF,NcAA9D,high glycosylation,cryo,synchrotron,,,D,19.03,3.59,0.75,41.67,OXY,,,,,4.11,1,29.28,HOH,,,,,,,,,,,
+Miller et al.,2026,9Z8O,NcAA9D,,cryo,synchrotron,1.23E+06,mixed,A,12.59,1.98,0.73,11.49,HOH,3.47,0.27,19.26,HOH,2.35,0.52,9.98,HOH,3.16,0.48,17.65,HOH,92.20,92.76,172.95,5.01,69.70,-3.09,8.03
+Miller et al.,2026,9Z8P,NcAA9D,,cryo,synchrotron,1.74E+06,mixed,A,12.67,2,0.59,11.56,HOH,3.47,0.41,19.33,HOH,2.33,0.41,10.05,HOH,3.19,0.59,17.72,HOH,92.40,94.70,170.49,6.31,67.89,-0.97,8.78
+Miller et al.,2026,9Z8Q,NcAA9D,,cryo,synchrotron,2.07E+06,mixed,A,12.6,1.97,0.59,11.53,HOH,3.46,0.41,19.3,HOH,2.36,0.41,10.02,HOH,3.18,0.59,17.69,HOH,92.85,93.85,170.11,7.27,66.62,1.04,8.10
+Miller et al.,2026,9Z8R,NcAA9D,,cryo,synchrotron,2.37E+06,mixed,A,12.68,1.98,0.55,11.66,HOH,3.42,0.45,19.43,HOH,2.38,0.38,10.15,HOH,3.35,0.62,17.82,HOH,92.76,94.34,170.04,6.98,66.94,1.12,8.09
+Miller et al.,2026,9Z8S,NcAA9D,,cryo,synchrotron,2.75E+06,mixed,A,12.56,1.98,0.55,11.47,HOH,3.45,0.45,19.24,HOH,2.38,0.43,9.96,HOH,3.12,0.57,17.63,HOH,93.12,94.02,170.71,5.93,67.76,0.64,8.93
+Miller et al.,2026,9Z8T,NcAA9D,,cryo,synchrotron,2.99E+06,mixed,A,12.67,2.02,0.52,11.51,HOH,3.41,0.48,19.28,HOH,2.41,0.41,10,HOH,3.23,0.59,17.67,HOH,93.25,93.64,170.24,6.90,66.57,1.27,8.02
+Miller et al.,2026,9Z8U,NcAA9D,,cryo,synchrotron,3.21E+06,mixed,A,12.68,1.99,0.57,11.47,HOH,3.5,0.43,19.24,HOH,2.39,0.41,9.96,HOH,3.33,0.59,17.63,HOH,92.63,94.68,170.51,6.04,68.20,0.13,9.13
+Miller et al.,2026,9Z8V,NcAA9D,,cryo,synchrotron,3.41E+06,mixed,A,12.8,2.01,0.6,11.58,HOH,3.37,0.4,19.35,HOH,2.38,0.41,10.07,HOH,3.38,0.59,17.74,HOH,92.61,93.87,171.09,6.12,66.95,-0.08,8.72
+Miller et al.,2026,9Z8W,NcAA9D,,cryo,synchrotron,3.59E+06,mixed,A,12.78,1.97,0.56,11.42,HOH,3.46,0.44,19.19,HOH,2.35,0.42,9.91,HOH,3.26,0.58,17.58,HOH,92.98,94.32,170.15,6.60,67.06,0.52,8.93
+Miller et al.,2026,9Z8X,NcAA9D,,cryo,synchrotron,3.85E+06,mixed,A,12.83,1.97,0.57,11.73,HOH,3.4,0.43,19.5,HOH,2.35,0.42,10.22,HOH,3.23,0.58,17.89,HOH,92.95,94.70,170.24,6.03,67.10,0.42,9.91
+Miller et al.,2026,9Z8Y,NcAA9D,,cryo,synchrotron,3.98E+06,mixed,A,13.03,1.98,0.55,11.69,HOH,3.48,0.45,19.46,HOH,2.37,0.41,10.18,HOH,3.42,0.59,17.85,HOH,92.93,93.73,170.69,6.50,67.47,0.65,8.65
+Miller et al.,2026,9Z8Z,NcAA9D,,cryo,synchrotron,4.11E+06,mixed,A,12.69,2.04,0.58,11.47,HOH,3.42,0.42,19.24,HOH,2.3,0.41,9.96,HOH,3.26,0.59,17.63,HOH,93.21,94.88,169.58,6.56,67.55,1.28,10.19
+Miller et al.,2026,9Z90,NcAA9D,,cryo,synchrotron,4.24E+06,mixed,A,12.96,1.95,0.6,11.53,HOH,3.44,0.4,19.3,HOH,2.37,0.46,10.02,HOH,3.27,0.54,17.69,HOH,92.14,94.88,170.68,6.11,67.05,-0.58,9.29
+Miller et al.,2026,9Z92,NcAA9D,,cryo,synchrotron,4.42E+06,mixed,A,12.9,2.02,0.61,11.61,HOH,3.42,0.39,19.38,HOH,2.36,0.41,10.1,HOH,3.38,0.59,17.77,HOH,92.89,93.71,171.20,5.80,66.50,0.07,8.83
+Miller et al.,2026,9Z93,NcAA9D,,cryo,synchrotron,4.53E+06,mixed,A,12.85,2.02,0.6,11.56,HOH,3.38,0.4,19.33,HOH,2.34,0.46,10.05,HOH,3.16,0.54,17.72,HOH,93.01,93.85,170.77,6.17,67.20,-0.57,8.69
+Miller et al.,2026,9Z94,NcAA9D,,cryo,synchrotron,4.64E+06,mixed,A,12.8,1.96,0.64,11.83,HOH,3.39,0.36,19.6,HOH,2.35,0.45,10.32,HOH,3.31,0.55,17.99,HOH,93.18,94.23,170.18,6.42,68.03,0.53,8.73
+Miller et al.,2026,9Z95,NcAA9D,,cryo,synchrotron,4.75E+06,mixed,A,12.97,1.99,0.61,11.77,HOH,3.37,0.39,19.54,HOH,2.35,0.4,10.26,HOH,3.33,0.6,17.93,HOH,93.12,93.55,171.27,5.63,67.90,-0.92,8.92
+Miller et al.,2026,9Z96,NcAA9D,,cryo,synchrotron,4.84E+06,mixed,A,12.82,1.97,0.61,11.4,HOH,3.36,0.39,19.17,HOH,2.33,0.42,9.89,HOH,3.23,0.58,17.56,HOH,93.21,94.74,169.95,6.13,68.40,0.53,9.89
+Miller et al.,2026,9Z97,NcAA9D,,cryo,synchrotron,4.98E+06,mixed,A,13.16,1.98,0.57,11.57,HOH,3.45,0.43,19.34,HOH,2.35,0.43,10.06,HOH,3.33,0.57,17.73,HOH,93.08,93.80,170.98,5.82,67.74,-0.55,9.31
+Miller et al.,2026,9Z98,NcAA9D,,cryo,synchrotron,5.06E+06,mixed,A,12.73,1.96,0.6,11.45,HOH,3.54,0.4,19.22,HOH,2.33,0.42,9.94,HOH,3.27,0.58,17.61,HOH,92.79,94.29,170.74,5.96,67.37,-0.99,9.61
+Miller et al.,2026,9Z99,NcAA9D,,cryo,synchrotron,5.14E+06,mixed,A,12.63,2.04,0.57,11.58,HOH,3.42,0.43,19.35,HOH,2.38,0.43,10.07,HOH,3.38,0.57,17.74,HOH,93.57,93.48,170.66,6.12,67.97,0.65,8.33
+Miller et al.,2026,9ZA5,NcAA9D,,cryo,synchrotron,5.21E+06,mixed,A,12.53,1.98,0.54,11.46,HOH,3.45,0.46,19.23,HOH,2.35,0.43,9.95,HOH,3.31,0.57,17.62,HOH,93.46,94.82,169.88,5.82,67.35,0.37,9.35
+Miller et al.,2026,9ZA6,NcAA9D,,cryo,synchrotron,5.33E+06,mixed,A,12.72,2.02,0.6,11.49,HOH,3.38,0.4,19.26,HOH,2.35,0.39,9.98,HOH,3.24,0.61,17.65,HOH,93.10,94.81,170.07,5.99,67.95,0.00,10.32
+Miller et al.,2026,9ZA7,NcAA9D,,cryo,synchrotron,5.41E+06,mixed,A,12.92,2.03,0.62,11.51,HOH,3.35,0.38,19.28,HOH,2.33,0.43,10,HOH,3.28,0.57,17.67,HOH,93.49,94.14,169.98,6.48,66.25,0.25,7.90
+Miller et al.,2026,9ZA8,NcAA9D,,cryo,synchrotron,5.48E+06,mixed,A,12.95,2,0.57,11.62,HOH,3.44,0.43,19.39,HOH,2.37,0.38,10.11,HOH,3.31,0.62,17.78,HOH,93.16,94.22,170.32,6.25,64.56,0.89,8.71
+Miller et al.,2026,9ZA9,NcAA9D,,cryo,synchrotron,5.55E+06,mixed,A,12.98,1.97,0.55,11.41,HOH,3.4,0.45,19.18,HOH,2.3,0.39,9.9,HOH,3.23,0.61,17.57,HOH,92.81,94.73,169.94,6.65,66.49,0.94,8.97
+Miller et al.,2026,9ZAA,NcAA9D,,cryo,synchrotron,5.63E+06,mixed,A,13.14,1.99,0.57,11.46,HOH,3.45,0.43,19.23,HOH,2.37,0.39,9.95,HOH,3.39,0.61,17.62,HOH,92.90,94.70,170.27,6.06,66.46,1.31,10.19
+Miller et al.,2026,9ZAB,NcAA9D,,cryo,synchrotron,5.71E+06,mixed,A,13.03,2.03,0.57,11.57,HOH,3.3,0.43,19.34,HOH,2.33,0.39,10.06,HOH,3.24,0.61,17.73,HOH,94.02,94.13,169.87,6.02,66.87,0.19,9.30
+Miller et al.,2026,9ZAC,NcAA9D,,cryo,synchrotron,5.78E+06,mixed,A,13.19,1.99,0.57,11.51,HOH,3.41,0.43,19.28,HOH,2.32,0.36,10,HOH,3.35,0.64,17.67,HOH,93.23,94.11,170.56,5.93,66.30,0.71,9.94
+Miller et al.,2026,9ZAD,NcAA9D,,cryo,synchrotron,5.84E+06,mixed,A,13.09,2.01,0.49,11.67,HOH,3.42,0.51,19.44,HOH,2.38,0.41,10.16,HOH,3.34,0.59,17.83,HOH,93.19,93.76,170.36,6.67,66.32,0.57,8.49
+Miller et al.,2026,9ZAE,NcAA9D,,cryo,synchrotron,5.90E+06,mixed,A,13.23,2,0.53,11.76,HOH,3.38,0.47,19.53,HOH,2.34,0.41,10.25,HOH,3.37,0.59,17.92,HOH,92.97,93.93,170.69,6.24,66.85,0.85,8.18
+Miller et al.,2026,9ZAF,NcAA9D,,cryo,synchrotron,5.99E+06,mixed,A,13.05,1.98,0.55,11.74,HOH,3.47,0.45,19.51,HOH,2.39,0.42,10.23,HOH,3.36,0.58,17.9,HOH,93.58,94.33,169.78,6.46,67.00,1.02,9.53
+Miller et al.,2026,9ZAH,NcAA9D,,cryo,synchrotron,6.04E+06,mixed,A,13.16,2.02,0.56,11.72,HOH,3.35,0.44,19.49,HOH,2.34,0.41,10.21,HOH,3.22,0.59,17.88,HOH,92.95,94.52,170.62,5.66,66.50,-0.72,9.72
+Miller et al.,2026,9ZAI,NcAA9D,,cryo,synchrotron,6.10E+06,mixed,A,13.33,2.04,0.55,11.88,HOH,3.39,0.45,19.65,HOH,2.33,0.36,10.37,HOH,3.26,0.64,18.04,HOH,92.98,94.13,170.54,6.23,67.54,0.61,9.07
+Miller et al.,2026,9ZAJ,NcAA9D,,cryo,synchrotron,6.15E+06,mixed,A,13.16,2.02,0.49,11.84,HOH,3.48,0.51,19.61,HOH,2.38,0.37,10.33,HOH,3.35,0.63,18,HOH,93.01,94.64,170.27,6.00,66.91,0.40,9.30
+Miller et al.,2026,9ZAL,NcAA9D,,cryo,synchrotron,6.20E+06,mixed,A,13.21,1.98,0.5,11.98,HOH,3.4,0.5,19.75,HOH,2.37,0.31,10.47,HOH,3.39,0.69,18.14,HOH,93.41,95.41,168.65,7.13,67.61,2.58,10.24
+Miller et al.,2026,9Z8O,NcAA9D,,cryo,synchrotron,1.23E+06,mixed,B,12.59,2.03,0.72,11.49,HOH,,,,,2.43,0.55,10.35,HOH,3.19,0.45,20.87,HOH,93.72,90.62,173.87,4.33,70.17,-0.26,6.86
+Miller et al.,2026,9Z8P,NcAA9D,,cryo,synchrotron,1.74E+06,mixed,B,12.67,2,0.55,11.56,HOH,,,,,2.41,0.4,10.42,HOH,3.28,0.6,20.94,HOH,93.95,92.02,172.20,5.02,68.55,0.73,7.38
+Miller et al.,2026,9Z8Q,NcAA9D,,cryo,synchrotron,2.07E+06,mixed,B,12.6,1.99,0.53,11.53,HOH,,,,,2.43,0.37,10.39,HOH,3.29,0.63,20.91,HOH,94.15,91.98,172.42,4.47,69.76,1.57,8.18
+Miller et al.,2026,9Z8R,NcAA9D,,cryo,synchrotron,2.37E+06,mixed,B,12.68,2.01,0.53,11.66,HOH,,,,,2.38,0.36,10.52,HOH,3.43,0.64,21.04,HOH,93.31,92.45,172.91,4.13,70.36,1.55,9.10
+Miller et al.,2026,9Z8S,NcAA9D,,cryo,synchrotron,2.75E+06,mixed,B,12.56,1.99,0.55,11.47,HOH,,,,,2.41,0.37,10.33,HOH,3.23,0.63,20.85,HOH,94.03,92.54,172.09,4.40,69.01,0.83,7.92
+Miller et al.,2026,9Z8T,NcAA9D,,cryo,synchrotron,2.99E+06,mixed,B,12.67,2.01,0.52,11.51,HOH,,,,,2.4,0.38,10.37,HOH,3.36,0.62,20.89,HOH,93.45,92.74,171.84,5.31,68.57,1.98,7.34
+Miller et al.,2026,9Z8U,NcAA9D,,cryo,synchrotron,3.21E+06,mixed,B,12.68,1.99,0.49,11.47,HOH,,,,,2.44,0.38,10.33,HOH,3.42,0.62,20.85,HOH,94.21,92.96,171.31,4.91,68.22,3.13,8.25
+Miller et al.,2026,9Z8V,NcAA9D,,cryo,synchrotron,3.41E+06,mixed,B,12.8,2.03,0.54,11.58,HOH,,,,,2.41,0.37,10.44,HOH,3.42,0.63,20.96,HOH,93.88,92.13,172.16,5.05,68.78,2.04,7.88
+Miller et al.,2026,9Z8W,NcAA9D,,cryo,synchrotron,3.59E+06,mixed,B,12.78,2.01,0.47,11.42,HOH,,,,,2.42,0.38,10.28,HOH,3.41,0.62,20.8,HOH,94.48,91.69,172.07,4.98,68.77,2.43,8.30
+Miller et al.,2026,9Z8X,NcAA9D,,cryo,synchrotron,3.85E+06,mixed,B,12.83,2.04,0.47,11.73,HOH,,,,,2.41,0.38,10.59,HOH,3.32,0.62,21.11,HOH,94.73,91.38,172.15,4.92,67.04,2.54,7.80
+Miller et al.,2026,9Z8Y,NcAA9D,,cryo,synchrotron,3.98E+06,mixed,B,13.03,2.06,0.51,11.69,HOH,,,,,2.36,0.41,10.55,HOH,3.34,0.59,21.07,HOH,94.04,93.03,171.89,3.95,69.27,1.34,10.45
+Miller et al.,2026,9Z8Z,NcAA9D,,cryo,synchrotron,4.11E+06,mixed,B,12.69,2.03,0.53,11.47,HOH,,,,,2.35,0.38,10.33,HOH,3.44,0.62,20.85,HOH,94.69,92.10,171.35,5.37,68.11,2.63,8.07
+Miller et al.,2026,9Z90,NcAA9D,,cryo,synchrotron,4.24E+06,mixed,B,12.96,1.95,0.49,11.53,HOH,,,,,2.38,0.37,10.39,HOH,3.29,0.63,20.91,HOH,94.20,92.05,171.68,5.49,68.07,2.93,7.75
+Miller et al.,2026,9Z92,NcAA9D,,cryo,synchrotron,4.42E+06,mixed,B,12.9,2.05,0.44,11.61,HOH,,,,,2.38,0.41,10.47,HOH,3.4,0.59,20.99,HOH,94.15,91.42,171.76,6.07,68.73,3.43,7.02
+Miller et al.,2026,9Z93,NcAA9D,,cryo,synchrotron,4.53E+06,mixed,B,12.85,2.04,0.46,11.56,HOH,,,,,2.39,0.36,10.42,HOH,3.43,0.64,20.94,HOH,94.07,91.43,172.19,5.55,68.71,1.92,7.04
+Miller et al.,2026,9Z94,NcAA9D,,cryo,synchrotron,4.64E+06,mixed,B,12.8,2.04,0.5,11.83,HOH,,,,,2.35,0.4,10.69,HOH,3.31,0.6,21.21,HOH,93.16,93.49,171.38,5.49,71.72,1.99,8.39
+Miller et al.,2026,9Z95,NcAA9D,,cryo,synchrotron,4.75E+06,mixed,B,12.97,2.02,0.5,11.77,HOH,,,,,2.43,0.4,10.63,HOH,3.37,0.6,21.15,HOH,93.40,93.52,171.10,5.59,69.64,1.96,8.93
+Miller et al.,2026,9Z96,NcAA9D,,cryo,synchrotron,4.84E+06,mixed,B,12.82,2.05,0.46,11.4,HOH,,,,,2.45,0.4,10.26,HOH,3.44,0.6,20.78,HOH,94.42,93.22,170.86,5.02,69.33,1.39,8.61
+Miller et al.,2026,9Z97,NcAA9D,,cryo,synchrotron,4.98E+06,mixed,B,13.16,2,0.52,11.57,HOH,,,,,2.43,0.42,10.43,HOH,3.37,0.58,20.95,HOH,94.65,92.39,170.88,5.80,69.58,3.19,8.58
+Miller et al.,2026,9Z98,NcAA9D,,cryo,synchrotron,5.06E+06,mixed,B,12.73,1.97,0.5,11.45,HOH,,,,,2.45,0.41,10.31,HOH,3.4,0.59,20.83,HOH,94.14,92.50,171.44,5.40,68.43,1.93,9.19
+Miller et al.,2026,9Z99,NcAA9D,,cryo,synchrotron,5.14E+06,mixed,B,12.63,2.01,0.55,11.58,HOH,,,,,2.45,0.44,10.44,HOH,3.34,0.56,20.96,HOH,93.92,92.56,172.41,3.97,68.97,0.67,9.65
+Miller et al.,2026,9ZA5,NcAA9D,,cryo,synchrotron,5.21E+06,mixed,B,12.53,2.09,0.5,11.46,HOH,,,,,2.39,0.4,10.32,HOH,3.26,0.6,20.84,HOH,93.92,92.18,172.78,3.86,68.66,1.18,9.78
+Miller et al.,2026,9ZA6,NcAA9D,,cryo,synchrotron,5.33E+06,mixed,B,12.72,2.03,0.52,11.49,HOH,,,,,2.44,0.37,10.35,HOH,3.43,0.63,20.87,HOH,93.62,93.02,172.29,3.92,68.53,0.59,10.15
+Miller et al.,2026,9ZA7,NcAA9D,,cryo,synchrotron,5.41E+06,mixed,B,12.92,2.06,0.47,11.51,HOH,,,,,2.39,0.36,10.37,HOH,3.33,0.64,20.89,HOH,93.68,93.43,171.64,4.38,69.97,1.59,10.25
+Miller et al.,2026,9ZA8,NcAA9D,,cryo,synchrotron,5.48E+06,mixed,B,12.95,2.02,0.5,11.62,HOH,,,,,2.44,0.39,10.48,HOH,3.42,0.61,21,HOH,92.55,92.66,172.54,5.33,68.69,2.52,7.47
+Miller et al.,2026,9ZA9,NcAA9D,,cryo,synchrotron,5.55E+06,mixed,B,12.98,2.07,0.53,11.41,HOH,,,,,2.37,0.37,10.27,HOH,3.4,0.63,20.79,HOH,93.34,92.84,171.57,5.74,69.67,2.13,7.51
+Miller et al.,2026,9ZAA,NcAA9D,,cryo,synchrotron,5.63E+06,mixed,B,13.14,1.97,0.5,11.46,HOH,,,,,2.42,0.34,10.32,HOH,3.37,0.66,20.84,HOH,93.68,92.98,171.76,4.85,69.19,1.84,9.46
+Miller et al.,2026,9ZAB,NcAA9D,,cryo,synchrotron,5.71E+06,mixed,B,13.03,2.02,0.51,11.57,HOH,,,,,2.42,0.35,10.43,HOH,3.34,0.65,20.95,HOH,94.87,93.17,170.54,4.98,67.27,1.89,9.15
+Miller et al.,2026,9ZAC,NcAA9D,,cryo,synchrotron,5.78E+06,mixed,B,13.19,1.95,0.59,11.51,HOH,,,,,2.39,0.4,10.37,HOH,3.35,0.6,20.89,HOH,94.31,92.58,171.69,4.66,68.66,2.19,9.60
+Miller et al.,2026,9ZAD,NcAA9D,,cryo,synchrotron,5.84E+06,mixed,B,13.09,2,0.55,11.67,HOH,,,,,2.44,0.39,10.53,HOH,3.36,0.61,21.05,HOH,93.68,92.06,172.06,5.49,69.73,2.12,7.48
+Miller et al.,2026,9ZAE,NcAA9D,,cryo,synchrotron,5.90E+06,mixed,B,13.23,1.94,0.54,11.76,HOH,,,,,2.45,0.43,10.62,HOH,3.39,0.57,21.14,HOH,93.95,92.52,171.86,4.93,71.30,2.70,9.99
+Miller et al.,2026,9ZAF,NcAA9D,,cryo,synchrotron,5.99E+06,mixed,B,13.05,2,0.55,11.74,HOH,,,,,2.48,0.34,10.6,HOH,3.46,0.66,21.12,HOH,93.96,92.91,171.14,5.59,69.50,2.34,8.74
+Miller et al.,2026,9ZAH,NcAA9D,,cryo,synchrotron,6.04E+06,mixed,B,13.16,2.02,0.54,11.72,HOH,,,,,2.39,0.36,10.58,HOH,3.37,0.64,21.1,HOH,94.62,92.79,170.91,5.27,67.73,2.76,9.55
+Miller et al.,2026,9ZAI,NcAA9D,,cryo,synchrotron,6.10E+06,mixed,B,13.33,2.01,0.52,11.88,HOH,,,,,2.5,0.46,10.74,HOH,3.48,0.54,21.26,HOH,94.43,93.23,170.35,5.87,67.00,4.99,9.27
+Miller et al.,2026,9ZAJ,NcAA9D,,cryo,synchrotron,6.15E+06,mixed,B,13.16,1.98,0.49,11.84,HOH,,,,,2.38,0.4,10.7,HOH,3.35,0.6,21.22,HOH,94.54,93.65,169.96,5.81,66.92,4.38,8.14
+Miller et al.,2026,9ZAL,NcAA9D,,cryo,synchrotron,6.20E+06,mixed,B,13.21,1.96,0.41,11.98,HOH,,,,,2.47,0.33,10.84,HOH,3.48,0.67,21.36,HOH,95.14,93.53,169.76,5.43,68.69,3.38,9.26
+Li et al.,2012,4EIR,NcAA9D,,cryo,synchrotron,,,A,14.3,1.82,0.5,16.07,HOH,,,,,2.92,0.8,18.63,OXY,,,,,,,,,,,
+Li et al.,2012,4EIR,NcAA9D,,cryo,synchrotron,,,B,14.3,1.84,0.49,16.69,HOH,,,,,2.96,0.8,16.77,OXY,,,,,,,,,,,
+O'Dell et al.,2017,5TKG,NcAA9D,,cryo,synchrotron,,,A,11.3,1.96,1,12.25,HOH,,,,,2.36,1,16.06,HOH,,,,,,,,,,,
+O'Dell et al.,2017,5TKH,NcAA9D,ascorbate,cryo,synchrotron,,Cu(I),A,13.66,1.9,0.59,18.98,PER,,,,,2.36,0.48,28.14,HOH,3.46,0.52,28.02,HOH,,,,,,,
+O'Dell et al.,2017,5TKI,NcAA9D,,ambient,joint neutron,,Cu(II),A,21.54,1.98,1,15.1,HOH,,,,,2.43,1,18.52,HOH,,,,,,,,,,,
+O'Dell et al.,2017,5TKG,NcAA9D,,cryo,synchrotron,,,B,11.3,2,1,13.68,HOH,,,,,2.44,1,17.33,HOH,,,,,,,,,,,
+O'Dell et al.,2017,5TKH,NcAA9D,ascorbate,cryo,synchrotron,,Cu(I),B,13.66,2.07,1,9.44,HOH,,,,,2.23,0.34,29.21,HOH,3.38,0.66,28.35,HOH,,,,,,,
+O'Dell et al.,2017,5TKI,NcAA9D,,ambient,joint neutron,,Cu(II),B,21.54,2.47,1,14.13,HOH,,,,,1.94,1,18.45,HOH,,,,,,,,,,,
+"Schröder, et al.",2022,7T5C,NcAA9D,low pH,cryo,home source,,,A,13.76,2.11,1,21.88,HOH,,,,,2.43,1,26.24,HOH,,,,,,,,,,,
+"Schröder, et al.",2022,7T5D,NcAA9D,ascorbate,ambient,neutron,,Cu(I),A,35.33,1.97,0.70/0.30,33.75/33.83,PEO/OXY,,,,,,,,,,,,,,,,,,,
+"Schröder, et al.",2022,7T5E,NcAA9D,low pH,ambient,joint neutron,,Cu(II),A,21.56,2.03,1,15.53,HOH,,,,,2.43,1,20.44,HOH,,,,,,,,,,,
+"Schröder, et al.",2022,7T5C,NcAA9D,low pH,cryo,home source,,,B,13.76,2.12,1,22.65,HOH,,,,,2.42,1,22.21,HOH,,,,,,,,,,,
+"Schröder, et al.",2022,7T5D,NcAA9D,ascorbate,ambient,neutron,,Cu(I),B,35.33,,,,,,,,,2.24,0.65,33.94,HOH,,,,,,,,,,,
+"Schröder, et al.",2022,7T5E,NcAA9D,low pH,ambient,joint neutron,,Cu(II),B,21.56,2.08,1,19.32,HOH,,,,,2.34,1,27.64,HOH,,,,,,,,,,,
