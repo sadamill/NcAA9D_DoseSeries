@@ -280,10 +280,14 @@ ggplots$Light$dose_distribution$dose_distribution <- dose_bin_summary |>
     x = dose, 
     ymin = offset, 
     ymax = density + offset, 
-    fill = offset, 
     group = pseudohelix_number
   )) +
-  ggplot2::geom_ribbon(alpha = 1, linewidth = 0.2, color = "black", show.legend = FALSE) +
+  ggplot2::geom_ribbon(
+    linewidth = 0.2,
+    fill = "darkmagenta",
+    show.legend = FALSE
+  ) +
+  ggplot2::geom_line(aes(y = density + offset), color = "white") +
   ggplot2::scale_y_continuous(breaks = 1:36) +
   ggplot2::coord_cartesian(expand = FALSE, xlim = c(0, 25), ylim = c(1, 37)) +
   ggplot2::labs(x = "Dose (MGy)", y = "Pseudohelix Number") +
@@ -291,12 +295,8 @@ ggplots$Light$dose_distribution$dose_distribution <- dose_bin_summary |>
     legend.justification = c(1, 0),
     legend.position.inside = c(0.95, 0.05),
     legend.key.height = grid::unit(4, "mm"),
-    panel.grid.major.y = element_blank(),
+    panel.grid.major.y = element_line(color = "gray"),
     panel.grid.minor.y = element_blank()
-  ) +
-  ggplot2::scale_fill_gradient(
-    low = "thistle1",
-    high = "darkorchid4"
   )
 
 # Make an animated histogram to add in supplementary information.
