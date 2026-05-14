@@ -244,9 +244,8 @@ max_dose <- max(pseudohelix_voxel_data$voxel_dose) |>
 bin_width <- 0.5
 bins <- seq(0, max_dose, bin_width)
 
-# Make a tibble containing intensity contributions summed across dose bins.
-# Ensure all frames and bins are filled in with zero values so that plots are
-# completely filled in.
+# Make a tibble containing dataset contributions from different doses
+# as estimated by a Gaussian KDE.
 dose_bin_summary <- map(
   1:36, 
   \(number) {
