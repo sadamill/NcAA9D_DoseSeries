@@ -54,7 +54,6 @@ atoms <- list( # Make list of atom and xyz indices
   tyr168oh_a = bio3d::atom.select(pseudohelixList[[1]], resno = 168, chain = "A", elety = "OH"),
   oxy_a      = bio3d::atom.select(pseudohelixList[[1]], resno = 232, chain = "A", elety = "O2"),
   co2_a      = bio3d::atom.select(pseudohelixList[[1]], resno = 228, chain = "B", elety = "C"),
-  
   cu_b       = bio3d::atom.select(pseudohelixList[[1]], resno = 229, chain = "B"),
   nterm_b    = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "B", elety = "N"),
   his1nd_b   = bio3d::atom.select(pseudohelixList[[1]], resno = 1,   chain = "B", elety = "ND1"),
